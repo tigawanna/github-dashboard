@@ -45,7 +45,7 @@ export default function LoginPage({ actionData }: PageProps) {
     }
   });
 
-  const mutation = useMutation(async() => {
+  const mutation = useMutation(async () => {
     try {
       // await new Promise<void>((resolve, reject) => {
       //   setTimeout(() => {
@@ -102,10 +102,16 @@ export default function LoginPage({ actionData }: PageProps) {
                   value={token}
                   onChange={handleChange}
                 />
-                <Button type="submit" disabled={mutation.isLoading} className="flex gap-2 items-center justify-center">
+                <Button
+                  type="submit"
+                  disabled={mutation.isLoading}
+                  className="flex gap-2 items-center justify-center"
+                >
                   {" "}
                   Connect{" "}
-                  {mutation.isLoading && <Loader className="animate-spin w-4 h-4" />}
+                  {mutation.isLoading && (
+                    <Loader className="animate-spin w-4 h-4" />
+                  )}
                 </Button>
               </div>
             </div>

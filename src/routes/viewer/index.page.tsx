@@ -1,8 +1,11 @@
 import { graphql } from "@/lib/graphql/relay/modules";
-import { PageProps,PreloadContext } from "rakkasjs";
-import { ViewerRepos, ViewerReposSuspenseFallback } from "./components/ViewerRepos";
+import { PageProps, PreloadContext } from "rakkasjs";
+import {
+  ViewerRepos,
+  ViewerReposSuspenseFallback,
+} from "./components/ViewerRepos";
 import { Suspense } from "react";
-export default function  ViewerPage({}: PageProps){
+export default function ViewerPage({}: PageProps) {
   const REPOS_QUERY = graphql`
     query viewerQuery {
       viewer {
@@ -23,7 +26,7 @@ export default function  ViewerPage({}: PageProps){
   return (
     <div className="w-full h-full  flex flex-col items-center justify-center">
       <div className="text-3xl font-bold">Viewer Page</div>
-      <Suspense fallback={<ViewerReposSuspenseFallback/>}>
+      <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense>
     </div>
@@ -31,7 +34,6 @@ export default function  ViewerPage({}: PageProps){
 }
 
 // export default ViewerPage
-
 
 // ViewerPage.preload = (ctx:PreloadContext) => {
 //   // Prefetch a query to avoid waterfalls caused by late discovery of data

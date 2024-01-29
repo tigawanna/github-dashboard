@@ -2,9 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
-
 /* Hide the default scroll bar */
 ::-webkit-scrollbar {
   width: 10px;
@@ -26,8 +23,6 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-accent;
 }
-
-
 
 @layer base {
   :root {
@@ -100,33 +95,30 @@
 }
 
 .skeleton {
-    border-radius: var(--rounded-box, 1rem/* 16px */);
-    --tw-bg-opacity: 1;
-    background-color: var(--fallback-b3,oklch(var(--b3)/var(--tw-bg-opacity)));
-    will-change: background-position;
-    animation: skeleton 5s ease-in-out infinite;
-    background-image: linear-gradient(
+  border-radius: var(--rounded-box, 1rem /* 16px */);
+  --tw-bg-opacity: 1;
+  background-color: var(--fallback-b3, oklch(var(--b3) / var(--tw-bg-opacity)));
+  will-change: background-position;
+  animation: skeleton 5s ease-in-out infinite;
+  background-image: linear-gradient(
     105deg,
     transparent 0%,
     transparent 40%,
-    var(--fallback-b1,oklch(var(--b1)/1)) 50%,
+    var(--fallback-b1, oklch(var(--b1) / 1)) 50%,
     transparent 60%,
     transparent 100%
   );
-    background-size: 200% auto;
-    background-repeat: no-repeat;
-    background-position-x: -50%;
+  background-size: 200% auto;
+  background-repeat: no-repeat;
+  background-position-x: -50%;
 }
 @media (prefers-reduced-motion) {
-    .skeleton {
-        animation-duration: 15s;
-    }
+  .skeleton {
+    animation-duration: 15s;
+  }
 }
 
-
-code pre{
-padding: 20px;
+code pre {
+  padding: 20px;
   border-radius: 15px;
 }
-
-

@@ -2,8 +2,8 @@ import postgres from "postgres";
 import { RequestContext } from "rakkasjs";
 
 export function postgresInstance(options?: DbAuthProps) {
-  if(!options){
-    return
+  if (!options) {
+    return;
   }
   if (options?.local_or_remote === "local") {
     return postgres({

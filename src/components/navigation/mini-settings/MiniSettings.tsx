@@ -1,4 +1,8 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+} from "@/components/shadcn/ui/avatar";
 import { Button } from "@/components/shadcn/ui/button";
 import {
   DropdownMenu,
@@ -42,18 +46,17 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
 
   const mutation = useMutation(async () => {
     try {
-  
-    if (window) {
-      document.cookie = `gh_pat_cookie=;`;
-      window.location.reload();
-    }
-    return { success: true, error: null };
+      if (window) {
+        document.cookie = `gh_pat_cookie=;`;
+        window.location.reload();
+      }
+      return { success: true, error: null };
     } catch (error: any) {
       // console.log("======== error loggin out of db ======= ", error);
       return { success: false, error: error.message };
     }
   });
-  const viewer = query.data?.viewer?.data?.viewer
+  const viewer = query.data?.viewer?.data?.viewer;
 
   if (mutation.data?.success) {
     qc.invalidateQueries("gh_pat_cookie");
@@ -90,7 +93,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
           </div>
 
           <Button
-          type="button"
+            type="button"
             onClick={() => mutation.mutateAsync()}
             disabled={mutation.isLoading}
             variant={"outline"}
@@ -99,7 +102,6 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
             Logout{" "}
             {mutation.isLoading && <Loader className="w-4 h-4 animate-spin" />}
           </Button>
-         
         </div>
       </DropdownMenuContent>
     </DropdownMenu>

@@ -1,8 +1,6 @@
-import {Toaster} from "react-hot-toast"
-interface DefaltExportedToasterProps {
+import { Toaster } from "react-hot-toast";
+interface DefaltExportedToasterProps {}
 
-}
-
-export default function DefaltExportedToaster({}:DefaltExportedToasterProps){
-return <Toaster/>
+export default function DefaltExportedToaster({}: DefaltExportedToasterProps) {
+  return <Toaster />;
 }

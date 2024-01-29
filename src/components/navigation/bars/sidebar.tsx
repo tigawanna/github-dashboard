@@ -1,5 +1,5 @@
 import { Link } from "rakkasjs";
-import {  Github, Home, TestTube } from "lucide-react";
+import { Github, Home, TestTube } from "lucide-react";
 import { MiniSettingsModal } from "../mini-settings/MiniSettings";
 
 interface SidebarProps {}

@@ -4,10 +4,10 @@ import { twMerge } from "tailwind-merge";
 
 interface CopyProps {
   text: string;
-  className?: string
+  className?: string;
 }
 
-export function CopyToClipBoard({ text,className }: CopyProps) {
+export function CopyToClipBoard({ text, className }: CopyProps) {
   const [copied, setCopied] = useState(false);
 
   function handleCopyToClipBoard(text: string) {
@@ -31,13 +31,14 @@ export function CopyToClipBoard({ text,className }: CopyProps) {
 
     return () => clearTimeout(timeout);
   }, [copied]);
-const button_styles = copied
-  ? "glass animate-in fade-in zoom-in"
-  : "animate-in fade-in zoom-in";
+  const button_styles = copied
+    ? "glass animate-in fade-in zoom-in"
+    : "animate-in fade-in zoom-in";
   return (
-    <Button 
-    className={twMerge(button_styles,className)}
-    onClick={() => handleCopyToClipBoard(text)}>
+    <Button
+      className={twMerge(button_styles, className)}
+      onClick={() => handleCopyToClipBoard(text)}
+    >
       {copied ? "Copied" : "Copy"}
     </Button>
   );

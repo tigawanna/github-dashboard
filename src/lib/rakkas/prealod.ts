@@ -20,7 +20,7 @@ export async function preloadGuards(ctx: PreloadContext, route_name?: string) {
   const valid_token = await testGithubToken(gh_pat_cookie);
   // console.log(" ==== valid_token in viewer layout preload  ===== ", valid_token);
   if (!valid_token) {
-    console.log(" ===== invalide github token ====== ")
+    console.log(" ===== invalide github token ====== ");
     return {
       redirect: {
         href: new_url.toString(),

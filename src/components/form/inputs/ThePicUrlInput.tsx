@@ -1,4 +1,3 @@
-
 import { Image, X } from "lucide-react";
 import { useState, useRef } from "react";
 
@@ -44,7 +43,6 @@ export function ThePicUrlInput({
               // className='border-6 h-[100px]'
               src={pic}
               height={100}
-         
               {...props}
             />
           </div>

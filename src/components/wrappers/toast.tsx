@@ -7,11 +7,17 @@ interface hotToastPrps {
   title: string;
   description: string;
   position?: ToastPosition | undefined;
-  duration?:number
+  duration?: number;
   type: "success" | "error" | "info" | "warning";
 }
 
-export function hotToast({ description, title, type,position,duration=5000 }: hotToastPrps) {
+export function hotToast({
+  description,
+  title,
+  type,
+  position,
+  duration = 5000,
+}: hotToastPrps) {
   const toastVariants = cva(["border"], {
     variants: {
       type: {
@@ -22,34 +28,37 @@ export function hotToast({ description, title, type,position,duration=5000 }: ho
       },
     },
   });
-  return toast.custom((t) => (
-    <div
-      className={`${
-        t.visible ? "animate-enter" : "animate-leave"
-      } max-w-md w-full bg-base-200  rounded-xl
-        pointer-events-auto flex `}
-    >
+  return toast.custom(
+    (t) => (
       <div
-        className={twMerge(
-          toastVariants({ type }),
-          "flex-1 w-0 p-2 rounded-xl",
-        )}
+        className={`${
+          t.visible ? "animate-enter" : "animate-leave"
+        } max-w-md w-full bg-base-200  rounded-xl
+        pointer-events-auto flex `}
       >
-        <div className="flex items-start ">
-          <div className="ml-3 flex-1">
-            <p className="text-lg font-bold ">{title}</p>
-            <p className="mt-1 text-sm">{description}</p>
+        <div
+          className={twMerge(
+            toastVariants({ type }),
+            "flex-1 w-0 p-2 rounded-xl",
+          )}
+        >
+          <div className="flex items-start ">
+            <div className="ml-3 flex-1">
+              <p className="text-lg font-bold ">{title}</p>
+              <p className="mt-1 text-sm">{description}</p>
+            </div>
           </div>
         </div>
-      </div>
-      <div className="flex border-l bg-base-100">
-        <button
-          onClick={() => toast.dismiss(t.id)}
-          className="w-full  p-2 rounded-lg"
-        >
+        <div className="flex border-l bg-base-100">
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="w-full  p-2 rounded-lg"
+          >
             <X />
-        </button>
+          </button>
+        </div>
       </div>
-    </div>
-  ),{position,duration});
+    ),
+    { position, duration },
+  );
 }

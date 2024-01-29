@@ -2,7 +2,6 @@ import fs from "fs";
 import fsp from "fs/promises";
 import path from "path";
 
-
 export async function getTextFromFileWithImports(
   filePath: string,
   currentText: string,
@@ -28,10 +27,14 @@ export async function getTextFromFileWithImports(
       const importedFileContent = fs.readFileSync(absoluteImportedPath, "utf8");
       updatedText += "\n" + importedFileContent;
       const next_file_path =
-        path.resolve("pg/" +dbName+"/public", importedFilePath) + ".ts";
+        path.resolve("pg/" + dbName + "/public", importedFilePath) + ".ts";
       // console.log(" ====== next file path  ======",next_file_path);
       updatedText =
-        (await getTextFromFileWithImports(next_file_path, updatedText, dbName)) ?? ""; // Make the process recursive
+        (await getTextFromFileWithImports(
+          next_file_path,
+          updatedText,
+          dbName,
+        )) ?? ""; // Make the process recursive
     }
     //  console.log("===== count  ======",count);
     return updatedText;

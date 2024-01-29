@@ -1,10 +1,5 @@
 import { Nprogress } from "@/components/navigation/nprogress/Nprogress";
-import {
-  ClientSuspense,
-  LayoutProps,
-
-  useLocation,
-} from "rakkasjs";
+import { ClientSuspense, LayoutProps, useLocation } from "rakkasjs";
 import "./index.css";
 import { Sidebar } from "@/components/navigation/bars/sidebar";
 import Toaster from "@/components/wrappers/DefaltExportedToaster";
@@ -57,7 +52,5 @@ function Layout({ children }: LayoutProps) {
 //     },
 //   };
 // };
-
-
 
 export default Layout;

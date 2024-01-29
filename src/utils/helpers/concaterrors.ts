@@ -12,8 +12,7 @@ export const concatErrors = (err_res: any) => {
     // //no-console("errs keys",err_key)
     let err_str = "";
     err_key.forEach((key) => {
-      err_str +=
-        " - " + key + ":" + errs[key].message;
+      err_str += " - " + key + ":" + errs[key].message;
       ("");
     });
     return err_str;

@@ -2,7 +2,6 @@ import { Link } from "rakkasjs";
 import { MiniSettingsModal } from "./mini-settings/MiniSettings";
 import { Home } from "lucide-react";
 
-
 interface ToolbarProps {}
 
 export function Toolbar({}: ToolbarProps) {

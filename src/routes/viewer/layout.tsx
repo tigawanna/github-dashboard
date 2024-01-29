@@ -9,5 +9,5 @@ export default function Layout({ children }: LayoutProps) {
   );
 }
 Layout.preload = async (ctx: PreloadContext) => {
-return await preloadGuards(ctx, "viewer");
+  return await preloadGuards(ctx, "viewer");
 };

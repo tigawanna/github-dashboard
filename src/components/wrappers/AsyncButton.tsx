@@ -17,7 +17,7 @@ const AsyncButton: ForwardRefRenderFunction<
     props.className,
     props.disabled
       ? default_styles + " opacity-50 hover:opacity-70"
-      : default_styles
+      : default_styles,
   );
   return (
     <Button {...props} ref={ref} className={className}>

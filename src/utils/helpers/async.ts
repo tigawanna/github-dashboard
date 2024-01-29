@@ -1,6 +1,5 @@
 import { PageContext } from "rakkasjs";
 
-
 export async function artificialDelay(delay: number) {
   await new Promise((resolve) => setTimeout(resolve, delay));
 }
@@ -86,7 +85,7 @@ export function narrowOutError<T = unknown>(data?: DataOrError<T>) {
   }
 }
 
-export async function tryCatchWrapper<T,E=Error>(
+export async function tryCatchWrapper<T, E = Error>(
   fn: Promise<T>,
 ): Promise<{ data: T | null; error: E | null }> {
   try {
