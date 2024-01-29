@@ -1,49 +1,108 @@
-import { graphql } from "@/lib/graphql/relay/modules";
-import { PageProps, PreloadContext } from "rakkasjs";
+import { graphql, useFragment, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
+import { PageProps} from "rakkasjs";
 import {
+  RepositoriesFragment,
   ViewerRepos,
   ViewerReposSuspenseFallback,
 } from "./components/ViewerRepos";
 import { Suspense } from "react";
-export default function ViewerPage({}: PageProps) {
-  const REPOS_QUERY = graphql`
-    query viewerQuery {
-      viewer {
-        repositories(first: 20) {
-          edges {
-            cursor
-            node {
-              name
-              nameWithOwner
-              url
-            }
-          }
-        }
-      }
-    }
-  `;
+import {
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from "@/components/shadcn/ui/tabs";
 
+import { viewerVIEWERQuery } from "./__generated__/viewerVIEWERQuery.graphql";
+import { viewer_info$key} from "./__generated__/viewer_info.graphql";
+import { ViewerRepos_repositories$key } from "./components/__generated__/ViewerRepos_repositories.graphql";
+export default function ViewerPage({}: PageProps) {
+  const query = useLazyLoadQuery<viewerVIEWERQuery>(rootViewerquery, {});
+  const data = useFragment<viewer_info$key>(
+    viewerVIEWERfragmant,
+    query?.viewer,
+  );
+  const repo_fragment = useFragment<ViewerRepos_repositories$key>(
+    RepositoriesFragment,
+    query?.viewer,
+  );
+  const counts = data 
+  // console.log("counts ==== ", counts);
   return (
     <div className="w-full h-full  flex flex-col items-center justify-center">
       <div className="text-3xl font-bold">Viewer Page</div>
-      <Suspense fallback={<ViewerReposSuspenseFallback />}>
+      {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
-      </Suspense>
+      </Suspense> */}
+      <Tabs defaultValue="repos" className="w-full h-full overflow-auto">
+        <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+          <TabsTrigger value="repos">Repositories {repo_fragment?.repositories?.totalCount}</TabsTrigger>
+          <TabsTrigger value="stars">Staring {counts?.starredRepositories?.totalCount}</TabsTrigger>
+            <TabsTrigger value="following">Following {counts?.following?.totalCount}</TabsTrigger>
+          <TabsTrigger value="followers">Followers {counts?.followers?.totalCount}</TabsTrigger>
+        </TabsList>
+        <TabsContent value="repos">
+          <h1 className="text-4xl font-bold ">Repositories</h1>
+          <ViewerRepos viewer={query?.viewer}/>
+        </TabsContent>
+        <TabsContent value="stars">
+          <h1 className="text-4xl font-bold ">Stars</h1>
+        </TabsContent>
+
+        <TabsContent value="following">
+          <h1 className="text-4xl font-bold ">Following who</h1>
+        </TabsContent>
+        <TabsContent value="followers">
+          <h1 className="text-4xl font-bold ">Followers</h1>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }
 
-// export default ViewerPage
+// export const HomeViewerQuery = graphql`
+// query viewerVIEWERQuery {
+//     viewer {
+//       ...Repositories_repositories
+//       ...Following_following
+//       ...Followers_followers
+//     }
+//   }
+// `;
 
-// ViewerPage.preload = (ctx:PreloadContext) => {
-//   // Prefetch a query to avoid waterfalls caused by late discovery of data
-//   // dependencies.
-//   console.log("= viewer preloading  === ",ctx.queryClient)
+export const rootViewerquery = graphql`
+  query viewerVIEWERQuery {
+    viewer {
+      ...viewer_info
+      ...ViewerRepos_repositories
+    }
+  }
+`;
 
-//   return {
-//     // Set head meta tags. Unlike a Head component rendered in a page,
-//     // it is guaranteed to be rendered on the server when rendered in the
-//     // preload function.
-//     head: { title: "Preload example" },
-//   };
-// };
+export const viewerVIEWERfragmant = graphql`
+  fragment viewer_info on User {
+    followers(first: 1) {
+      totalCount
+      nodes {
+        id
+      }
+    }
+    following(first: 1) {
+      totalCount
+      nodes {
+        id
+      }
+    }
+
+ 
+
+    starredRepositories(first: 1) {
+      totalCount
+      nodes {
+        id
+      
+      }
+    }
+  }
+`;
+
