@@ -81,7 +81,7 @@ export const rootViewerquery = graphql`
   query viewerVIEWERQuery {
     viewer {
       ...viewer_info
-      ...ViewerRepos_repositories
+      ...ViewerRepos_repositories @arguments(isFork: true)
     }
   }
 `;

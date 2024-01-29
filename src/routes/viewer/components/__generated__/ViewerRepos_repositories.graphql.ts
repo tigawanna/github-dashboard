@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d88c3fb4909e5cff5b27b5a655b18221>>
+ * @generated SignedSource<<a541389663e377a45c43a522953fd7a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,6 +117,19 @@ return {
       "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "isFork"
+    },
+    {
+      "defaultValue": {
+        "direction": "DESC",
+        "field": "PUSHED_AT"
+      },
+      "kind": "LocalArgument",
+      "name": "orderBy"
     }
   ],
   "kind": "Fragment",
@@ -154,12 +167,14 @@ return {
       "alias": "repositories",
       "args": [
         {
-          "kind": "Literal",
+          "kind": "Variable",
+          "name": "isFork",
+          "variableName": "isFork"
+        },
+        {
+          "kind": "Variable",
           "name": "orderBy",
-          "value": {
-            "direction": "DESC",
-            "field": "PUSHED_AT"
-          }
+          "variableName": "orderBy"
         }
       ],
       "concreteType": "RepositoryConnection",
@@ -514,7 +529,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "__Repositories_repositories_connection(orderBy:{\"direction\":\"DESC\",\"field\":\"PUSHED_AT\"})"
+      "storageKey": null
     },
     (v1/*: any*/)
   ],
@@ -523,6 +538,6 @@ return {
 };
 })();
 
-(node as any).hash = "dc141794b68d86327484fa658fce9f08";
+(node as any).hash = "d8ed35a0e66af07132da74dca0a35701";
 
 export default node;

@@ -16,7 +16,7 @@ interface ViewerReposProps {
 export function ViewerRepos({ viewer }: ViewerReposProps) {
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
-    viewer,
+    viewer
   );
 
   const repos = repo_fragment?.repositories?.edges;
@@ -162,12 +162,18 @@ export const RepositoriesFragment = graphql`
   @argumentDefinitions(
     first: { type: "Int", defaultValue: 10 }
     after: { type: "String" }
+    orderBy: {
+      type: "RepositoryOrder"
+      defaultValue: { field: PUSHED_AT, direction: DESC }
+    }
+    isFork: { type: "Boolean" }
   )
   @refetchable(queryName: "RepositoriesPaginationQuery") {
     repositories(
       first: $first
       after: $after
-      orderBy: { field: PUSHED_AT, direction: DESC }
+      orderBy: $orderBy
+      isFork: $isFork
     ) @connection(key: "Repositories_repositories") {
       totalCount
       edges {
@@ -234,23 +240,6 @@ export const RepositoriesFragment = graphql`
         startCursor
       }
       totalCount
-    }
-  }
-`;
-
-const REPOS_QUERY = graphql`
-  query ViewerReposQuery {
-    viewer {
-      repositories(first: 20) {
-        edges {
-          cursor
-          node {
-            name
-            nameWithOwner
-            url
-          }
-        }
-      }
     }
   }
 `;
