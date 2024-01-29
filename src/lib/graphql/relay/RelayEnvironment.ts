@@ -1,10 +1,4 @@
-import {
-  Environment,
-  Network,
-  RecordSource,
-  Store,
-  FetchFunction,
-} from "relay-runtime";
+import { FetchFunction } from "relay-runtime";
 
 const HTTP_ENDPOINT = "https://api.github.com/graphql";
 
@@ -49,7 +43,7 @@ export const fetchFn: FetchFunction = async (request, variables) => {
     return json;
   } catch (error) {
     console.log(" ====== RELAY FETCHER ERROR ============== ", error);
-    return;
+    throw error
   }
 };
 

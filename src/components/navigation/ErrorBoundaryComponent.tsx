@@ -23,6 +23,11 @@ export default function ErrorBoundaryComponent({
             <p className="p-5 text-error bg-error/10 rounded-lg">
               {error.message}
             </p>
+            {/* {error.message==="MIssingToken"&&
+            <div className="">
+
+            </div>
+            } */}
             <button
               className="btn btn-wide"
               onClick={() => {
@@ -38,4 +43,17 @@ export default function ErrorBoundaryComponent({
       {children}
     </ErrorBoundary>
   );
+}
+
+
+interface MIssingTokenErrorBoundaryComponentProps {
+
+}
+
+export function MIssingTokenErrorBoundaryComponent({}:MIssingTokenErrorBoundaryComponentProps){
+return (
+ <div className='w-full h-full flex items-center justify-center'>
+
+ </div>
+);
 }

@@ -14,6 +14,7 @@ import { Button } from "@/components/shadcn/ui/button";
 import { useMutation, useQueryClient } from "rakkasjs";
 import { useState } from "react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+import { hotToast } from "@/components/wrappers/toast";
 
 interface ActionResultData {
   data: {
@@ -34,7 +35,7 @@ export default function LoginPage({ actionData }: PageProps) {
         return { viewer: null, error: "no github token" };
       }
       const viewer = await testGithubToken(gh_pat_cookie);
-      console.log("viewer ==== ", viewer?.data.viewer);
+      // console.log("viewer ==== ", viewer?.data.viewer);
       if (!viewer) {
         return { viewer: null, error: "invalid github token" };
       }
@@ -47,21 +48,27 @@ export default function LoginPage({ actionData }: PageProps) {
 
   const mutation = useMutation(async () => {
     try {
-      // await new Promise<void>((resolve, reject) => {
-      //   setTimeout(() => {
-      //     resolve();
-      //   }, 1000);
-      // })
+      await new Promise<void>((resolve, reject) => {
+        setTimeout(() => {
+          resolve();
+        }, 100);
+      })
+      // const valid_token = await testGithubToken(token);
+      // // console.log("===valid token  ==== ", valid_token);
+      // if (!valid_token) {
+      //   throw new Error("invalid github token");
+      // }
       if (window) {
-        const valid_token = await testGithubToken(token);
-        if (!valid_token) {
-          throw new Error("invalid github token");
-        }
         qc.setQueryData("gh_pat_cookie", token);
         document.cookie = `gh_pat_cookie=${token};path=/;`;
         window.location.reload();
       }
-    } catch (error) {
+    } catch (error:any) {
+      hotToast({
+        title: "failed",
+        description: error.message,
+        type: "error",
+      })
       return;
     }
   });
@@ -93,7 +100,7 @@ export default function LoginPage({ actionData }: PageProps) {
           <CardContent className="space-y-2">
             <div className="space-y-1">
               <Label htmlFor="gh_pat_cookie">Github PAT</Label>
-              <div className="w-full  flex flex-col md:flex-row  gap-2">
+              <div className="w-full  flex flex-col md:flex-row  gap-4">
                 <Input
                   id="gh_pat_cookie"
                   name="gh_pat_cookie"
