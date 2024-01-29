@@ -1,4 +1,8 @@
-import { graphql, useFragment } from "@/lib/graphql/relay/modules";
+import {
+  graphql,
+  useFragment,
+  usePaginationFragment,
+} from "@/lib/graphql/relay/modules";
 import { ViewerRepos_repositories$key } from "./__generated__/ViewerRepos_repositories.graphql";
 import { SiVisualstudiocode } from "react-icons/si";
 import { FiActivity } from "react-icons/fi";
@@ -14,15 +18,17 @@ interface ViewerReposProps {
 }
 
 export function ViewerRepos({ viewer }: ViewerReposProps) {
-  const repo_fragment = useFragment<ViewerRepos_repositories$key>(
+  const repo_fragment = usePaginationFragment<any,ViewerRepos_repositories$key>(
     RepositoriesFragment,
-    viewer
+    viewer,
   );
 
-  const repos = repo_fragment?.repositories?.edges;
+
+  const repo_response = repo_fragment.data?.repositories
+  const repos = repo_response?.edges;
 
   return (
-    <div className="w-full h-full flex items-center justify-center">
+    <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       <ul className="flex flex-wrap gap-2 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
@@ -34,9 +40,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                 key={edge?.node?.id}
                 className="bg-base-300 rounded-lg flex-grow
                 min-h-fit  md:h-60 w-[95%] md:w-[40%] xl:w-[30%]  flex-col
-                 justify-between items-center
-                
-                "
+                 justify-between items-center"
               >
                 <div
                   onClick={() => {}}
@@ -136,6 +140,16 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
             );
           })}
       </ul>
+      {repo_fragment.hasNext ? (
+        <button
+          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
+          onClick={() => {
+            repo_fragment.loadNext(10);
+          }}
+        >
+          {repo_fragment.isLoadingNext ? "loading..." : "  --- load more ---"}
+        </button>
+      ) : null}
     </div>
   );
 }
