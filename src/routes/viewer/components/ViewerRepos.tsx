@@ -29,6 +29,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
 
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
+      {/* add filter controls */}
       <ul className="flex flex-wrap gap-2 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
