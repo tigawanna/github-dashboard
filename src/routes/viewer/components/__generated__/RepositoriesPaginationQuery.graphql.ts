@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<71295c194610b887bbdf5968bfaf0821>>
+ * @generated SignedSource<<a68d4bf5e9d48a34add6af26457530b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,7 +50,7 @@ v2 = {
   "name": "id"
 },
 v3 = {
-  "defaultValue": null,
+  "defaultValue": false,
   "kind": "LocalArgument",
   "name": "isFork"
 },
@@ -551,16 +551,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ff175cb9a143d22616635c1e42bad50d",
+    "cacheID": "ef13d378c6af4206a22ef2d52d530e45",
     "id": null,
     "metadata": {},
     "name": "RepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d8ed35a0e66af07132da74dca0a35701";
+(node as any).hash = "c68bc10e0d122ca49a88332bdbbfd59f";
 
 export default node;

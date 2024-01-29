@@ -33,7 +33,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
               <li
                 key={edge?.node?.id}
                 className="bg-base-300 rounded-lg flex-grow
-                min-h-fit h-60 w-[95%] md:w-[40%] lg:w-[30%]  flex-col
+                min-h-fit  md:h-60 w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center
                 
                 "
@@ -46,7 +46,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                     href={"/repo/" + repo?.name + "--```--" + repo?.owner.login}
                     className="w-full bg-base-200 p-2 hover:bg-accent/20 flex flex-col gap-2"
                   >
-                    <div className=" font-semibold md:text-2xl md:font-bold  break-all">
+                    <div className=" text-2xl font-bold  break-all">
                       {repo?.name}
                     </div>
 
@@ -74,7 +74,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                     {repo?.description}
                   </div>
                   <div className="w-fit max-w-full text-sm flex p-2 gap-1 items-center justify-center">
-                    <p className="w-full flex flex-wrap">
+                    <div className="w-full flex flex-wrap">
                       <div className="flex gap-1  items-center justify-center">
                         <History className="w-4 h-4" />
                         <div className="">
@@ -89,7 +89,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                             ?.edges?.[0]?.node?.message
                         }
                       </div>
-                    </p>
+                    </div>
                   </div>
                 </div>
 
@@ -166,7 +166,7 @@ export const RepositoriesFragment = graphql`
       type: "RepositoryOrder"
       defaultValue: { field: PUSHED_AT, direction: DESC }
     }
-    isFork: { type: "Boolean" }
+    isFork: { type: "Boolean", defaultValue: false }
   )
   @refetchable(queryName: "RepositoriesPaginationQuery") {
     repositories(

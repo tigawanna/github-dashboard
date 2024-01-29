@@ -1,9 +1,10 @@
-import { graphql, useFragment, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
-import { PageProps} from "rakkasjs";
 import {
-  RepositoriesFragment,
-  ViewerRepos,
-} from "./components/ViewerRepos";
+  graphql,
+  useFragment,
+  useLazyLoadQuery,
+} from "@/lib/graphql/relay/modules";
+import { PageProps } from "rakkasjs";
+import { RepositoriesFragment, ViewerRepos } from "./components/ViewerRepos";
 
 import {
   Tabs,
@@ -13,10 +14,18 @@ import {
 } from "@/components/shadcn/ui/tabs";
 
 import { viewerVIEWERQuery } from "./__generated__/viewerVIEWERQuery.graphql";
-import { viewer_info$key} from "./__generated__/viewer_info.graphql";
+import { viewer_info$key } from "./__generated__/viewer_info.graphql";
 import { ViewerRepos_repositories$key } from "./components/__generated__/ViewerRepos_repositories.graphql";
+import { useRepoSearchQuery } from "./components/hooks";
 export default function ViewerPage({}: PageProps) {
-  const query = useLazyLoadQuery<viewerVIEWERQuery>(rootViewerquery, {});
+  const {
+    params: { ifk, dir, oBy },
+  } = useRepoSearchQuery();
+
+  const query = useLazyLoadQuery<viewerVIEWERQuery>(rootViewerquery, {
+    isFork: ifk,
+    orderBy: { field: oBy, direction: dir },
+  });
   const data = useFragment<viewer_info$key>(
     viewerVIEWERfragmant,
     query?.viewer,
@@ -25,7 +34,7 @@ export default function ViewerPage({}: PageProps) {
     RepositoriesFragment,
     query?.viewer,
   );
-  const counts = data 
+  const counts = data;
   // console.log("counts ==== ", counts);
   return (
     <div className="w-full h-full   overflow-auto ">
@@ -78,10 +87,10 @@ export default function ViewerPage({}: PageProps) {
 // `;
 
 export const rootViewerquery = graphql`
-  query viewerVIEWERQuery {
+  query viewerVIEWERQuery($isFork: Boolean, $orderBy: RepositoryOrder) {
     viewer {
       ...viewer_info
-      ...ViewerRepos_repositories @arguments(isFork: true)
+      ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
     }
   }
 `;
@@ -101,15 +110,11 @@ export const viewerVIEWERfragmant = graphql`
       }
     }
 
- 
-
     starredRepositories(first: 1) {
       totalCount
       nodes {
         id
-      
       }
     }
   }
 `;
-

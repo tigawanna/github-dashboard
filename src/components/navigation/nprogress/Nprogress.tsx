@@ -5,7 +5,7 @@ interface NprogressProps {
   isAnimating: boolean;
 }
 
-export function Nprogress({ isAnimating }: NprogressProps) {
+export default function Nprogress({ isAnimating }: NprogressProps) {
   const { animationDuration, isFinished, progress } = useNProgress({
     isAnimating,
   });

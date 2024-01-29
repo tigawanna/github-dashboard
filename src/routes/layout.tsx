@@ -1,11 +1,11 @@
-import { Nprogress } from "@/components/navigation/nprogress/Nprogress";
+import  Nprogress  from "@/components/navigation/nprogress/Nprogress";
 import { ClientSuspense, LayoutProps, useLocation } from "rakkasjs";
 import "./index.css";
 import { Sidebar } from "@/components/navigation/bars/sidebar";
 import Toaster from "@/components/wrappers/DefaltExportedToaster";
 import ErrorBoundaryComponent from "@/components/navigation/ErrorBoundaryComponent";
 import BreadCrumbs from "@/components/navigation/BreadCrumbs";
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+
 
 function Layout({ children }: LayoutProps) {
   const location = useLocation();
@@ -15,7 +15,7 @@ function Layout({ children }: LayoutProps) {
     <ErrorBoundaryComponent>
       <div className="w-full h-screen  overflow-y-hidden  flex flex-col items-center ">
         {/* <Head description={"Resume building assistant"} /> */}
-        <ClientSuspense fallback={<div></div>}>
+        <ClientSuspense fallback={null}>
           <Nprogress
             isAnimating={location && location?.pending ? true : false}
           />
@@ -26,14 +26,14 @@ function Layout({ children }: LayoutProps) {
           </div>
           <div className="w-full md:w-[90%]  max-h-[97vh] flex flex-col gap-2 pt-2">
             <div className="w-fit flex rounded-xl p-auto">
-              <ClientSuspense fallback={<div className="h-5"></div>}>
+              <ClientSuspense fallback={null}>
                 <BreadCrumbs />
               </ClientSuspense>
             </div>
             <ErrorBoundaryComponent>{children}</ErrorBoundaryComponent>
           </div>
         </div>
-        <ClientSuspense fallback={<div></div>}>
+        <ClientSuspense fallback={null}>
           <Toaster />
         </ClientSuspense>
       </div>
