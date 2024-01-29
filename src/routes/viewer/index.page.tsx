@@ -3,9 +3,8 @@ import { PageProps} from "rakkasjs";
 import {
   RepositoriesFragment,
   ViewerRepos,
-  ViewerReposSuspenseFallback,
 } from "./components/ViewerRepos";
-import { Suspense } from "react";
+
 import {
   Tabs,
   TabsContent,
@@ -29,21 +28,29 @@ export default function ViewerPage({}: PageProps) {
   const counts = data 
   // console.log("counts ==== ", counts);
   return (
-    <div className="w-full h-full  flex flex-col items-center justify-center">
+    <div className="w-full h-full   overflow-auto ">
       <div className="text-3xl font-bold">Viewer Page</div>
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
-      <Tabs defaultValue="repos" className="w-full h-full overflow-auto">
+      <Tabs defaultValue="repos" className="w-full h-full ">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
-          <TabsTrigger value="repos">Repositories {repo_fragment?.repositories?.totalCount}</TabsTrigger>
-          <TabsTrigger value="stars">Staring {counts?.starredRepositories?.totalCount}</TabsTrigger>
-            <TabsTrigger value="following">Following {counts?.following?.totalCount}</TabsTrigger>
-          <TabsTrigger value="followers">Followers {counts?.followers?.totalCount}</TabsTrigger>
+          <TabsTrigger value="repos">
+            Repositories {repo_fragment?.repositories?.totalCount}
+          </TabsTrigger>
+          <TabsTrigger value="stars">
+            Staring {counts?.starredRepositories?.totalCount}
+          </TabsTrigger>
+          <TabsTrigger value="following">
+            Following {counts?.following?.totalCount}
+          </TabsTrigger>
+          <TabsTrigger value="followers">
+            Followers {counts?.followers?.totalCount}
+          </TabsTrigger>
         </TabsList>
-        <TabsContent value="repos">
+        <TabsContent value="repos" className="">
           <h1 className="text-4xl font-bold ">Repositories</h1>
-          <ViewerRepos viewer={query?.viewer}/>
+          <ViewerRepos viewer={query?.viewer} />
         </TabsContent>
         <TabsContent value="stars">
           <h1 className="text-4xl font-bold ">Stars</h1>
