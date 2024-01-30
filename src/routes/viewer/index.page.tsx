@@ -4,7 +4,7 @@ import {
   useLazyLoadQuery,
 } from "@/lib/graphql/relay/modules";
 import { PageProps } from "rakkasjs";
-import { RepositoriesFragment, ViewerRepos } from "./components/ViewerRepos";
+import { RepositoriesFragment, ViewerRepos } from "./components/repos/ViewerRepos";
 
 import {
   Tabs,
@@ -15,8 +15,8 @@ import {
 
 import { viewerVIEWERQuery } from "./__generated__/viewerVIEWERQuery.graphql";
 import { viewer_info$key } from "./__generated__/viewer_info.graphql";
-import { ViewerRepos_repositories$key } from "./components/__generated__/ViewerRepos_repositories.graphql";
-import { useRepoSearchQuery } from "./components/hooks";
+import { useRepoSearchQuery } from "./components/repos/hooks";
+import { ViewerRepos_repositories$key } from "./components/repos/__generated__/ViewerRepos_repositories.graphql";
 export default function ViewerPage({}: PageProps) {
   const {
     params: { ifk, dir, oBy },

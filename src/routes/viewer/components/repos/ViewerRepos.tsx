@@ -18,13 +18,12 @@ interface ViewerReposProps {
 }
 
 export function ViewerRepos({ viewer }: ViewerReposProps) {
-  const repo_fragment = usePaginationFragment<any,ViewerRepos_repositories$key>(
-    RepositoriesFragment,
-    viewer,
-  );
+  const repo_fragment = usePaginationFragment<
+    any,
+    ViewerRepos_repositories$key
+  >(RepositoriesFragment, viewer);
 
-
-  const repo_response = repo_fragment.data?.repositories
+  const repo_response = repo_fragment.data?.repositories;
   const repos = repo_response?.edges;
 
   return (
@@ -45,7 +44,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
               >
                 <div
                   onClick={() => {}}
-                  className="flex flex-col cursor-pointer h-[85%] w-full gap-3  "
+                  className="flex flex-col cursor-pointer h-[85%] w-full gap-1  "
                 >
                   <Link
                     href={"/repo/" + repo?.name + "--```--" + repo?.owner.login}
@@ -74,25 +73,32 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                       })}
                     </div>
                   </Link>
-
-                  <div className="text-sm md:text-xs break-word overflow-y-clip line-clamp-3 p-1">
-                    {repo?.description}
-                  </div>
-                  <div className="w-fit max-w-full text-sm flex p-2 gap-1 items-center justify-center">
-                    <div className="w-full flex flex-wrap">
-                      <div className="flex gap-1  items-center justify-center">
-                        <History className="w-4 h-4" />
-                        <div className="">
-                          {repo?.refs?.edges?.[0]?.node?.name} :
+                  {/*  description and last commit message */}
+                  <div className="w-full flex flex-col p-2 gap-2">
+                    <div className="text-sm md:text-sm brightness-75 break-word overflow-y-clip line-clamp-3 ">
+                      {repo?.description}
+                    </div>
+                    <div className="w-fit max-w-full text-sm flex gap-1 items-center justify-center">
+                      <div className="w-full flex flex-wrap gap-1">
+                        <div className="flex gap-1  items-center justify-center">
+                          <History className="w-4 h-4 text-accent" />
+                          <div
+                            className="tooltip hover:text-secondary"
+                            data-tip={"last pushed to branch"}
+                          >
+                            {repo?.refs?.edges?.[0]?.node?.name}:
+                          </div>
                         </div>
-                      </div>
 
-                      <div className="truncate">
-                        {" "}
-                        {
-                          repo?.refs?.edges?.[0]?.node?.target?.history
-                            ?.edges?.[0]?.node?.message
-                        }
+                        <div
+                          className="tooltip hover:text-secondary"
+                          data-tip={"last commit message"}
+                        >
+                          {
+                            repo?.refs?.edges?.[0]?.node?.target?.history
+                              ?.edges?.[0]?.node?.message
+                          }
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -151,23 +157,6 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
           {repo_fragment.isLoadingNext ? "loading..." : "  --- load more ---"}
         </button>
       ) : null}
-    </div>
-  );
-}
-
-export function ViewerReposSuspenseFallback() {
-  return (
-    <div className="w-full h-full flex items-center justify-center">
-      <ul className="flex flex-wrap gap-2 w-full items-center justify-center">
-        {Array.from({ length: 20 }).map((_, i) => {
-          return (
-            <li
-              key={i}
-              className="bg-base-300 p-5 rounded-lg w-[30%] h-20 flex-grow skeleton"
-            ></li>
-          );
-        })}
-      </ul>
     </div>
   );
 }
