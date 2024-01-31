@@ -29,16 +29,16 @@ export default function GithubUserPage({ params }: PageProps) {
     return <Redirect href="/viewer" />;
   }
   return (
-    <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">
+    <div className="w-full h-full">
       <div className="flex gap-2">
         <h1 className="text-3xl text-accent">{user}</h1>
         <h1 className="text-3xl">{repo}</h1>
       </div>
-      <div className="w-full   h-full flex-col  ">
+      <div className="w-full flex-col  ">
         <div className=" w-full text-lg  flex items-center justify-center p-1">
           <Languages data={query.repository} />
         </div>
-        <div className=" flex flex-col items-center justify-center p-5 h-full">
+        <div className="  ">
           <Branches data={query.repository} />
           <Stars data={query.repository} />
         </div>

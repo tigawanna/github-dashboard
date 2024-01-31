@@ -2,8 +2,8 @@ import React from "react";
 import { FragmentRefs } from "relay-runtime";
 import { Commits } from "./Commits";
 import { Branches_refs$key } from "./__generated__/Branches_refs.graphql";
-import { ChevronDown } from "lucide-react";
 import { usePaginationFragment, graphql } from "@/lib/graphql/relay/modules";
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/ui/accordion";
 interface BranchesProps {
   data: Branches_refs$key | null;
 }
@@ -64,26 +64,32 @@ interface BranchProps {
 
 export const Branch: React.FC<BranchProps> = ({ branch }) => {
   const [open, setOpen] = React.useState(false);
-  return (
-    <div className="w-[97%] flex-col-center p-2 m-1 border-2 ">
-      <div className="w-[100%]  flex items-center justify-between">
+  if (!branch?.node?.name) return null
+    return (
+      <div className="w-[97%] flex-col-center p-2 m-1 border-2 ">
+        {/* <div className="w-[100%]  flex items-center justify-between">
         <div className="text-lg  font-mono font-bold ">
           {branch?.node?.name} branch
         </div>
-
-        {/* <TheIcon Icon={RiArrowDropDownLine} size={"40"} color={"blue"}
-        iconAction={() => setOpen(!open)}
-        iconstyle={"mx-2 hover:border hover:border-purple-900 rounded-[50%]"} /> */}
-        <ChevronDown onClick={() => setOpen(!open)}/>
-      </div>
-
-      {open ? (
+          <ChevronDown onClick={() => setOpen(!open)} />
+      </div> */}
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value={branch?.node?.name}>
+            <AccordionTrigger>{branch?.node?.name} branch</AccordionTrigger>
+            <AccordionContent>
+              <div className="w-full ">
+                <Commits data={branch?.node?.target} />
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        {/* {open ? (
         <div className="w-full ">
           <Commits data={branch?.node?.target} />
         </div>
-      ) : null}
-    </div>
-  );
+      ) : null} */}
+      </div>
+    );
 };
 
 export const Branchesfragment = graphql`

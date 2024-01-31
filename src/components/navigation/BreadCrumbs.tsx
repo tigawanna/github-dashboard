@@ -8,7 +8,7 @@ export default function BreadCrumbs({}: BreadCrumbsProps) {
   const { breadcrumb_routes, current } = useRakkasBreadCrumbs();
 
   return (
-    <div className="flex z-50 px-2 py- ">
+    <div className="flex z-50 px-1 gap-1">
       {breadcrumb_routes.map(({ name, path }, idx) => {
         const new_url = new URL(current);
         new_url.pathname = path;
@@ -16,7 +16,7 @@ export default function BreadCrumbs({}: BreadCrumbsProps) {
           <StyledLink
             key={name}
             href={new_url.toString()}
-            className="text-sm  hover:brightness-50 btn btn-sm "
+            className="hover:brightness-50 flex"
             activeClass="text-secondary"
           >
             {name} {idx < breadcrumb_routes.length - 1 && <ChevronRight />}
