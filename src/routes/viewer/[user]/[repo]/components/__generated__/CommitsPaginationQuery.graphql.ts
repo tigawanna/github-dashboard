@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7efb6617b938d48bdc6bb00f99601f7a>>
+ * @generated SignedSource<<6e36cc9047d5a175b674ebbc137fb2a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -133,6 +133,13 @@ return {
                   {
                     "alias": null,
                     "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
                     "concreteType": "CommitEdge",
                     "kind": "LinkedField",
                     "name": "edges",
@@ -259,13 +266,6 @@ return {
                       }
                     ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "totalCount",
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -289,16 +289,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9595da7c5b2fad405df2814b3d221a8a",
+    "cacheID": "384a235f26429cd4591b2ea5d587f085",
     "id": null,
     "metadata": {},
     "name": "CommitsPaginationQuery",
     "operationKind": "query",
-    "text": "query CommitsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Commits_history_2HEEH6\n    id\n  }\n}\n\nfragment Commits_history_2HEEH6 on Commit {\n  history(first: $first, after: $after) {\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query CommitsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Commits_history_2HEEH6\n    id\n  }\n}\n\nfragment Commits_history_2HEEH6 on Commit {\n  history(first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a380927b65face4e73c8602c748cffd9";
+(node as any).hash = "1ce8dd372fae31fc18d73ee4302a40bb";
 
 export default node;

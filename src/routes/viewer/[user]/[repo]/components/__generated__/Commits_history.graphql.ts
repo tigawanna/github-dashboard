@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cde4491eded1d35b9a3aa0b48243a530>>
+ * @generated SignedSource<<4279a39c86b71741f5a4a1b897dd781a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -99,6 +99,13 @@ return {
       "name": "__Commits_history_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -233,13 +240,6 @@ return {
             }
           ],
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -257,6 +257,6 @@ return {
 };
 })();
 
-(node as any).hash = "a380927b65face4e73c8602c748cffd9";
+(node as any).hash = "1ce8dd372fae31fc18d73ee4302a40bb";
 
 export default node;

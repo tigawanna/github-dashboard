@@ -19,9 +19,15 @@ export function Commits({ data }: CommitsProps) {
     data,
   );
   const commits = fragData?.data;
+
   if (!commits) return null;
   return (
     <div className="w-full p-1 m-2 flex-center-col  ">
+      <div className="w-full">
+        {" "}
+        {commits?.history?.edges?.length}/{commits.history.totalCount} Commits
+      </div>
+
       {commits.history.edges?.map((commit, index) => {
         return (
           <Commit commit={commit} key={commit?.node?.pushedDate + index} />
@@ -113,6 +119,7 @@ export const CommitsOnBranchFragment = graphql`
   )
   @refetchable(queryName: "CommitsPaginationQuery") {
     history(first: $first, after: $after) @connection(key: "Commits_history") {
+      totalCount
       edges {
         node {
           committedDate

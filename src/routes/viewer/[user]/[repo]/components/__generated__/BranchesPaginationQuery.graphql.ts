@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a5c5052f7f65d7032831e32474ad3c1>>
+ * @generated SignedSource<<682b679b149afb9d26f2dcc47fc5023b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -230,6 +230,7 @@ return {
                                     "name": "history",
                                     "plural": false,
                                     "selections": [
+                                      (v7/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -335,8 +336,7 @@ return {
                                           }
                                         ],
                                         "storageKey": null
-                                      },
-                                      (v7/*: any*/)
+                                      }
                                     ],
                                     "storageKey": "history(first:5)"
                                   },
@@ -402,12 +402,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "54af326df938704a97810a7cbab330f7",
+    "cacheID": "953de71e927f3305ffc86b673fc27204",
     "id": null,
     "metadata": {},
     "name": "BranchesPaginationQuery",
     "operationKind": "query",
-    "text": "query BranchesPaginationQuery(\n  $after: String\n  $first: Int = 3\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Branches_refs_2HEEH6\n    id\n  }\n}\n\nfragment Branches_refs_2HEEH6 on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query BranchesPaginationQuery(\n  $after: String\n  $first: Int = 3\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Branches_refs_2HEEH6\n    id\n  }\n}\n\nfragment Branches_refs_2HEEH6 on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    totalCount\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
