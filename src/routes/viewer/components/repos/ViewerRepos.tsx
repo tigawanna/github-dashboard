@@ -56,7 +56,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                     src={repo?.openGraphImageUrl}
                   /> */}
                   <Link
-                    href={"/repo/" + repo?.name + "--```--" + repo?.owner.login}
+                    href={"/viewer/" + repo.nameWithOwner}
                     className="w-full bg-base-200 p-2 hover:bg-accent/20 flex flex-col gap-2"
                   >
                     <div className="   break-all flex flex-col justify-center ">
@@ -189,7 +189,8 @@ export const RepositoriesFragment = graphql`
       after: $after
       orderBy: $orderBy
       isFork: $isFork
-    ) @connection(key: "Repositories_repositories") {
+    ) 
+    @connection(key: "Repositories_repositories") {
       totalCount
       edges {
         node {

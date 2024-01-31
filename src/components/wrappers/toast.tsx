@@ -5,7 +5,7 @@ import { X } from "lucide-react";
 
 interface hotToastPrps {
   title: string;
-  description: string;
+  description?: string;
   position?: ToastPosition | undefined;
   duration?: number;
   type: "success" | "error" | "info" | "warning";
@@ -16,7 +16,7 @@ export function hotToast({
   title,
   type,
   position,
-  duration = 5000,
+  duration = 3000,
 }: hotToastPrps) {
   const toastVariants = cva(["border"], {
     variants: {

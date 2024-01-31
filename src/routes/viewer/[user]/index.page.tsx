@@ -1,8 +1,9 @@
 import { PageProps } from "rakkasjs";
-export default function GithubUserPage({}: PageProps) {
+export default function GithubUserPage({params}: PageProps) {
+  const user  = params.user
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-center">
-      Github User Page
+      <h1 className="text-3xl">{user}</h1>
     </div>
   );
 }
