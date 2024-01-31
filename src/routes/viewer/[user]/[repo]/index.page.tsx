@@ -1,5 +1,4 @@
 import { PageProps, Redirect } from "rakkasjs";
-import { Onerepo } from "./components/Onerepo";
 import { graphql, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
 import { RepoFullRepositoryQuery } from "./__generated__/RepoFullRepositoryQuery.graphql";
 import { hotToast } from "@/components/wrappers/toast";
