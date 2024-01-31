@@ -18,10 +18,10 @@ export function Branches({ data }: BranchesProps) {
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
       <div className="w-full flex gap-3 ">
-        <div className="text-center text-lg font-semibold">Branches</div>
         <div className="text-center text-lg font-semibold">
-          {branches?.refs?.totalCount}
+          {branches?.refs?.edges?.length}/{branches?.refs?.totalCount}
         </div>
+        <div className="text-center text-lg font-semibold">Branches</div>
       </div>
       <div className="w-full  flex-center-col">
         {branches?.refs?.edges?.map((branch, index) => {
