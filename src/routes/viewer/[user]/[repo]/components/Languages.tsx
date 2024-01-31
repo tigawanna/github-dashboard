@@ -14,20 +14,20 @@ const fragData = usePaginationFragment<any, Languages_languages$key>(
   const langs = fragData?.data 
   
   return (
-    <div className="w- full flex flex-wrap text-color">
+    <div className="flex flex-wrap text-color">
       {langs?.languages?.edges?.map((item) => {
+        if (!item) return null;
         return (
           <div
-            key={item?.node.id}
+            key={item.node.id}
             style={{
               borderStyle: "solid",
-              borderWidth: "2px",
-              borderColor: item?.node.color??" ",
-              borderRadius: "10%",
+              borderWidth: "1px",
+              borderColor: item?.node?.color ?? "",
             }}
-            className="px-[2px] mx-[3px] text-[10px]  md:text-[12px] font-bold  break-all"
+            className="p-[1px] m-[1px] rounded-lg text-xs  break-all px-1"
           >
-            {item?.node.name}
+            {item.node.name}
           </div>
         );
       })}

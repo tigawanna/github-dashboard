@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4e1726961cef36803caa57a1e153479>>
+ * @generated SignedSource<<3bbb13053139d2865d18e12a63aa1394>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type Branches_refs$data = {
         } | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
+    readonly totalCount: number;
   } | null | undefined;
   readonly " $fragmentType": "Branches_refs";
 };
@@ -109,6 +110,13 @@ return {
       "name": "__Branches_refs_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -204,6 +212,6 @@ return {
 };
 })();
 
-(node as any).hash = "84ab5a2ebfccd34c772e52b47c454c23";
+(node as any).hash = "39f611a294c301b48f7de4283b87cfd8";
 
 export default node;

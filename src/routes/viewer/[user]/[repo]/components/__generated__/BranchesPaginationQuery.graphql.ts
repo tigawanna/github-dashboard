@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8f79a0aebfd950f44a7797d129254d6>>
+ * @generated SignedSource<<6a5c5052f7f65d7032831e32474ad3c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,31 +95,38 @@ v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v8 = [
+v9 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 5
   }
 ],
-v9 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v10 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "endCursor",
   "storageKey": null
 },
-v11 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -183,6 +190,7 @@ return {
                 "name": "refs",
                 "plural": false,
                 "selections": [
+                  (v7/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -199,7 +207,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v7/*: any*/),
+                          (v8/*: any*/),
                           (v5/*: any*/),
                           {
                             "alias": null,
@@ -216,7 +224,7 @@ return {
                                 "selections": [
                                   {
                                     "alias": null,
-                                    "args": (v8/*: any*/),
+                                    "args": (v9/*: any*/),
                                     "concreteType": "CommitHistoryConnection",
                                     "kind": "LinkedField",
                                     "name": "history",
@@ -253,7 +261,7 @@ return {
                                                 "name": "author",
                                                 "plural": false,
                                                 "selections": [
-                                                  (v7/*: any*/),
+                                                  (v8/*: any*/),
                                                   {
                                                     "alias": null,
                                                     "args": null,
@@ -297,7 +305,7 @@ return {
                                             ],
                                             "storageKey": null
                                           },
-                                          (v9/*: any*/)
+                                          (v10/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -309,8 +317,8 @@ return {
                                         "name": "pageInfo",
                                         "plural": false,
                                         "selections": [
-                                          (v10/*: any*/),
                                           (v11/*: any*/),
+                                          (v12/*: any*/),
                                           {
                                             "alias": null,
                                             "args": null,
@@ -328,19 +336,13 @@ return {
                                         ],
                                         "storageKey": null
                                       },
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "totalCount",
-                                        "storageKey": null
-                                      }
+                                      (v7/*: any*/)
                                     ],
                                     "storageKey": "history(first:5)"
                                   },
                                   {
                                     "alias": null,
-                                    "args": (v8/*: any*/),
+                                    "args": (v9/*: any*/),
                                     "filters": null,
                                     "handle": "connection",
                                     "key": "Commits_history",
@@ -358,7 +360,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v9/*: any*/)
+                      (v10/*: any*/)
                     ],
                     "storageKey": null
                   },
@@ -370,8 +372,8 @@ return {
                     "name": "pageInfo",
                     "plural": false,
                     "selections": [
-                      (v10/*: any*/),
-                      (v11/*: any*/)
+                      (v11/*: any*/),
+                      (v12/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -400,16 +402,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "42ca07a286bdfbd689c83946312b596c",
+    "cacheID": "54af326df938704a97810a7cbab330f7",
     "id": null,
     "metadata": {},
     "name": "BranchesPaginationQuery",
     "operationKind": "query",
-    "text": "query BranchesPaginationQuery(\n  $after: String\n  $first: Int = 3\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Branches_refs_2HEEH6\n    id\n  }\n}\n\nfragment Branches_refs_2HEEH6 on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: $first, after: $after) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query BranchesPaginationQuery(\n  $after: String\n  $first: Int = 3\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Branches_refs_2HEEH6\n    id\n  }\n}\n\nfragment Branches_refs_2HEEH6 on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: $first, after: $after) {\n    totalCount\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "84ab5a2ebfccd34c772e52b47c454c23";
+(node as any).hash = "39f611a294c301b48f7de4283b87cfd8";
 
 export default node;

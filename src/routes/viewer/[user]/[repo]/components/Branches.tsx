@@ -17,7 +17,12 @@ export function Branches({ data }: BranchesProps) {
 
   return (
     <div className="w-full h-full flex flex-col justify-start items-center">
-      <div className="w-full  flex-center text-lg font-semibold">Branches</div>
+      <div className="w-full flex gap-3 ">
+        <div className="text-center text-lg font-semibold">Branches</div>
+        <div className="text-center text-lg font-semibold">
+          {branches?.refs?.totalCount}
+        </div>
+      </div>
       <div className="w-full  flex-center-col">
         {branches?.refs?.edges?.map((branch, index) => {
           return <Branch branch={branch} key={branch?.node?.id} />;
@@ -62,34 +67,33 @@ interface BranchProps {
     | undefined;
 }
 
-export const Branch: React.FC<BranchProps> = ({ branch }) => {
-  const [open, setOpen] = React.useState(false);
-  if (!branch?.node?.name) return null
-    return (
-      <div className="w-[97%] flex-col-center p-2 m-1 border-2 ">
-        {/* <div className="w-[100%]  flex items-center justify-between">
+export function Branch({ branch }: BranchProps) {
+  if (!branch?.node?.name) return null;
+  return (
+    <div className="w-[97%] flex-col-center p-2 m-1 border-2 ">
+      {/* <div className="w-[100%]  flex items-center justify-between">
         <div className="text-lg  font-mono font-bold ">
           {branch?.node?.name} branch
         </div>
           <ChevronDown onClick={() => setOpen(!open)} />
       </div> */}
-        <Accordion type="single" collapsible className="w-full">
-          <AccordionItem value={branch?.node?.name}>
-            <AccordionTrigger>{branch?.node?.name} branch</AccordionTrigger>
-            <AccordionContent>
-              <div className="w-full ">
-                <Commits data={branch?.node?.target} />
-              </div>
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-        {/* {open ? (
+      <Accordion type="single" collapsible className="w-full">
+        <AccordionItem value={branch?.node?.name}>
+          <AccordionTrigger>{branch?.node?.name} branch</AccordionTrigger>
+          <AccordionContent>
+            <div className="w-full ">
+              <Commits data={branch?.node?.target} />
+            </div>
+          </AccordionContent>
+        </AccordionItem>
+      </Accordion>
+      {/* {open ? (
         <div className="w-full ">
           <Commits data={branch?.node?.target} />
         </div>
       ) : null} */}
-      </div>
-    );
+    </div>
+  );
 };
 
 export const Branchesfragment = graphql`
@@ -105,7 +109,9 @@ export const Branchesfragment = graphql`
       first: $first
       after: $after
     ) @connection(key: "Branches_refs") {
+      totalCount
       edges {
+
         node {
           name
           id
@@ -113,6 +119,7 @@ export const Branchesfragment = graphql`
             ...Commits_history
           }
         }
+
       }
     }
   }
