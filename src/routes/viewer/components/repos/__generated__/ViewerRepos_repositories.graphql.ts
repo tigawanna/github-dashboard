@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<96dc0ba503a448cec99dd729d42ad1bd>>
+ * @generated SignedSource<<7a91117620c51351957a54e263d8c026>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type ViewerRepos_repositories$data = {
         } | null | undefined;
         readonly name: string;
         readonly nameWithOwner: string;
+        readonly openGraphImageUrl: any;
         readonly owner: {
           readonly avatarUrl: any;
           readonly id: string;
@@ -248,6 +249,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "forkCount",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "openGraphImageUrl",
                   "storageKey": null
                 },
                 {
@@ -538,6 +546,6 @@ return {
 };
 })();
 
-(node as any).hash = "c68bc10e0d122ca49a88332bdbbfd59f";
+(node as any).hash = "5f586339ed2ad693a6d43a59e5736aab";
 
 export default node;

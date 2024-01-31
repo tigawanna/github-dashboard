@@ -3,8 +3,11 @@ import {
   useFragment,
   useLazyLoadQuery,
 } from "@/lib/graphql/relay/modules";
-import { PageProps } from "rakkasjs";
-import { RepositoriesFragment, ViewerRepos } from "./components/repos/ViewerRepos";
+import { PageProps, useLocation } from "rakkasjs";
+import {
+  RepositoriesFragment,
+  ViewerRepos,
+} from "./components/repos/ViewerRepos";
 
 import {
   Tabs,
@@ -13,19 +16,36 @@ import {
   TabsTrigger,
 } from "@/components/shadcn/ui/tabs";
 
-import { viewerVIEWERQuery } from "./__generated__/viewerVIEWERQuery.graphql";
+import {
+  RepositoryOrderField,
+  viewerVIEWERQuery,
+} from "./__generated__/viewerVIEWERQuery.graphql";
 import { viewer_info$key } from "./__generated__/viewer_info.graphql";
-import { useRepoSearchQuery } from "./components/repos/hooks";
+
 import { ViewerRepos_repositories$key } from "./components/repos/__generated__/ViewerRepos_repositories.graphql";
 export default function ViewerPage({}: PageProps) {
-  const {
-    params: { ifk, dir, oBy },
-  } = useRepoSearchQuery();
+  const { current } = useLocation();
 
-  const query = useLazyLoadQuery<viewerVIEWERQuery>(rootViewerquery, {
-    isFork: ifk,
-    orderBy: { field: oBy, direction: dir },
-  });
+  const is_fork =
+    current.searchParams.get("ifk") ?? ("false" as "true" | "false");
+  const order_by = current.searchParams.get("oBy") as RepositoryOrderField;
+  const order_by_dir = current.searchParams.get("dir") as "ASC" | "DESC";
+  const isFork = is_fork === "true" ? true : false;
+
+  const query = useLazyLoadQuery<viewerVIEWERQuery>(
+    rootViewerquery,
+    {
+      isFork,
+      orderBy: {
+        field: order_by ?? "PUSHED_AT",
+        direction: order_by_dir ?? "DESC",
+      },
+    },
+    {
+      // fetchKey,
+      // fetchPolicy: "store-and-network"
+    },
+  );
   const data = useFragment<viewer_info$key>(
     viewerVIEWERfragmant,
     query?.viewer,
@@ -38,7 +58,6 @@ export default function ViewerPage({}: PageProps) {
   // console.log("counts ==== ", counts);
   return (
     <div className="w-full h-full   overflow-auto ">
-      <div className="text-3xl font-bold">Viewer Page</div>
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
@@ -58,7 +77,6 @@ export default function ViewerPage({}: PageProps) {
           </TabsTrigger>
         </TabsList>
         <TabsContent value="repos" className="">
-          <h1 className="text-4xl font-bold ">Repositories</h1>
           <ViewerRepos viewer={query?.viewer} />
         </TabsContent>
         <TabsContent value="stars">

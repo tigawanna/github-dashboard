@@ -15,7 +15,7 @@ import { RepositoryOrderField } from "./__generated__/RepositoriesPaginationQuer
 //
 
 export interface RepoSearchParms {
-  ifk: boolean;
+  ifk: "true"|"false";
   q?: string;
   oBy: RepositoryOrderField;
   dir: "ASC" | "DESC";
@@ -25,7 +25,7 @@ export function useRepoSearchQuery() {
   const { current } = useLocation();
 
   const initialParams = {
-    ifk: current.searchParams.get("ifk") ?? false,
+    ifk: current.searchParams.get("ifk") ?? "false",
     q: current.searchParams.get("q"),
     oBy: current.searchParams.get("oBy") ?? "PUSHED_AT",
     dir: current.searchParams.get("dir") ?? "DESC",
@@ -40,6 +40,7 @@ export function useRepoSearchQuery() {
         Object.entries(params).forEach(([k, v]) => {
           if (v) url.searchParams.set(k, v.toString());
         });
+
         navigate(url);
       }
       // check if values in parasm have changed

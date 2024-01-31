@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e2fd51aed68a24e2c17de2169495488>>
+ * @generated SignedSource<<8a60f3ec9c47e6cda4e705b29944ab83>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -280,6 +280,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "forkCount",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "openGraphImageUrl",
                         "storageKey": null
                       },
                       {
@@ -570,12 +577,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "29772a5a1c7061dcd56e9a7a23c08732",
+    "cacheID": "322005dbbaeced74f60fc320b563e8e7",
     "id": null,
     "metadata": {},
     "name": "viewerVIEWERQuery",
     "operationKind": "query",
-    "text": "query viewerVIEWERQuery(\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  viewer {\n    ...viewer_info\n    ...ViewerRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_3LFRQw on User {\n  repositories(first: 10, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 10) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment viewer_info on User {\n  followers(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n  following(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n  starredRepositories(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n}\n"
+    "text": "query viewerVIEWERQuery(\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  viewer {\n    ...viewer_info\n    ...ViewerRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_3LFRQw on User {\n  repositories(first: 10, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 10) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment viewer_info on User {\n  followers(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n  following(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n  starredRepositories(first: 1) {\n    totalCount\n    nodes {\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,3 +1,8 @@
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/shadcn/ui/select";
+import { useRepoSearchQuery } from "./hooks";
+import { RepositoryOrderField } from "./__generated__/RepositoriesPaginationQuery.graphql";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
+
 export function ViewerReposSuspenseFallback() {
   return (
     <div className="w-full h-full flex items-center justify-center">
@@ -24,4 +29,69 @@ export function ViewerReposSuspenseFallback() {
       </ul>
     </div>
   );
+}
+
+
+interface FilterReposProps {
+
+}
+
+export function FilterRepos({}:FilterReposProps){
+const {params,setParams} = useRepoSearchQuery()
+const order_by_selects:{value:RepositoryOrderField,label:string}[] = [
+  {label:"pushed",value:"PUSHED_AT"},
+  {label:"name",value:"NAME"},
+  {label:"stars",value:"STARGAZERS"},
+  {label:"updated",value:"UPDATED_AT"},
+  {label:"created",value:"CREATED_AT"},
+]
+const checked = params.ifk==="true"
+return (
+  <div className="w-full h-full flex items-center justify-center gap-3 px-2">
+    <div className="w-full h-full flex items-center justify-center">
+      <Select value={params.oBy} onValueChange={(value:RepositoryOrderField) => setParams({...params,oBy:value})}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Order by" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Order by</SelectLabel>
+            {order_by_selects.map((item) => {
+              return (
+                <SelectItem value={item.value} key={item.label}>
+                  {item.label}
+                </SelectItem>
+              );
+            })}
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+    <div className="w-full h-full flex items-center justify-center">
+      <Select value={params.dir} onValueChange={(value:"ASC"|"DESC") => setParams({...params,dir:value})}>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="Direction" />
+        </SelectTrigger>
+        <SelectContent>
+          <SelectGroup>
+            <SelectLabel>Direction</SelectLabel>
+            <SelectItem value="ASC">ASC</SelectItem>
+            <SelectItem value="DESC">DESC</SelectItem>
+          </SelectGroup>
+        </SelectContent>
+      </Select>
+    </div>
+    <div className="flex items-center gap-3 w-full ">
+      <Checkbox id="is_fork" className="h-7 w-7" 
+      checked={checked} onCheckedChange={(value:boolean) => {
+        setParams({...params,ifk:value?"true":"false"})}} />
+      <label
+        htmlFor="s_fork"
+        className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      >
+        is fork
+      </label>
+    </div>
+  </div>
+);
 }
