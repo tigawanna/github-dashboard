@@ -5,6 +5,7 @@ import { hotToast } from "@/components/wrappers/toast";
 import { Languages } from "./components/Languages";
 import { Branches } from "./components/Branches";
 import { Stars } from "./components/Stars";
+import { GeneralInfo } from "./components/GeneralInfo";
 export default function GithubUserPage({ params }: PageProps) {
   const user = params?.user;
   const repo = params?.repo;
@@ -30,14 +31,11 @@ export default function GithubUserPage({ params }: PageProps) {
   }
   return (
     <div className="w-full h-full">
-      <div className="flex gap-2">
-        <h1 className="text-3xl text-accent">{user}</h1>
-        <h1 className="text-3xl">{repo}</h1>
-      </div>
+
+
       <div className="w-full flex-col  ">
-        <div className=" w-full text-lg  flex items-center justify-center p-1">
-          <Languages data={query.repository} />
-        </div>
+        <GeneralInfo data={query.repository} />
+    
         <div className="  ">
           <Branches data={query.repository} />
           <Stars data={query.repository} />
@@ -50,11 +48,10 @@ export default function GithubUserPage({ params }: PageProps) {
 export const oneREPOquery = graphql`
   query RepoFullRepositoryQuery($repoowner: String!, $reponame: String!) {
     repository(owner: $repoowner, name: $reponame) {
-      nameWithOwner
-      forkCount
+      ...GeneralInfo_info
       ...Stars_stargazers
       ...Branches_refs
-      ...Languages_languages
+
     }
   }
 `;

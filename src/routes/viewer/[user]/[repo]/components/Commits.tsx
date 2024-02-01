@@ -24,7 +24,6 @@ export function Commits({ data }: CommitsProps) {
   return (
     <div className="w-full p-1 m-2 flex-center-col  ">
       <div className="w-full">
-        {" "}
         {commits?.history?.edges?.length}/{commits.history.totalCount} Commits
       </div>
 
