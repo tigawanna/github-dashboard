@@ -11,14 +11,11 @@ import { FilterRepos } from "./components";
 
 dayjs.extend(relativeTime);
 interface ViewerReposProps {
-  viewer: ViewerRepos_repositories$key;
+  viewer: ViewerRepos_repositories$key 
 }
 
 export function ViewerRepos({ viewer }: ViewerReposProps) {
-  const repo_fragment = usePaginationFragment<
-    any,
-    ViewerRepos_repositories$key
-  >(RepositoriesFragment, viewer);
+  const repo_fragment = usePaginationFragment<any,ViewerRepos_repositories$key>(RepositoriesFragment, viewer);
 
   const repo_response = repo_fragment.data?.repositories;
   const repos = repo_response?.edges;

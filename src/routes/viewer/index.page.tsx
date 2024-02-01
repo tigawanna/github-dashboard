@@ -94,15 +94,7 @@ export default function ViewerPage({}: PageProps) {
   );
 }
 
-// export const HomeViewerQuery = graphql`
-// query viewerVIEWERQuery {
-//     viewer {
-//       ...Repositories_repositories
-//       ...Following_following
-//       ...Followers_followers
-//     }
-//   }
-// `;
+
 
 export const rootViewerquery = graphql`
   query viewerVIEWERQuery($isFork: Boolean, $orderBy: RepositoryOrder) {
