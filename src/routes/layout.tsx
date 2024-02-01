@@ -25,7 +25,7 @@ function Layout({ children }: LayoutProps) {
             <Sidebar />
           </div>
           <div className="w-full md:w-[90%]   flex flex-col o gap-2 ">
-            <div className="w-fit flex rounded-xl p-auto ">
+            <div className="w-fit flex rounded-xl p-2">
               <ClientSuspense fallback={null}>
                 <BreadCrumbs />
               </ClientSuspense>

@@ -8,7 +8,7 @@ export default function BreadCrumbs({}: BreadCrumbsProps) {
   const { breadcrumb_routes, current } = useRakkasBreadCrumbs();
 
   return (
-    <div className="flex z-50 px-1 gap-1">
+    <div className="flex flex-wrap z-50 px-1 gap-1">
       {breadcrumb_routes.map(({ name, path }, idx) => {
         const new_url = new URL(current);
         new_url.pathname = path;
