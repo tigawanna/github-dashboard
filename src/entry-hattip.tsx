@@ -3,16 +3,22 @@ import { cookie } from "@hattip/cookie";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
 import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
+import { RequestContext } from "rakkasjs";
 
-function createRelayEnvironment() {
+function createRelayEnvironment(ctx:RequestContext) {
+  const token = ctx.cookie.gh_pat_cookie;
   return new Environment({
-    network: Network.create(fetchFn),
+    network: Network.create((request, variables, cacheConfig, uploadables) =>
+      fetchFn({
+        fetchVars: { request, variables, cacheConfig, uploadables },
+        token,
+      }),
+    ),
     store: new Store(new RecordSource()),
     isServer: true,
   });
 }
 
-const serverRelayEnvironment = createRelayEnvironment();
 
 export default createRequestHandler({
   middleware: {
@@ -21,8 +27,9 @@ export default createRequestHandler({
     beforeNotFound: [],
     beforeAll: [cookie()],
   },
-
+  
   createPageHooks(requestContext) {
+    const serverRelayEnvironment = createRelayEnvironment(requestContext);
     return {
       emitToDocumentHead() {
         const cookie_theme = requestContext?.cookie?.theme;
