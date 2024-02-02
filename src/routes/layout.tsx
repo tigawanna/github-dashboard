@@ -24,13 +24,13 @@ function Layout({ children }: LayoutProps) {
           <div className="min-w-[5%] w-fit flex h-screen gap-2">
             <Sidebar />
           </div>
-          <div className="w-full md:w-[90%]   flex flex-col  gap-2 ">
-            <div className="w-fit flex rounded-xl p-2">
+          <div className="w-full    flex flex-col  gap-2 ">
+            <div className="w-fit flex rounded-xl">
               <ClientSuspense fallback={null}>
                 <BreadCrumbs />
               </ClientSuspense>
             </div>
-             <div className="w-full  h-[95vh] flex flex-col overflow-y-auto gap-2 pt-2">
+             <div className="w-full  h-[95vh] flex flex-col overflow-y-auto gap-2 ">
             <ErrorBoundaryComponent>{children}</ErrorBoundaryComponent>
 
              </div>
