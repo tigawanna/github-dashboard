@@ -17,6 +17,7 @@ import {
   useQueryClient,
   useMutation,
   useSSQ,
+  useLocation,
 } from "rakkasjs";
 import { Loader } from "lucide-react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
@@ -26,6 +27,7 @@ interface MiniSettingsModalProps {}
 export function MiniSettingsModal({}: MiniSettingsModalProps) {
   const page_ctx = usePageContext();
   const qc = useQueryClient();
+    const { current } = useLocation();
   const query = useSSQ(async (ctx) => {
     try {
       const gh_pat_cookie = ctx.cookie?.gh_pat_cookie;
@@ -60,9 +62,9 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
 
   if (mutation.data?.success) {
     qc.invalidateQueries("gh_pat_cookie");
-    const new_url = new URL(page_ctx.url);
+    const new_url = new URL(current);
     new_url.pathname = "/auth";
-    new_url.searchParams.set("redirect", page_ctx.url.pathname);
+    new_url.searchParams.set("redirect", current.pathname);
     return <Redirect href={new_url.toString()} />;
   }
 

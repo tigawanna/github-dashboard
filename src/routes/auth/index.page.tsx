@@ -1,4 +1,4 @@
-import { PageProps, Redirect, usePageContext, useSSM, useSSQ } from "rakkasjs";
+import { PageProps, Redirect, useLocation, usePageContext, useSSM, useSSQ } from "rakkasjs";
 import {
   Card,
   CardHeader,
@@ -27,7 +27,7 @@ interface ActionResultData {
 export default function LoginPage({ actionData }: PageProps) {
   // const formActionData = actionData as ActionResultData;
   const qc = useQueryClient();
-  const page_ctx = usePageContext();
+  const { current } = useLocation();
   const [token, setToken] = useState("");
   const query = useSSQ(async (ctx) => {
     try {
@@ -85,7 +85,7 @@ export default function LoginPage({ actionData }: PageProps) {
   }
 
   if (query.data.viewer?.data?.viewer) {
-    const redirect_search_param = page_ctx.url.searchParams.get("redirect");
+    const redirect_search_param = current.searchParams.get("redirect");
     const redirect_to = redirect_search_param ?? "/";
     return <Redirect href={redirect_to.toString()} />;
   }
@@ -141,51 +141,3 @@ export default function LoginPage({ actionData }: PageProps) {
   );
 }
 
-// export async function action(
-//   ctx: ActionContext,
-// ): Promise<ActionResult<ActionResultData>> {
-//   const formData = await ctx.requestContext.request.formData();
-//   const gh_token = formData.get("gh_pat_cookie") as string | null;
-//   // console.log("============ gh_pat_token ========= ", gh_token);
-//   if (gh_token == null || gh_token?.slice(0, 4) !== "ghp_") {
-//     // console.log(
-//     //   " ============== gh_pat_token cant be null or incorrect format========= ",
-//     //   gh_token,
-//     // );
-//     return {
-//       data: {
-//         error: "Github access token cannot be empty or in invalid format",
-//         data: {
-//           gh_pat_cookie: gh_token as string,
-//         },
-//       },
-//     };
-//   }
-
-//   const valid_token = await testGithubToken(gh_token);
-//   if (valid_token) {
-//     // console.log(" ============== gh_pat_token is valide ========= ", gh_token);
-//     const redirect_search_param = ctx.url.searchParams.get("redirect");
-//     const redirect_to = redirect_search_param ?? "/";
-//     // ctx.queryClient.setQueryData("gh_pat_cookie", gh_token);
-//     // console.log(" ======  ctx.queryClient.getQueryData(gh_pat_cookie) ======",ctx.queryClient.getQueryData("gh_pat_cookie"))
-//     return {
-//       redirect:redirect_to.toString(),
-//       headers: {
-//         "Set-Cookie": `gh_pat_cookie=${gh_token}`,
-//       },
-//     };
-//   }
-//   // console.log(
-//   //   " ============== gh_pat_token cant be invalide ========= ",
-//   //   gh_token,
-//   // );
-//   return {
-//     data: {
-//       error: "Invalid github personal access token",
-//       data: {
-//         gh_pat_cookie: gh_token as string,
-//       },
-//     },
-//   };
-// }

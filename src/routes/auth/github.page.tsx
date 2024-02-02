@@ -1,4 +1,4 @@
-import { deletePGCookie, setPGCookie } from "@/lib/pg/pg";
+
 import { GitHub, OAuth2RequestError } from "arctic";
 import { PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
 export default function GithubAuthPage({ url }: PageProps) {
