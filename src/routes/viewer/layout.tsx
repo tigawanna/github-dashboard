@@ -1,13 +1,12 @@
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
-import { preloadGuards } from "@/lib/rakkas/prealod";
-import { LayoutProps, PreloadContext } from "rakkasjs";
+import { LayoutProps } from "rakkasjs";
+import ViewerErrorBoundaryComponent from "./components/ErrorBoundaryComponent";
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="w-full ">
-      {children}
+      <ViewerErrorBoundaryComponent>{children}</ViewerErrorBoundaryComponent>
     </div>
   );
 }
-Layout.preload = async (ctx: PreloadContext) => {
-  return await preloadGuards(ctx, "viewer");
-};
+// Layout.preload = async (ctx: PreloadContext) => {
+//   return await preloadGuards(ctx, "viewer");
+// };

@@ -1,8 +1,10 @@
-
+import { setGHPATCookie } from "@/lib/cookie";
 import { GitHub, OAuth2RequestError } from "arctic";
+import { parse } from "cookie-es";
 import { PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
 export default function GithubAuthPage({ url }: PageProps) {
   const { queryClient: qc } = usePageContext();
+
   const query = useSSQ(async (ctx) => {
     const code = ctx.url.searchParams.get("code");
     const state = ctx.url.searchParams.get("state");
@@ -11,49 +13,37 @@ export default function GithubAuthPage({ url }: PageProps) {
       return { data: null, error: "no code" };
     }
     try {
-      const client = import.meta.env.GH_CLIENT;
-      const secret = import.meta.env.GH_SECRET;
-      console.log({ client, secret });
-      const github = new GitHub(client, secret);
-
+      const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
+      if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+        throw new Error("GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET not found");
+      }
+      const github = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
       const tokens = await github.validateAuthorizationCode(code);
-      const redirect_to = ctx.cookie?.["redirect_to"];
-      // const github_cookie = ctx.cookie?.["gh_pat_cookie"];
-      // if(!(github_cookie == null)){
-      //   deletePGCookie(ctx)
-      // }
-      // ctx.setCookie("gh_pat_cookie", tokens.accessToken, {
-      //   path: "/",
-      //   secure: import.meta.env.PROD,
-
-      //   maxAge: 60 * 10,
-
-      // });
-      // setPGCookie(ctx,tokens.accessToken);
-      // console.log("==== cookie set ====", ctx.cookie);
-      console.log(" ====== token ===  ", tokens);
-      return { data: tokens, redirect_to, error: null };
+      // setGHPATCookie(ctx,tokens.accessToken)
+      return { data: tokens, error: null };
     } catch (e) {
       // the specific error message depends on the provider
       if (e instanceof OAuth2RequestError) {
-        console.log("  OAuth2RequestError Error instance   ===", e);
-        // invalid code
+        console.log(" ===== OAuth2RequestError Error instance   ===", e);
         return { data: null, error: "invalid code" };
       }
       console.log(" Authing error instance   ===", e);
       return { data: null, error: "Authing error" };
     }
   });
-  if (query.data.redirect_to) {
-    const token = query?.data?.data?.accessToken;
-    qc.setQueryData("gh_pat_cookie", query.data.data.accessToken);
-    if (window) {
-      qc.setQueryData("gh_pat_cookie", token);
-      document.cookie = `gh_pat_cookie=${token};path=/;`;
-      // window.location.reload();
+  if (query.data.data) {
+    const token = query.data.data.accessToken;
+    // console.log(" ==== query.data.data in github.page ==== ", token);
+    // qc.setQueryData("gh_token",token);
+    if (typeof window !== "undefined" && typeof document !== "undefined") {
+      qc.setQueryData("gh_token", token);
+      document.cookie = `gh_token=${token};path=/;`;
+      const return_to = parse(document.cookie)?.return_to ?? "/";
+      // console.log("===== return to to in github.page.tsx ======", return_to);
+      return <Redirect href={return_to} />;
     }
-    return <Redirect href={query.data.redirect_to} />;
   }
+
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-center">
       {query.data?.data && (

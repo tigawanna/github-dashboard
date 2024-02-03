@@ -3,6 +3,7 @@ import { startClient } from "rakkasjs/client";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
 import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
+import {parse} from "cookie-es"
 
 const relay_data_form_server = (window as any)?.__RELAY_DATA__;
 // console.log(
@@ -10,8 +11,17 @@ const relay_data_form_server = (window as any)?.__RELAY_DATA__;
 //   relay_data_form_server,
 // );
 function createRelayEnvironment() {
+  const cookie = parse(document?.cookie);
+  // console.log("===== document .cookie  === ",document.cookie)
+  // console.log(" ===== entry client cookies ===== ",cookie)
+  const token = cookie.gh_token;
   return new Environment({
-    network: Network.create(fetchFn),
+    network: Network.create((request, variables, cacheConfig, uploadables) =>
+      fetchFn({
+        fetchVars: { request, variables, cacheConfig, uploadables },
+        token
+      }),
+    ),
     store: new Store(RecordSource.create(relay_data_form_server)),
     isServer: false,
   });
