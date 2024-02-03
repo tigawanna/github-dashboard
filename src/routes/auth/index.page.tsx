@@ -85,7 +85,7 @@ export default function LoginPage({ actionData }: PageProps) {
   }
 
   if (query.data.viewer?.data?.viewer) {
-    const redirect_search_param = current.searchParams.get("redirect");
+    const redirect_search_param = current.searchParams.get("return_to");
     const redirect_to = redirect_search_param ?? "/";
     return <Redirect href={redirect_to.toString()} />;
   }

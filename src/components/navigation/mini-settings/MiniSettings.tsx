@@ -60,11 +60,12 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
   });
   const viewer = query.data?.viewer?.data?.viewer;
 
+  console.log(" ====  logging out with url  ===== ",current.pathname)
   if (mutation.data?.success) {
     qc.invalidateQueries("gh_pat_cookie");
     const new_url = new URL(current);
     new_url.pathname = "/auth";
-    new_url.searchParams.set("redirect", current.pathname);
+    new_url.searchParams.set("return_to", current.pathname);
     return <Redirect href={new_url.toString()} />;
   }
 

@@ -10,7 +10,6 @@ import {
   AlertDialogAction,
 } from "@/components/shadcn/ui/alert-dialog";
 import { Button } from "@/components/shadcn/ui/button";
-import { Label } from "@/components/shadcn/ui/label";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 
 import { GitHub, generateState } from "arctic";
@@ -18,6 +17,7 @@ import { Loader } from "lucide-react";
 import { Redirect, useSSM } from "rakkasjs";
 import { FiGithub } from "react-icons/fi";
 import { useState } from "react";
+import { setGHPATCookie } from "@/lib/cookie";
 
 interface GithubLoginProps {}
 
@@ -57,8 +57,8 @@ export function GithubLoginButton({}: GithubLoginProps) {
 
   const github_auth_mutation = useSSM(async (ctx, { scopes }: { scopes: string[] }) => {
     try {
-      const client = import.meta.env.GH_CLIENT
-      const secret = import.meta.env.GH_SECRET
+      const client = import.meta.env.RAKKAS_GH_CLIENT;
+      const secret = import.meta.env.RAKKAS_GH_SECRET;
       console.log("====== client,secret inside GithubButton useSSm",{client, secret})
       const state = generateState();
       const github = new GitHub(
@@ -81,12 +81,15 @@ export function GithubLoginButton({}: GithubLoginProps) {
         maxAge: 60 * 10,
         sameSite: "lax",
       });
-      const redirect_search_param = ctx.url.searchParams.get("redirect");
-      const redirect_to = redirect_search_param ?? "/";
-      ctx.setCookie("redirect_to", redirect_to, {
+   
+      const return_to_search_param = ctx.url.searchParams.get("return_to");
+      console.log("return_search_param in oauth  === ", return_to_search_param);
+      const return_to = return_to_search_param ?? "/";
+      console.log("return_to in auth layout  === ", return_to);
+      ctx.setCookie("return_to", return_to, {
         path: "/",
         secure: import.meta.env.PROD,
-        httpOnly: true,
+        httpOnly: false,
         maxAge: 60 * 10,
         sameSite: "lax",
       });
@@ -144,17 +147,18 @@ export function GithubLoginButton({}: GithubLoginProps) {
 
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <Button
-            className="flex gap-2 justify-center items-center hover:brightness-75"
-            onClick={() => github_auth_mutation.mutate({ scopes: selectedScopes })}
-          >
-         
-            Login
-            {github_auth_mutation.isLoading && (
-              <Loader className="animate-spin" />
-            )}
-          </Button>
         </AlertDialogFooter>
+        <Button
+          className="flex gap-2 justify-center items-center hover:brightness-75"
+          onClick={() =>
+            github_auth_mutation.mutate({ scopes: selectedScopes })
+          }
+        >
+          Login
+          {github_auth_mutation.isLoading && (
+            <Loader className="animate-spin" />
+          )}
+        </Button>
       </AlertDialogContent>
     </AlertDialog>
   );

@@ -1,4 +1,5 @@
 
+import { setGHPATCookie } from "@/lib/cookie";
 import { GitHub, OAuth2RequestError } from "arctic";
 import { PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
 export default function GithubAuthPage({ url }: PageProps) {
@@ -11,9 +12,9 @@ export default function GithubAuthPage({ url }: PageProps) {
       return { data: null, error: "no code" };
     }
     try {
-      const client = import.meta.env.GH_CLIENT;
-      const secret = import.meta.env.GH_SECRET;
-      console.log({ client, secret });
+      const client = import.meta.env.RAKKAS_GH_CLIENT;
+      const secret = import.meta.env.RAKKAS_GH_SECRET;
+
       const github = new GitHub(client, secret);
 
       const tokens = await github.validateAuthorizationCode(code);
@@ -31,6 +32,7 @@ export default function GithubAuthPage({ url }: PageProps) {
       // });
       // setPGCookie(ctx,tokens.accessToken);
       // console.log("==== cookie set ====", ctx.cookie);
+      // setGHPATCookie(ctx, tokens.accessToken);
       console.log(" ====== token ===  ", tokens);
       return { data: tokens, redirect_to, error: null };
     } catch (e) {
@@ -47,10 +49,10 @@ export default function GithubAuthPage({ url }: PageProps) {
   if (query.data.redirect_to) {
     const token = query?.data?.data?.accessToken;
     qc.setQueryData("gh_pat_cookie", query.data.data.accessToken);
-    if (window) {
-      qc.setQueryData("gh_pat_cookie", token);
+    if (window && document ) {
       document.cookie = `gh_pat_cookie=${token};path=/;`;
-      // window.location.reload();
+      // qc.setQueryData("gh_pat_cookie", token);
+      window.location.reload();
     }
     return <Redirect href={query.data.redirect_to} />;
   }
