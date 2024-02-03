@@ -8,6 +8,6 @@ export default function Layout({ children }: LayoutProps) {
     </div>
   );
 }
-Layout.preload = async (ctx: PreloadContext) => {
-  return await preloadGuards(ctx, "viewer");
-};
+// Layout.preload = async (ctx: PreloadContext) => {
+//   return await preloadGuards(ctx, "viewer");
+// };

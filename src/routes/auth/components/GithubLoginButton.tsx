@@ -23,86 +23,69 @@ interface GithubLoginProps {}
 
 export function GithubLoginButton({}: GithubLoginProps) {
   const githubScopes = [
-    // Core user permissions
     "user",
     "user:email",
     "user:follow",
-
-    // Repository permissions
     "repo",
     "repo:status",
-    // "repo_deployment",
     "public_repo",
-
-    // Organization permissions
-    // "org:read",
-    // "org:write",
-    // "org:admin",
-
-    // // Team permissions
-    // "team:read",
-    // "team:write",
-
-    // // Gist permissions
-    // "gist",
-
-    // Deprecated scopes (avoid using, but may be necessary for older integrations)
-    // "admin:org",
-    // "admin:public_key",
-    // "admin:repo_hook",
-    // "admin:webhook",
     "delete_repo",
   ];
-  const [selectedScopes, setScopes] = useState(githubScopes.slice(0,4));
+  const [selectedScopes, setScopes] = useState(githubScopes.slice(0, 4));
 
-  const github_auth_mutation = useSSM(async (ctx, { scopes }: { scopes: string[] }) => {
-    try {
-      const client = import.meta.env.RAKKAS_GH_CLIENT;
-      const secret = import.meta.env.RAKKAS_GH_SECRET;
-      console.log("====== client,secret inside GithubButton useSSm",{client, secret})
-      const state = generateState();
-      const github = new GitHub(
-        client,
-        secret,
-      );
-      const url: URL = await github.createAuthorizationURL(state, {
-        // optional
-        //   scopes,
-        scopes,
-      });
-      console.log("url ==== ", url);
-      if (!url) {
-        return { data: null, error: "no url" };
+  const github_auth_mutation = useSSM(
+    async (ctx, { scopes }: { scopes: string[] }) => {
+      try {
+        const client = import.meta.env.RAKKAS_GH_CLIENT;
+        const secret = import.meta.env.RAKKAS_GH_SECRET;
+        console.log("====== client,secret inside GithubButton useSSm", {
+          client,
+          secret,
+        });
+        const state = generateState();
+        const github = new GitHub(client, secret);
+        const url: URL = await github.createAuthorizationURL(state, {
+          // optional
+          //   scopes,
+          scopes,
+        });
+        console.log("url ==== ", url);
+        if (!url) {
+          return { data: null, error: "no url" };
+        }
+        ctx.setCookie("github_oauth_state", state, {
+          path: "/",
+          secure: import.meta.env.PROD,
+          httpOnly: true,
+          maxAge: 60 * 10,
+          sameSite: "lax",
+        });
+
+        const return_to_search_param = ctx.url.searchParams.get("return_to");
+        console.log(
+          "return_search_param in oauth  === ",
+          return_to_search_param,
+        );
+        const return_to = return_to_search_param ?? "/";
+        console.log("return_to in auth layout  === ", return_to);
+        ctx.setCookie("return_to", return_to, {
+          path: "/",
+          secure: import.meta.env.PROD,
+          httpOnly: false,
+          maxAge: 60 * 10,
+          sameSite: "lax",
+        });
+
+        return { data: url.toString(), error: null };
+      } catch (error: any) {
+        console.log("Error authing  ===", error);
+        return { data: null, error: error.message };
       }
-      ctx.setCookie("github_oauth_state", state, {
-        path: "/",
-        secure: import.meta.env.PROD,
-        httpOnly: true,
-        maxAge: 60 * 10,
-        sameSite: "lax",
-      });
-   
-      const return_to_search_param = ctx.url.searchParams.get("return_to");
-      console.log("return_search_param in oauth  === ", return_to_search_param);
-      const return_to = return_to_search_param ?? "/";
-      console.log("return_to in auth layout  === ", return_to);
-      ctx.setCookie("return_to", return_to, {
-        path: "/",
-        secure: import.meta.env.PROD,
-        httpOnly: false,
-        maxAge: 60 * 10,
-        sameSite: "lax",
-      });
-      
-      return { data: url.toString(), error: null };
-    } catch (error: any) {
-      console.log("Error authing  ===", error);
-      return { data: null, error: error.message };
-    }
-  });
+    },
+  );
 
   if (github_auth_mutation.data?.data) {
-  return <Redirect href={github_auth_mutation.data.data.toString()} />;
+    return <Redirect href={github_auth_mutation.data.data.toString()} />;
   }
 
   return (
