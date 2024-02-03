@@ -27,14 +27,14 @@ export async function get(ctx: RequestContext) {
     const github = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
     const tokens = await github.validateAuthorizationCode(code);
     setGHPATCookie(ctx, tokens.accessToken);
-    console.log(" ctx.cookie github.api.ts ===== ", ctx.cookie);
-    const redirect_to = ctx.cookie?.["return_to"];
+    // console.log(" ctx.cookie github.api.ts ===== ", ctx.cookie);
+    const return_to = ctx.cookie?.["return_to"];
     return new Response(null, {
       status: 302,
       headers: {
-        location: redirect_to ?? "/",
+        location: return_to ?? "/",
         "content-type": "text/plain",
-        // "set-cookie": `redirect_to=${redirect_to ?? "/"}`,
+        // "set-cookie": `return_to=${return_to ?? "/"}`,
       },
     });
   } catch (error) {

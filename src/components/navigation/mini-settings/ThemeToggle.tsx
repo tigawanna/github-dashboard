@@ -17,7 +17,6 @@ export function ThemeToggle({}: ThemeToggleModalProps) {
     "light",
     "dark",
     // "cupcake",
-    // "custom",
     // "wireframe",
     // "black",
     // "acid",
@@ -46,7 +45,7 @@ export function ThemeToggle({}: ThemeToggleModalProps) {
   };
 
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center gap-1 p-5">
+    <div className="w-full  flex flex-col items-center justify-center gap-1 p-1">
       {/* <Label>Theme</Label> */}
       <Select
         data-choose-theme
@@ -55,7 +54,7 @@ export function ThemeToggle({}: ThemeToggleModalProps) {
           handleThemeChange(e);
         }}
       >
-        <SelectTrigger className="w-[180px]">
+        <SelectTrigger className="w-full">
           <SelectValue placeholder="Theme" />
         </SelectTrigger>
         <SelectContent>

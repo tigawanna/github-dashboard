@@ -29,21 +29,23 @@ export default function LoginPage({ actionData }: PageProps) {
   const qc = useQueryClient();
   const { current } = useLocation();
   const [token, setToken] = useState("");
-  const query = useSSQ(async (ctx) => {
-    try {
-      const gh_pat_cookie = ctx.cookie?.gh_pat_cookie;
-      if (!gh_pat_cookie) {
-        return { viewer: null, error: "no github token" };
-      }
-      const viewer = await testGithubToken(gh_pat_cookie);
-      if (!viewer) {
-        return { viewer: null, error: "invalid github token" };
-      }
-      return { viewer, error: null };
-    } catch (error: any) {
-      return { viewer: null, error: error.message };
-    }
-  });
+  
+  
+  // const query = useSSQ(async (ctx) => {
+  //   try {
+  //     const gh_pat_cookie = ctx.cookie?.gh_pat_cookie;
+  //     if (!gh_pat_cookie) {
+  //       return { viewer: null, error: "no github token" };
+  //     }
+  //     const viewer = await testGithubToken(gh_pat_cookie);
+  //     if (!viewer) {
+  //       return { viewer: null, error: "invalid github token" };
+  //     }
+  //     return { viewer, error: null };
+  //   } catch (error: any) {
+  //     return { viewer: null, error: error.message };
+  //   }
+  // });
 
   const mutation = useMutation(async () => {
     try {
@@ -53,11 +55,11 @@ export default function LoginPage({ actionData }: PageProps) {
         }, 100);
       })
       const valid_token = await testGithubToken(token);
-      // console.log("===valid token  ==== ", valid_token);
+      console.log("===valid token  ==== ", valid_token);
       if (!valid_token) {
         throw new Error("invalid github token");
       }
-      if (window) {
+      if (typeof window !=="undefined") {
         qc.setQueryData("gh_token", token);
         document.cookie = `gh_token=${token};path=/;`;
         window.location.reload();
@@ -82,17 +84,21 @@ export default function LoginPage({ actionData }: PageProps) {
     setToken(event.target.value);
   }
 
-  if (query.data.viewer?.data?.viewer) {
-    const redirect_search_param = current.searchParams.get("return_to");
-    const redirect_to = redirect_search_param ?? "/";
-    return <Redirect href={redirect_to.toString()} />;
-  }
+  // if (query.data.viewer?.data?.viewer) {
+  //   const redirect_search_param = current.searchParams.get("return_to");
+  //   const return_to = redirect_search_param ?? "/";
+  //   return <Redirect href={return_to.toString()} />;
+  // }
 
   return (
-    <div className="w-full flex items-center justify-center overflow-auto">
+    <div className="w-full flex flex-col   items-center justify-center overflow-auto">
+
+    <div className="flex flex-col gap-5  
+    items-center justify-center overflow-auto glass rounded-xl p-4" >
+      <h1 className="text-3xl font-bold">Authenticate</h1>
       <form
         onSubmit={handleSubmit}
-        className="w-[95%] md:w-[60%] h-full flex items-center justify-center"
+        className="w-full h-full flex items-center justify-center"
       >
         <Card className="w-full">
           <CardHeader>
@@ -125,16 +131,17 @@ export default function LoginPage({ actionData }: PageProps) {
               </div>
             </div>
           </CardContent>
-          <CardFooter className="justify-center flex-col gap-3">
-            <div className="w-full flex items-center justify-center">
-              <span className="w-full border-t border-accent" />
-              <span className="px-2  min-w-fit">Or continue with Github</span>
-              <span className="w-full border-t border-accent" />
-            </div>
-            <GithubLoginButton />
-          </CardFooter>
         </Card>
       </form>
+      <div className="justify-center flex-col gap-3">
+        <div className="w-full flex items-center justify-center">
+          <span className="w-full border-t border-accent" />
+          <span className="px-2  min-w-fit">Or continue with Github Oauth2</span>
+          <span className="w-full border-t border-accent" />
+        </div>
+        <GithubLoginButton />
+      </div>
+    </div>
     </div>
   );
 }

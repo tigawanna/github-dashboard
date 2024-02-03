@@ -2,16 +2,17 @@ import { Button } from "@/components/shadcn/ui/button";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { GitHub, generateState } from "arctic";
 import { Loader } from "lucide-react";
-import { Redirect, useSSM } from "rakkasjs";
+import { Redirect, useLocation, useQueryClient, useSSM } from "rakkasjs";
 import { FiGithub } from "react-icons/fi";
 import { useState } from "react";
-
 
 interface GithubLoginProps {}
 
 export function GithubLoginButton({}: GithubLoginProps) {
   const githubScopes = ["user", "delete_repo"];
   const [selectedScopes, setScopes] = useState(githubScopes.slice(0, 4));
+  const qc = useQueryClient();
+  const { current } = useLocation();
 
   const github_auth_mutation = useSSM(
     async (ctx, { scopes }: { scopes: string[] }) => {
@@ -37,27 +38,35 @@ export function GithubLoginButton({}: GithubLoginProps) {
           sameSite: "lax",
         });
 
-        const return_to_search_param = ctx.url.searchParams.get("return_to");
-        const return_to = return_to_search_param ?? "/";
-     
-        ctx.setCookie("return_to", return_to, {
-          path: "/",
-          secure: import.meta.env.PROD,
-          httpOnly: false,
-          maxAge: 60 * 10,
-          sameSite: "lax",
-        });
+        // const return_to_search_param = ctx.url.searchParams.get("return_to");
+        // const return_to = return_to_search_param ?? "/";
+        // console.log(" ===== return_to ========= ", return_to);
+        // ctx.setCookie("return_to", return_to, {
+        //   path: "/",
+        //   secure: import.meta.env.PROD,
+        //   httpOnly: false,
+        //   maxAge: 60 * 10,
+        //   sameSite: "lax",
+        // });
 
         return { data: url.toString(), error: null };
       } catch (error: any) {
-        console.log("======  Error authing inside GithubLoginButton  ===", error);
+        console.log(
+          "======  Error authing inside GithubLoginButton  ===",
+          error,
+        );
         return { data: null, error: error.message };
       }
     },
   );
 
   // if (github_auth_mutation.data?.data) {
-  //   return <Redirect href={github_auth_mutation.data.data.toString()} />;
+  //   // qc.setQueryData("return_to", github_auth_mutation.data.return_to);
+  //   if(typeof window !=="undefined"&& typeof document !=="undefined") {
+  //     console.log(" ===== github_auth_mutation.data.data.toString() ========= ",
+  //     document.cookie);
+  //   }
+  //   // return <Redirect href={github_auth_mutation.data.data.toString()} />;
   // }
 
   return (
@@ -94,7 +103,24 @@ export function GithubLoginButton({}: GithubLoginProps) {
         ))}
         <Button
           onClick={() =>
-            github_auth_mutation.mutate({ scopes: selectedScopes })
+            github_auth_mutation
+              .mutateAsync({ scopes: selectedScopes })
+              .then((res) => {
+                console.log(" ==== res ==== ", res);
+                if (
+                  typeof window !== "undefined" &&
+                  typeof document !== "undefined"
+                ) {
+                  // const return_to =
+                  //   current.searchParams.get("return_to") || "/";
+                  // document.cookie = `return_to=${return_to}; path=/`;
+                  // console.log(" ==== return_to ==== ", return_to);
+                  // console.log(
+                  //   " ===== github_auth_mutation.data.data.toString() ========= ",
+                  //   document.cookie,
+                  // );
+                }
+              })
           }
           className="flex gap-2 justify-center items-center hover:brightness-75"
         >

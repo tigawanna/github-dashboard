@@ -55,10 +55,10 @@ export default createRequestHandler({
         if (gh_token) {
           try {
             await testGithubToken(gh_token);
-            console.log(
-              "========= testGithubToken in extend page-ctx entry-hattip ==========",
-              gh_token,
-            );
+            // console.log(
+            //   "========= testGithubToken in extend page-ctx entry-hattip ==========",
+            //   gh_token,
+            // );
             pageContext.queryClient.setQueryData("gh_token", gh_token);
           } catch (error) {
             pageContext.queryClient.setQueryData("gh_token", null);

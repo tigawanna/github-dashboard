@@ -98,6 +98,9 @@ dependencies:
   destr:
     specifier: ^2.0.2
     version: 2.0.2
+  i:
+    specifier: ^0.3.7
+    version: 0.3.7
   lucia:
     specifier: ^3.0.1
     version: 3.0.1
@@ -146,8 +149,8 @@ dependencies:
 
 devDependencies:
   '@rakkasjs/eslint-config':
-    specifier: 0.7.0-next.37
-    version: 0.7.0-next.37(eslint@8.56.0)(typescript@5.3.3)
+    specifier: 0.7.0-next.38
+    version: 0.7.0-next.38(eslint@8.56.0)(typescript@5.3.3)
   '@types/react':
     specifier: ^18.2.51
     version: 18.2.51
@@ -188,8 +191,8 @@ devDependencies:
     specifier: 0.5.11
     version: 0.5.11(prettier@3.2.4)
   rakkasjs:
-    specifier: 0.7.0-next.37
-    version: 0.7.0-next.37(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(vite@5.0.12)
+    specifier: 0.7.0-next.38
+    version: 0.7.0-next.38(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(vite@5.0.12)
   relay-compiler:
     specifier: 16.2.0
     version: 16.2.0
@@ -2964,8 +2967,8 @@ packages:
       '@babel/runtime': 7.23.9
     dev: false
 
-  /@rakkasjs/eslint-config@0.7.0-next.37(eslint@8.56.0)(typescript@5.3.3):
-    resolution: {integrity: sha512-U4poj0CvkWCt/Unyjht0fQNmX5krvwzx0+N2y81THo3lVKge9xYfXOddPe8chu3yYpxqwz2H9s+zHR8YdAROeg==}
+  /@rakkasjs/eslint-config@0.7.0-next.38(eslint@8.56.0)(typescript@5.3.3):
+    resolution: {integrity: sha512-DvHutM9exK7gmvz2BeJ/f3OhaE1AI4LRzmK7Liy764mFR2qI3AAOUkKHbqzXwu6oaW/gH3Y+tCCJY68hJWLvyw==}
     peerDependencies:
       eslint: ^8.7.0
       typescript: 4 || 5
@@ -5091,6 +5094,11 @@ packages:
     engines: {node: '>=16.17.0'}
     dev: true
 
+  /i@0.3.7:
+    resolution: {integrity: sha512-FYz4wlXgkQwIPqhzC5TdNMLSE5+GS1IIDJZY/1ZiEPCT2S3COUVZeT5OW4BmW4r5LHLQuOosSwsvnroG9GR59Q==}
+    engines: {node: '>=0.4'}
+    dev: false
+
   /ignore@5.3.0:
     resolution: {integrity: sha512-g7dmpshy+gD7mh88OC9NwSGTKoc3kyLAZQRU1mt53Aw/vnvfXnbC+F/7F7QoYVKbV+KNvJx8wArewKy1vXMtlg==}
     engines: {node: '>= 4'}
@@ -6175,8 +6183,8 @@ packages:
     engines: {node: '>=14.18.0'}
     dev: false
 
-  /rakkasjs@0.7.0-next.37(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(vite@5.0.12):
-    resolution: {integrity: sha512-oTf9JuMpPyPityITIB7yQnVgTJEygN3nnud5hAb7fQDROyzQfVuOXT7d6VCqekIDTifYKXZ7CDKkmfKHVWTE0w==}
+  /rakkasjs@0.7.0-next.38(react-dom@18.2.0)(react@18.2.0)(typescript@5.3.3)(vite@5.0.12):
+    resolution: {integrity: sha512-vgE2qDxaz0/urlQ8QmEbml0SNOiVlrJROlal6W0eH7BrVeeGcXaIJgYp6HWhAZiAq2+IZQCxjIwEqRaa9Av5TQ==}
     hasBin: true
     peerDependencies:
       react: '18'

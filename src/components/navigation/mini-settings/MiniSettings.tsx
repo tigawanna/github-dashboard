@@ -21,6 +21,7 @@ import {
 } from "rakkasjs";
 import { Loader } from "lucide-react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+import { ThemeToggle } from "./ThemeToggle";
 
 interface MiniSettingsModalProps {}
 
@@ -29,11 +30,11 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
   const { current } = useLocation();
   const query = useSSQ(async (ctx) => {
     try {
-      const gh_pat_cookie = ctx.cookie?.gh_pat_cookie;
-      if (!gh_pat_cookie) {
+      const gh_token = ctx.cookie?.gh_token;
+      if (!gh_token) {
         return { viewer: null, error: "no github token" };
       }
-      const viewer = await testGithubToken(gh_pat_cookie);
+      const viewer = await testGithubToken(gh_token);
       // console.log("viewer ==== ",viewer?.data.viewer)
       if (!viewer) {
         return { viewer: null, error: "invalid github token" };
@@ -47,7 +48,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
 
   const mutation = useMutation(async () => {
     try {
-      if (window) {
+      if (typeof window !== "undefined") {
         document.cookie = `gh_token;`;
         window.location.reload();
       }
@@ -64,7 +65,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
     qc.invalidateQueries("gh_token");
     const new_url = new URL(current);
     new_url.pathname = "/auth";
-    new_url.searchParams.set("return_to", current.pathname);
+    new_url.searchParams.set("return_to", current.pathname + current.search);
     return <Redirect href={new_url.toString()} />;
   }
 
@@ -86,6 +87,8 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
         <DropdownMenuLabel className="font-bold text-xl">
           Viewer
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <ThemeToggle />
         <DropdownMenuSeparator />
         <div className="flex flex-col gap-1 p-3">
           <div className="flex flex-col gap-1 p-3">
