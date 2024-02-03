@@ -22,7 +22,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
     repoGeneralInfoFragment,
     data,
   );
-  console.log({ fragData });
+  // console.log({ fragData });
   return (
     <div className="w-full h-full flex flex-col gap-3 divide-y divide-solid divide-base-200 py-2">
       <div className="w-full h-full flex flex-col md:flex-row gap-2 px-2 ">

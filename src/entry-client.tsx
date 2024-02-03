@@ -12,8 +12,9 @@ const relay_data_form_server = (window as any)?.__RELAY_DATA__;
 // );
 function createRelayEnvironment() {
   const cookie = parse(document?.cookie);
-  const token = cookie.gh_pat_cookie;
-  // console.log(" ===== entry client token ===== ",token)
+  // console.log("===== document .cookie  === ",document.cookie)
+  // console.log(" ===== entry client cookies ===== ",cookie)
+  const token = cookie.gh_token;
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
       fetchFn({

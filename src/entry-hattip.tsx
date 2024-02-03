@@ -2,11 +2,11 @@ import { createRequestHandler } from "rakkasjs/server";
 import { cookie } from "@hattip/cookie";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
-import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
+import { fetchFn, testGithubToken } from "./lib/graphql/relay/RelayEnvironment";
 import { RequestContext } from "rakkasjs";
 
-function createRelayEnvironment(ctx:RequestContext) {
-  const token = ctx.cookie.gh_pat_cookie;
+function createRelayEnvironment(ctx: RequestContext) {
+  const token = ctx.cookie.gh_token;
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
       fetchFn({
@@ -18,7 +18,6 @@ function createRelayEnvironment(ctx:RequestContext) {
     isServer: true,
   });
 }
-
 
 export default createRequestHandler({
   middleware: {
@@ -49,17 +48,21 @@ export default createRequestHandler({
   `;
       },
 
-      async extendPageContext(ctx) {
-        const request = ctx.requestContext?.request;
+      async extendPageContext(pageContext) {
+        const request = pageContext.requestContext?.request;
         if (!request) return;
-
-        const cookie = requestContext.cookie;
-        if (cookie?.gh_pat_cookie) {
-          // console.log("  ===  entry-hatip cookie =====", cookie.pg_cookie);
-          const gh_pat_cookie = cookie?.gh_pat_cookie;
-          // ctx.locals.pg = gh_pat_cookie;
-          ctx.queryClient.setQueryData("gh_pat_cookie", gh_pat_cookie);
-          // console.log("  ===  entry-hatip pg_config =====",pg_config );
+        const gh_token = requestContext?.cookie?.gh_token;
+        if (gh_token) {
+          try {
+            await testGithubToken(gh_token);
+            // console.log(
+            //   "========= testGithubToken in extend page-ctx entry-hattip ==========",
+            //   gh_token,
+            // );
+            pageContext.queryClient.setQueryData("gh_token", gh_token);
+          } catch (error) {
+            pageContext.queryClient.setQueryData("gh_token", null);
+          }
         }
       },
 
@@ -71,19 +74,7 @@ export default createRequestHandler({
         );
       },
 
-      //   wrapSsrStream(stream) {
-      //     const { readable, writable } = new TransformStream({
-      //       transform(chunk, controller) {
-      //         // You can transform the chunks of the
-      //         // React SSR stream here.
-      //         controller.enqueue(chunk);
-      //       },
-      //     });
-      // // @ts-expect-error
-      //     stream.pipeThrough(writable);
 
-      //     return readable;
-      //   },
     };
   },
 });

@@ -1,8 +1,6 @@
-import { CacheConfig, FetchFunction, RequestParameters, UploadableMap, Variables } from "relay-runtime";
+import { CacheConfig,  RequestParameters, UploadableMap, Variables } from "relay-runtime";
 
 const HTTP_ENDPOINT = "https://api.github.com/graphql";
-
-
 
 
 interface RelayFecherVars {
@@ -19,7 +17,8 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
   try {
     // throw new Error("no gh_pat in env")
     const gh_pat = token
-    if (token==null) {
+    // console.log("=== gh_pat in relay fetchFn ====== ",gh_pat)
+    if (gh_pat==null) {
       throw new Error("no gh_pat in env");
     }
 
@@ -43,7 +42,7 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
       throw new Error(resp.statusText);
     }
     const json = await resp.json();
-    console.log(" ====== RELAY FETCHER JSON ============== ", json);
+    // console.log(" ====== RELAY FETCHER JSON ============== ", json);
     // GraphQL returns exceptions (for example, a missing required variable) in the "errors"
     // property of the response. If any exceptions occurred when processing the request,
     // throw an error to indicate to the developer what went wrong.
@@ -108,7 +107,7 @@ export async function testGithubToken(gh_token: string) {
       });
     return viewer;
   } catch (error:any) {
-    console.log(" ====== Github token invalid ============== ", error)
+    // console.log(" ====== Github token invalid ============== ", error)
     // return error.message
     throw error
   }
