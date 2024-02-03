@@ -26,7 +26,7 @@ export default createRequestHandler({
     beforeNotFound: [],
     beforeAll: [cookie()],
   },
-  
+
   createPageHooks(requestContext) {
     const serverRelayEnvironment = createRelayEnvironment(requestContext);
     return {
