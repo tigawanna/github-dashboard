@@ -25,9 +25,8 @@ import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
 interface MiniSettingsModalProps {}
 
 export function MiniSettingsModal({}: MiniSettingsModalProps) {
-  const page_ctx = usePageContext();
   const qc = useQueryClient();
-    const { current } = useLocation();
+  const { current } = useLocation();
   const query = useSSQ(async (ctx) => {
     try {
       const gh_pat_cookie = ctx.cookie?.gh_pat_cookie;
@@ -49,7 +48,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
   const mutation = useMutation(async () => {
     try {
       if (window) {
-        document.cookie = `gh_pat_cookie=;`;
+        document.cookie = `gh_token;`;
         window.location.reload();
       }
       return { success: true, error: null };
@@ -60,9 +59,9 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
   });
   const viewer = query.data?.viewer?.data?.viewer;
 
-  console.log(" ====  logging out with url  ===== ",current.pathname)
+  console.log(" ====  logging out with url  ===== ", current.pathname);
   if (mutation.data?.success) {
-    qc.invalidateQueries("gh_pat_cookie");
+    qc.invalidateQueries("gh_token");
     const new_url = new URL(current);
     new_url.pathname = "/auth";
     new_url.searchParams.set("return_to", current.pathname);

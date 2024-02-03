@@ -17,7 +17,7 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
   try {
     // throw new Error("no gh_pat in env")
     const gh_pat = token
-    console.log("=== gh_pat in relay fetchFn ====== ",gh_pat)
+    // console.log("=== gh_pat in relay fetchFn ====== ",gh_pat)
     if (gh_pat==null) {
       throw new Error("no gh_pat in env");
     }
@@ -37,7 +37,7 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
     });
     if (!resp.ok) {
       // If the response is not okay, then throw an error
-      // console.log(" ====== RELAY FETCHER STATUS TEXT ============== ", resp.statusText);
+      console.log(" ====== RELAY FETCHER STATUS TEXT ============== ", resp.statusText);
       throw new Error(resp.statusText);
     }
     const json = await resp.json();

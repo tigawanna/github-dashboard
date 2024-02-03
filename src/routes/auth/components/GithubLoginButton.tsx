@@ -56,12 +56,15 @@ export function GithubLoginButton({}: GithubLoginProps) {
     },
   );
 
-  if (github_auth_mutation.data?.data) {
-    return <Redirect href={github_auth_mutation.data.data.toString()} />;
-  }
+  // if (github_auth_mutation.data?.data) {
+  //   return <Redirect href={github_auth_mutation.data.data.toString()} />;
+  // }
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
+      {github_auth_mutation.data?.data && (
+        <Redirect href={github_auth_mutation.data.data.toString()} />
+      )}
       {/* <div className="text-2xl p-4 ">login with Github</div> */}
       <div className="alert text-xs">
         This action will use the Github OAuth flow to get an accessToken to make
@@ -89,14 +92,18 @@ export function GithubLoginButton({}: GithubLoginProps) {
             />
           </div>
         ))}
-      <Button
-        onClick={() => github_auth_mutation.mutate({ scopes: selectedScopes })}
-        className="flex gap-2 justify-center items-center hover:brightness-75"
-      >
-        <FiGithub className="h-6 w-6" />
-        Login with Github
-        {github_auth_mutation.isLoading && <Loader className="animate-spin" />}
-      </Button>
+        <Button
+          onClick={() =>
+            github_auth_mutation.mutate({ scopes: selectedScopes })
+          }
+          className="flex gap-2 justify-center items-center hover:brightness-75"
+        >
+          <FiGithub className="h-6 w-6" />
+          Login with Github
+          {github_auth_mutation.isLoading && (
+            <Loader className="animate-spin" />
+          )}
+        </Button>
       </div>
     </div>
   );

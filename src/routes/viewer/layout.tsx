@@ -1,8 +1,9 @@
 import { LayoutProps } from "rakkasjs";
+import ViewerErrorBoundaryComponent from "./components/ErrorBoundaryComponent";
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="w-full ">
-      {children}
+      <ViewerErrorBoundaryComponent>{children}</ViewerErrorBoundaryComponent>
     </div>
   );
 }
