@@ -21,7 +21,6 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
     if (gh_pat==null) {
       throw new Error("no gh_pat in env");
     }
-
     const resp = await fetch(HTTP_ENDPOINT, {
       method: "POST",
       headers: {
