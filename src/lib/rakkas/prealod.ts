@@ -3,10 +3,10 @@ import { testGithubToken } from "../graphql/relay/RelayEnvironment";
 
 export async function preloadGuards(ctx: PreloadContext, route_name?: string) {
   const gh_pat_cookie = ctx.queryClient.getQueryData("gh_pat_cookie");
-  console.log(
-    " ==== gh_pat_cookie in " + route_name + " layout preload  ===== ",
-    gh_pat_cookie,
-  );
+  // console.log(
+  //   " ==== gh_pat_cookie in " + route_name + " layout preload  ===== ",
+  //   gh_pat_cookie,
+  // );
   const new_url = new URL(ctx.url);
   new_url.pathname = "/auth";
   new_url.searchParams.set("redirect", ctx.url.pathname + ctx.url.search);

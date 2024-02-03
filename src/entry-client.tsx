@@ -14,7 +14,7 @@ function createRelayEnvironment() {
   const cookie = parse(document?.cookie);
   console.log("===== document .cookie  === ",document.cookie)
   console.log(" ===== entry client cookies ===== ",cookie)
-  const token = cookie.gh_pat_cookie;
+  const token = cookie.gh_token;
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
       fetchFn({

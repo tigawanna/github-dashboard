@@ -1,6 +1,4 @@
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
-import { preloadGuards } from "@/lib/rakkas/prealod";
-import { LayoutProps, PreloadContext } from "rakkasjs";
+import { LayoutProps } from "rakkasjs";
 export default function Layout({ children }: LayoutProps) {
   return (
     <div className="w-full ">

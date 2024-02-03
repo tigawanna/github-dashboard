@@ -1,14 +1,13 @@
-import { Session } from "@auth/core/types";
 import { LookupHookResult, PageRouteGuardContext } from "rakkasjs";
 
 export function pageGuard(ctx: PageRouteGuardContext): LookupHookResult {
-    const session: Session | null = ctx.queryClient.getQueryData("auth:session");
-
-    if (session?.user) {
+    const session: string = ctx.queryClient.getQueryData("gh_token");
+    console.log("======== viewer guard $queryClient.getQueryData(gh_token) ====== ", session);
+    if (session) {
         return true;
     } else {
-        const url = new URL("/auth/signin", ctx.url);
-        url.searchParams.set("callbackUrl", url.pathname + url.search);
+        const url = new URL("/auth", ctx.url);
+        url.searchParams.set("redirect_to", url.pathname + url.search);
         return { redirect: url };
     }
 }

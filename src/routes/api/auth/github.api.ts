@@ -1,6 +1,6 @@
 import { json } from "@hattip/response";
 import { RequestContext } from "rakkasjs";
-import { GitHub, OAuth2RequestError } from "arctic";
+import { GitHub} from "arctic";
 import { setGHPATCookie } from "@/lib/cookie";
 
 export async function get(ctx: RequestContext) {
@@ -19,13 +19,15 @@ export async function get(ctx: RequestContext) {
         },
       );
     }
-    const client = import.meta.env.RAKKAS_GH_CLIENT;
-    const secret = import.meta.env.RAKKAS_GH_SECRET;
+    const { GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET } = process.env;
+    if (!GITHUB_CLIENT_ID || !GITHUB_CLIENT_SECRET) {
+      throw new Error("GITHUB_CLIENT_ID or GITHUB_CLIENT_SECRET not found");
+    }
 
-    const github = new GitHub(client, secret);
+    const github = new GitHub(GITHUB_CLIENT_ID, GITHUB_CLIENT_SECRET);
     const tokens = await github.validateAuthorizationCode(code);
     setGHPATCookie(ctx, tokens.accessToken);
-    console.log(" ctx.cookie github.api.ts ===== ",ctx.cookie)
+    console.log(" ctx.cookie github.api.ts ===== ", ctx.cookie);
     const redirect_to = ctx.cookie?.["return_to"];
     return new Response(null, {
       status: 302,

@@ -36,11 +36,9 @@ export default function LoginPage({ actionData }: PageProps) {
         return { viewer: null, error: "no github token" };
       }
       const viewer = await testGithubToken(gh_pat_cookie);
-      // console.log("viewer ==== ", viewer?.data.viewer);
       if (!viewer) {
         return { viewer: null, error: "invalid github token" };
       }
-
       return { viewer, error: null };
     } catch (error: any) {
       return { viewer: null, error: error.message };
@@ -60,8 +58,8 @@ export default function LoginPage({ actionData }: PageProps) {
         throw new Error("invalid github token");
       }
       if (window) {
-        qc.setQueryData("gh_pat_cookie", token);
-        document.cookie = `gh_pat_cookie=${token};path=/;`;
+        qc.setQueryData("gh_token", token);
+        document.cookie = `gh_token=${token};path=/;`;
         window.location.reload();
       }
     } catch (error:any) {
@@ -130,7 +128,7 @@ export default function LoginPage({ actionData }: PageProps) {
           <CardFooter className="justify-center flex-col gap-3">
             <div className="w-full flex items-center justify-center">
               <span className="w-full border-t border-accent" />
-              <span className="px-2  min-w-fit">Or continue with</span>
+              <span className="px-2  min-w-fit">Or continue with Github</span>
               <span className="w-full border-t border-accent" />
             </div>
             <GithubLoginButton />
