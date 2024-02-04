@@ -14,10 +14,10 @@ import { ViewerStarerdRepos_repositories$key } from "./staring/__generated__/Vie
 import { useFragment } from "@/lib/graphql/relay/modules";
 import { viewer_info$key } from "../__generated__/viewer_info.graphql";
 import { viewerVIEWERfragmant } from "../index.page";
-import { User_info$key } from "../[user]/__generated__/User_info.graphql";
+
 
 interface GithubUserTabsProps {
-  user_info$key: viewer_info$key | User_info$key | null | undefined;
+  user_info$key: viewer_info$key  | null | undefined;
   viewerRepos_repositories$key: ViewerRepos_repositories$key | null | undefined;
   viewerStarerdRepos_repositories$key:
     | ViewerStarerdRepos_repositories$key
@@ -26,10 +26,7 @@ interface GithubUserTabsProps {
 }
 
 export function GithubUserTabs({
-  user_info$key,
-
-  viewerRepos_repositories$key,
-  viewerStarerdRepos_repositories$key,
+  user_info$key,viewerRepos_repositories$key,viewerStarerdRepos_repositories$key,
 }: GithubUserTabsProps) {
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
@@ -40,7 +37,7 @@ export function GithubUserTabs({
       ViewerStarerdReposFragment,
       viewerStarerdRepos_repositories$key,
     );
-  const data = useFragment<User_info$key>(
+  const data = useFragment<viewer_info$key>(
     viewerVIEWERfragmant,
     user_info$key,
   );

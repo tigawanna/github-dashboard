@@ -14,7 +14,7 @@ export default function ViewerPage({ params }: PageProps) {
   const order_by = current.searchParams.get("oBy") as RepositoryOrderField;
   const order_by_dir = current.searchParams.get("dir") as "ASC" | "DESC";
   const isFork = is_fork === "true" ? true : false;
-
+  const star_order_by_dir = current.searchParams.get("sDir") as "ASC" | "DESC";
   const query = useLazyLoadQuery<UserQuery>(
     userQuery,
     {
@@ -23,6 +23,10 @@ export default function ViewerPage({ params }: PageProps) {
       orderBy: {
         field: order_by ?? "PUSHED_AT",
         direction: order_by_dir ?? "DESC",
+      },
+      starOrder: {
+        direction: star_order_by_dir ?? "DESC",
+        field: "STARRED_AT",
       },
     },
     {
@@ -47,11 +51,12 @@ export const userQuery = graphql`
     $login: String!
     $isFork: Boolean
     $orderBy: RepositoryOrder
+    $starOrder: StarOrder
   ) {
     user(login: $login) {
       ...viewer_info
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-      ...ViewerStarerdRepos_repositories
+      ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
     }
   }
 `;

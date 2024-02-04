@@ -7,6 +7,7 @@ import { FiActivity } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { FilterStarredRepos } from "./components";
 dayjs.extend(relativeTime);
 
 interface ViewerStarerdReposProps {
@@ -19,6 +20,7 @@ export function ViewerStarerdRepos({viewer}: ViewerStarerdReposProps) {
     const repos = repo_response?.edges;
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
+      <FilterStarredRepos/>
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
