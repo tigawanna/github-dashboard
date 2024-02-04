@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc8df20baf97893b0e6c8a4ef563c294>>
+ * @generated SignedSource<<270f8e9e944d75b85cd5d193c06bd0f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,12 +23,6 @@ export type viewer_info$data = {
     } | null | undefined> | null | undefined;
     readonly totalCount: number;
   };
-  readonly starredRepositories: {
-    readonly nodes: ReadonlyArray<{
-      readonly id: string;
-    } | null | undefined> | null | undefined;
-    readonly totalCount: number;
-  };
   readonly " $fragmentType": "viewer_info";
 };
 export type viewer_info$key = {
@@ -44,24 +38,14 @@ var v0 = [
     "value": 1
   }
 ],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "totalCount",
-  "storageKey": null
-},
-v2 = [
+v1 = [
   {
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "id",
+    "name": "totalCount",
     "storageKey": null
-  }
-],
-v3 = [
-  (v1/*: any*/),
+  },
   {
     "alias": null,
     "args": null,
@@ -69,7 +53,15 @@ v3 = [
     "kind": "LinkedField",
     "name": "nodes",
     "plural": true,
-    "selections": (v2/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "id",
+        "storageKey": null
+      }
+    ],
     "storageKey": null
   }
 ];
@@ -86,7 +78,7 @@ return {
       "kind": "LinkedField",
       "name": "followers",
       "plural": false,
-      "selections": (v3/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": "followers(first:1)"
     },
     {
@@ -96,30 +88,8 @@ return {
       "kind": "LinkedField",
       "name": "following",
       "plural": false,
-      "selections": (v3/*: any*/),
+      "selections": (v1/*: any*/),
       "storageKey": "following(first:1)"
-    },
-    {
-      "alias": null,
-      "args": (v0/*: any*/),
-      "concreteType": "StarredRepositoryConnection",
-      "kind": "LinkedField",
-      "name": "starredRepositories",
-      "plural": false,
-      "selections": [
-        (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Repository",
-          "kind": "LinkedField",
-          "name": "nodes",
-          "plural": true,
-          "selections": (v2/*: any*/),
-          "storageKey": null
-        }
-      ],
-      "storageKey": "starredRepositories(first:1)"
     }
   ],
   "type": "User",
@@ -127,6 +97,6 @@ return {
 };
 })();
 
-(node as any).hash = "5b40086d9355904212ed89bc015b87c3";
+(node as any).hash = "d48d805139969b9b8e7b92e7fceb7845";
 
 export default node;

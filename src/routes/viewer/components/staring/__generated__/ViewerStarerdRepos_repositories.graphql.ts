@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1fb5fece0f512ea3d7818232918fb5f>>
+ * @generated SignedSource<<ed8fec9b7d62d660420061147c8b64e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
 export type RepositoryVisibility = "INTERNAL" | "PRIVATE" | "PUBLIC" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ViewerRepos_repositories$data = {
+export type ViewerStarerdRepos_repositories$data = {
   readonly id: string;
-  readonly repositories: {
+  readonly starredRepositories: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly description: string | null | undefined;
@@ -69,7 +69,7 @@ export type ViewerRepos_repositories$data = {
         readonly stargazerCount: number;
         readonly url: any;
         readonly visibility: RepositoryVisibility;
-      } | null | undefined;
+      };
     } | null | undefined> | null | undefined;
     readonly pageInfo: {
       readonly endCursor: string | null | undefined;
@@ -79,18 +79,18 @@ export type ViewerRepos_repositories$data = {
     };
     readonly totalCount: number;
   };
-  readonly " $fragmentType": "ViewerRepos_repositories";
+  readonly " $fragmentType": "ViewerStarerdRepos_repositories";
 };
-export type ViewerRepos_repositories$key = {
-  readonly " $data"?: ViewerRepos_repositories$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ViewerRepos_repositories">;
+export type ViewerStarerdRepos_repositories$key = {
+  readonly " $data"?: ViewerStarerdRepos_repositories$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ViewerStarerdRepos_repositories">;
 };
 
-import RepositoriesPaginationQuery_graphql from './RepositoriesPaginationQuery.graphql';
+import StarredRepositoriesPaginationQuery_graphql from './StarredRepositoriesPaginationQuery.graphql';
 
 const node: ReaderFragment = (function(){
 var v0 = [
-  "repositories"
+  "starredRepositories"
 ],
 v1 = {
   "alias": null,
@@ -133,14 +133,9 @@ return {
       "name": "first"
     },
     {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "isFork"
-    },
-    {
       "defaultValue": {
         "direction": "DESC",
-        "field": "PUSHED_AT"
+        "field": "STARRED_AT"
       },
       "kind": "LocalArgument",
       "name": "orderBy"
@@ -168,32 +163,27 @@ return {
       "fragmentPathInResult": [
         "node"
       ],
-      "operation": RepositoriesPaginationQuery_graphql,
+      "operation": StarredRepositoriesPaginationQuery_graphql,
       "identifierInfo": {
         "identifierField": "id",
         "identifierQueryVariableName": "id"
       }
     }
   },
-  "name": "ViewerRepos_repositories",
+  "name": "ViewerStarerdRepos_repositories",
   "selections": [
     {
-      "alias": "repositories",
+      "alias": "starredRepositories",
       "args": [
-        {
-          "kind": "Variable",
-          "name": "isFork",
-          "variableName": "isFork"
-        },
         {
           "kind": "Variable",
           "name": "orderBy",
           "variableName": "orderBy"
         }
       ],
-      "concreteType": "RepositoryConnection",
+      "concreteType": "StarredRepositoryConnection",
       "kind": "LinkedField",
-      "name": "__Repositories_repositories_connection",
+      "name": "__Viewer_starredRepositories_connection",
       "plural": false,
       "selections": [
         {
@@ -206,7 +196,7 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "RepositoryEdge",
+          "concreteType": "StarredRepositoryEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -583,6 +573,6 @@ return {
 };
 })();
 
-(node as any).hash = "cf69f8cc308993a262f69e52818c0bd3";
+(node as any).hash = "414f4cc33147c8a02c0a9d90ee0899db";
 
 export default node;

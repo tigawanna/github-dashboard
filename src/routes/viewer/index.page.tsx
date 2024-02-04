@@ -23,6 +23,8 @@ import {
 import { viewer_info$key } from "./__generated__/viewer_info.graphql";
 
 import { ViewerRepos_repositories$key } from "./components/repos/__generated__/ViewerRepos_repositories.graphql";
+import { ViewerStarerdRepos, ViewerStarerdReposFragment } from "./components/staring/ViewerStarerdRepos";
+import { ViewerStarerdRepos_repositories$data, ViewerStarerdRepos_repositories$key } from "./components/staring/__generated__/ViewerStarerdRepos_repositories.graphql";
 export default function ViewerPage({}: PageProps) {
   const { current } = useLocation();
 
@@ -54,6 +56,12 @@ export default function ViewerPage({}: PageProps) {
     RepositoriesFragment,
     query?.viewer,
   );
+  const starred_repo_fragment = useFragment<ViewerStarerdRepos_repositories$key>(
+    ViewerStarerdReposFragment,
+    query?.viewer,
+  );
+
+
   const counts = data;
   // console.log("counts ==== ", counts);
   return (
@@ -67,7 +75,7 @@ export default function ViewerPage({}: PageProps) {
             Repositories {repo_fragment?.repositories?.totalCount}
           </TabsTrigger>
           <TabsTrigger value="stars">
-            Staring {counts?.starredRepositories?.totalCount}
+            Starring {starred_repo_fragment?.starredRepositories?.totalCount}
           </TabsTrigger>
           <TabsTrigger value="following">
             Following {counts?.following?.totalCount}
@@ -76,11 +84,13 @@ export default function ViewerPage({}: PageProps) {
             Followers {counts?.followers?.totalCount}
           </TabsTrigger>
         </TabsList>
+
+
         <TabsContent value="repos" className="">
           <ViewerRepos viewer={query?.viewer} />
         </TabsContent>
         <TabsContent value="stars">
-          <h1 className="text-4xl font-bold ">Stars</h1>
+        <ViewerStarerdRepos viewer={query?.viewer}/>
         </TabsContent>
 
         <TabsContent value="following">
@@ -94,13 +104,12 @@ export default function ViewerPage({}: PageProps) {
   );
 }
 
-
-
 export const rootViewerquery = graphql`
   query viewerVIEWERQuery($isFork: Boolean, $orderBy: RepositoryOrder) {
     viewer {
       ...viewer_info
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
+      ...ViewerStarerdRepos_repositories
     }
   }
 `;
@@ -120,11 +129,6 @@ export const viewerVIEWERfragmant = graphql`
       }
     }
 
-    starredRepositories(first: 1) {
-      totalCount
-      nodes {
-        id
-      }
-    }
+
   }
 `;

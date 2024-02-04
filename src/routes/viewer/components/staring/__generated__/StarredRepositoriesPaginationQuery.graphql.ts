@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4e52f84a91db360e81debc6cb509de2>>
+ * @generated SignedSource<<9e3f65405736c17c68f150b35537d2dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,26 +11,25 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OrderDirection = "ASC" | "DESC" | "%future added value";
-export type RepositoryOrderField = "CREATED_AT" | "NAME" | "PUSHED_AT" | "STARGAZERS" | "UPDATED_AT" | "%future added value";
-export type RepositoryOrder = {
+export type StarOrderField = "STARRED_AT" | "%future added value";
+export type StarOrder = {
   direction: OrderDirection;
-  field: RepositoryOrderField;
+  field: StarOrderField;
 };
-export type RepositoriesPaginationQuery$variables = {
+export type StarredRepositoriesPaginationQuery$variables = {
   after?: string | null | undefined;
   first?: number | null | undefined;
   id: string;
-  isFork?: boolean | null | undefined;
-  orderBy?: RepositoryOrder | null | undefined;
+  orderBy?: StarOrder | null | undefined;
 };
-export type RepositoriesPaginationQuery$data = {
+export type StarredRepositoriesPaginationQuery$data = {
   readonly node: {
-    readonly " $fragmentSpreads": FragmentRefs<"ViewerRepos_repositories">;
+    readonly " $fragmentSpreads": FragmentRefs<"ViewerStarerdRepos_repositories">;
   } | null | undefined;
 };
-export type RepositoriesPaginationQuery = {
-  response: RepositoriesPaginationQuery$data;
-  variables: RepositoriesPaginationQuery$variables;
+export type StarredRepositoriesPaginationQuery = {
+  response: StarredRepositoriesPaginationQuery$data;
+  variables: StarredRepositoriesPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -50,77 +49,67 @@ v2 = {
   "name": "id"
 },
 v3 = {
-  "defaultValue": false,
-  "kind": "LocalArgument",
-  "name": "isFork"
-},
-v4 = {
   "defaultValue": {
     "direction": "DESC",
-    "field": "PUSHED_AT"
+    "field": "STARRED_AT"
   },
   "kind": "LocalArgument",
   "name": "orderBy"
 },
-v5 = [
+v4 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "id"
   }
 ],
-v6 = {
+v5 = {
   "kind": "Variable",
   "name": "first",
   "variableName": "first"
 },
-v7 = [
+v6 = [
   {
     "kind": "Variable",
     "name": "after",
     "variableName": "after"
   },
-  (v6/*: any*/),
-  {
-    "kind": "Variable",
-    "name": "isFork",
-    "variableName": "isFork"
-  },
+  (v5/*: any*/),
   {
     "kind": "Variable",
     "name": "orderBy",
     "variableName": "orderBy"
   }
 ],
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v12 = [
+v11 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -133,25 +122,24 @@ return {
       (v0/*: any*/),
       (v1/*: any*/),
       (v2/*: any*/),
-      (v3/*: any*/),
-      (v4/*: any*/)
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "RepositoriesPaginationQuery",
+    "name": "StarredRepositoriesPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
           {
-            "args": (v7/*: any*/),
+            "args": (v6/*: any*/),
             "kind": "FragmentSpread",
-            "name": "ViewerRepos_repositories"
+            "name": "ViewerStarerdRepos_repositories"
           }
         ],
         "storageKey": null
@@ -166,31 +154,30 @@ return {
       (v0/*: any*/),
       (v1/*: any*/),
       (v3/*: any*/),
-      (v4/*: any*/),
       (v2/*: any*/)
     ],
     "kind": "Operation",
-    "name": "RepositoriesPaginationQuery",
+    "name": "StarredRepositoriesPaginationQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v5/*: any*/),
+        "args": (v4/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "node",
         "plural": false,
         "selections": [
+          (v7/*: any*/),
           (v8/*: any*/),
-          (v9/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": (v7/*: any*/),
-                "concreteType": "RepositoryConnection",
+                "args": (v6/*: any*/),
+                "concreteType": "StarredRepositoryConnection",
                 "kind": "LinkedField",
-                "name": "repositories",
+                "name": "starredRepositories",
                 "plural": false,
                 "selections": [
                   {
@@ -203,7 +190,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "RepositoryEdge",
+                    "concreteType": "StarredRepositoryEdge",
                     "kind": "LinkedField",
                     "name": "edges",
                     "plural": true,
@@ -216,8 +203,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          (v8/*: any*/),
                           (v9/*: any*/),
-                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -246,7 +233,7 @@ return {
                             "name": "diskUsage",
                             "storageKey": null
                           },
-                          (v11/*: any*/),
+                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -276,7 +263,7 @@ return {
                             "name": "owner",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -284,8 +271,8 @@ return {
                                 "name": "login",
                                 "storageKey": null
                               },
-                              (v9/*: any*/),
-                              (v11/*: any*/),
+                              (v8/*: any*/),
+                              (v10/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -299,7 +286,7 @@ return {
                           {
                             "alias": null,
                             "args": [
-                              (v6/*: any*/)
+                              (v5/*: any*/)
                             ],
                             "concreteType": "LanguageConnection",
                             "kind": "LinkedField",
@@ -322,7 +309,7 @@ return {
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                      (v9/*: any*/),
+                                      (v8/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -330,7 +317,7 @@ return {
                                         "name": "color",
                                         "storageKey": null
                                       },
-                                      (v10/*: any*/)
+                                      (v9/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -342,7 +329,7 @@ return {
                           },
                           {
                             "alias": null,
-                            "args": (v12/*: any*/),
+                            "args": (v11/*: any*/),
                             "concreteType": "ReleaseConnection",
                             "kind": "LinkedField",
                             "name": "releases",
@@ -356,7 +343,7 @@ return {
                                 "name": "nodes",
                                 "plural": true,
                                 "selections": [
-                                  (v10/*: any*/),
+                                  (v9/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -364,7 +351,7 @@ return {
                                     "name": "publishedAt",
                                     "storageKey": null
                                   },
-                                  (v9/*: any*/)
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -421,8 +408,8 @@ return {
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                      (v10/*: any*/),
                                       (v9/*: any*/),
+                                      (v8/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -431,13 +418,13 @@ return {
                                         "name": "target",
                                         "plural": false,
                                         "selections": [
-                                          (v8/*: any*/),
+                                          (v7/*: any*/),
                                           {
                                             "kind": "InlineFragment",
                                             "selections": [
                                               {
                                                 "alias": null,
-                                                "args": (v12/*: any*/),
+                                                "args": (v11/*: any*/),
                                                 "concreteType": "CommitHistoryConnection",
                                                 "kind": "LinkedField",
                                                 "name": "history",
@@ -474,7 +461,7 @@ return {
                                                             "name": "author",
                                                             "plural": false,
                                                             "selections": [
-                                                              (v10/*: any*/)
+                                                              (v9/*: any*/)
                                                             ],
                                                             "storageKey": null
                                                           },
@@ -485,7 +472,7 @@ return {
                                                             "name": "message",
                                                             "storageKey": null
                                                           },
-                                                          (v9/*: any*/)
+                                                          (v8/*: any*/)
                                                         ],
                                                         "storageKey": null
                                                       }
@@ -499,7 +486,7 @@ return {
                                             "type": "Commit",
                                             "abstractKey": null
                                           },
-                                          (v9/*: any*/)
+                                          (v8/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -512,7 +499,7 @@ return {
                             ],
                             "storageKey": "refs(first:2,orderBy:{\"direction\":\"DESC\",\"field\":\"TAG_COMMIT_DATE\"},refPrefix:\"refs/heads/\")"
                           },
-                          (v8/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -570,15 +557,14 @@ return {
               },
               {
                 "alias": null,
-                "args": (v7/*: any*/),
+                "args": (v6/*: any*/),
                 "filters": [
-                  "orderBy",
-                  "isFork"
+                  "orderBy"
                 ],
                 "handle": "connection",
-                "key": "Repositories_repositories",
+                "key": "Viewer_starredRepositories",
                 "kind": "LinkedHandle",
-                "name": "repositories"
+                "name": "starredRepositories"
               }
             ],
             "type": "User",
@@ -590,16 +576,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3960fab6723d0d94df4b9ef80363640",
+    "cacheID": "ee6f4a875f2a84a9d973df2ae3124624",
     "id": null,
     "metadata": {},
-    "name": "RepositoriesPaginationQuery",
+    "name": "StarredRepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query StarredRepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $orderBy: StarOrder = {field: STARRED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerStarerdRepos_repositories_2IJuIk\n    id\n  }\n}\n\nfragment ViewerStarerdRepos_repositories_2IJuIk on User {\n  starredRepositories(first: $first, after: $after, orderBy: $orderBy) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cf69f8cc308993a262f69e52818c0bd3";
+(node as any).hash = "414f4cc33147c8a02c0a9d90ee0899db";
 
 export default node;

@@ -1,35 +1,24 @@
 import { graphql, usePaginationFragment } from "@/lib/graphql/relay/modules";
-import { ViewerRepos_repositories$key } from "./__generated__/ViewerRepos_repositories.graphql";
+import { ViewerStarerdRepos_repositories$key } from "./__generated__/ViewerStarerdRepos_repositories.graphql";
+import { Link } from "rakkasjs";
+import { Github, History, Lock, Star } from "lucide-react";
 import { SiVisualstudiocode } from "react-icons/si";
 import { FiActivity } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
-import { Link } from "rakkasjs";
-import { Github, History, Info, Lock, Star } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { FilterRepos } from "./components";
 dayjs.extend(relativeTime);
 
-interface ViewerReposProps {
-  viewer: ViewerRepos_repositories$key;
+interface ViewerStarerdReposProps {
+  viewer: ViewerStarerdRepos_repositories$key;
 }
 
-export function ViewerRepos({ viewer }: ViewerReposProps) {
-  const repo_fragment = usePaginationFragment<
-    any,
-    ViewerRepos_repositories$key
-  >(RepositoriesFragment, viewer);
-
-  const repo_response = repo_fragment.data?.repositories;
-  const repos = repo_response?.edges;
-
+export function ViewerStarerdRepos({viewer}: ViewerStarerdReposProps) {
+    const repo_fragment = usePaginationFragment<any,ViewerStarerdRepos_repositories$key>(ViewerStarerdReposFragment, viewer);
+    const repo_response = repo_fragment.data?.starredRepositories
+    const repos = repo_response?.edges;
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
-      {/* add filter controls */}
-      <div className="w-full border border-accent bg-base-200 sticky top-0">
-        <FilterRepos />
-      </div>
-
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
@@ -93,7 +82,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                       {repo?.description}
                     </div> */}
                     {repo?.releases?.nodes?.[0] && (
-                      <div className="w-full text-sm flex gap-3  overflow-clip">
+                      <div className="w-full text-sm flex gap-3 overflow-clip">
                         <span>Release: {repo?.releases?.nodes?.[0]?.name}</span>
                         <span>
                           {" "}
@@ -184,24 +173,19 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
   );
 }
 
-export const RepositoriesFragment = graphql`
-  fragment ViewerRepos_repositories on User
+export const ViewerStarerdReposFragment = graphql`
+  fragment ViewerStarerdRepos_repositories on User
   @argumentDefinitions(
     first: { type: "Int", defaultValue: 10 }
     after: { type: "String" }
     orderBy: {
-      type: "RepositoryOrder"
-      defaultValue: { field: PUSHED_AT, direction: DESC }
+      type: "StarOrder"
+      defaultValue: { field: STARRED_AT, direction: DESC }
     }
-    isFork: { type: "Boolean", defaultValue: false }
   )
-  @refetchable(queryName: "RepositoriesPaginationQuery") {
-    repositories(
-      first: $first
-      after: $after
-      orderBy: $orderBy
-      isFork: $isFork
-    ) @connection(key: "Repositories_repositories") {
+  @refetchable(queryName: "StarredRepositoriesPaginationQuery") {
+    starredRepositories(first: $first, after: $after, orderBy: $orderBy)
+      @connection(key: "Viewer_starredRepositories") {
       totalCount
       edges {
         node {
