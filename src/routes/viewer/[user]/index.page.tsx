@@ -38,6 +38,7 @@ export default function ViewerPage({ params }: PageProps) {
   return (
     <div className="w-full h-full   overflow-auto ">
       <GithubUserTabs
+      profile_info_key={query.user}
         user_info$key={query.user}
         viewerRepos_repositories$key={query.user}
         viewerStarerdRepos_repositories$key={query.user}
@@ -56,6 +57,7 @@ export const userQuery = graphql`
   ) {
     user(login: $login) {
       ...viewer_info
+      ...ProfileDetails
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
       ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
     }

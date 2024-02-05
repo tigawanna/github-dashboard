@@ -1,10 +1,11 @@
-import { graphql,useLazyLoadQuery} from "@/lib/graphql/relay/modules";
+import { graphql, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
 import { PageProps, useLocation } from "rakkasjs";
 import {
   RepositoryOrderField,
   viewerVIEWERQuery,
 } from "./__generated__/viewerVIEWERQuery.graphql";
 import { GithubUserTabs } from "./components/GithubUserTabs";
+import { ProfileDetails } from "./components/people/ProfileDetails";
 
 export default function ViewerPage({}: PageProps) {
   const { current } = useLocation();
@@ -24,14 +25,14 @@ export default function ViewerPage({}: PageProps) {
         field: order_by ?? "PUSHED_AT",
         direction: order_by_dir ?? "DESC",
       },
-      starOrder:{
-        direction:star_order_by_dir ?? "DESC",
-        field:"STARRED_AT"
-      }
+      starOrder: {
+        direction: star_order_by_dir ?? "DESC",
+        field: "STARRED_AT",
+      },
     },
     {
-      fetchKey:"viewer/usrrtabs",
-      fetchPolicy: "store-and-network"
+      fetchKey: "viewer/usrrtabs",
+      fetchPolicy: "store-and-network",
     },
   );
 
@@ -39,6 +40,7 @@ export default function ViewerPage({}: PageProps) {
     <div className="w-full h-full   overflow-auto ">
       <GithubUserTabs
         key="viewer/usrrtabs"
+        profile_info_key={query.viewer}
         user_info$key={query.viewer}
         viewerRepos_repositories$key={query.viewer}
         viewerStarerdRepos_repositories$key={query.viewer}
@@ -48,9 +50,14 @@ export default function ViewerPage({}: PageProps) {
 }
 
 export const rootViewerquery = graphql`
-  query viewerVIEWERQuery($isFork: Boolean, $orderBy: RepositoryOrder, $starOrder:StarOrder) {
+  query viewerVIEWERQuery(
+    $isFork: Boolean
+    $orderBy: RepositoryOrder
+    $starOrder: StarOrder
+  ) {
     viewer {
       ...viewer_info
+      ...ProfileDetails
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
       ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
     }

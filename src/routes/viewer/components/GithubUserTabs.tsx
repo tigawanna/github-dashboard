@@ -16,8 +16,11 @@ import { viewer_info$key } from "../__generated__/viewer_info.graphql";
 import { viewerVIEWERfragmant } from "../index.page";
 import { ViewerReposSuspenseFallback } from "./repos/components";
 import { Suspense } from "react";
+import { ProfileDetails } from "./people/ProfileDetails";
+import { ProfileDetails$key } from "./people/__generated__/ProfileDetails.graphql";
 
 interface GithubUserTabsProps {
+  profile_info_key: ProfileDetails$key | null | undefined;
   user_info$key: viewer_info$key | null | undefined;
   viewerRepos_repositories$key: ViewerRepos_repositories$key | null | undefined;
   viewerStarerdRepos_repositories$key:
@@ -27,6 +30,7 @@ interface GithubUserTabsProps {
 }
 
 export function GithubUserTabs({
+  profile_info_key,
   user_info$key,
   viewerRepos_repositories$key,
   viewerStarerdRepos_repositories$key,
@@ -49,6 +53,9 @@ export function GithubUserTabs({
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
+      {profile_info_key && (
+        <ProfileDetails profile_details_key={profile_info_key} />
+      )}
       <Tabs defaultValue="repos" className="w-full h-full ">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
           <TabsTrigger value="repos">
