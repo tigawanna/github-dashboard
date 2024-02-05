@@ -38,7 +38,7 @@ export default function ViewerPage({}: PageProps) {
   return (
     <div className="w-full h-full   overflow-auto ">
       <GithubUserTabs
-              key="viewer/usrrtabs"
+        key="viewer/usrrtabs"
         user_info$key={query.viewer}
         viewerRepos_repositories$key={query.viewer}
         viewerStarerdRepos_repositories$key={query.viewer}

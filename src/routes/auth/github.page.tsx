@@ -1,4 +1,4 @@
-import { setClientGHPATCookie} from "@/lib/cookies.client";
+import { setClientGHPATCookie } from "@/lib/cookies.client";
 import { GitHub, OAuth2RequestError } from "arctic";
 import { parse } from "cookie-es";
 import { Link, PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
@@ -33,18 +33,16 @@ export default function GithubAuthPage({ url }: PageProps) {
   });
 
   if (query.data?.data) {
-    console.log(" ==== query.data.data ====", query.data.data);
     const token = query.data.data.accessToken;
     if (typeof window !== "undefined" && typeof document !== "undefined") {
       qc.setQueryData("gh_token", token);
       document.cookie = `gh_token=${token}; max-age=31536000; path=/;`;
       // setClientGHPATCookie("gh_token",token);
       const return_to = parse(document?.cookie)?.return_to ?? "/";
-      console.log("===== return to to in github.page.tsx ======", return_to);
       return <Redirect href={return_to} />;
     }
   }
-console.log(" === query.data ==== ",query.data)
+
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-center">
       {query.data?.data && (

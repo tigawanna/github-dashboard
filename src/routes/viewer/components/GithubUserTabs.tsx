@@ -14,10 +14,11 @@ import { ViewerStarerdRepos_repositories$key } from "./staring/__generated__/Vie
 import { useFragment } from "@/lib/graphql/relay/modules";
 import { viewer_info$key } from "../__generated__/viewer_info.graphql";
 import { viewerVIEWERfragmant } from "../index.page";
-
+import { ViewerReposSuspenseFallback } from "./repos/components";
+import { Suspense } from "react";
 
 interface GithubUserTabsProps {
-  user_info$key: viewer_info$key  | null | undefined;
+  user_info$key: viewer_info$key | null | undefined;
   viewerRepos_repositories$key: ViewerRepos_repositories$key | null | undefined;
   viewerStarerdRepos_repositories$key:
     | ViewerStarerdRepos_repositories$key
@@ -26,7 +27,9 @@ interface GithubUserTabsProps {
 }
 
 export function GithubUserTabs({
-  user_info$key,viewerRepos_repositories$key,viewerStarerdRepos_repositories$key,
+  user_info$key,
+  viewerRepos_repositories$key,
+  viewerStarerdRepos_repositories$key,
 }: GithubUserTabsProps) {
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
@@ -64,12 +67,18 @@ export function GithubUserTabs({
 
         <TabsContent value="repos" className="">
           {viewerRepos_repositories$key && (
-            <ViewerRepos viewer={viewerRepos_repositories$key} />
+            <Suspense fallback={<ViewerReposSuspenseFallback />}>
+              <ViewerRepos viewer={viewerRepos_repositories$key} />
+            </Suspense>
           )}
         </TabsContent>
         <TabsContent value="stars">
           {viewerStarerdRepos_repositories$key && (
-            <ViewerStarerdRepos viewer={viewerStarerdRepos_repositories$key} />
+            <Suspense fallback={<ViewerReposSuspenseFallback />}>
+              <ViewerStarerdRepos
+                viewer={viewerStarerdRepos_repositories$key}
+              />
+            </Suspense>
           )}
         </TabsContent>
 
