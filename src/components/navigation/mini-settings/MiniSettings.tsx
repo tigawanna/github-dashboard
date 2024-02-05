@@ -13,61 +13,119 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 import {
   Redirect,
-  usePageContext,
   useQueryClient,
   useMutation,
   useSSQ,
   useLocation,
+  usePageContext,
+  useQuery,
+  navigate,
 } from "rakkasjs";
 import { Loader } from "lucide-react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
 import { ThemeToggle } from "./ThemeToggle";
+import {
+  deleteClientGHPATCookie,
+  setClientGHPATCookie,
+} from "@/lib/cookies.client";
+import { hotToast } from "@/components/wrappers/toast";
 
 interface MiniSettingsModalProps {}
 
 export function MiniSettingsModal({}: MiniSettingsModalProps) {
   const qc = useQueryClient();
   const { current } = useLocation();
-  const query = useSSQ(async (ctx) => {
-    try {
-      const gh_token = ctx.cookie?.gh_token;
-      if (!gh_token) {
-        return { viewer: null, error: "no github token" };
-      }
-      const viewer = await testGithubToken(gh_token);
-      // console.log("viewer ==== ",viewer?.data.viewer)
-      if (!viewer) {
-        return { viewer: null, error: "invalid github token" };
-      }
+  const { locals } = usePageContext();
 
-      return { viewer, error: null };
-    } catch (error: any) {
-      return { viewer: null, error: error.message };
-    }
+  // const query = useSSQ(async (ctx) => {
+  //   try {
+  //     const user = ctx.locals?.pb?.authStore?.model
+  //     const gh_token = user?.accessToken
+  //     console.log(" ===== mini settings user ,gh_token ==== ", user,gh_token);
+  //     if (!gh_token) {
+  //       return { viewer: null, error: "no github token" };
+  //     }
+  //     const viewer = await testGithubToken(gh_token);
+  //     // console.log("viewer ==== ",viewer?.data.viewer)
+  //     if (!viewer) {
+  //       return { viewer: null, error: "invalid github token" };
+  //     }
+
+  //     return { viewer, error: null };
+  //   } catch (error: any) {
+  //     return { viewer: null, error: error.message };
+  //   }
+  // });
+  const query = useQuery({
+    queryKey: "viewer",
+    queryFn: async (ctx) => {
+      try {
+        const user = ctx.locals?.pb?.authStore?.model;
+        const gh_token = user?.accessToken;
+
+        if (!gh_token) {
+          return { viewer: null, error: "no github token" };
+        }
+        const viewer = await testGithubToken(gh_token);
+        // console.log("viewer ==== ",viewer?.data.viewer)
+        if (!viewer) {
+          return { viewer: null, error: "invalid github token" };
+        }
+        return { viewer, error: null };
+      } catch (error: any) {
+        return { viewer: null, error: error.message };
+      }
+    },
   });
 
-  const mutation = useMutation(async () => {
-    try {
-      if (typeof window !== "undefined") {
-        document.cookie = `gh_token;`;
-        window.location.reload();
+  const mutation = useMutation(
+    async () => {
+      try {
+        await locals.pb.authStore.clear();
+        return { success: true, error: null };
+      } catch (error: any) {
+        // console.log("======== error loggin out of db ======= ", error);
+        return { success: false, error: error.message };
       }
-      return { success: true, error: null };
-    } catch (error: any) {
-      // console.log("======== error loggin out of db ======= ", error);
-      return { success: false, error: error.message };
-    }
-  });
+    },
+    {
+      onSuccess(data) {
+        if (data) {
+          if (data.error) {
+            hotToast({
+              title: "Something went wrong",
+              description: data.error,
+              type: "error",
+            });
+          }
+          if (data.success) {
+            hotToast({
+              title: "Logged out",
+              type: "success",
+            });
+            qc.invalidateQueries(["viewer"]);
+            const new_url = new URL(current);
+            new_url.pathname = "/auth";
+            new_url.searchParams.set(
+              "return_to",
+              current.pathname + current.search,
+            );
+            navigate(new_url.toString());
+            //  return <Redirect href={new_url.toString()} />;
+          }
+        }
+      },
+    },
+  );
   const viewer = query.data?.viewer?.data?.viewer;
 
-  console.log(" ====  logging out with url  ===== ", current.pathname);
-  if (mutation.data?.success) {
-    qc.invalidateQueries("gh_token");
-    const new_url = new URL(current);
-    new_url.pathname = "/auth";
-    new_url.searchParams.set("return_to", current.pathname + current.search);
-    return <Redirect href={new_url.toString()} />;
-  }
+  // console.log(" ====  logging out with url  ===== ", current.pathname);
+  // if (mutation.data?.success) {
+  //   const new_url = new URL(current);
+  //   new_url.pathname = "/auth";
+  //   new_url.searchParams.set("return_to", current.pathname + current.search);
+  //   return <Redirect href={new_url.toString()} />;
+  // }
 
   if (!viewer) {
     return null;

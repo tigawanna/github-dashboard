@@ -1,7 +1,7 @@
-import { setGHPATCookie } from "@/lib/cookie";
+import { setClientGHPATCookie} from "@/lib/cookies.client";
 import { GitHub, OAuth2RequestError } from "arctic";
 import { parse } from "cookie-es";
-import { PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
+import { Link, PageProps, Redirect, usePageContext, useSSQ } from "rakkasjs";
 export default function GithubAuthPage({ url }: PageProps) {
   const { queryClient: qc } = usePageContext();
 
@@ -31,30 +31,35 @@ export default function GithubAuthPage({ url }: PageProps) {
       return { data: null, error: "Authing error" };
     }
   });
-  if (query.data.data) {
+
+  if (query.data?.data) {
+    console.log(" ==== query.data.data ====", query.data.data);
     const token = query.data.data.accessToken;
-    // console.log(" ==== query.data.data in github.page ==== ", token);
-    // qc.setQueryData("gh_token",token);
     if (typeof window !== "undefined" && typeof document !== "undefined") {
       qc.setQueryData("gh_token", token);
-      document.cookie = `gh_token=${token};path=/;`;
-      const return_to = parse(document.cookie)?.return_to ?? "/";
-      // console.log("===== return to to in github.page.tsx ======", return_to);
+      document.cookie = `gh_token=${token}; max-age=31536000; path=/;`;
+      // setClientGHPATCookie("gh_token",token);
+      const return_to = parse(document?.cookie)?.return_to ?? "/";
+      console.log("===== return to to in github.page.tsx ======", return_to);
       return <Redirect href={return_to} />;
     }
   }
-
+console.log(" === query.data ==== ",query.data)
   return (
     <div className="w-full h-full min-h-screen flex items-center justify-center">
       {query.data?.data && (
         <div className="w-full h-full min-h-screen flex items-center justify-center">
-          GitHub access token
-          {query.data.data?.accessToken}
+          {/* GitHub access token
+          {query.data.data?.accessToken} */}
+          <h2 className="text-lg font-bold">Success</h2>
+          <Link href={parse(document?.cookie)?.return_to ?? "/"}>
+            Resume using
+          </Link>
         </div>
       )}
       {query.data?.error && (
         <div className="w-full h-full min-h-screen flex items-center justify-center">
-          {query.data.error}
+          {JSON.stringify(query?.data?.error)}
         </div>
       )}
     </div>

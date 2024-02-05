@@ -5,7 +5,7 @@ import {
   CardTitle,
   CardDescription,
   CardContent,
-  CardFooter,
+
 } from "@/components/shadcn/ui/card";
 import { Input } from "@/components/shadcn/ui/input";
 import { Label } from "@radix-ui/react-label";
@@ -16,6 +16,8 @@ import { useState } from "react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
 import { hotToast } from "@/components/wrappers/toast";
 import { GithubLoginButton } from "./components/GithubLoginButton";
+import { setClientGHPATCookie } from "@/lib/cookies.client";
+import { OAuthproviders } from "./components/OAuthProviders";
 
 interface ActionResultData {
   data: {
@@ -61,7 +63,8 @@ export default function LoginPage({ actionData }: PageProps) {
       }
       if (typeof window !=="undefined") {
         qc.setQueryData("gh_token", token);
-        document.cookie = `gh_token=${token};path=/;`;
+        // document.cookie = `gh_token=${token};path=/;`;
+        setClientGHPATCookie("gh_token",token);
         window.location.reload();
       }
     } catch (error:any) {
@@ -96,7 +99,7 @@ export default function LoginPage({ actionData }: PageProps) {
     <div className="flex flex-col gap-5  
     items-center justify-center overflow-auto glass rounded-xl p-4" >
       <h1 className="text-3xl font-bold">Authenticate</h1>
-      <form
+      {/* <form
         onSubmit={handleSubmit}
         className="w-full h-full flex items-center justify-center"
       >
@@ -125,22 +128,30 @@ export default function LoginPage({ actionData }: PageProps) {
                   {" "}
                   Connect{" "}
                   {mutation.isLoading && (
-                    <Loader className="animate-spin w-4 h-4" />
+                    <Loader className="animate-spin w-3 h-3" />
                   )}
                 </Button>
               </div>
             </div>
           </CardContent>
         </Card>
-      </form>
-      <div className="justify-center flex-col gap-3">
+      </form> */}
+      {/* <div className="justify-center flex-col gap-3">
         <div className="w-full flex items-center justify-center">
           <span className="w-full border-t border-accent" />
           <span className="px-2  min-w-fit">Or continue with Github Oauth2</span>
           <span className="w-full border-t border-accent" />
         </div>
         <GithubLoginButton />
-      </div>
+      </div> */}
+      {/* <div className="justify-center flex-col gap-3">
+        <div className="w-full flex items-center justify-center">
+          <span className="w-full border-t border-accent" />
+          <span className="px-2  min-w-fit">Or continue with Github Oauth2</span>
+          <span className="w-full border-t border-accent" />
+        </div>
+      </div> */}
+        <OAuthproviders/>
     </div>
     </div>
   );

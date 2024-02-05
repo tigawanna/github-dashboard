@@ -9,6 +9,7 @@ export function Sidebar({}: SidebarProps) {
     { name: "home", url: "/", icon: <Home /> },
     { name: "viewer", url: "/viewer", icon: <Github /> },
     { name: "test", url: "/test", icon: <TestTube/> },
+    { name: "pb", url: "/pb", icon: <TestTube/> },
   ];
   return (
     <header
@@ -22,7 +23,7 @@ export function Sidebar({}: SidebarProps) {
 
         <div className="flex flex-col gap-3 items-center divide-y-2">
           {routes.map((route) => {
-            if(route.name === "test" && !import.meta.env.DEV) return
+            if((route.name === "test"||route.name === "pb") && !import.meta.env.DEV) return
             return (
               <Link
                 key={route.name}

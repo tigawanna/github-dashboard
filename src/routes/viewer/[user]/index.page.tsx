@@ -30,8 +30,8 @@ export default function ViewerPage({ params }: PageProps) {
       },
     },
     {
-      // fetchKey,
-      // fetchPolicy: "store-and-network"
+      fetchKey:"user/usrrtabs",
+      fetchPolicy: "store-and-network"
     },
   );
 
@@ -41,6 +41,7 @@ export default function ViewerPage({ params }: PageProps) {
         user_info$key={query.user}
         viewerRepos_repositories$key={query.user}
         viewerStarerdRepos_repositories$key={query.user}
+        key="user/usrrtabs"
       />
     </div>
   );

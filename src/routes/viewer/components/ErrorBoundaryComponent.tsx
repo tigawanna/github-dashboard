@@ -4,18 +4,30 @@ interface ViewerErrorBoundaryComponentProps {
   children: React.ReactNode;
 }
 
-export default function ViewerErrorBoundaryComponent({children}: ViewerErrorBoundaryComponentProps) {
-  const {current} = useLocation()
+export default function ViewerErrorBoundaryComponent({
+  children,
+}: ViewerErrorBoundaryComponentProps) {
+  const { current, rendered } = useLocation();
   return (
     <ErrorBoundary
       fallbackRender={({
         error,
         resetErrorBoundary,
-      }: { error: Error;
-    resetErrorBoundary: () => void;
+      }: {
+        error: Error;
+        resetErrorBoundary: () => void;
       }) => {
-        const url = new URL("/auth", current)
-        return <Redirect href={url.toString()} />
+        if (
+          error.message &&
+          error.message.includes(
+            "Could not resolve to a User with the login of",
+          )
+        ) {
+          // console.log(" ===  current url  ==== ", current);
+          // console.log(" === rendered url  ==== ", rendered);
+          // const url = new URL("/auth", current)
+          return <Redirect href={"/viewer"} />;
+        }
         return (
           <div className="w-full h-full  flex flex-col gap-5 justify-center items-center">
             <h1 className="text-2xl text-error">Something went wrong</h1>
@@ -45,15 +57,8 @@ export default function ViewerErrorBoundaryComponent({children}: ViewerErrorBoun
   );
 }
 
+interface MIssingTokenErrorBoundaryComponentProps {}
 
-interface MIssingTokenErrorBoundaryComponentProps {
-
-}
-
-export function MIssingTokenErrorBoundaryComponent({}:MIssingTokenErrorBoundaryComponentProps){
-return (
- <div className='w-full h-full flex items-center justify-center'>
-
- </div>
-);
+export function MIssingTokenErrorBoundaryComponent({}: MIssingTokenErrorBoundaryComponentProps) {
+  return <div className="w-full h-full flex items-center justify-center"></div>;
 }

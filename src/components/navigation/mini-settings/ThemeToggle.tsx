@@ -9,6 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
+import { setClientGHPATCookie } from "@/lib/cookies.client";
 
 interface ThemeToggleModalProps {}
 
@@ -40,7 +41,7 @@ export function ThemeToggle({}: ThemeToggleModalProps) {
     if (window) {
       setTheme(newTheme);
       document?.documentElement?.setAttribute("data-theme", newTheme);
-      document.cookie = `theme=${newTheme}`;
+      setClientGHPATCookie("theme", newTheme);
     }
   };
 

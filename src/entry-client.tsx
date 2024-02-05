@@ -4,17 +4,37 @@ import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
 import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
 import {parse} from "cookie-es"
-
+import { PocketBaseClient } from "./lib/pb/client";
+import PocketBase from "pocketbase"
+import { CodeSquare } from "lucide-react";
+import {safeDestr} from "destr"
 const relay_data_form_server = (window as any)?.__RELAY_DATA__;
-// console.log(
-//   "  ===  entry-client relay_data_form_server =====",
-//   relay_data_form_server,
-// );
+
+export interface PB_AUTH {
+  token: string;
+  model: Model;
+}
+
+export interface Model {
+  accessToken: string
+  avatarUrl: string
+  collectionId: string
+  collectionName: string
+  created: string
+  email: string
+  emailVisibility: boolean
+  id: string
+  updated: string
+  username: string
+  verified: boolean
+}
+
 function createRelayEnvironment() {
+
   const cookie = parse(document?.cookie);
-  // console.log("===== document .cookie  === ",document.cookie)
-  // console.log(" ===== entry client cookies ===== ",cookie)
-  const token = cookie.gh_token;
+  const pb_auth = safeDestr<PB_AUTH>(cookie.pb_auth)
+  console.log(" ======  entry client cookie  ====== ",safeDestr<PB_AUTH>(cookie.pb_auth))
+  const token = pb_auth?.model?.accessToken
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
       fetchFn({
@@ -27,14 +47,13 @@ function createRelayEnvironment() {
   });
 }
 export const clientRelayEnvironment = createRelayEnvironment();
-// console.log("  ===  entry-client clientRelayEnvironment =====",clientRelayEnvironment);
-// const network = clientRelayEnvironment?.options;
-// console.log("=====  clientRelayEnvironment =====", network);
+
 startClient({
   hooks: {
     beforeStart() {
       // Do something before starting the client
     },
+    
     wrapApp(app) {
       return (
         <RelayEnvironmentProvider environment={clientRelayEnvironment}>
@@ -44,20 +63,17 @@ startClient({
     },
 
     extendPageContext(ctx) {
-      // if (document?.cookie) {
-      //   const cookie = parse(document?.cookie);
-      //   if (cookie) {
-      //     const pg_config = safeDestr<DbAuthProps>(cookie?.pg_cookie);
-      //     // console.log("  ===  entry-client pg_config =====", pg_config);
-      //     ctx.locals.pg = pg_config;
-      //     console.log("  ===  entry-client cooki_pg config =====", cookie,pg_config);
-      //     ctx.queryClient.setQueryData("pg_config", pg_config);
-      //   } else {
-      //     console.log("  ===  entry-client no cookie =====");
-      //     ctx.queryClient.setQueryData("pg_config", null);
-      //     ctx.locals.pg = null;
-      //   }
-      // }
+      if (!ctx.locals.pb) {
+        ctx.locals.pb = new PocketBase(
+          import.meta.env.RAKKAS_PB_URL,
+        ) as PocketBaseClient;
+        ctx.locals.pb?.authStore.onChange(() => {
+          ctx.requestContext?.setCookie?.(
+            "set-cookie",
+            ctx.locals.pb?.authStore.exportToCookie(),
+          );
+        });
+      }
     },
   },
 });

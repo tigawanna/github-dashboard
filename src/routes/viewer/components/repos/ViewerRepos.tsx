@@ -51,7 +51,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
                   <img
                     height={300}
                     width={300}
-                    className=" w-full md:h-[200px] object-cover"
+                    className=" w-full md:h-[200px] object-cover dark:brightness-50 hover:brightness-75"
                     loading="lazy"
                     src={repo?.openGraphImageUrl}
                   />

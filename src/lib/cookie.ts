@@ -1,7 +1,7 @@
 import { RequestContext } from "rakkasjs";
 
 export function setGHPATCookie(ctx: RequestContext<unknown>, value: string) {
-    ctx?.setCookie("gh_token", value, {
+  ctx?.setCookie("gh_token", value, {
     path: "/",
     secure: import.meta.env.PROD,
     httpOnly: false,
@@ -11,8 +11,9 @@ export function setGHPATCookie(ctx: RequestContext<unknown>, value: string) {
   // console.log( " ============= set pg cookie  ============ ", ctx.cookie?.pg_cookie);
 }
 export function deleteGHPATCookie(ctx: RequestContext<unknown>) {
-    ctx?.deleteCookie("gh_token", {
+  ctx?.deleteCookie("gh_token", {
     path: "/",
   });
   // console.log( " ============= deleted pg cookie  ============ ", ctx.cookie?.pg_cookie);
 }
+
