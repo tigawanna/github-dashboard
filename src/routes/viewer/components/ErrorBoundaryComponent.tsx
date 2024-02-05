@@ -1,4 +1,4 @@
-import { ErrorBoundary, Redirect, useLocation } from "rakkasjs";
+import { ErrorBoundary, Redirect, useLocation, Link, navigate } from "rakkasjs";
 
 interface ViewerErrorBoundaryComponentProps {
   children: React.ReactNode;
@@ -23,10 +23,21 @@ export default function ViewerErrorBoundaryComponent({
             "Could not resolve to a User with the login of",
           )
         ) {
+          //  resetErrorBoundary();
           // console.log(" ===  current url  ==== ", current);
           // console.log(" === rendered url  ==== ", rendered);
-          // const url = new URL("/auth", current)
-          return <Redirect href={"/viewer"} />;
+          // return <Redirect href={"/viewer"} />;
+          // Splits the current URL pathname by "/" and removes the last segment, then joins the remaining segments with "/" to create a new URL.
+
+          const url = current.pathname.split("/").slice(0, -1).join("/");
+          navigate(url, { replace: true });
+          // window.location.href = url.toString();
+          // history.back();
+          return (
+            <div className="w-full h-full  flex flex-col gap-5 justify-center items-center">
+              <h1 className="text-2xl text-error">Something went wrong</h1>
+            </div>
+          );
         }
         return (
           <div className="w-full h-full  flex flex-col gap-5 justify-center items-center">
