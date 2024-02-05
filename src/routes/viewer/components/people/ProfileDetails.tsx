@@ -10,6 +10,7 @@ import { useState } from "react";
 
 import { ProfileDetailsfollowMutation } from "./__generated__/ProfileDetailsfollowMutation.graphql";
 import { ProfileDetailsunfollowMutation } from "./__generated__/ProfileDetailsunfollowMutation.graphql";
+import { Button } from "@/components/shadcn/ui/button";
 dayjs.extend(relativeTime);
 
 interface ProfileDetailsProps {
@@ -47,7 +48,7 @@ export function ProfileDetails({ profile_details_key }: ProfileDetailsProps) {
   };
   return (
     <div className="w-full flex">
-      <div className="w-full   p-2  ">
+      <div className="w-full flex flex-col items-center justify-center  p-2  ">
         <div className="p-1 h-full w-full flex flex-col md:flex-row items-center">
           <img
             className="
@@ -76,7 +77,7 @@ export function ProfileDetails({ profile_details_key }: ProfileDetailsProps) {
               </div>
             </div>
 
-            <div className="text-[15px] w-full ">
+            <div className="w-full flex flex-wrap md:justify-center items-center gap-3 md:gap-2">
               <ProfileInfoItemWrapper
                 valkey="email"
                 value={extradetails?.email}
@@ -93,32 +94,31 @@ export function ProfileDetails({ profile_details_key }: ProfileDetailsProps) {
                 valkey={"twitter"}
                 value={extradetails?.twitter}
               />
+              <div className="flex">
+                {!admin ? (
+                  <div>
+                    {yes ? (
+                      <Button
+                        onClick={() => unfollowThem(user?.id as string)}
+                        className="
+                rounded-md   "
+                      >
+                        {"Unfollow"}
+                      </Button>
+                    ) : (
+                      <Button
+                        onClick={() => followThem(user?.id as string)}
+                        className="
+                   rounded-md "
+                      >
+                        {user?.isFollowingViewer ? "Follow back" : "Follow"}
+                      </Button>
+                    )}
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className="w-[95%] flex">
-          {!admin ? (
-            <div>
-              {yes ? (
-                <button
-                  onClick={() => unfollowThem(user?.id as string)}
-                  className="bg-slate-600 hover:bg-slate-800 text-white hover:text-red-200 
-                  text-[12px] rounded-md p-[4px] m-[3px] h-fit w-full "
-                >
-                  {"Unfollow"}
-                </button>
-              ) : (
-                <button
-                  onClick={() => followThem(user?.id as string)}
-                  className="bg-slate-600 hover:bg-slate-800 text-white hover:text-red-200 
-                  text-[12px] rounded-md p-[4px] m-[3px] h-fit "
-                >
-                  {user?.isFollowingViewer ? "Follow back" : "Follow"}
-                </button>
-              )}
-            </div>
-          ) : null}
         </div>
       </div>
     </div>
