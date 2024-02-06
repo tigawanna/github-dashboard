@@ -8,6 +8,7 @@ import { Github, History, Info, Lock, Star } from "lucide-react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FilterRepos } from "./components";
+import { LoadMoreButton } from "../shared";
 dayjs.extend(relativeTime);
 
 interface ViewerReposProps {
@@ -170,16 +171,8 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
             );
           })}
       </ul>
-      {repo_fragment.hasNext ? (
-        <button
-          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
-          onClick={() => {
-            repo_fragment.loadNext(10);
-          }}
-        >
-          {repo_fragment.isLoadingNext ? "loading..." : "  --- load more ---"}
-        </button>
-      ) : null}
+
+      <LoadMoreButton frag={repo_fragment} />
     </div>
   );
 }

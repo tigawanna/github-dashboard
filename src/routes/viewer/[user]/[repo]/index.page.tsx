@@ -6,8 +6,7 @@ import { Branches } from "./components/Branches";
 import { Stars } from "./components/Stars";
 import { GeneralInfo } from "./components/GeneralInfo";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
-import { ViewerRepos } from "../../components/repos/ViewerRepos";
-import { ViewerStarerdRepos } from "../../components/staring/ViewerStarerdRepos";
+
 export default function GithubUserPage({ params }: PageProps) {
   const user = params?.user;
   const repo = params?.repo;

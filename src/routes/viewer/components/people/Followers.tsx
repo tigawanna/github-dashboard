@@ -1,13 +1,9 @@
-import React from "react";
 import { FragmentRefs } from "relay-runtime";
 import { usePaginationFragment } from "react-relay";
-import { FollowersPaginationQuery } from "./__generated__/FollowersPaginationQuery.graphql";
-import {
-  Followers_followers$data,
-  Followers_followers$key,
-} from "./__generated__/Followers_followers.graphql";
+import { Followers_followers$key } from "./__generated__/Followers_followers.graphql";
 import { PersonCard } from "./PersonCard";
 import { graphql } from "@/lib/graphql/relay/modules";
+import { LoadMoreButton } from "../shared";
 
 interface FollowersProps {
   refs: {
@@ -18,11 +14,11 @@ interface FollowersProps {
 }
 
 export function Followers({ refs }: FollowersProps) {
-  const followers_data = usePaginationFragment<any, Followers_followers$key>(
+  const followers_fragment = usePaginationFragment<any, Followers_followers$key>(
     FollowersFragment,
     refs,
   );
-  const followers = followers_data.data;
+  const followers = followers_fragment.data;
 
   return (
     <div className="w-full flex flex-col justify-start h-full  ">
@@ -31,16 +27,8 @@ export function Followers({ refs }: FollowersProps) {
           return <PersonCard key={index} personRef={follow?.node} />;
         })}
       </div>
-      {followers_data.hasNext && !followers_data.isLoadingNext ? (
-        <button
-          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
-          onClick={() => {
-            followers_data.loadNext(10);
-          }}
-        >
-          --- load more --- {followers_data.isLoadingNext ? "loading..." : ""}
-        </button>
-      ) : null}
+
+      <LoadMoreButton frag={followers_fragment} />
     </div>
   );
 }

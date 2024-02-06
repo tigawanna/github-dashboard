@@ -8,6 +8,7 @@ import { BiGitRepoForked } from "react-icons/bi";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FilterStarredRepos } from "./components";
+import { LoadMoreButton } from "../shared";
 dayjs.extend(relativeTime);
 
 interface ViewerStarerdReposProps {
@@ -15,12 +16,12 @@ interface ViewerStarerdReposProps {
 }
 
 export function ViewerStarerdRepos({viewer}: ViewerStarerdReposProps) {
-    const repo_fragment = usePaginationFragment<any,ViewerStarerdRepos_repositories$key>(ViewerStarerdReposFragment, viewer);
-    const repo_response = repo_fragment.data?.starredRepositories
+    const viewer_repo_fragment = usePaginationFragment<any,ViewerStarerdRepos_repositories$key>(ViewerStarerdReposFragment, viewer);
+    const repo_response = viewer_repo_fragment.data?.starredRepositories
     const repos = repo_response?.edges;
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
-      <FilterStarredRepos/>
+      <FilterStarredRepos />
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
@@ -161,16 +162,8 @@ export function ViewerStarerdRepos({viewer}: ViewerStarerdReposProps) {
             );
           })}
       </ul>
-      {repo_fragment.hasNext ? (
-        <button
-          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
-          onClick={() => {
-            repo_fragment.loadNext(10);
-          }}
-        >
-          {repo_fragment.isLoadingNext ? "loading..." : "  --- load more ---"}
-        </button>
-      ) : null}
+
+      <LoadMoreButton frag={viewer_repo_fragment} />
     </div>
   );
 }

@@ -24,10 +24,6 @@ import {
 import { Loader } from "lucide-react";
 import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
 import { ThemeToggle } from "./ThemeToggle";
-import {
-  deleteClientGHPATCookie,
-  setClientGHPATCookie,
-} from "@/lib/cookies.client";
 import { hotToast } from "@/components/wrappers/toast";
 
 interface MiniSettingsModalProps {}

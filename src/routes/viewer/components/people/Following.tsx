@@ -3,6 +3,7 @@ import { usePaginationFragment } from "react-relay";
 import { PersonCard } from "./PersonCard";
 import { FragmentRefs } from "relay-runtime";
 import { graphql } from "@/lib/graphql/relay/modules";
+import { LoadMoreButton } from "../shared";
 interface FollowingProps {
   refs: {
     readonly " $fragmentSpreads": FragmentRefs<
@@ -12,11 +13,11 @@ interface FollowingProps {
 }
 
 export function Following({ refs }: FollowingProps) {
-  const following_data = usePaginationFragment<any, Following_following$key>(
+  const following_fragment = usePaginationFragment<any, Following_following$key>(
     FollowingFragment,
     refs,
   );
-  const following = following_data.data;
+  const following = following_fragment.data;
 
   return (
     <div className=" w-full flex flex-col justify-start h-full ">
@@ -31,17 +32,7 @@ export function Following({ refs }: FollowingProps) {
           );
         })}
       </div>
-
-      {following_data.hasNext && !following_data.isLoadingNext ? (
-        <button
-          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
-          onClick={() => {
-            following_data.loadNext(10);
-          }}
-        >
-          --- load more --- {following_data.isLoadingNext ? "loading..." : ""}
-        </button>
-      ) : null}
+    <LoadMoreButton frag={following_fragment} />
     </div>
   );
 }
