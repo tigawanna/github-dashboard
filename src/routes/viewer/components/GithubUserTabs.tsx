@@ -12,50 +12,51 @@ import {
 import { ViewerRepos_repositories$key } from "./repos/__generated__/ViewerRepos_repositories.graphql";
 import { ViewerStarerdRepos_repositories$key } from "./staring/__generated__/ViewerStarerdRepos_repositories.graphql";
 import { useFragment } from "@/lib/graphql/relay/modules";
-import { viewer_info$key } from "../__generated__/viewer_info.graphql";
-import { viewerVIEWERfragmant } from "../index.page";
 import { ViewerReposSuspenseFallback } from "./repos/components";
 import { Suspense } from "react";
 import { ProfileDetails } from "./people/ProfileDetails";
-import { ProfileDetails$key } from "./people/__generated__/ProfileDetails.graphql";
-
+import { FollowingFragment } from "./people/Following";
+import { FollowersFragment } from "./people/Followers";
+import { FragmentRefs } from "relay-runtime";
+import { Following_following$key } from "./people/__generated__/Following_following.graphql";
+import { Followers_followers$key } from "./people/__generated__/Followers_followers.graphql";
 interface GithubUserTabsProps {
-  profile_info_key: ProfileDetails$key | null | undefined;
-  user_info$key: viewer_info$key | null | undefined;
-  viewerRepos_repositories$key: ViewerRepos_repositories$key | null | undefined;
-  viewerStarerdRepos_repositories$key:
-    | ViewerStarerdRepos_repositories$key
-    | null
-    | undefined;
+  refs?: {
+    readonly " $fragmentSpreads": FragmentRefs<
+    | "ProfileDetails"
+    | "Followers_followers"
+    | "Following_following"
+    | "ViewerRepos_repositories"
+    | "ViewerStarerdRepos_repositories"
+    >
+  } | null;
+
 }
 
-export function GithubUserTabs({
-  profile_info_key,
-  user_info$key,
-  viewerRepos_repositories$key,
-  viewerStarerdRepos_repositories$key,
-}: GithubUserTabsProps) {
+export function GithubUserTabs({ refs }: GithubUserTabsProps) {
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
-    viewerRepos_repositories$key,
+    refs,
   );
   const starred_repo_fragment =
     useFragment<ViewerStarerdRepos_repositories$key>(
       ViewerStarerdReposFragment,
-      viewerStarerdRepos_repositories$key,
+      refs,
     );
-  const data = useFragment<viewer_info$key>(
-    viewerVIEWERfragmant,
-    user_info$key,
+  const followers_fragment = useFragment<Followers_followers$key>(
+    FollowersFragment,
+    refs,
+  );
+  const following_fragment = useFragment<Following_following$key>(
+    FollowingFragment,
+    refs,
   );
   return (
     <div className="w-full h-full   overflow-auto ">
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
-      {profile_info_key && (
-        <ProfileDetails profile_details_key={profile_info_key} />
-      )}
+      {refs && <ProfileDetails profile_details_key={refs} />}
       <Tabs defaultValue="repos" className="w-full h-full ">
         <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
           <TabsTrigger value="repos">
@@ -65,26 +66,24 @@ export function GithubUserTabs({
             Starring {starred_repo_fragment?.starredRepositories?.totalCount}
           </TabsTrigger>
           <TabsTrigger value="following">
-            Following {data?.following?.totalCount}
+            Following {following_fragment?.following?.totalCount}
           </TabsTrigger>
           <TabsTrigger value="followers">
-            Followers {data?.followers?.totalCount}
+            Followers {followers_fragment?.followers?.totalCount}
           </TabsTrigger>
         </TabsList>
 
         <TabsContent value="repos" className="">
-          {viewerRepos_repositories$key && (
+          {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
-              <ViewerRepos viewer={viewerRepos_repositories$key} />
+              <ViewerRepos viewer={refs} />
             </Suspense>
           )}
         </TabsContent>
         <TabsContent value="stars">
-          {viewerStarerdRepos_repositories$key && (
+          {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
-              <ViewerStarerdRepos
-                viewer={viewerStarerdRepos_repositories$key}
-              />
+              <ViewerStarerdRepos viewer={refs} />
             </Suspense>
           )}
         </TabsContent>

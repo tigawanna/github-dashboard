@@ -5,7 +5,6 @@ import {
   viewerVIEWERQuery,
 } from "./__generated__/viewerVIEWERQuery.graphql";
 import { GithubUserTabs } from "./components/GithubUserTabs";
-import { ProfileDetails } from "./components/people/ProfileDetails";
 
 export default function ViewerPage({}: PageProps) {
   const { current } = useLocation();
@@ -38,13 +37,7 @@ export default function ViewerPage({}: PageProps) {
 
   return (
     <div className="w-full h-full   overflow-auto ">
-      <GithubUserTabs
-        key="viewer/usrrtabs"
-        profile_info_key={query.viewer}
-        user_info$key={query.viewer}
-        viewerRepos_repositories$key={query.viewer}
-        viewerStarerdRepos_repositories$key={query.viewer}
-      />
+      <GithubUserTabs key="viewer/usrrtabs" refs={query.viewer} />
     </div>
   );
 }
@@ -56,27 +49,11 @@ export const rootViewerquery = graphql`
     $starOrder: StarOrder
   ) {
     viewer {
-      ...viewer_info
       ...ProfileDetails
+      ...Following_following
+      ...Followers_followers
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
       ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
-    }
-  }
-`;
-
-export const viewerVIEWERfragmant = graphql`
-  fragment viewer_info on User {
-    followers(first: 1) {
-      totalCount
-      nodes {
-        id
-      }
-    }
-    following(first: 1) {
-      totalCount
-      nodes {
-        id
-      }
     }
   }
 `;

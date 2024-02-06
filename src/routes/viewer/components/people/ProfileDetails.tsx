@@ -7,7 +7,6 @@ import { MdCorporateFare } from "react-icons/md";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useState } from "react";
-
 import { ProfileDetailsfollowMutation } from "./__generated__/ProfileDetailsfollowMutation.graphql";
 import { ProfileDetailsunfollowMutation } from "./__generated__/ProfileDetailsunfollowMutation.graphql";
 import { Button } from "@/components/shadcn/ui/button";

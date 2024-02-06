@@ -2,6 +2,7 @@ import RelayRuntime from "relay-runtime";
 import Relay from "react-relay";
 
 
+
 export const {
   RelayEnvironmentProvider,
   useMutation,
@@ -9,6 +10,7 @@ export const {
   useFragment,
   usePreloadedQuery,
   usePaginationFragment,
+
 } = Relay;
-export const { graphql} = RelayRuntime;
+export const { graphql } = RelayRuntime;
 

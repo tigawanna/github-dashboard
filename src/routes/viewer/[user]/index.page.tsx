@@ -30,18 +30,15 @@ export default function ViewerPage({ params }: PageProps) {
       },
     },
     {
-      fetchKey:"user/usrrtabs",
-      fetchPolicy: "store-and-network"
+      fetchKey: "user/usrrtabs",
+      fetchPolicy: "store-and-network",
     },
   );
 
   return (
     <div className="w-full h-full   overflow-auto ">
       <GithubUserTabs
-      profile_info_key={query.user}
-        user_info$key={query.user}
-        viewerRepos_repositories$key={query.user}
-        viewerStarerdRepos_repositories$key={query.user}
+        refs={query.user}
         key="user/usrrtabs"
       />
     </div>
@@ -56,8 +53,9 @@ export const userQuery = graphql`
     $starOrder: StarOrder
   ) {
     user(login: $login) {
-      ...viewer_info
       ...ProfileDetails
+      ...Following_following
+      ...Followers_followers
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
       ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
     }
