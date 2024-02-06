@@ -25,8 +25,7 @@ export function Following({ refs }: FollowingProps) {
           return (
             <PersonCard
               key={index}
-              //@ts-ignore
-              dev={follow?.node}
+              // dev={follow?.node}
               personRef={follow?.node}
             />
           );

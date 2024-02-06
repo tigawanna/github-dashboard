@@ -5,9 +5,12 @@ import { PersonCard_user$data } from "./__generated__/PersonCard_user.graphql";
 import { Link } from "rakkasjs";
 import { graphql, useFragment, useMutation } from "@/lib/graphql/relay/modules";
 import { Button } from "@/components/shadcn/ui/button";
+import { FragmentRefs } from "relay-runtime";
 
 interface PersonCardProps {
-  personRef: any;
+  personRef?: {
+    readonly " $fragmentSpreads": FragmentRefs<"PersonCard_user">;
+  } | null;
 }
 
 export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
