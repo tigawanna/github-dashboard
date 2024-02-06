@@ -6,7 +6,6 @@ import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
 import {parse} from "cookie-es"
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase"
-import { CodeSquare } from "lucide-react";
 import {safeDestr} from "destr"
 const relay_data_form_server = (window as any)?.__RELAY_DATA__;
 
