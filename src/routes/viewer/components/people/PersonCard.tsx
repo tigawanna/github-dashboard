@@ -25,16 +25,12 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
   const followThem = (their_id: string) => {
     setYes(true);
     followMutation({ variables: { input: { userId: their_id } } });
-    // followUser(their_name, token);
-    // followMutation.mutate({input:{userId:their_id}})
   };
   const unfollowThem = (their_id: string) => {
     setYes(false);
     unfollowMutation({ variables: { input: { userId: their_id } } });
-    // unfollowUser(their_name, token);
-    // unfollowMutation.mutate({input:{userId:their_id}})
   };
-  // console.log("dev.login",dev.login)
+
   return (
     <div
       className="bg-base-300 rounded-lg flex-grow  w-[95%] md:w-[40%] xl:w-[30%]  flex-wrap
@@ -46,7 +42,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
        hover:shadow-md border-[1px]  rounded-sm"
       >
         <Link
-          href={"/profile/" + dev?.login}
+          href={"/viewer/" + dev?.login}
           className="hover:text-secondary hover:bg-base-200 p-2"
         >
           <div className=" flex items-center justify-between min-w-[60%] cursor-pointer w-full">

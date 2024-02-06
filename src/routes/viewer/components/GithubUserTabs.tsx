@@ -54,7 +54,7 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
     return null;
   }
   return (
-    <div className="w-full h-full    ">
+    <div className="w-full">
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
