@@ -15,22 +15,21 @@ import { useFragment } from "@/lib/graphql/relay/modules";
 import { ViewerReposSuspenseFallback } from "./repos/components";
 import { Suspense } from "react";
 import { ProfileDetails } from "./people/ProfileDetails";
-import { FollowingFragment } from "./people/Following";
-import { FollowersFragment } from "./people/Followers";
+import { Following, FollowingFragment } from "./people/Following";
+import { Followers, FollowersFragment } from "./people/Followers";
 import { FragmentRefs } from "relay-runtime";
 import { Following_following$key } from "./people/__generated__/Following_following.graphql";
 import { Followers_followers$key } from "./people/__generated__/Followers_followers.graphql";
 interface GithubUserTabsProps {
   refs?: {
     readonly " $fragmentSpreads": FragmentRefs<
-    | "ProfileDetails"
-    | "Followers_followers"
-    | "Following_following"
-    | "ViewerRepos_repositories"
-    | "ViewerStarerdRepos_repositories"
-    >
+      | "ProfileDetails"
+      | "Followers_followers"
+      | "Following_following"
+      | "ViewerRepos_repositories"
+      | "ViewerStarerdRepos_repositories"
+    >;
   } | null;
-
 }
 
 export function GithubUserTabs({ refs }: GithubUserTabsProps) {
@@ -51,8 +50,11 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
     FollowingFragment,
     refs,
   );
+  if (!refs) {
+    return null;
+  }
   return (
-    <div className="w-full h-full   overflow-auto ">
+    <div className="w-full h-full    ">
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
         <ViewerRepos />
       </Suspense> */}
@@ -89,10 +91,10 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
         </TabsContent>
 
         <TabsContent value="following">
-          <h1 className="text-4xl font-bold ">Following who</h1>
+          <Following refs={refs} />
         </TabsContent>
         <TabsContent value="followers">
-          <h1 className="text-4xl font-bold ">Followers</h1>
+          <Followers refs={refs} />
         </TabsContent>
       </Tabs>
     </div>

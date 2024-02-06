@@ -7,14 +7,12 @@ import {
   Followers_followers$key,
 } from "./__generated__/Followers_followers.graphql";
 import { PersonCard } from "./PersonCard";
-import { graphql, useFragment, useMutation } from "@/lib/graphql/relay/modules";
+import { graphql } from "@/lib/graphql/relay/modules";
 
 interface FollowersProps {
   refs: {
     readonly " $fragmentSpreads": FragmentRefs<
-      | "Followers_followers"
-      | "Following_following"
-      | "Repositories_repositories"
+      "Followers_followers" | "Following_following"
     >;
   } | null;
 }
@@ -27,8 +25,8 @@ export function Followers({ refs }: FollowersProps) {
   const followers = followers_data.data;
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-start h-full mb-5 ">
-      <div className="h-fit w-full flex-center  flex-wrap">
+    <div className="w-full flex flex-col justify-start h-full  ">
+      <div className="flex flex-wrap gap-5 w-full items-center justify-center">
         {followers?.followers?.edges?.map((follow, index) => {
           return <PersonCard key={index} personRef={follow?.node} />;
         })}

@@ -6,9 +6,7 @@ import { graphql } from "@/lib/graphql/relay/modules";
 interface FollowingProps {
   refs: {
     readonly " $fragmentSpreads": FragmentRefs<
-      | "Followers_followers"
-      | "Following_following"
-      | "Repositories_repositories"
+      "Followers_followers" | "Following_following"
     >;
   } | null;
 }
@@ -21,8 +19,8 @@ export function Following({ refs }: FollowingProps) {
   const following = following_data.data;
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-start h-full mb-5 ">
-      <div className="h-fit w-full flex-center  flex-wrap">
+    <div className=" w-full flex flex-col justify-start h-full ">
+      <div className="flex flex-wrap gap-5 w-full items-center justify-center">
         {following?.following?.edges?.map((follow, index) => {
           return (
             <PersonCard
@@ -59,7 +57,6 @@ export const FollowingFragment = graphql`
     following(first: $first, after: $after)
       @connection(key: "Following_following") {
       edges {
- 
         node {
           ...PersonCard_user
         }
