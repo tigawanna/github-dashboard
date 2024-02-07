@@ -7,6 +7,7 @@ import { ViewerRepos_repositories$data } from "./__generated__/ViewerRepos_repos
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { RepositoryActions } from "./RepositoryActions";
 dayjs.extend(relativeTime);
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
@@ -22,13 +23,12 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
   const repo = edge?.node;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
-  const CAN_STAR = repo.owner.login
-  const CAN_DELETE = repo.viewerCanAdminister
+
   return (
     <li
       key={edge?.node?.id}
       className="bg-base-300 rounded-lg flex-grow
-                min-h-fit  md:h-[400px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
+                min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1"
     >
       <div
@@ -43,36 +43,46 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
           loading="lazy"
           src={repo?.openGraphImageUrl}
         />
-        <Link
-          href={"/viewer/" + repo.nameWithOwner}
-          className="w-full bg-base-200 p-2 hover:bg-accent/20 flex flex-col gap-2"
-        >
-          <div className=" break-all flex flex-col justify-center ">
-            <div className="text-2xl font-bold">{repo?.name}</div>
-            <div className="flex gap-1 items-center">
-              <div className="text-sm line-clamp-1">{repo.description}</div>
+        <div className="flex gap-3 bg-base-200">
+          <Link
+            href={"/viewer/" + repo.nameWithOwner}
+            className="w-full  p-2 hover:bg-accent/20 flex flex-col gap-2"
+          >
+            <div className=" break-all flex flex-col justify-center ">
+              <div className="text-2xl font-bold">{repo?.name}</div>
+              <div className="flex gap-1 items-center">
+                <div className="text-sm line-clamp-1">{repo.description}</div>
+              </div>
             </div>
-          </div>
 
-          <div className="flex truncate  gap-1">
-            {repo?.languages?.edges?.map((item) => {
-              if (!item) return null;
-              return (
-                <div
-                  key={item.node.id}
-                  style={{
-                    borderStyle: "solid",
-                    borderWidth: "1px",
-                    borderColor: item?.node?.color ?? "",
-                  }}
-                  className="p-[1px] m-[1px] rounded-lg text-xs  break-all px-1"
-                >
-                  {item.node.name}
-                </div>
-              );
-            })}
-          </div>
-        </Link>
+            <div className="flex truncate  gap-1">
+              {repo?.languages?.edges?.map((item) => {
+                if (!item) return null;
+                return (
+                  <div
+                    key={item.node.id}
+                    style={{
+                      borderStyle: "solid",
+                      borderWidth: "1px",
+                      borderColor: item?.node?.color ?? "",
+                    }}
+                    className="p-[1px] m-[1px] rounded-lg text-xs  break-all px-1"
+                  >
+                    {item.node.name}
+                  </div>
+                );
+              })}
+            </div>
+          </Link>
+          <RepositoryActions
+            owner={repo.owner.login}
+            local_viewer={local_viewer}
+            viewerCanAdminister={repo.viewerCanAdminister}
+            viewerHasStarred={repo.viewerHasStarred}
+            isFork={repo.isFork}
+            forkingAllowed={repo.forkingAllowed}
+          />
+        </div>
         {/*  description and last commit message */}
         <div className="w-full flex flex-col p-1 gap-2">
           {/* <div className="text-sm md:text-sm brightness-75 break-word overflow-y-clip line-clamp-3 ">

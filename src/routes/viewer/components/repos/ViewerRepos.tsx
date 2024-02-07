@@ -69,7 +69,8 @@ export const RepositoriesFragment = graphql`
           visibility
           forkCount
           openGraphImageUrl
-
+          forkingAllowed
+          isFork
           viewerHasStarred
           viewerPermission
           viewerCanAdminister

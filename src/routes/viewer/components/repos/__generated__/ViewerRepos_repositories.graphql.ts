@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d4dd322ea8c34696ead9bc2e4c92e16>>
+ * @generated SignedSource<<5ac40901db5930d82bc9663c9785e233>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,9 @@ export type ViewerRepos_repositories$data = {
         readonly description: string | null | undefined;
         readonly diskUsage: number | null | undefined;
         readonly forkCount: number;
+        readonly forkingAllowed: boolean;
         readonly id: string;
+        readonly isFork: boolean;
         readonly languages: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -273,6 +275,20 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "openGraphImageUrl",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "forkingAllowed",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isFork",
                   "storageKey": null
                 },
                 {
@@ -608,6 +624,6 @@ return {
 };
 })();
 
-(node as any).hash = "cf7712cf7403a0ed685d6c447bfabca4";
+(node as any).hash = "3bd896a89c41454add82e6f9eabf153f";
 
 export default node;
