@@ -8,9 +8,9 @@ import { RepositoriesFragment, ViewerRepos } from "./repos/ViewerRepos";
 import {
   ViewerStarerdRepos,
   ViewerStarerdReposFragment,
-} from "./staring/ViewerStarerdRepos";
+} from "./repos/ViewerStarerdRepos";
 import { ViewerRepos_repositories$key } from "./repos/__generated__/ViewerRepos_repositories.graphql";
-import { ViewerStarerdRepos_repositories$key } from "./staring/__generated__/ViewerStarerdRepos_repositories.graphql";
+
 import { useFragment } from "@/lib/graphql/relay/modules";
 import { ViewerReposSuspenseFallback } from "./repos/components";
 import { Suspense } from "react";
@@ -21,6 +21,7 @@ import { FragmentRefs } from "relay-runtime";
 import { Following_following$key } from "./people/__generated__/Following_following.graphql";
 import { Followers_followers$key } from "./people/__generated__/Followers_followers.graphql";
 import { useViewer } from "@/lib/pb/hooks/useViewer";
+import { ViewerStarerdRepos_repositories$key } from "./repos/__generated__/ViewerStarerdRepos_repositories.graphql";
 interface GithubUserTabsProps {
   refs?: {
     readonly " $fragmentSpreads": FragmentRefs<
@@ -34,7 +35,7 @@ interface GithubUserTabsProps {
 }
 
 export function GithubUserTabs({ refs }: GithubUserTabsProps) {
-  const {data} = useViewer();
+  const { data } = useViewer();
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
     refs,
@@ -55,6 +56,7 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
   if (!refs) {
     return null;
   }
+  const viewer = data?.viewer;
   return (
     <div className="w-full">
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>
@@ -80,14 +82,14 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
         <TabsContent value="repos" className="">
           {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
-              <ViewerRepos viewer={refs} />
+              <ViewerRepos viewer={refs} local_viewer={data.viewer} />
             </Suspense>
           )}
         </TabsContent>
         <TabsContent value="stars">
           {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
-              <ViewerStarerdRepos viewer={refs} />
+              <ViewerStarerdRepos viewer={refs} local_viewer={data.viewer} />
             </Suspense>
           )}
         </TabsContent>

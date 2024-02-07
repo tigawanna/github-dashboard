@@ -57,7 +57,8 @@ export const userQuery = graphql`
       ...Following_following
       ...Followers_followers
       ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-      ...ViewerStarerdRepos_repositories @arguments(orderBy: $starOrder)
+      ...ViewerStarerdRepos_repositories
+        @arguments(orderByStarredRepos: $starOrder)
     }
   }
 `;

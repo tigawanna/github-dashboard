@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<203dadd98548004dab8613e81559a61a>>
+ * @generated SignedSource<<c06ce5d71a94f98e0bc2d917673253e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,12 +129,12 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after"
+      "name": "afterStarredRepo"
     },
     {
       "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "first"
+      "name": "firstStarredRepos"
     },
     {
       "defaultValue": {
@@ -142,15 +142,15 @@ return {
         "field": "STARRED_AT"
       },
       "kind": "LocalArgument",
-      "name": "orderBy"
+      "name": "orderByStarredRepos"
     }
   ],
   "kind": "Fragment",
   "metadata": {
     "connection": [
       {
-        "count": "first",
-        "cursor": "after",
+        "count": "firstStarredRepos",
+        "cursor": "afterStarredRepo",
         "direction": "forward",
         "path": (v0/*: any*/)
       }
@@ -158,8 +158,8 @@ return {
     "refetch": {
       "connection": {
         "forward": {
-          "count": "first",
-          "cursor": "after"
+          "count": "firstStarredRepos",
+          "cursor": "afterStarredRepo"
         },
         "backward": null,
         "path": (v0/*: any*/)
@@ -182,7 +182,7 @@ return {
         {
           "kind": "Variable",
           "name": "orderBy",
-          "variableName": "orderBy"
+          "variableName": "orderByStarredRepos"
         }
       ],
       "concreteType": "StarredRepositoryConnection",
@@ -317,9 +317,9 @@ return {
                   "alias": null,
                   "args": [
                     {
-                      "kind": "Variable",
+                      "kind": "Literal",
                       "name": "first",
-                      "variableName": "first"
+                      "value": 20
                     }
                   ],
                   "concreteType": "LanguageConnection",
@@ -359,7 +359,7 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": null
+                  "storageKey": "languages(first:20)"
                 },
                 {
                   "alias": null,
@@ -598,6 +598,6 @@ return {
 };
 })();
 
-(node as any).hash = "f83b2a8a86bed197fac594b0c1cfa1f9";
+(node as any).hash = "dee8615621140bde395d741e802d858d";
 
 export default node;

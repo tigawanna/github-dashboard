@@ -3,12 +3,14 @@ import { ViewerRepos_repositories$key } from "./__generated__/ViewerRepos_reposi
 import { FilterRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
+import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
 
 interface ViewerReposProps {
   viewer: ViewerRepos_repositories$key;
+  local_viewer:LocalViewer|null
 }
 
-export function ViewerRepos({ viewer }: ViewerReposProps) {
+export function ViewerRepos({ viewer,local_viewer }: ViewerReposProps) {
   const repo_fragment = usePaginationFragment<
     any,
     ViewerRepos_repositories$key
@@ -27,7 +29,7 @@ export function ViewerRepos({ viewer }: ViewerReposProps) {
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
-            return <RepoCard key={edge?.node?.id} edge={edge} />;
+            return <RepoCard key={edge?.node?.id} edge={edge}  local_viewer={local_viewer}/>;
           })}
       </ul>
 
@@ -72,7 +74,6 @@ export const RepositoriesFragment = graphql`
           viewerPermission
           viewerCanAdminister
 
-        
           owner {
             login
             id
@@ -80,7 +81,7 @@ export const RepositoriesFragment = graphql`
             avatarUrl
           }
 
-          languages(first: $first) {
+          languages(first: 20) {
             edges {
               node {
                 id

@@ -61,6 +61,15 @@ export async function fetchFn({ fetchVars:{request,variables},token}: RelayeFetc
   }
 };
 
+
+ export interface LocalViewer{
+   login: string;
+   name: string;
+   avatarUrl: string;
+   email: string;
+ }
+
+
 export async function testGithubToken(gh_token: string) {
   try {
     const viewer = await fetch("https://api.github.com/graphql", {

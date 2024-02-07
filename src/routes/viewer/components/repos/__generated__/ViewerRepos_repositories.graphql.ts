@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6039d5a120b099f1765773f4c402ef91>>
+ * @generated SignedSource<<8d4dd322ea8c34696ead9bc2e4c92e16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -327,9 +327,9 @@ return {
                   "alias": null,
                   "args": [
                     {
-                      "kind": "Variable",
+                      "kind": "Literal",
                       "name": "first",
-                      "variableName": "first"
+                      "value": 20
                     }
                   ],
                   "concreteType": "LanguageConnection",
@@ -369,7 +369,7 @@ return {
                       "storageKey": null
                     }
                   ],
-                  "storageKey": null
+                  "storageKey": "languages(first:20)"
                 },
                 {
                   "alias": null,
@@ -608,6 +608,6 @@ return {
 };
 })();
 
-(node as any).hash = "47dbb8779c319fb0180c1ec6db3b5a0c";
+(node as any).hash = "cf7712cf7403a0ed685d6c447bfabca4";
 
 export default node;

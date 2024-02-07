@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
-import { useRepoSearchQuery } from "./hooks";
+import { useRepoSearchQuery, useStarredRepoSearchQuery } from "./hooks";
 import { RepositoryOrderField } from "./__generated__/RepositoriesPaginationQuery.graphql";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 
@@ -114,6 +114,35 @@ export function FilterRepos({}: FilterReposProps) {
         >
           is fork
         </label>
+      </div>
+    </div>
+  );
+}
+
+
+export function FilterStarredRepos({}: FilterReposProps) {
+  const { params, setParams } = useStarredRepoSearchQuery();
+
+  return (
+    <div className="w-full h-full flex items-center justify-center gap-3 px-2">
+      <div className="w-full h-full flex items-center justify-center">
+        <Select
+          value={params.sDir}
+          onValueChange={(value: "ASC" | "DESC") =>
+            setParams({ ...params, sDir: value })
+          }
+        >
+          <SelectTrigger className="w-full">
+            <SelectValue placeholder="Direction" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectGroup>
+              <SelectLabel>Direction</SelectLabel>
+              <SelectItem value="ASC">ASC</SelectItem>
+              <SelectItem value="DESC">DESC</SelectItem>
+            </SelectGroup>
+          </SelectContent>
+        </Select>
       </div>
     </div>
   );

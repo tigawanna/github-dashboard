@@ -6,6 +6,7 @@ import { Github, History, Info, Lock, Star } from "lucide-react";
 import { ViewerRepos_repositories$data } from "./__generated__/ViewerRepos_repositories.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
 dayjs.extend(relativeTime);
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
@@ -14,9 +15,10 @@ type ReadonlyToRegular<T> = T extends ReadonlyArray<infer U> ? Array<U> : never;
 type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
+  local_viewer: LocalViewer | null;
 }
 
-export function RepoCard({ edge }: RepoCardProps) {
+export function RepoCard({ edge,local_viewer }: RepoCardProps) {
   const repo = edge?.node;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;

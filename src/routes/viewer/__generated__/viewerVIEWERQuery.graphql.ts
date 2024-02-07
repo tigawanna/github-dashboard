@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6551412a4ed09a2fabf533eba9f1d01>>
+ * @generated SignedSource<<f111932bf6a729ae6d880969af86ac07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -65,131 +65,126 @@ v2 = {
   "variableName": "orderBy"
 },
 v3 = {
-  "kind": "Variable",
-  "name": "orderBy",
-  "variableName": "starOrder"
-},
-v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v6 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "login",
   "storageKey": null
 },
-v7 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "email",
   "storageKey": null
 },
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "bio",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "avatarUrl",
   "storageKey": null
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "company",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "twitterUsername",
   "storageKey": null
 },
-v12 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "createdAt",
   "storageKey": null
 },
-v13 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isFollowingViewer",
   "storageKey": null
 },
-v14 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "viewerIsFollowing",
   "storageKey": null
 },
-v15 = {
+v14 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "isViewer",
   "storageKey": null
 },
-v16 = {
+v15 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "location",
   "storageKey": null
 },
-v17 = {
+v16 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v18 = {
+v17 = {
   "kind": "Literal",
   "name": "first",
   "value": 10
 },
-v19 = [
-  (v18/*: any*/)
+v18 = [
+  (v17/*: any*/)
 ],
-v20 = {
+v19 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v21 = {
+v20 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cursor",
   "storageKey": null
 },
-v22 = {
+v21 = {
   "alias": null,
   "args": null,
   "concreteType": "PageInfo",
@@ -228,14 +223,14 @@ v22 = {
   ],
   "storageKey": null
 },
-v23 = {
+v22 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v24 = [
+v23 = [
   {
     "alias": null,
     "args": null,
@@ -252,6 +247,7 @@ v24 = [
         "name": "node",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
@@ -265,31 +261,30 @@ v24 = [
           (v14/*: any*/),
           (v15/*: any*/),
           (v16/*: any*/),
-          (v17/*: any*/),
-          (v20/*: any*/)
+          (v19/*: any*/)
         ],
         "storageKey": null
       },
-      (v21/*: any*/)
+      (v20/*: any*/)
     ],
     "storageKey": null
   },
-  (v22/*: any*/),
-  (v23/*: any*/)
+  (v21/*: any*/),
+  (v22/*: any*/)
 ],
-v25 = [
-  (v18/*: any*/),
+v24 = [
+  (v17/*: any*/),
   (v1/*: any*/),
   (v2/*: any*/)
 ],
-v26 = [
+v25 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 1
   }
 ],
-v27 = [
+v26 = [
   {
     "alias": null,
     "args": null,
@@ -298,8 +293,8 @@ v27 = [
     "name": "node",
     "plural": false,
     "selections": [
+      (v3/*: any*/),
       (v4/*: any*/),
-      (v5/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -328,7 +323,7 @@ v27 = [
         "name": "diskUsage",
         "storageKey": null
       },
-      (v17/*: any*/),
+      (v16/*: any*/),
       {
         "alias": null,
         "args": null,
@@ -379,17 +374,23 @@ v27 = [
         "name": "owner",
         "plural": false,
         "selections": [
-          (v20/*: any*/),
-          (v6/*: any*/),
-          (v4/*: any*/),
-          (v17/*: any*/),
-          (v9/*: any*/)
+          (v19/*: any*/),
+          (v5/*: any*/),
+          (v3/*: any*/),
+          (v16/*: any*/),
+          (v8/*: any*/)
         ],
         "storageKey": null
       },
       {
         "alias": null,
-        "args": (v19/*: any*/),
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "first",
+            "value": 20
+          }
+        ],
         "concreteType": "LanguageConnection",
         "kind": "LinkedField",
         "name": "languages",
@@ -411,7 +412,7 @@ v27 = [
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -419,7 +420,7 @@ v27 = [
                     "name": "color",
                     "storageKey": null
                   },
-                  (v5/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -427,11 +428,11 @@ v27 = [
             "storageKey": null
           }
         ],
-        "storageKey": "languages(first:10)"
+        "storageKey": "languages(first:20)"
       },
       {
         "alias": null,
-        "args": (v26/*: any*/),
+        "args": (v25/*: any*/),
         "concreteType": "ReleaseConnection",
         "kind": "LinkedField",
         "name": "releases",
@@ -445,7 +446,7 @@ v27 = [
             "name": "nodes",
             "plural": true,
             "selections": [
-              (v5/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -453,7 +454,7 @@ v27 = [
                 "name": "publishedAt",
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -510,8 +511,8 @@ v27 = [
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
                   (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -520,13 +521,13 @@ v27 = [
                     "name": "target",
                     "plural": false,
                     "selections": [
-                      (v20/*: any*/),
+                      (v19/*: any*/),
                       {
                         "kind": "InlineFragment",
                         "selections": [
                           {
                             "alias": null,
-                            "args": (v26/*: any*/),
+                            "args": (v25/*: any*/),
                             "concreteType": "CommitHistoryConnection",
                             "kind": "LinkedField",
                             "name": "history",
@@ -563,7 +564,7 @@ v27 = [
                                         "name": "author",
                                         "plural": false,
                                         "selections": [
-                                          (v5/*: any*/)
+                                          (v4/*: any*/)
                                         ],
                                         "storageKey": null
                                       },
@@ -574,7 +575,7 @@ v27 = [
                                         "name": "message",
                                         "storageKey": null
                                       },
-                                      (v4/*: any*/)
+                                      (v3/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -588,7 +589,7 @@ v27 = [
                         "type": "Commit",
                         "abstractKey": null
                       },
-                      (v4/*: any*/)
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -601,15 +602,19 @@ v27 = [
         ],
         "storageKey": "refs(first:2,orderBy:{\"direction\":\"DESC\",\"field\":\"TAG_COMMIT_DATE\"},refPrefix:\"refs/heads/\")"
       },
-      (v20/*: any*/)
+      (v19/*: any*/)
     ],
     "storageKey": null
   },
-  (v21/*: any*/)
+  (v20/*: any*/)
 ],
-v28 = [
-  (v18/*: any*/),
-  (v3/*: any*/)
+v27 = [
+  (v17/*: any*/),
+  {
+    "kind": "Variable",
+    "name": "orderBy",
+    "variableName": "starOrder"
+  }
 ];
 return {
   "fragment": {
@@ -651,7 +656,11 @@ return {
           },
           {
             "args": [
-              (v3/*: any*/)
+              {
+                "kind": "Variable",
+                "name": "orderByStarredRepos",
+                "variableName": "starOrder"
+              }
             ],
             "kind": "FragmentSpread",
             "name": "ViewerStarerdRepos_repositories"
@@ -677,6 +686,7 @@ return {
         "name": "viewer",
         "plural": false,
         "selections": [
+          (v3/*: any*/),
           (v4/*: any*/),
           (v5/*: any*/),
           (v6/*: any*/),
@@ -690,20 +700,19 @@ return {
           (v14/*: any*/),
           (v15/*: any*/),
           (v16/*: any*/),
-          (v17/*: any*/),
           {
             "alias": null,
-            "args": (v19/*: any*/),
+            "args": (v18/*: any*/),
             "concreteType": "FollowingConnection",
             "kind": "LinkedField",
             "name": "following",
             "plural": false,
-            "selections": (v24/*: any*/),
+            "selections": (v23/*: any*/),
             "storageKey": "following(first:10)"
           },
           {
             "alias": null,
-            "args": (v19/*: any*/),
+            "args": (v18/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "Following_following",
@@ -712,17 +721,17 @@ return {
           },
           {
             "alias": null,
-            "args": (v19/*: any*/),
+            "args": (v18/*: any*/),
             "concreteType": "FollowerConnection",
             "kind": "LinkedField",
             "name": "followers",
             "plural": false,
-            "selections": (v24/*: any*/),
+            "selections": (v23/*: any*/),
             "storageKey": "followers(first:10)"
           },
           {
             "alias": null,
-            "args": (v19/*: any*/),
+            "args": (v18/*: any*/),
             "filters": null,
             "handle": "connection",
             "key": "Followers_followers",
@@ -731,13 +740,13 @@ return {
           },
           {
             "alias": null,
-            "args": (v25/*: any*/),
+            "args": (v24/*: any*/),
             "concreteType": "RepositoryConnection",
             "kind": "LinkedField",
             "name": "repositories",
             "plural": false,
             "selections": [
-              (v23/*: any*/),
+              (v22/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -745,16 +754,16 @@ return {
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
-                "selections": (v27/*: any*/),
+                "selections": (v26/*: any*/),
                 "storageKey": null
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v25/*: any*/),
+            "args": (v24/*: any*/),
             "filters": [
               "orderBy",
               "isFork"
@@ -766,13 +775,13 @@ return {
           },
           {
             "alias": null,
-            "args": (v28/*: any*/),
+            "args": (v27/*: any*/),
             "concreteType": "StarredRepositoryConnection",
             "kind": "LinkedField",
             "name": "starredRepositories",
             "plural": false,
             "selections": [
-              (v23/*: any*/),
+              (v22/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -780,16 +789,16 @@ return {
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
-                "selections": (v27/*: any*/),
+                "selections": (v26/*: any*/),
                 "storageKey": null
               },
-              (v22/*: any*/)
+              (v21/*: any*/)
             ],
             "storageKey": null
           },
           {
             "alias": null,
-            "args": (v28/*: any*/),
+            "args": (v27/*: any*/),
             "filters": [
               "orderBy"
             ],
@@ -804,16 +813,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "68aea5bf2b5999c1d809ee34781e4580",
+    "cacheID": "2ff4ba9574e1e3b703297648117d6f80",
     "id": null,
     "metadata": {},
     "name": "viewerVIEWERQuery",
     "operationKind": "query",
-    "text": "query viewerVIEWERQuery(\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n  $starOrder: StarOrder\n) {\n  viewer {\n    ...ProfileDetails\n    ...Following_following\n    ...Followers_followers\n    ...ViewerRepos_repositories_3LFRQw\n    ...ViewerStarerdRepos_repositories_pZk0a\n    id\n  }\n}\n\nfragment Followers_followers on User {\n  followers(first: 10) {\n    edges {\n      node {\n        ...PersonCard_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment Following_following on User {\n  following(first: 10) {\n    edges {\n      node {\n        ...PersonCard_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment PersonCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment ProfileDetails on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment ViewerRepos_repositories_3LFRQw on User {\n  repositories(first: 10, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 10) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment ViewerStarerdRepos_repositories_pZk0a on User {\n  starredRepositories(first: 10, orderBy: $starOrder) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 10) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query viewerVIEWERQuery(\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n  $starOrder: StarOrder\n) {\n  viewer {\n    ...ProfileDetails\n    ...Following_following\n    ...Followers_followers\n    ...ViewerRepos_repositories_3LFRQw\n    ...ViewerStarerdRepos_repositories_fFbs1\n    id\n  }\n}\n\nfragment Followers_followers on User {\n  followers(first: 10) {\n    edges {\n      node {\n        ...PersonCard_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment Following_following on User {\n  following(first: 10) {\n    edges {\n      node {\n        ...PersonCard_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment PersonCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment ProfileDetails on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment ViewerRepos_repositories_3LFRQw on User {\n  repositories(first: 10, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment ViewerStarerdRepos_repositories_fFbs1 on User {\n  starredRepositories(first: 10, orderBy: $starOrder) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "236a928c16026347b9bb9ce48117f9c7";
+(node as any).hash = "932abd3fb1e6630a8f0fb8bf57f4d1b0";
 
 export default node;

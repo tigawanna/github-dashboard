@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c14e08e7b394d3c814fb48ee7768a76>>
+ * @generated SignedSource<<03789b6546a97035c9766a0aeb5cbc8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -69,18 +69,17 @@ v5 = [
     "variableName": "id"
   }
 ],
-v6 = {
-  "kind": "Variable",
-  "name": "first",
-  "variableName": "first"
-},
-v7 = [
+v6 = [
   {
     "kind": "Variable",
     "name": "after",
     "variableName": "after"
   },
-  (v6/*: any*/),
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  },
   {
     "kind": "Variable",
     "name": "isFork",
@@ -92,35 +91,35 @@ v7 = [
     "variableName": "orderBy"
   }
 ],
-v8 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v9 = {
+v8 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v10 = {
+v9 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v11 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
 },
-v12 = [
+v11 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -149,7 +148,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": (v7/*: any*/),
+            "args": (v6/*: any*/),
             "kind": "FragmentSpread",
             "name": "ViewerRepos_repositories"
           }
@@ -180,14 +179,14 @@ return {
         "name": "node",
         "plural": false,
         "selections": [
+          (v7/*: any*/),
           (v8/*: any*/),
-          (v9/*: any*/),
           {
             "kind": "InlineFragment",
             "selections": [
               {
                 "alias": null,
-                "args": (v7/*: any*/),
+                "args": (v6/*: any*/),
                 "concreteType": "RepositoryConnection",
                 "kind": "LinkedField",
                 "name": "repositories",
@@ -216,8 +215,8 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
+                          (v8/*: any*/),
                           (v9/*: any*/),
-                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -246,7 +245,7 @@ return {
                             "name": "diskUsage",
                             "storageKey": null
                           },
-                          (v11/*: any*/),
+                          (v10/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -297,7 +296,7 @@ return {
                             "name": "owner",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
+                              (v7/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -305,8 +304,8 @@ return {
                                 "name": "login",
                                 "storageKey": null
                               },
-                              (v9/*: any*/),
-                              (v11/*: any*/),
+                              (v8/*: any*/),
+                              (v10/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -320,7 +319,11 @@ return {
                           {
                             "alias": null,
                             "args": [
-                              (v6/*: any*/)
+                              {
+                                "kind": "Literal",
+                                "name": "first",
+                                "value": 20
+                              }
                             ],
                             "concreteType": "LanguageConnection",
                             "kind": "LinkedField",
@@ -343,7 +346,7 @@ return {
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                      (v9/*: any*/),
+                                      (v8/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -351,7 +354,7 @@ return {
                                         "name": "color",
                                         "storageKey": null
                                       },
-                                      (v10/*: any*/)
+                                      (v9/*: any*/)
                                     ],
                                     "storageKey": null
                                   }
@@ -359,11 +362,11 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": null
+                            "storageKey": "languages(first:20)"
                           },
                           {
                             "alias": null,
-                            "args": (v12/*: any*/),
+                            "args": (v11/*: any*/),
                             "concreteType": "ReleaseConnection",
                             "kind": "LinkedField",
                             "name": "releases",
@@ -377,7 +380,7 @@ return {
                                 "name": "nodes",
                                 "plural": true,
                                 "selections": [
-                                  (v10/*: any*/),
+                                  (v9/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -385,7 +388,7 @@ return {
                                     "name": "publishedAt",
                                     "storageKey": null
                                   },
-                                  (v9/*: any*/)
+                                  (v8/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -442,8 +445,8 @@ return {
                                     "name": "node",
                                     "plural": false,
                                     "selections": [
-                                      (v10/*: any*/),
                                       (v9/*: any*/),
+                                      (v8/*: any*/),
                                       {
                                         "alias": null,
                                         "args": null,
@@ -452,13 +455,13 @@ return {
                                         "name": "target",
                                         "plural": false,
                                         "selections": [
-                                          (v8/*: any*/),
+                                          (v7/*: any*/),
                                           {
                                             "kind": "InlineFragment",
                                             "selections": [
                                               {
                                                 "alias": null,
-                                                "args": (v12/*: any*/),
+                                                "args": (v11/*: any*/),
                                                 "concreteType": "CommitHistoryConnection",
                                                 "kind": "LinkedField",
                                                 "name": "history",
@@ -495,7 +498,7 @@ return {
                                                             "name": "author",
                                                             "plural": false,
                                                             "selections": [
-                                                              (v10/*: any*/)
+                                                              (v9/*: any*/)
                                                             ],
                                                             "storageKey": null
                                                           },
@@ -506,7 +509,7 @@ return {
                                                             "name": "message",
                                                             "storageKey": null
                                                           },
-                                                          (v9/*: any*/)
+                                                          (v8/*: any*/)
                                                         ],
                                                         "storageKey": null
                                                       }
@@ -520,7 +523,7 @@ return {
                                             "type": "Commit",
                                             "abstractKey": null
                                           },
-                                          (v9/*: any*/)
+                                          (v8/*: any*/)
                                         ],
                                         "storageKey": null
                                       }
@@ -533,7 +536,7 @@ return {
                             ],
                             "storageKey": "refs(first:2,orderBy:{\"direction\":\"DESC\",\"field\":\"TAG_COMMIT_DATE\"},refPrefix:\"refs/heads/\")"
                           },
-                          (v8/*: any*/)
+                          (v7/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -591,7 +594,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v7/*: any*/),
+                "args": (v6/*: any*/),
                 "filters": [
                   "orderBy",
                   "isFork"
@@ -611,16 +614,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1c9bd457d60580949611e51a5fff5fa3",
+    "cacheID": "f146f1c6a5a0f6528301c96815103c8b",
     "id": null,
     "metadata": {},
     "name": "RepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment ViewerRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "47dbb8779c319fb0180c1ec6db3b5a0c";
+(node as any).hash = "cf7712cf7403a0ed685d6c447bfabca4";
 
 export default node;
