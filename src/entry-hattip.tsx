@@ -2,7 +2,7 @@ import { createRequestHandler } from "rakkasjs/server";
 import { cookie } from "@hattip/cookie";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
 import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
-import { fetchFn, testGithubToken } from "./lib/graphql/relay/RelayEnvironment";
+import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
 import { RequestContext } from "rakkasjs";
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase";

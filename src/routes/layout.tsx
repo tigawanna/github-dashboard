@@ -1,5 +1,5 @@
 import Nprogress from "@/components/navigation/nprogress/Nprogress";
-import { ClientSuspense, LayoutProps, useLocation } from "rakkasjs";
+import { ClientSuspense, LayoutProps, useLocation,Head, PreloadContext } from "rakkasjs";
 import "./index.css";
 import { Sidebar } from "@/components/navigation/bars/sidebar";
 import Toaster from "@/components/wrappers/DefaltExportedToaster";
@@ -9,11 +9,20 @@ import BreadCrumbs from "@/components/navigation/BreadCrumbs";
 function Layout({ children }: LayoutProps) {
   const location = useLocation();
 
-  // console.log(" page ctx ==== ",page_ctx.locals.pb)
+
   return (
     <ErrorBoundaryComponent>
       <div className="w-full h-screen  overflow-y-hidden  flex flex-col items-center ">
-        {/* <Head description={"Resume building assistant"} /> */}
+        {/* <Head
+          title={"Github dashboard"}
+          description={"Github dashboard built with react , rakkasjs and relay"}
+          og:title={"Github dashboard"}
+          og:description={
+            "Github dashboard built with react , rakkasjs and relay"
+          }
+          og:image={"/og.jpeg"}
+        /> */}
+        
         <ClientSuspense fallback={null}>
           <Nprogress
             isAnimating={location && location?.pending ? true : false}
@@ -41,17 +50,17 @@ function Layout({ children }: LayoutProps) {
     </ErrorBoundaryComponent>
   );
 }
-// Layout.preload = async(ctx: PreloadContext) => {
-//   // const layout_preload_cookie = ctx.requestContext?.cookie
-//   console.log(" ==== preload cookie  ===== ",ctx.requestContext?.cookie)
+Layout.preload = async(ctx: PreloadContext) => {
 
-//   // await testGithubToken()
-//   return {
-//     head: {
-//       title: "Github Dashboard",
-//       description: "Github dashboard built with Rakkasjs (vite + SSR) + Relay + Github GraphQL API",
-//     },
-//   };
-// };
+  return {
+    head: {
+      title: "Github Dashboard",
+      "og:title":"Github dashboard",
+      description: "Github dashboard built with Rakkasjs (vite + SSR) + Relay + Github GraphQL API",
+      "og:description": "Github dashboard built with Rakkasjs (vite + SSR) + Relay + Github GraphQL API",
+      "og:image": "/og.jpeg",
+    },
+  };
+};
 
 export default Layout;
