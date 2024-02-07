@@ -20,6 +20,7 @@ import { Followers, FollowersFragment } from "./people/Followers";
 import { FragmentRefs } from "relay-runtime";
 import { Following_following$key } from "./people/__generated__/Following_following.graphql";
 import { Followers_followers$key } from "./people/__generated__/Followers_followers.graphql";
+import { useViewer } from "@/lib/pb/hooks/useViewer";
 interface GithubUserTabsProps {
   refs?: {
     readonly " $fragmentSpreads": FragmentRefs<
@@ -33,6 +34,7 @@ interface GithubUserTabsProps {
 }
 
 export function GithubUserTabs({ refs }: GithubUserTabsProps) {
+  const {data} = useViewer();
   const repo_fragment = useFragment<ViewerRepos_repositories$key>(
     RepositoriesFragment,
     refs,

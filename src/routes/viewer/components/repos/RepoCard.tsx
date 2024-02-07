@@ -20,7 +20,8 @@ export function RepoCard({ edge }: RepoCardProps) {
   const repo = edge?.node;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
-
+  const CAN_STAR = repo.owner.login
+  const CAN_DELETE = repo.viewerCanAdminister
   return (
     <li
       key={edge?.node?.id}

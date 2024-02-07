@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e3f65405736c17c68f150b35537d2dd>>
+ * @generated SignedSource<<6e113f6760d3713a786c254dbe7007ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -253,6 +253,27 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "openGraphImageUrl",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "viewerHasStarred",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "viewerPermission",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "viewerCanAdminister",
                             "storageKey": null
                           },
                           {
@@ -576,16 +597,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee6f4a875f2a84a9d973df2ae3124624",
+    "cacheID": "12f5f2baa31befc0d3692ae73ae1b4fb",
     "id": null,
     "metadata": {},
     "name": "StarredRepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query StarredRepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $orderBy: StarOrder = {field: STARRED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerStarerdRepos_repositories_2IJuIk\n    id\n  }\n}\n\nfragment ViewerStarerdRepos_repositories_2IJuIk on User {\n  starredRepositories(first: $first, after: $after, orderBy: $orderBy) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query StarredRepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $orderBy: StarOrder = {field: STARRED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ViewerStarerdRepos_repositories_2IJuIk\n    id\n  }\n}\n\nfragment ViewerStarerdRepos_repositories_2IJuIk on User {\n  starredRepositories(first: $first, after: $after, orderBy: $orderBy) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: $first) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "414f4cc33147c8a02c0a9d90ee0899db";
+(node as any).hash = "f83b2a8a86bed197fac594b0c1cfa1f9";
 
 export default node;

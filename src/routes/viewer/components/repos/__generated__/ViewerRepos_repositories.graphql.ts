@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1fb5fece0f512ea3d7818232918fb5f>>
+ * @generated SignedSource<<6039d5a120b099f1765773f4c402ef91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
+export type RepositoryPermission = "ADMIN" | "MAINTAIN" | "READ" | "TRIAGE" | "WRITE" | "%future added value";
 export type RepositoryVisibility = "INTERNAL" | "PRIVATE" | "PUBLIC" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ViewerRepos_repositories$data = {
@@ -68,6 +69,9 @@ export type ViewerRepos_repositories$data = {
         };
         readonly stargazerCount: number;
         readonly url: any;
+        readonly viewerCanAdminister: boolean;
+        readonly viewerHasStarred: boolean;
+        readonly viewerPermission: RepositoryPermission | null | undefined;
         readonly visibility: RepositoryVisibility;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -269,6 +273,27 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "openGraphImageUrl",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "viewerHasStarred",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "viewerPermission",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "viewerCanAdminister",
                   "storageKey": null
                 },
                 {
@@ -583,6 +608,6 @@ return {
 };
 })();
 
-(node as any).hash = "cf69f8cc308993a262f69e52818c0bd3";
+(node as any).hash = "47dbb8779c319fb0180c1ec6db3b5a0c";
 
 export default node;

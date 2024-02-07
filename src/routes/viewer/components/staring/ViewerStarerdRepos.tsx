@@ -1,10 +1,5 @@
 import { graphql, usePaginationFragment } from "@/lib/graphql/relay/modules";
 import { ViewerStarerdRepos_repositories$key } from "./__generated__/ViewerStarerdRepos_repositories.graphql";
-import { Link } from "rakkasjs";
-import { Github, History, Lock, Star } from "lucide-react";
-import { SiVisualstudiocode } from "react-icons/si";
-import { FiActivity } from "react-icons/fi";
-import { BiGitRepoForked } from "react-icons/bi";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FilterStarredRepos } from "./components";
@@ -61,6 +56,11 @@ export const ViewerStarerdReposFragment = graphql`
           visibility
           forkCount
           openGraphImageUrl
+
+          viewerHasStarred
+          viewerPermission
+          viewerCanAdminister
+
           owner {
             login
             id
