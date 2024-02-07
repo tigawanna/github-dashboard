@@ -17,12 +17,12 @@ export function LoadMoreButton<
   return (
     <div className="flex items-center justify-center">
       <button
-        className=" hover:text-purple-400 shadow-lg hover:shadow-purple"
+        className=" hover:text-secondary shadow-lg hover:shadow-purple p-5"
         onClick={() => {
           frag.loadNext(10);
         }}
       >
-        --- load more --- {frag.isLoadingNext ? "loading..." : ""}
+        {frag.isLoadingNext ? "loading..." : "--- load more ---"}
       </button>
     </div>
   );
