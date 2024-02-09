@@ -17,7 +17,7 @@ interface ViewerReposProps {
 
 export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
   const [editing, setEditing] = useState(true);
-  const [open, setOpen] = useState(true);
+  const [open, setOpen] = useState(false);
   const { deselectAll, selectAll, selected, unselectItem, selectItem,setSelected } =
     useRepoSelector();
   const repo_fragment = usePaginationFragment<

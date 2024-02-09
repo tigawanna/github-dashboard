@@ -58,22 +58,23 @@ export function RepoCardDelete({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            <ul className="flex flex-col w-[90%] ml-4">
-              {selected.map((item, idx) => {
-                return (
-                  <li key={item.id}>
-                    {idx + 1}. {item.nameWithOwner}
-                  </li>
-                );
-              })}
-            </ul>
-          </AlertDialogDescription>
+          <AlertDialogTitle>
+            Are you absolutely sure you want to delete?
+          </AlertDialogTitle>
+          <ul className="flex flex-col w-[90%] ml-4">
+            {selected.map((item, idx) => {
+              return (
+                <li key={item.id}>
+                  {idx + 1}. {item.nameWithOwner}
+                </li>
+              );
+            })}
+          </ul>
+      
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction onClick={() => mutation.mutate()}>
+          <AlertDialogAction  className="bg-error/50" onClick={() => mutation.mutate()}>
             {mutation.isLoading ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

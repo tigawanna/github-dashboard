@@ -46,7 +46,7 @@ export function RepoCard({
                 min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1 relative"
     >
-      {" "}
+
       {editing &&
         !repo.isInOrganization &&
         repo.viewerPermission === "ADMIN" && (
