@@ -15,8 +15,9 @@ import { ItemList } from "./types";
 import { useMutation, usePageContext } from "rakkasjs";
 import { deleteRepositories } from "./mutations/repo_mutations";
 import { hotToast } from "@/components/wrappers/toast";
+import { commitLocalUpdate, useRelayEnvironment } from "@/lib/relay/modules";
 interface RepoCardDeleteProps {
-  open:boolean
+  open: boolean;
   selected: ItemList[];
   setSelected: (selected: ItemList[] | null) => void;
   setOpen: (open: boolean) => void;
@@ -30,14 +31,29 @@ export function RepoCardDelete({
 }: RepoCardDeleteProps) {
   const { locals } = usePageContext();
   const token = locals?.pb?.authStore.model?.accessToken;
+  const enviroment = useRelayEnvironment();
+
   const mutation = useMutation(() => deleteRepositories(selected, token), {
-    onSuccess: () => {
-      //console.log("succesfully deleted repos");
+    onSuccess: (data) => {
+      // console.log("succesfully deleted repos", data);
       setSelected(null);
+      (data.successfull.length>0)&&
+        data.successfull?.forEach((item) => {
+          enviroment.applyUpdate({
+            storeUpdater: (store) => {
+              store.delete(item.id);
+            },
+          });
+        });
       hotToast({
-        title: "Success",
-        description: "Deleted successfully",
-        type: "success",
+        title: "Done",
+        mixed: {
+          successfull: 
+          `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull.map((item)=>item.name + "\n").join(", \n")}`,
+          failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed.map((item) => item.repo + " : " + item.issue + "\n").join(", ")}`,
+        },
+        type: "mixed",
+        duration: 7000,
       });
 
       setOpen(false);
@@ -48,9 +64,42 @@ export function RepoCardDelete({
         description: "Issue deleting repositories",
         type: "error",
       });
-
     },
   });
+  const mutation3 = useMutation(
+    () => {
+      selected.forEach((item) => {
+        enviroment.applyUpdate({
+          storeUpdater: (store) => {
+            store.delete(item.id);
+          },
+        });
+      });
+    },
+    {
+      onSuccess: () => {
+        //console.log("succesfully deleted repos");
+
+        setSelected(null);
+        hotToast({
+          title: "Success",
+          description: "Deleted successfully",
+          type: "success",
+        });
+        commitLocalUpdate(enviroment, (store) => {
+          store.invalidateStore();
+        });
+        setOpen(false);
+      },
+      onError(error: any) {
+        hotToast({
+          title: "Error",
+          description: "Issue deleting repositories",
+          type: "error",
+        });
+      },
+    },
+  );
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
@@ -70,11 +119,13 @@ export function RepoCardDelete({
               );
             })}
           </ul>
-      
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction  className="bg-error/50" onClick={() => mutation.mutate()}>
+          <AlertDialogAction
+            className="bg-error/50"
+            onClick={() => mutation.mutate()}
+          >
             {mutation.isLoading ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

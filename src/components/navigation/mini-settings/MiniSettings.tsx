@@ -22,7 +22,7 @@ import {
   navigate,
 } from "rakkasjs";
 import { Loader } from "lucide-react";
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+import { testGithubToken } from "@/lib/relay/RelayEnvironment";
 import { ThemeToggle } from "./ThemeToggle";
 import { hotToast } from "@/components/wrappers/toast";
 import { useViewer } from "@/lib/pb/hooks/useViewer";

@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 import { OneRepoEdge } from "./RepoCard";
-import { graphql, useMutation } from "@/lib/graphql/relay/modules";
+import { graphql, useMutation } from "@/lib/relay/modules";
 import { RepoCardStardAddStarMutation } from "./__generated__/RepoCardStardAddStarMutation.graphql";
 import { RepoCardStardRemoveStarMutation } from "./__generated__/RepoCardStardRemoveStarMutation.graphql";
 

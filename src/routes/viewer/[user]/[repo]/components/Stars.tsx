@@ -1,5 +1,5 @@
 import React from "react";
-import { usePaginationFragment, graphql } from "@/lib/graphql/relay/modules";
+import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import { Stars_stargazers$key } from "./__generated__/Stars_stargazers.graphql";
 interface StarsProps {
   data: Stars_stargazers$key | null;

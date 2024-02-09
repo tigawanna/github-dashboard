@@ -11,7 +11,7 @@ import {
 } from "./repos/ViewerStarerdRepos";
 import { ViewerRepos_repositories$key } from "./repos/__generated__/ViewerRepos_repositories.graphql";
 
-import { useFragment } from "@/lib/graphql/relay/modules";
+import { useFragment } from "@/lib/relay/modules";
 import { ViewerReposSuspenseFallback } from "./repos/components";
 import { Suspense } from "react";
 import { ProfileDetails } from "./people/ProfileDetails";

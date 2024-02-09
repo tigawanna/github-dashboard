@@ -1,14 +1,20 @@
-import { graphql, usePaginationFragment } from "@/lib/graphql/relay/modules";
+import {
+  graphql,
+  usePaginationFragment,
+  useRelayEnvironment,
+  commitLocalUpdate,
+} from "@/lib/relay/modules";
 import { ViewerRepos_repositories$key } from "./__generated__/ViewerRepos_repositories.graphql";
 import { FilterRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
-import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
-import { Edit} from "lucide-react";
+import { Edit } from "lucide-react";
 import { RepoCardDelete } from "./RepoCardDelete";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { useRepoSelector } from "./hooks/selectRepos";
+import { useInvalidateRelayStore } from "./hooks/store";
 
 interface ViewerReposProps {
   viewer: ViewerRepos_repositories$key;
@@ -18,12 +24,22 @@ interface ViewerReposProps {
 export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
   const [editing, setEditing] = useState(true);
   const [open, setOpen] = useState(false);
-  const { deselectAll, selectAll, selected, unselectItem, selectItem,setSelected } =
-    useRepoSelector();
+  const invalidate = useInvalidateRelayStore()
+  const {
+    deselectAll,
+    selectAll,
+    selected,
+    unselectItem,
+    selectItem,
+    setSelected,
+  } = useRepoSelector();
   const repo_fragment = usePaginationFragment<
     any,
     ViewerRepos_repositories$key
   >(RepositoriesFragment, viewer);
+
+  const enviroment = useRelayEnvironment();
+  const store = enviroment.getStore();
 
   const repo_response = repo_fragment.data?.repositories;
   const repos = repo_response?.edges;
@@ -32,6 +48,23 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       {/* add filter controls */}
+      <button
+        onClick={() => {
+          // console.log(" === ", repo_fragment);
+          // console.log(store.getSource().get(repo_fragment.data.id));
+          // invalidate()
+          // commitLocalUpdate(enviroment, (store, data) => {
+          //   store.invalidateStore();
+          // });
+          // enviroment.applyUpdate({
+          //   storeUpdater: (store) => {
+          //     store.delete(repo_fragment.data?.id!);
+          //   }
+          // })
+        }}
+      >
+        applyUpdate
+      </button>
       <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
         <FilterRepos />
         <div className=" flex items-center justify-center gap-3">
@@ -67,8 +100,8 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
               />
             )}
           </div>
-    
         </div>
+        b
       </div>
 
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
@@ -81,7 +114,9 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
                 local_viewer={local_viewer}
                 editing={editing}
                 selected={
-                  selected ? selected.some((i) => i.id === edge?.node?.id) : false
+                  selected
+                    ? selected.some((i) => i.id === edge?.node?.id)
+                    : false
                 }
                 selectItem={selectItem}
                 unselectItem={unselectItem}

@@ -10,7 +10,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 
 
 interface RepositoryActionsProps {

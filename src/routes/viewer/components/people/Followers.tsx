@@ -1,7 +1,7 @@
 import { FragmentRefs } from "relay-runtime";
 import { Followers_followers$key } from "./__generated__/Followers_followers.graphql";
 import { PersonCard } from "./PersonCard";
-import { graphql,usePaginationFragment } from "@/lib/graphql/relay/modules";
+import { graphql,usePaginationFragment } from "@/lib/relay/modules";
 import { LoadMoreButton } from "../shared";
 
 interface FollowersProps {

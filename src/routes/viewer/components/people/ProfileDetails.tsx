@@ -1,4 +1,4 @@
-import { graphql, useFragment, useMutation } from "@/lib/graphql/relay/modules";
+import { graphql, useFragment, useMutation } from "@/lib/relay/modules";
 import { ProfileDetails$key } from "./__generated__/ProfileDetails.graphql";
 import { IoLocationOutline } from "react-icons/io5";
 import { AiOutlineMail } from "react-icons/ai";

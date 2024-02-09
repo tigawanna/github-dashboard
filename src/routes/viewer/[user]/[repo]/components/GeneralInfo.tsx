@@ -1,4 +1,4 @@
-import { graphql, useFragment } from "@/lib/graphql/relay/modules";
+import { graphql, useFragment } from "@/lib/relay/modules";
 import { GeneralInfo_info$key } from "./__generated__/GeneralInfo_info.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";

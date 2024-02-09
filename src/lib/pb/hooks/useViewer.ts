@@ -1,4 +1,4 @@
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+import { testGithubToken } from "@/lib/relay/RelayEnvironment";
 import { useQuery } from "rakkasjs";
 
 export function useViewer(){

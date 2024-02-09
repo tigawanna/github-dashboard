@@ -1,8 +1,8 @@
 /* eslint-disable no-var */
 import { startClient } from "rakkasjs/client";
 import { Environment, Network, RecordSource, Store } from "relay-runtime";
-import { RelayEnvironmentProvider } from "@/lib/graphql/relay/modules";
-import { fetchFn } from "./lib/graphql/relay/RelayEnvironment";
+import { RelayEnvironmentProvider } from "@/lib/relay/modules";
+import { fetchFn } from "./lib/relay/RelayEnvironment";
 import {parse} from "cookie-es"
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase"

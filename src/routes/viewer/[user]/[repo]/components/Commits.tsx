@@ -6,7 +6,7 @@ import { Commits_history$key } from "./__generated__/Commits_history.graphql";
 import { Link } from "rakkasjs";
 import { Github } from "lucide-react";
 
-import { usePaginationFragment, graphql } from "@/lib/graphql/relay/modules";
+import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 
 dayjs.extend(relativeTime);
 interface CommitsProps {

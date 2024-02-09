@@ -10,7 +10,10 @@ export const {
   useFragment,
   usePreloadedQuery,
   usePaginationFragment,
+  useRelayEnvironment,
+
+  
 
 } = Relay;
-export const { graphql } = RelayRuntime;
+export const { graphql,commitMutation,commitLocalUpdate} = RelayRuntime;
 

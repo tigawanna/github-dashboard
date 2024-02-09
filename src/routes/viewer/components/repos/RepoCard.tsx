@@ -6,7 +6,7 @@ import { Github, History, Info, Lock, Star } from "lucide-react";
 import { ViewerRepos_repositories$data } from "./__generated__/ViewerRepos_repositories.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { RepositoryActions } from "./RepositoryActions";
 import { RepoCardStar } from "./RepoCardStar";
 

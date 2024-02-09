@@ -1,5 +1,5 @@
 import { PageProps, Redirect } from "rakkasjs";
-import { graphql, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
+import { graphql, useLazyLoadQuery } from "@/lib/relay/modules";
 import { RepoFullRepositoryQuery } from "./__generated__/RepoFullRepositoryQuery.graphql";
 import { hotToast } from "@/components/wrappers/toast";
 import { Branches } from "./components/Branches";

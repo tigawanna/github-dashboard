@@ -1,5 +1,5 @@
 import React from "react";
-import { usePaginationFragment, graphql } from "@/lib/graphql/relay/modules";
+import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import {  Languages_languages$key } from "./__generated__/Languages_languages.graphql";
 
 interface LanguagesProps {

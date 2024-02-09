@@ -2,7 +2,7 @@ import React from "react";
 import { FragmentRefs } from "relay-runtime";
 import { Commits } from "./Commits";
 import { Branches_refs$key } from "./__generated__/Branches_refs.graphql";
-import { usePaginationFragment, graphql } from "@/lib/graphql/relay/modules";
+import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/ui/accordion";
 interface BranchesProps {
   data: Branches_refs$key | null;

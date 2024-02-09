@@ -1,4 +1,4 @@
-import { testGithubToken } from "@/lib/graphql/relay/RelayEnvironment";
+import { testGithubToken } from "@/lib/relay/RelayEnvironment";
 import { LayoutProps, PreloadContext } from "rakkasjs";
 export default function Layout({ children }: LayoutProps) {
   return (

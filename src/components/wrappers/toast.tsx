@@ -6,9 +6,14 @@ import { X } from "lucide-react";
 interface hotToastPrps {
   title: string;
   description?: string;
+  autoClose?:boolean;
+  mixed?: {
+    successfull?: string;
+    failed?: string;
+  };
   position?: ToastPosition | undefined;
   duration?: number;
-  type: "success" | "error" | "info" | "warning";
+  type: "success" | "error" | "info" | "warning" | "mixed";
 }
 
 export function hotToast({
@@ -16,6 +21,8 @@ export function hotToast({
   title,
   type,
   position,
+  autoClose=true,
+  mixed,
   duration = 3000,
 }: hotToastPrps) {
   const toastVariants = cva(["border"], {
@@ -25,6 +32,7 @@ export function hotToast({
         success: ["border-success", "text-success", "bg-success/5"],
         info: ["border-info", "text-info", "bg-info/5"],
         warning: ["border-warning", "text-warning", "bg-warning/5"],
+        mixed: ["border-accent", "text-accent", ""],
       },
     },
   });
@@ -42,11 +50,17 @@ export function hotToast({
             "flex-1 w-0 p-2 rounded-xl",
           )}
         >
-          <div className="flex items-start ">
+          <div className="flex flex-col items-start ">
             <div className="ml-3 flex-1">
               <p className="text-lg font-bold ">{title}</p>
               <p className="mt-1 text-sm">{description}</p>
             </div>
+            {mixed && (
+              <div className="ml-3 flex flex-col gap-1">
+                <p className="text-sm text-success">{mixed?.successfull}</p>
+                <p className="text-sm text-error">{mixed?.failed}</p>
+              </div>
+            )}
           </div>
         </div>
         <div className="flex border-l bg-base-100">
@@ -59,6 +73,6 @@ export function hotToast({
         </div>
       </div>
     ),
-    { position, duration },
+    { position, duration:autoClose?duration:2000000,  },
   );
 }

@@ -1,5 +1,5 @@
 import { PreloadContext } from "rakkasjs";
-import { testGithubToken } from "../graphql/relay/RelayEnvironment";
+import { testGithubToken } from "../relay/RelayEnvironment";
 
 export async function preloadGuards(ctx: PreloadContext, route_name?: string) {
   const gh_pat_cookie = ctx.queryClient.getQueryData("gh_pat_cookie");

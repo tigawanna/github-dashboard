@@ -3,7 +3,7 @@ import { PersonCardfollowMutation } from "./__generated__/PersonCardfollowMutati
 import { PersonCardunfollowMutation } from "./__generated__/PersonCardunfollowMutation.graphql";
 import { PersonCard_user$data } from "./__generated__/PersonCard_user.graphql";
 import { Link } from "rakkasjs";
-import { graphql, useFragment, useMutation } from "@/lib/graphql/relay/modules";
+import { graphql, useFragment, useMutation } from "@/lib/relay/modules";
 import { Button } from "@/components/shadcn/ui/button";
 import { FragmentRefs } from "relay-runtime";
 

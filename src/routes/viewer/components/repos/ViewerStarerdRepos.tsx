@@ -1,11 +1,11 @@
-import { graphql, usePaginationFragment } from "@/lib/graphql/relay/modules";
+import { graphql, usePaginationFragment } from "@/lib/relay/modules";
 import { ViewerStarerdRepos_repositories$key } from "./__generated__/ViewerStarerdRepos_repositories.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { FilterStarredRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
-import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
 import { useRepoSelector } from "./hooks/selectRepos";
 import { Checkbox } from "@radix-ui/react-checkbox";

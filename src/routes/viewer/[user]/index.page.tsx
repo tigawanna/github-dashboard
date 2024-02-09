@@ -1,4 +1,4 @@
-import { graphql, useLazyLoadQuery } from "@/lib/graphql/relay/modules";
+import { graphql, useLazyLoadQuery } from "@/lib/relay/modules";
 import { PageProps, useLocation } from "rakkasjs";
 import {
   RepositoryOrderField,
