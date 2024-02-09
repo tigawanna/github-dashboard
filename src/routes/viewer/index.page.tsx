@@ -37,7 +37,6 @@ export default function ViewerPage({}: PageProps) {
 
   return (
     <div className="w-full h-full   ">
-
       <GithubUserTabs key="viewer/usrrtabs" refs={query.viewer} />
     </div>
   );
