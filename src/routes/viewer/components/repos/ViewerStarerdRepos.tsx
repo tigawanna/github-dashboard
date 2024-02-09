@@ -6,6 +6,11 @@ import { FilterStarredRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
 import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { useState } from "react";
+import { useRepoSelector } from "./hooks/selectRepos";
+import { Checkbox } from "@radix-ui/react-checkbox";
+import { Edit } from "lucide-react";
+import { RepoCardDelete } from "./RepoCardDelete";
 dayjs.extend(relativeTime);
 
 interface ViewerStarerdReposProps {
@@ -18,14 +23,76 @@ export function ViewerStarerdRepos({viewer,local_viewer}: ViewerStarerdReposProp
     const repo_response = viewer_repo_fragment.data?.starredRepositories
     const repos = repo_response?.edges;
 
+      const [editing, setEditing] = useState(true);
+      const [open, setOpen] = useState(true);
+      const {
+        deselectAll,
+        selectAll,
+        selected,
+        unselectItem,
+        selectItem,
+        setSelected,
+      } = useRepoSelector();
+        const is_all_selected =
+          selected && selected.length === repos?.length ? true : false;
+
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
-      <FilterStarredRepos />
+      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
+        <FilterStarredRepos />
+        <div className=" flex items-center justify-center gap-3">
+          <Edit
+            onClick={() => setEditing(!editing)}
+            className="h-7 w-7 hover:text-orange-500"
+          />
+          {editing && (
+            <Checkbox
+              className="h-7 w-7 border border-accent"
+              checked={is_all_selected}
+              onClick={() => {
+                if (is_all_selected) {
+                  deselectAll();
+                } else {
+                  // @ts-expect-error
+                  selectAll(repos);
+                }
+              }}
+            />
+          )}
+          {editing && selected && selected?.length > 0 && (
+            <div className="badge badge-sm">{selected?.length}</div>
+          )}
+
+          <div className="flex items-center justify-center gap-3">
+            {selected && selected.length > 0 && (
+              <RepoCardDelete
+                open={open}
+                setOpen={setOpen}
+                setSelected={setSelected}
+                selected={selected}
+              />
+            )}
+          </div>
+        </div>
+      </div>
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
-
-            return <RepoCard key={edge?.node?.id} edge={edge} local_viewer={local_viewer}/>;
+            return (
+              <RepoCard
+                key={edge?.node?.id}
+                edge={edge}
+                local_viewer={local_viewer}
+                editing={editing}
+                selected={
+                  selected
+                    ? selected.some((i) => i.id === edge?.node?.id)
+                    : false
+                }
+                selectItem={selectItem}
+                unselectItem={unselectItem}
+              />
+            );
           })}
       </ul>
 
@@ -61,6 +128,7 @@ export const ViewerStarerdReposFragment = graphql`
           diskUsage
           url
           visibility
+          isInOrganization
           forkCount
           openGraphImageUrl
           forkingAllowed

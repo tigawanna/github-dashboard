@@ -8,18 +8,33 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
 import { RepositoryActions } from "./RepositoryActions";
+import { RepoCardStar } from "./RepoCardStar";
+
+import { ItemList } from "./types";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
 dayjs.extend(relativeTime);
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
 type RepoEdges = ViewerRepos_repositories$data["repositories"]["edges"];
 type ReadonlyToRegular<T> = T extends ReadonlyArray<infer U> ? Array<U> : never;
-type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
+export type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
   local_viewer: LocalViewer | null;
+  editing: boolean;
+  selected: boolean;
+  selectItem: (item: ItemList) => void;
+  unselectItem: (item: ItemList) => void;
 }
 
-export function RepoCard({ edge,local_viewer }: RepoCardProps) {
+export function RepoCard({
+  edge,
+  local_viewer,
+  editing,
+  selected,
+  selectItem,
+  unselectItem,
+}: RepoCardProps) {
   const repo = edge?.node;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
@@ -29,8 +44,26 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
       key={edge?.node?.id}
       className="bg-base-300 rounded-lg flex-grow
                 min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
-                 justify-between items-center p-1"
+                 justify-between items-center p-1 relative"
     >
+      {" "}
+      {editing &&
+        !repo.isInOrganization &&
+        repo.viewerPermission === "ADMIN" && (
+          <div className="absolute left-[3%] bottom-[2%] z-40">
+            <Checkbox
+              className="h-7 w-7  border-2 border-accent"
+              checked={selected}
+              onClick={() => {
+                if (selected) {
+                  unselectItem(repo);
+                } else {
+                  selectItem(repo);
+                }
+              }}
+            />
+          </div>
+        )}
       <div
         className="flex flex-col cursor-pointer  w-full gap-1 "
         onClick={() => {}}
@@ -46,7 +79,7 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
         <div className="flex gap-3 bg-base-200">
           <Link
             href={"/viewer/" + repo.nameWithOwner}
-            className="w-full  p-2 hover:bg-accent/20 flex flex-col gap-2"
+            className="w-full max-w-[92%]  p-2 hover:bg-accent/20 flex flex-col gap-2"
           >
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -120,7 +153,6 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
           </div>
         </div>
       </div>
-
       <div className="w-full  text-[15px] text-sm  flex justify-between p-2">
         <div className="text-[12px] font-bold flex gap-1 justify-center items-center">
           <FiActivity /> {dayjs(repo?.pushedAt).fromNow()}
@@ -128,12 +160,7 @@ export function RepoCard({ edge,local_viewer }: RepoCardProps) {
         <div className="flex gap-1 justify-center items-center">
           <BiGitRepoForked /> {repo?.forkCount}
         </div>
-        {repo?.stargazerCount > 0 ? (
-          <div className="flex gap-1 justify-center items-center">
-            <Star />
-            {repo?.stargazerCount}
-          </div>
-        ) : null}
+        <RepoCardStar edge={edge} />
         {repo?.visibility === "PRIVATE" ? (
           <div className="flex gap-1 justify-center items-center">
             <Lock className="text-error" />

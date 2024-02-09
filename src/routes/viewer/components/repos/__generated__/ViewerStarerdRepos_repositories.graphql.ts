@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbca82b5788b5ea5579d91e8cc457810>>
+ * @generated SignedSource<<6533d8e5e510cb02b64ee96f9e81e093>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ViewerStarerdRepos_repositories$data = {
         readonly forkingAllowed: boolean;
         readonly id: string;
         readonly isFork: boolean;
+        readonly isInOrganization: boolean;
         readonly languages: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -251,6 +252,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "visibility",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isInOrganization",
                   "storageKey": null
                 },
                 {
@@ -614,6 +622,6 @@ return {
 };
 })();
 
-(node as any).hash = "d0a77a65e01124200f6d17fa9ba1de0e";
+(node as any).hash = "8d391e08fd0641efe170f393f452f054";
 
 export default node;

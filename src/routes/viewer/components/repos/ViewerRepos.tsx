@@ -4,13 +4,22 @@ import { FilterRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
 import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
+import { useState } from "react";
+import { Edit} from "lucide-react";
+import { RepoCardDelete } from "./RepoCardDelete";
+import { Checkbox } from "@/components/shadcn/ui/checkbox";
+import { useRepoSelector } from "./hooks/selectRepos";
 
 interface ViewerReposProps {
   viewer: ViewerRepos_repositories$key;
-  local_viewer:LocalViewer|null
+  local_viewer: LocalViewer | null;
 }
 
-export function ViewerRepos({ viewer,local_viewer }: ViewerReposProps) {
+export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
+  const [editing, setEditing] = useState(true);
+  const [open, setOpen] = useState(true);
+  const { deselectAll, selectAll, selected, unselectItem, selectItem,setSelected } =
+    useRepoSelector();
   const repo_fragment = usePaginationFragment<
     any,
     ViewerRepos_repositories$key
@@ -18,18 +27,66 @@ export function ViewerRepos({ viewer,local_viewer }: ViewerReposProps) {
 
   const repo_response = repo_fragment.data?.repositories;
   const repos = repo_response?.edges;
-
+  const is_all_selected =
+    selected && selected.length === repos?.length ? true : false;
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       {/* add filter controls */}
-      <div className="w-full border border-accent bg-base-200 sticky top-0">
+      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
         <FilterRepos />
+        <div className=" flex items-center justify-center gap-3">
+          <Edit
+            onClick={() => setEditing(!editing)}
+            className="h-7 w-7 hover:text-orange-500"
+          />
+          {editing && (
+            <Checkbox
+              className="h-7 w-7 border border-accent"
+              checked={is_all_selected}
+              onClick={() => {
+                if (is_all_selected) {
+                  deselectAll();
+                } else {
+                  // @ts-expect-error
+                  selectAll(repos);
+                }
+              }}
+            />
+          )}
+          {editing && selected && selected?.length > 0 && (
+            <div className="badge badge-sm">{selected?.length}</div>
+          )}
+
+          <div className="flex items-center justify-center gap-3">
+            {selected && selected.length > 0 && (
+              <RepoCardDelete
+                open={open}
+                setOpen={setOpen}
+                setSelected={setSelected}
+                selected={selected}
+              />
+            )}
+          </div>
+    
+        </div>
       </div>
 
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
           repos.map((edge) => {
-            return <RepoCard key={edge?.node?.id} edge={edge}  local_viewer={local_viewer}/>;
+            return (
+              <RepoCard
+                key={edge?.node?.id}
+                edge={edge}
+                local_viewer={local_viewer}
+                editing={editing}
+                selected={
+                  selected ? selected.some((i) => i.id === edge?.node?.id) : false
+                }
+                selectItem={selectItem}
+                unselectItem={unselectItem}
+              />
+            );
           })}
       </ul>
 
@@ -69,6 +126,7 @@ export const RepositoriesFragment = graphql`
           visibility
           forkCount
           openGraphImageUrl
+          isInOrganization
           forkingAllowed
           isFork
           viewerHasStarred

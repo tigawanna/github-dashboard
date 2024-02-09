@@ -7,9 +7,10 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
-import { useRepoSearchQuery, useStarredRepoSearchQuery } from "./hooks";
+
 import { RepositoryOrderField } from "./__generated__/RepositoriesPaginationQuery.graphql";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
+import { useRepoSearchQuery, useStarredRepoSearchQuery } from "./hooks/searchRepos";
 
 export function ViewerReposSuspenseFallback() {
   return (
@@ -55,7 +56,7 @@ export function FilterRepos({}: FilterReposProps) {
   ];
   const checked = params.ifk === "true";
   return (
-    <div className="w-full h-full flex items-center justify-center gap-3 px-2">
+    <div className="min-w-[60%] h-full flex items-center justify-center gap-3 px-2">
       <div className="w-full h-full flex items-center justify-center">
         <Select
           value={params.oBy}
@@ -124,7 +125,7 @@ export function FilterStarredRepos({}: FilterReposProps) {
   const { params, setParams } = useStarredRepoSearchQuery();
 
   return (
-    <div className="w-full h-full flex items-center justify-center gap-3 px-2">
+    <div className="min-w-[60%] h-full flex items-center justify-center gap-3 px-2">
       <div className="w-full h-full flex items-center justify-center">
         <Select
           value={params.sDir}

@@ -1,6 +1,6 @@
 import { navigate, useLocation } from "rakkasjs";
 import { useEffect, useState, useTransition } from "react";
-import { RepositoryOrderField } from "./__generated__/RepositoriesPaginationQuery.graphql";
+import { RepositoryOrderField } from "../__generated__/RepositoriesPaginationQuery.graphql";
 
 
 export interface RepoSearchParms {

@@ -12,6 +12,7 @@ import {
 import { MoreVertical } from "lucide-react";
 import { LocalViewer } from "@/lib/graphql/relay/RelayEnvironment";
 
+
 interface RepositoryActionsProps {
   local_viewer: LocalViewer | null;
   viewerCanAdminister: boolean;
@@ -45,17 +46,12 @@ export function RepositoryActions({
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {CAN_STAR && (
-            <DropdownMenuItem className="gap-2">
+            <div className="flex gap-2">
               <Star className="w-4 h-4" /> Star
-              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-            </DropdownMenuItem>
+              {/* <DropdownMenuShortcut>⌘S</DropdownMenuShortcut> */}
+            </div>
           )}
-          {CAN_FORK && (
-            <DropdownMenuItem className="gap-2">
-              <GitFork className="w-4 h-4" /> Fork
-              <DropdownMenuShortcut>⌘F</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          )}
+
           {CAN_DELETE && (
             <DropdownMenuItem className="gap-2">
               <Trash className="w-4 h-4" /> Delete

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ac40901db5930d82bc9663c9785e233>>
+ * @generated SignedSource<<0ef1cbb6e2111173edfe54401151d5c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ViewerRepos_repositories$data = {
         readonly forkingAllowed: boolean;
         readonly id: string;
         readonly isFork: boolean;
+        readonly isInOrganization: boolean;
         readonly languages: {
           readonly edges: ReadonlyArray<{
             readonly node: {
@@ -275,6 +276,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "openGraphImageUrl",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isInOrganization",
                   "storageKey": null
                 },
                 {
@@ -624,6 +632,6 @@ return {
 };
 })();
 
-(node as any).hash = "3bd896a89c41454add82e6f9eabf153f";
+(node as any).hash = "d7479a208116a8b7660b38f1c061769d";
 
 export default node;
