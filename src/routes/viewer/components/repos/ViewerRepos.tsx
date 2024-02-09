@@ -39,33 +39,18 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
   >(RepositoriesFragment, viewer);
 
   const enviroment = useRelayEnvironment();
-  const store = enviroment.getStore();
+ 
 
   const repo_response = repo_fragment.data?.repositories;
   const repos = repo_response?.edges;
   const is_all_selected =
     selected && selected.length === repos?.length ? true : false;
+
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       {/* add filter controls */}
-      <button
-        onClick={() => {
-          // console.log(" === ", repo_fragment);
-          // console.log(store.getSource().get(repo_fragment.data.id));
-          // invalidate()
-          // commitLocalUpdate(enviroment, (store, data) => {
-          //   store.invalidateStore();
-          // });
-          // enviroment.applyUpdate({
-          //   storeUpdater: (store) => {
-          //     store.delete(repo_fragment.data?.id!);
-          //   }
-          // })
-        }}
-      >
-        applyUpdate
-      </button>
-      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
+
+      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly z-30">
         <FilterRepos />
         <div className=" flex items-center justify-center gap-3">
           <Edit
@@ -101,7 +86,7 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
             )}
           </div>
         </div>
-        b
+        
       </div>
 
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">

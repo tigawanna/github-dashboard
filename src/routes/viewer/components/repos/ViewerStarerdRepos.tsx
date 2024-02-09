@@ -8,9 +8,7 @@ import { RepoCard } from "./RepoCard";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
 import { useRepoSelector } from "./hooks/selectRepos";
-import { Checkbox } from "@radix-ui/react-checkbox";
-import { Edit } from "lucide-react";
-import { RepoCardDelete } from "./RepoCardDelete";
+
 dayjs.extend(relativeTime);
 
 interface ViewerStarerdReposProps {
@@ -18,29 +16,25 @@ interface ViewerStarerdReposProps {
   local_viewer: LocalViewer | null;
 }
 
-export function ViewerStarerdRepos({viewer,local_viewer}: ViewerStarerdReposProps) {
-    const viewer_repo_fragment = usePaginationFragment<any,ViewerStarerdRepos_repositories$key>(ViewerStarerdReposFragment, viewer);
-    const repo_response = viewer_repo_fragment.data?.starredRepositories
-    const repos = repo_response?.edges;
+export function ViewerStarerdRepos({
+  viewer,
+  local_viewer,
+}: ViewerStarerdReposProps) {
+  const viewer_repo_fragment = usePaginationFragment<
+    any,
+    ViewerStarerdRepos_repositories$key
+  >(ViewerStarerdReposFragment, viewer);
+  const repo_response = viewer_repo_fragment.data?.starredRepositories;
+  const repos = repo_response?.edges;
 
-      const [editing, setEditing] = useState(true);
-      const [open, setOpen] = useState(true);
-      const {
-        deselectAll,
-        selectAll,
-        selected,
-        unselectItem,
-        selectItem,
-        setSelected,
-      } = useRepoSelector();
-        const is_all_selected =
-          selected && selected.length === repos?.length ? true : false;
+  const { unselectItem, selectItem } = useRepoSelector();
+
 
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
         <FilterStarredRepos />
-        <div className=" flex items-center justify-center gap-3">
+        {/* <div className=" flex items-center justify-center gap-3">
           <Edit
             onClick={() => setEditing(!editing)}
             className="h-7 w-7 hover:text-orange-500"
@@ -73,7 +67,7 @@ export function ViewerStarerdRepos({viewer,local_viewer}: ViewerStarerdReposProp
               />
             )}
           </div>
-        </div>
+        </div> */}
       </div>
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
@@ -83,12 +77,8 @@ export function ViewerStarerdRepos({viewer,local_viewer}: ViewerStarerdReposProp
                 key={edge?.node?.id}
                 edge={edge}
                 local_viewer={local_viewer}
-                editing={editing}
-                selected={
-                  selected
-                    ? selected.some((i) => i.id === edge?.node?.id)
-                    : false
-                }
+                editing={false}
+                selected={false}
                 selectItem={selectItem}
                 unselectItem={unselectItem}
               />
