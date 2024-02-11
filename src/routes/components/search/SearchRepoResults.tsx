@@ -1,5 +1,4 @@
-import { graphql } from "@/lib/relay/modules";
-import { useFragment } from "react-relay";
+import { graphql,useFragment } from "@/lib/relay/modules";
 import { FragmentRefs } from "relay-runtime";
 import { SearchRepoResultsFraggment$key } from "./__generated__/SearchRepoResultsFraggment.graphql";
 import { Link } from "rakkasjs";
