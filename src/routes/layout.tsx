@@ -21,16 +21,6 @@ function Layout({ children }: LayoutProps) {
   return (
     <ErrorBoundaryComponent>
       <div className="w-full h-screen  overflow-y-hidden  flex flex-col items-center ">
-        {/* <Head
-          title={"Github dashboard"}
-          description={"Github dashboard built with react , rakkasjs and relay"}
-          og:title={"Github dashboard"}
-          og:description={
-            "Github dashboard built with react , rakkasjs and relay"
-          }
-          og:image={"/og.jpeg"}
-        /> */}
-
         <ClientSuspense fallback={null}>
           <Nprogress
             isAnimating={location && location?.pending ? true : false}
