@@ -7,7 +7,7 @@ import {
   PreloadContext,
 } from "rakkasjs";
 import "./index.css";
-import { Sidebar } from "@/components/navigation/bars/sidebar";
+import { Sidebar } from "@/components/navigation/sidebar";
 import Toaster from "@/components/wrappers/DefaltExportedToaster";
 import ErrorBoundaryComponent from "@/components/navigation/ErrorBoundaryComponent";
 import BreadCrumbs from "@/components/navigation/BreadCrumbs";
