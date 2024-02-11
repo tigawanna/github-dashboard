@@ -1,0 +1,17 @@
+meta {
+  name: feed
+  type: http
+  seq: 1
+}
+
+get {
+  url: https://api.github.com/feeds
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/vnd.github+json
+  Authorization: Bearer <YOUR-TOKEN>
+  X-GitHub-Api-Version: 2022-11-28
+}

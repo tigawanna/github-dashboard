@@ -18,7 +18,7 @@ export function Sidebar({}: SidebarProps) {
     >
       <div className="w-full h-full flex flex-col justify-between items-center p-2 pb-12 pt-3">
         <Link href="/" className="text-2xl font-bold">
-          <Home className="h-10 w-10" />
+
         </Link>
 
         <div className="flex flex-col gap-3 items-center divide-y-2">
