@@ -33,7 +33,7 @@ export function SearchInputSection({
     const navigate_to = new URL(current) 
     navigate_to.pathname = "/"
 
-    console.log( {debouncedValue,isDebouncing})
+
   return (
     <div
       className="w-full flex items-center justify-center"

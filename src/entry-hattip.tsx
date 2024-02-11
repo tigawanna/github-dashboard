@@ -7,7 +7,7 @@ import { RequestContext } from "rakkasjs";
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase";
 function createRelayEnvironment(ctx: RequestContext) {
-  console.log("=== createRelayEnvironment pocketbase  ===== ",ctx.locals.pb.authStore.model);
+  // console.log("=== createRelayEnvironment pocketbase  ===== ",ctx.locals.pb.authStore.model);
   const token = ctx.cookie.gh_token;
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>

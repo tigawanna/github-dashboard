@@ -32,7 +32,7 @@ function createRelayEnvironment() {
 
   const cookie = parse(document?.cookie);
   const pb_auth = safeDestr<PB_AUTH>(cookie.pb_auth)
-  console.log(" ======  entry client cookie  ====== ",safeDestr<PB_AUTH>(cookie.pb_auth))
+  // console.log(" ======  entry client cookie  ====== ",safeDestr<PB_AUTH>(cookie.pb_auth))
   const token = pb_auth?.model?.accessToken
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
