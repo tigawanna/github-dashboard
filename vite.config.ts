@@ -11,7 +11,7 @@ export default defineConfig({
   ssr: {
     external: ["@auth/core", "rakkasjs/node-adapter"],
   },
-  plugins: [relay, tsconfigPaths(), react(), rakkas({})],
+  plugins: [relay, tsconfigPaths(), react(), rakkas({adapter:"vercel"})],
   server: {
     port: 3000,
     host: true,
