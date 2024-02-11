@@ -4,14 +4,13 @@ import {
   SearchListQuery,
   SearchType,
 } from "./__generated__/SearchListQuery.graphql";
-import { Suspense, useState, useTransition } from "react";
+import { Suspense, useTransition } from "react";
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from "@/components/shadcn/ui/tabs";
-
 import { ViewerReposSuspenseFallback } from "@/routes/viewer/components/repos/components";
 import { SearchUserResults } from "./SearchUserResults";
 
@@ -41,12 +40,12 @@ export function SearchList({
         }
         className="w-full h-full "
       >
-        <TabsList className="grid w-full grid-cols-2 ">
+        <TabsList className="grid w-full grid-cols-2 sticky top-0 z-50">
           <TabsTrigger value="REPOSITORY">Repositories</TabsTrigger>
           <TabsTrigger value="USER">Users</TabsTrigger>
         </TabsList>
 
-        <TabsContent value="REPOSITORY" className="">
+        <TabsContent value="REPOSITORY" className="z-30">
           <Suspense fallback={<ViewerReposSuspenseFallback />}>
             {query?.search?.edges && (
               <div className="w-full flex flex-wrap gap-4 p-2">
@@ -64,7 +63,7 @@ export function SearchList({
             )}
           </Suspense>
         </TabsContent>
-        <TabsContent value="USER" className="">
+        <TabsContent value="USER" className="z-30">
           {query?.search?.edges && (
             <div className="w-full flex flex-wrap gap-4 p-2">
               {query?.search?.edges.length === 0 && (
