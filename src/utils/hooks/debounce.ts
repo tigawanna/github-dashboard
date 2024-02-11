@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 
 export function useDebouncedValue<T = any>(value: T, delay: number) {
   const [isDebouncing, setIsDebouncing] = useState(false);
@@ -16,5 +16,6 @@ export function useDebouncedValue<T = any>(value: T, delay: number) {
     };
   }, [value, delay]);
 
-  return { debouncedValue, isDebouncing };
+  return { debouncedValue, setDebouncedValue,isDebouncing };
 }
+
