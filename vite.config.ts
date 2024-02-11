@@ -9,7 +9,7 @@ Object.assign(process.env, env);
 
 export default defineConfig({
   ssr: {
-    external: ["@auth/core", "rakkasjs/node-adapter"],
+    external: ["rakkasjs/node-adapter"],
   },
   plugins: [relay, tsconfigPaths(), react(), rakkas({adapter:"vercel"})],
   server: {
