@@ -7,20 +7,38 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
-import { Suspense, useState, useTransition } from "react";
+import { Suspense, useEffect, useState, useTransition } from "react";
 import { Input } from "@/components/shadcn/ui/input";
 import { useDebouncedValue } from "@/utils/hooks/debounce";
 import { SearchList, SearchListSuspenseFalllback } from "./SearchList";
 import { SearchType } from "./__generated__/SearchListQuery.graphql";
+import { navigate, useLocation } from "rakkasjs";
 interface SearchBarProps {}
 
 export function SearchBar({}: SearchBarProps) {
+  const {current} = useLocation()
+  const initSearchType = current.searchParams.get("ST") as SearchType|null
+  const initSearchValue = current.searchParams.get("SQ")??""
+
   const [, startTransition] = useTransition();
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
-    "",
+    initSearchValue,
     5000,
   );
-  const [searchType, setSearchType] = useState<SearchType>("REPOSITORY");
+  const [searchType, setSearchType] = useState<SearchType>(initSearchType??"REPOSITORY");
+
+  useEffect(() => {
+    const new_url = new URL(current)
+    if(debouncedValue&& debouncedValue!==initSearchValue) {
+      new_url.searchParams.set("SQ",debouncedValue)
+    }
+    if(searchType && searchType!==initSearchType) {
+      new_url.searchParams.set("ST",searchType)
+    }
+    startTransition(() => {
+      navigate(new_url.toString())
+    })
+  },[debouncedValue,searchType])
 
   return (
     <div className="w-full h-full flex flex-col items-center justify-center gap-3">
