@@ -40,8 +40,9 @@ export function OAuthproviders({}: OAuthprovidersProps) {
             type: "success",
           });
           qc.invalidateQueries(["viewer"]);
-          const navigate_to = current.searchParams.get("return_to");
-          navigate(navigate_to ?? "/");
+          window.location.reload()
+          // const navigate_to = current.searchParams.get("return_to");
+          // navigate(navigate_to ?? "/");
         }
         if (data.error) {
           // toast(data.error.message, { type: "error", autoClose: false });

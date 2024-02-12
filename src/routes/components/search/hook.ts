@@ -5,8 +5,8 @@ import { SearchType } from "./__generated__/SearchListQuery.graphql";
 
 export function useGithubSearch() {
   const { current } = useLocation();
-  const initSearchType = current.searchParams.get("ST") as SearchType | null;
-  const initSearchValue = current.searchParams.get("SQ") ?? "";
+  const initSearchType = current.searchParams.get("st") as SearchType | null;
+  const initSearchValue = current.searchParams.get("st") ?? "";
 
   const [, startTransition] = useTransition();
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
@@ -24,10 +24,10 @@ export function useGithubSearch() {
   useEffect(() => {
     const new_url = new URL(current);
     if (debouncedValue && debouncedValue !== initSearchValue) {
-      new_url.searchParams.set("SQ", debouncedValue);
+      new_url.searchParams.set("sq", debouncedValue);
     }
     if (searchType && searchType !== initSearchType) {
-      new_url.searchParams.set("ST", searchType);
+      new_url.searchParams.set("st", searchType);
     }
     startTransition(() => {
       navigate(new_url.toString());

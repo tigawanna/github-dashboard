@@ -32,6 +32,7 @@ interface MiniSettingsModalProps {}
 export function MiniSettingsModal({}: MiniSettingsModalProps) {
   const qc = useQueryClient();
   const { current } = useLocation();
+
   const { locals } = usePageContext();
 
   // const query = useSSQ(async (ctx) => {
@@ -83,10 +84,7 @@ const query = useViewer()
             qc.invalidateQueries(["viewer"]);
             const new_url = new URL(current);
             new_url.pathname = "/auth";
-            new_url.searchParams.set(
-              "return_to",
-              current.pathname + current.search,
-            );
+            new_url.searchParams.set("return_to",current.pathname);
             navigate(new_url.toString());
             //  return <Redirect href={new_url.toString()} />;
           }

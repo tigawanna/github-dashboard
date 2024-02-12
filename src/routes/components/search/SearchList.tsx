@@ -89,7 +89,7 @@ export function SearchListSuspenseFalllback({}) {
     <div className="w-full h-full flex items-center justify-center">
       {Array.from({ length: 12 }).map((_, index) => {
         return (
-          <div className="h-32 bg-base-300 skeleton">
+          <div key={index} className="h-32 bg-base-300 skeleton">
             <div className="h-10 w-full bg-base-100 animate-pulse"></div>
             <div className="h-7 w-full bg-base-100 animate-pulse"></div>
           </div>
