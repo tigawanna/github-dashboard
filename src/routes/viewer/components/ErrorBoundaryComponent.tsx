@@ -1,3 +1,4 @@
+import { hotToast } from "@/components/wrappers/toast";
 import { ErrorBoundary, Redirect, useLocation, Link, navigate } from "rakkasjs";
 
 interface ViewerErrorBoundaryComponentProps {
@@ -17,6 +18,14 @@ export default function ViewerErrorBoundaryComponent({
         error: Error;
         resetErrorBoundary: () => void;
       }) => {
+        console.log("err in viewer error boundary  === ",error)
+        // if(error.message){
+        //   hotToast({
+        //     title: "Error",
+        //     type:"error",
+        //     description: error.message
+        //   })
+        // }
         if (
           error.message &&
           error.message.includes(

@@ -7,7 +7,7 @@ import {parse} from "cookie-es"
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase"
 import {safeDestr} from "destr"
-const relay_data_form_server = (window as any)?.__RELAY_DATA__;
+const relay_data_from_server = (window as any)?.__RELAY_DATA__;
 
 export interface PB_AUTH {
   token: string;
@@ -41,7 +41,7 @@ function createRelayEnvironment() {
         token
       }),
     ),
-    store: new Store(RecordSource.create(relay_data_form_server)),
+    store: new Store(RecordSource.create(relay_data_from_server)),
     isServer: false,
   });
 }
