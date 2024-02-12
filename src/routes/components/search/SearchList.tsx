@@ -13,6 +13,7 @@ import {
 } from "@/components/shadcn/ui/tabs";
 import { ViewerReposSuspenseFallback } from "@/routes/viewer/components/repos/components";
 import { SearchUserResults } from "./SearchUserResults";
+import { Link } from "rakkasjs";
 
 interface SearchListProps {
   searchvalue: string;
@@ -49,11 +50,7 @@ export function SearchList({
           <Suspense fallback={<ViewerReposSuspenseFallback />}>
             {query?.search?.edges && (
               <div className="w-full flex flex-wrap gap-4 p-2">
-                {query?.search?.edges.length === 0 && (
-                  <p className="w-full h-full flex items-center justify-center text-center">
-                    No results found
-                  </p>
-                )}
+                {query?.search?.edges.length === 0 && <SearchInputNoItems />}
                 <Suspense fallback={<SearchListSuspenseFalllback />}>
                   {query?.search?.edges.map((item, idx) => {
                     return <SearchRepoResults refs={item?.node} key={idx} />;
@@ -66,11 +63,7 @@ export function SearchList({
         <TabsContent value="USER" className="z-30">
           {query?.search?.edges && (
             <div className="w-full flex flex-wrap gap-4 p-2">
-              {query?.search?.edges.length === 0 && (
-                <p className="w-full h-full flex items-center justify-center text-center">
-                  No results found
-                </p>
-              )}
+              {query?.search?.edges.length === 0 && <SearchInputNoItems />}
               <Suspense fallback={<SearchListSuspenseFalllback />}>
                 {query?.search?.edges.map((item, idx) => {
                   return <SearchUserResults refs={item?.node} key={idx} />;
@@ -95,6 +88,23 @@ export function SearchListSuspenseFalllback({}) {
           </div>
         );
       })}
+    </div>
+  );
+}
+
+export function SearchInputNoItems() {
+  return (
+    <div className="w-full min-h-[50vh] h-full flex justify-center items-center  rounded-lg ">
+      <div className="flex flex-col items-center justify-center gap-2 bg-base-200 rounded-lg p-5 ">
+        <p> No results found, try some keywords </p>
+        <> ---- or ----- </>
+        <Link
+          href="/viewer"
+          className="text-secondary hover:text-accent text-xl font-bold"
+        >
+          View your profile
+        </Link>{" "}
+      </div>
     </div>
   );
 }

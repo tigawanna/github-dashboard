@@ -6,7 +6,7 @@ import { SearchType } from "./__generated__/SearchListQuery.graphql";
 export function useGithubSearch() {
   const { current } = useLocation();
   const initSearchType = current.searchParams.get("st") as SearchType | null;
-  const initSearchValue = current.searchParams.get("st") ?? "";
+  const initSearchValue = current.searchParams.get("sq") ?? "";
 
   const [, startTransition] = useTransition();
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
