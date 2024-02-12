@@ -72,7 +72,7 @@ export function FilterRepos({}: FilterReposProps) {
               <SelectLabel>Order by</SelectLabel>
               {order_by_selects.map((item) => {
                 return (
-                  <SelectItem value={item.value} key={item.label}>
+                  <SelectItem value={item.value} key={item.label} className="capitalize">
                     {item.label}
                   </SelectItem>
                 );
@@ -100,7 +100,7 @@ export function FilterRepos({}: FilterReposProps) {
           </SelectContent>
         </Select>
       </div>
-      <div className="flex items-center gap-3 w-full ">
+      <div className="flex justify-center items-center gap-3 w-full ">
         <Checkbox
           id="is_fork"
           className="h-7 w-7"
@@ -110,8 +110,8 @@ export function FilterRepos({}: FilterReposProps) {
           }}
         />
         <label
-          htmlFor="s_fork"
-          className="font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+          htmlFor="is_fork"
+          className="font-medium  leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
           is fork
         </label>

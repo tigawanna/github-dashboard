@@ -29,11 +29,11 @@ function Layout({ children }: LayoutProps) {
         <div className="w-full flex gap-3">
           <div className="w-10 sm:hidden flex flex-col justify-center gap-3 relative ">
             <Menu
-              className="h-8 w-8 absolute top-[5%] left-[25%] z-40 "
+              className="h-8 w-8 absolute top-[2%] left-[25%] z-40 "
               onClick={() => setOpen(!open)}
             />
             {open && (
-              <div className="sm:hidden w-full flex h-screen gap-2 animate-in fade-in zoom-in">
+              <div onClick={() => setOpen(!open)} className="sm:hidden w-full flex h-screen gap-2 animate-in fade-in zoom-in">
                 <Sidebar />
               </div>
             )}

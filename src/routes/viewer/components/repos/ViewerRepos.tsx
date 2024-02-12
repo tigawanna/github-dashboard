@@ -50,9 +50,9 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       {/* add filter controls */}
 
-      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly z-30">
+      <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly z-30 p-1">
         <FilterRepos />
-        <div className=" flex items-center justify-center gap-3">
+        <div className=" flex flex-wrap items-center justify-center gap-3">
           <Edit
             onClick={() => setEditing(!editing)}
             className="h-7 w-7 hover:text-orange-500"
