@@ -46,23 +46,6 @@ export function RepoCard({
                 min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1 relative"
     >
-      {editing &&
-        !repo.isInOrganization &&
-        repo.viewerPermission === "ADMIN" && (
-          <div className="absolute left-[3%] bottom-[2%] z-40">
-            <Checkbox
-              className="h-7 w-7  border-2 border-accent"
-              checked={selected}
-              onClick={() => {
-                if (selected) {
-                  unselectItem(repo);
-                } else {
-                  selectItem(repo);
-                }
-              }}
-            />
-          </div>
-        )}
       <div
         className="flex flex-col cursor-pointer  w-full gap-1 "
         onClick={() => {}}
@@ -75,7 +58,7 @@ export function RepoCard({
           loading="lazy"
           src={repo?.openGraphImageUrl}
         />
-        <div className="flex gap-3 bg-base-200">
+        <div className="flex gap-3 bg-base-200 h-full">
           <Link
             href={"/viewer/" + repo.nameWithOwner}
             className="w-full max-w-[92%]  p-2 hover:bg-accent/20 flex flex-col gap-2"
@@ -106,22 +89,38 @@ export function RepoCard({
               })}
             </div>
           </Link>
+          <div className=" min-h-[50px] p-2 gap-2 flex flex-col items-center justify-between">
           <RepositoryActions
             owner={repo.owner.login}
             local_viewer={local_viewer}
             viewerCanAdminister={repo.viewerCanAdminister}
-     
             isFork={repo.isFork}
             forkingAllowed={repo.forkingAllowed}
             id={repo.id}
             nameWithOwner={repo.nameWithOwner}
           />
+          {editing &&
+            !repo.isInOrganization &&
+            repo.viewerPermission === "ADMIN" && (
+              <div className="right-[3%] bottom-[27%] z-40">
+                <Checkbox
+                  className="h-7 w-7  border-2 border-accent"
+                  checked={selected}
+                  onClick={() => {
+                    if (selected) {
+                      unselectItem(repo);
+                    } else {
+                      selectItem(repo);
+                    }
+                  }}
+                />
+              </div>
+            )}
+
+          </div>
         </div>
         {/*  description and last commit message */}
         <div className="w-full flex flex-col p-1 gap-2">
-          {/* <div className="text-sm md:text-sm brightness-75 break-word overflow-y-clip line-clamp-3 ">
-                      {repo?.description}
-                    </div> */}
           {repo?.releases?.nodes?.[0] && (
             <div className="w-full text-sm flex gap-3  overflow-clip">
               <span>Release: {repo?.releases?.nodes?.[0]?.name}</span>

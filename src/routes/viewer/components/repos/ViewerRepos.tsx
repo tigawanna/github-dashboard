@@ -14,7 +14,7 @@ import { Edit } from "lucide-react";
 import { RepoCardDelete } from "./RepoCardDelete";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { useRepoSelector } from "./hooks/selectRepos";
-import { useInvalidateRelayStore } from "./hooks/store";
+
 
 interface ViewerReposProps {
   viewer: ViewerRepos_repositories$key;
@@ -22,7 +22,7 @@ interface ViewerReposProps {
 }
 
 export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
-  const [editing, setEditing] = useState(true);
+  const [editing, setEditing] = useState(false);
   const [open, setOpen] = useState(false);
 
   const {
@@ -76,7 +76,7 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
           )}
 
           <div className="flex items-center justify-center gap-3">
-            {selected && selected.length > 0 && (
+            {editing&&selected && selected.length > 0 && (
               <RepoCardDelete
                 open={open}
                 setOpen={setOpen}
