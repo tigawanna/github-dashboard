@@ -6,6 +6,8 @@ import { Link } from "rakkasjs";
 import { graphql, useFragment, useMutation } from "@/lib/relay/modules";
 import { Button } from "@/components/shadcn/ui/button";
 import { FragmentRefs } from "relay-runtime";
+import { hotToast } from "@/components/wrappers/toast";
+import { Loader } from "lucide-react";
 
 interface PersonCardProps {
   personRef?: {
@@ -24,11 +26,29 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
 
   const followThem = (their_id: string) => {
     setYes(true);
-    followMutation({ variables: { input: { userId: their_id } } });
+    followMutation({
+      variables: { input: { userId: their_id } },
+      onError(error) {
+        hotToast({
+          title: "Error Following",
+          type: "error",
+          description: error.message,
+        });
+      },
+    });
   };
   const unfollowThem = (their_id: string) => {
     setYes(false);
-    unfollowMutation({ variables: { input: { userId: their_id } } });
+    unfollowMutation({
+      variables: { input: { userId: their_id } },
+      onError(error) {
+        hotToast({
+          title: "Error Unfollowing",
+          type: "error",
+          description: error.message,
+        });
+      },
+    });
   };
 
   return (
@@ -78,7 +98,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
                   onClick={() => unfollowThem(dev.id)}
                   className=" rounded-md hover:bg-warning  hover:brightness-90 w-full"
                 >
-                  {"Unfollow"}
+                  {"Unfollow"}{" "}
+                  {isUnFollowMutationInFlight && (
+                    <Loader className="animate-spin" />
+                  )}
                 </Button>
               ) : (
                 <Button
@@ -87,6 +110,10 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
                   className=" rounded-md hover:bg-success hover:brightness-90 w-full"
                 >
                   {dev?.isFollowingViewer ? "Follow back" : "Follow"}
+                  {"Unfollow"}{" "}
+                  {isFollowMutationInFlight && (
+                    <Loader className="animate-spin" />
+                  )}
                 </Button>
               )}
             </div>

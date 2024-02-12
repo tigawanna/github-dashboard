@@ -41,7 +41,7 @@ export function hotToast({
       <div
         className={`${
           t.visible ? "animate-enter" : "animate-leave"
-        } max-w-md w-full bg-base-200  rounded-xl
+        }  w-full bg-base-200  rounded-xl
         pointer-events-auto flex `}
       >
         <div
@@ -73,6 +73,6 @@ export function hotToast({
         </div>
       </div>
     ),
-    { position, duration:autoClose?duration:2000000,  },
+    { position, duration:(!autoClose || type==="error")?20000:duration,  },
   );
 }

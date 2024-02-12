@@ -1,22 +1,24 @@
 import { Star } from "lucide-react";
-import { OneRepoEdge } from "./RepoCard";
 import { graphql, useMutation } from "@/lib/relay/modules";
 import { RepoCardStardAddStarMutation } from "./__generated__/RepoCardStardAddStarMutation.graphql";
 import { RepoCardStardRemoveStarMutation } from "./__generated__/RepoCardStardRemoveStarMutation.graphql";
+import { hotToast } from "@/components/wrappers/toast";
 
 interface RepoCardStarProps {
-
   id: string;
   viewerHasStarred: boolean;
-  stargazerCount:number;
+  stargazerCount: number;
 }
 
-export function RepoCardStar({ id,stargazerCount,viewerHasStarred }: RepoCardStarProps) {
+export function RepoCardStar({
+  id,
+  stargazerCount,
+  viewerHasStarred,
+}: RepoCardStarProps) {
   const [starMutation, isStarMutationInFlight] =
     useMutation<RepoCardStardAddStarMutation>(AddStarMutation);
   const [unStarMutation, isUnStarMutationInFlight] =
     useMutation<RepoCardStardRemoveStarMutation>(RemoveStarMutation);
-
 
   const is_starring = isStarMutationInFlight || isUnStarMutationInFlight;
   const star_classnames = viewerHasStarred ? "fill-yellow-400" : "";
@@ -27,9 +29,29 @@ export function RepoCardStar({ id,stargazerCount,viewerHasStarred }: RepoCardSta
         className={`w-5 h-5 ${star_classnames} ${is_starring_classname}`}
         onClick={() => {
           if (viewerHasStarred) {
-            unStarMutation({ variables: { starrableId:id } });
+            unStarMutation({
+              variables: { starrableId: id },
+              onError(error) {
+                hotToast({
+                  title: "Error starring",
+                  type: "error",
+                  description: error.message,
+                  autoClose: false,
+                });
+              },
+            });
           } else {
-            starMutation({ variables: { starrableId:id } });
+            starMutation({
+              variables: { starrableId: id },
+              onError: (error) => {
+                hotToast({
+                  title: "Error starring",
+                  type: "error",
+                  description: error.message,
+                  autoClose: false,
+                });
+              },
+            });
           }
         }}
       />
