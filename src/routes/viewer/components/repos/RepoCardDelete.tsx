@@ -3,7 +3,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-  AlertDialogDescription,
+
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -15,7 +15,7 @@ import { ItemList } from "./types";
 import { useMutation, usePageContext } from "rakkasjs";
 import { deleteRepositories } from "./mutations/repo_mutations";
 import { hotToast } from "@/components/wrappers/toast";
-import { commitLocalUpdate, useRelayEnvironment } from "@/lib/relay/modules";
+import {  useRelayEnvironment } from "@/lib/relay/modules";
 interface RepoCardDeleteProps {
   open: boolean;
   selected: ItemList[];
@@ -66,44 +66,11 @@ export function RepoCardDelete({
       });
     },
   });
-  const mutation3 = useMutation(
-    () => {
-      selected.forEach((item) => {
-        enviroment.applyUpdate({
-          storeUpdater: (store) => {
-            store.delete(item.id);
-          },
-        });
-      });
-    },
-    {
-      onSuccess: () => {
-        //console.log("succesfully deleted repos");
 
-        setSelected(null);
-        hotToast({
-          title: "Success",
-          description: "Deleted successfully",
-          type: "success",
-        });
-        commitLocalUpdate(enviroment, (store) => {
-          store.invalidateStore();
-        });
-        setOpen(false);
-      },
-      onError(error: any) {
-        hotToast({
-          title: "Error",
-          description: "Issue deleting repositories",
-          type: "error",
-        });
-      },
-    },
-  );
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Trash className="h-5 w-5 text-red-700 hover:fill-red-700 " />
+        <Trash className="h-6 w-6 text-red-700 hover:fill-red-700 " />
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

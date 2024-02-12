@@ -5,33 +5,35 @@ import { RepoCardStardAddStarMutation } from "./__generated__/RepoCardStardAddSt
 import { RepoCardStardRemoveStarMutation } from "./__generated__/RepoCardStardRemoveStarMutation.graphql";
 
 interface RepoCardStarProps {
-  edge: OneRepoEdge | null | undefined;
+
+  id: string;
+  viewerHasStarred: boolean;
+  stargazerCount:number;
 }
 
-export function RepoCardStar({ edge }: RepoCardStarProps) {
+export function RepoCardStar({ id,stargazerCount,viewerHasStarred }: RepoCardStarProps) {
   const [starMutation, isStarMutationInFlight] =
     useMutation<RepoCardStardAddStarMutation>(AddStarMutation);
   const [unStarMutation, isUnStarMutationInFlight] =
     useMutation<RepoCardStardRemoveStarMutation>(RemoveStarMutation);
 
-  const repo = edge?.node;
-  if (!repo) return null;
+
   const is_starring = isStarMutationInFlight || isUnStarMutationInFlight;
-  const star_classnames = repo.viewerHasStarred ? "fill-yellow-400" : "";
+  const star_classnames = viewerHasStarred ? "fill-yellow-400" : "";
   const is_starring_classname = is_starring ? "animate-spin" : "";
   return (
     <div className="flex gap-1 justify-center items-center ">
       <Star
         className={`w-5 h-5 ${star_classnames} ${is_starring_classname}`}
         onClick={() => {
-          if (repo.viewerHasStarred) {
-            unStarMutation({ variables: { starrableId: repo.id } });
+          if (viewerHasStarred) {
+            unStarMutation({ variables: { starrableId:id } });
           } else {
-            starMutation({ variables: { starrableId: repo.id } });
+            starMutation({ variables: { starrableId:id } });
           }
         }}
       />
-      {repo?.stargazerCount}
+      {stargazerCount}
     </div>
   );
 }

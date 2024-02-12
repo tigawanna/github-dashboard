@@ -46,7 +46,6 @@ export function RepoCard({
                 min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1 relative"
     >
-
       {editing &&
         !repo.isInOrganization &&
         repo.viewerPermission === "ADMIN" && (
@@ -111,9 +110,11 @@ export function RepoCard({
             owner={repo.owner.login}
             local_viewer={local_viewer}
             viewerCanAdminister={repo.viewerCanAdminister}
-            viewerHasStarred={repo.viewerHasStarred}
+     
             isFork={repo.isFork}
             forkingAllowed={repo.forkingAllowed}
+            id={repo.id}
+            nameWithOwner={repo.nameWithOwner}
           />
         </div>
         {/*  description and last commit message */}
@@ -160,7 +161,11 @@ export function RepoCard({
         <div className="flex gap-1 justify-center items-center">
           <BiGitRepoForked /> {repo?.forkCount}
         </div>
-        <RepoCardStar edge={edge} />
+        <RepoCardStar
+          id={repo.id}
+          stargazerCount={repo?.stargazerCount}
+          viewerHasStarred={repo?.viewerHasStarred}
+        />
         {repo?.visibility === "PRIVATE" ? (
           <div className="flex gap-1 justify-center items-center">
             <Lock className="text-error" />

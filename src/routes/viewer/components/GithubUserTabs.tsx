@@ -56,7 +56,7 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
   if (!refs) {
     return null;
   }
-  const viewer = data?.viewer;
+
   return (
     <div className="w-full">
       {/* <Suspense fallback={<ViewerReposSuspenseFallback />}>

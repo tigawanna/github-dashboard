@@ -10,6 +10,9 @@ import { Link } from "rakkasjs";
 import { NumberStats } from "@/components/shared/NumberStats";
 import { BooleanStats } from "@/components/shared/BooleanStats";
 import { ImBlocked } from "react-icons/im";
+import { RepoCardStar } from "@/routes/viewer/components/repos/RepoCardStar";
+import { RepositoryActions } from "@/routes/viewer/components/repos/RepositoryActions";
+import { useViewer } from "@/lib/pb/hooks/useViewer";
 
 dayjs.extend(relativeTime);
 
@@ -22,7 +25,9 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
     repoGeneralInfoFragment,
     data,
   );
+  const { data: local_viewer } = useViewer();
   // console.log({ fragData });
+
   return (
     <div className="w-full h-full flex flex-col gap-3 divide-y divide-solid divide-base-200 py-2">
       <div className="w-full h-full flex flex-col md:flex-row gap-2 px-2 ">
@@ -37,14 +42,33 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
           >
             <div className=" flex items-center justify-evenly gap-3">
               <NumberStats Icon={BiGitRepoForked} stat={fragData?.forkCount} />
-              <NumberStats Icon={Star} stat={fragData?.stargazerCount} />
-
+              {/* <NumberStats Icon={Star} stat={fragData?.stargazerCount} /> */}
+              {fragData?.stargazerCount && (
+                <RepoCardStar
+                  id={fragData.id}
+                  stargazerCount={fragData?.stargazerCount}
+                  viewerHasStarred={fragData?.viewerHasStarred}
+                />
+              )}
               {fragData?.diskUsage && (
                 <div className="flex">{fragData?.diskUsage} kbs</div>
               )}
             </div>
 
             <div className="flex gap-2 justify-evenly"></div>
+
+            {fragData?.id && fragData.nameWithOwner && local_viewer?.viewer && (
+              <RepositoryActions
+                owner={local_viewer.viewer?.login}
+                local_viewer={local_viewer.viewer}
+                viewerCanAdminister={fragData?.viewerCanAdminister ?? false}
+         
+                isFork={fragData?.isFork ?? false}
+                forkingAllowed={fragData?.forkingAllowed ?? false}
+                id={fragData?.id}
+                nameWithOwner={fragData?.nameWithOwner}
+              />
+            )}
 
             <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit ">
               <FiActivity /> {dayjs(fragData?.pushedAt).fromNow()}

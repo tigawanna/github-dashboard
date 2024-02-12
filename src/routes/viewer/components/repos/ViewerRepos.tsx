@@ -24,7 +24,7 @@ interface ViewerReposProps {
 export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
   const [editing, setEditing] = useState(true);
   const [open, setOpen] = useState(false);
-  const invalidate = useInvalidateRelayStore()
+
   const {
     deselectAll,
     selectAll,
@@ -38,7 +38,7 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
     ViewerRepos_repositories$key
   >(RepositoriesFragment, viewer);
 
-  const enviroment = useRelayEnvironment();
+
  
 
   const repo_response = repo_fragment.data?.repositories;
