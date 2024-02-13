@@ -6,8 +6,8 @@ import { FilterStarredRepos } from "./components";
 import { LoadMoreButton } from "../shared";
 import { RepoCard } from "./RepoCard";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
-import { useState } from "react";
 import { useRepoSelector } from "./hooks/selectRepos";
+import { viewerVIEWERQuery } from "../../__generated__/viewerVIEWERQuery.graphql";
 
 dayjs.extend(relativeTime);
 
@@ -21,7 +21,7 @@ export function ViewerStarerdRepos({
   local_viewer,
 }: ViewerStarerdReposProps) {
   const viewer_repo_fragment = usePaginationFragment<
-    any,
+    viewerVIEWERQuery,
     ViewerStarerdRepos_repositories$key
   >(ViewerStarerdReposFragment, viewer);
   const repo_response = viewer_repo_fragment.data?.starredRepositories;

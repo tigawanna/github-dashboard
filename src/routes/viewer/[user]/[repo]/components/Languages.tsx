@@ -1,16 +1,17 @@
 import React from "react";
 import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import {  Languages_languages$key } from "./__generated__/Languages_languages.graphql";
+import { RepoFullRepositoryQuery } from "../__generated__/RepoFullRepositoryQuery.graphql";
 
 interface LanguagesProps {
   data:Languages_languages$key | null
 }
 
 export const Languages: React.FC<LanguagesProps> = ({data}) => {
-const fragData = usePaginationFragment<any, Languages_languages$key>(
-  LanguagesFragment,
-  data,
-);
+const fragData = usePaginationFragment<
+  RepoFullRepositoryQuery,
+  Languages_languages$key
+>(LanguagesFragment, data);
   const langs = fragData?.data 
   
   return (

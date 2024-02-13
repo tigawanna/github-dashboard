@@ -3,6 +3,7 @@ import { Followers_followers$key } from "./__generated__/Followers_followers.gra
 import { PersonCard } from "./PersonCard";
 import { graphql,usePaginationFragment } from "@/lib/relay/modules";
 import { LoadMoreButton } from "../shared";
+import { viewerVIEWERQuery } from "../../__generated__/viewerVIEWERQuery.graphql";
 
 interface FollowersProps {
   refs: {
@@ -13,10 +14,10 @@ interface FollowersProps {
 }
 
 export function Followers({ refs }: FollowersProps) {
-  const followers_fragment = usePaginationFragment<any, Followers_followers$key>(
-    FollowersFragment,
-    refs,
-  );
+  const followers_fragment = usePaginationFragment<
+    viewerVIEWERQuery,
+    Followers_followers$key
+  >(FollowersFragment, refs);
   const followers = followers_fragment.data;
 
   return (

@@ -1,6 +1,7 @@
 import {
   graphql,
   usePaginationFragment,
+
   useRelayEnvironment,
   commitLocalUpdate,
 } from "@/lib/relay/modules";
@@ -14,6 +15,7 @@ import { Edit } from "lucide-react";
 import { RepoCardDelete } from "./RepoCardDelete";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { useRepoSelector } from "./hooks/selectRepos";
+import { viewerVIEWERQuery } from "../../__generated__/viewerVIEWERQuery.graphql";
 
 
 interface ViewerReposProps {
@@ -33,10 +35,7 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
     selectItem,
     setSelected,
   } = useRepoSelector();
-  const repo_fragment = usePaginationFragment<
-    any,
-    ViewerRepos_repositories$key
-  >(RepositoriesFragment, viewer);
+  const repo_fragment = usePaginationFragment<viewerVIEWERQuery,ViewerRepos_repositories$key>(RepositoriesFragment, viewer);
 
 
  

@@ -4,15 +4,16 @@ import { Commits } from "./Commits";
 import { Branches_refs$key } from "./__generated__/Branches_refs.graphql";
 import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/ui/accordion";
+import { RepoFullRepositoryQuery } from "../__generated__/RepoFullRepositoryQuery.graphql";
 interface BranchesProps {
   data: Branches_refs$key | null;
 }
 
 export function Branches({ data }: BranchesProps) {
-  const fragData = usePaginationFragment<any, Branches_refs$key>(
-    Branchesfragment,
-    data,
-  );
+  const fragData = usePaginationFragment<
+    RepoFullRepositoryQuery,
+    Branches_refs$key
+  >(Branchesfragment, data);
   const branches = fragData.data;
 
   return (

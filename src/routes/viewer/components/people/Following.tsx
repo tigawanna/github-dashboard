@@ -3,6 +3,7 @@ import { PersonCard } from "./PersonCard";
 import { FragmentRefs } from "relay-runtime";
 import { graphql, usePaginationFragment } from "@/lib/relay/modules";
 import { LoadMoreButton } from "../shared";
+import { viewerVIEWERQuery } from "../../__generated__/viewerVIEWERQuery.graphql";
 interface FollowingProps {
   refs: {
     readonly " $fragmentSpreads": FragmentRefs<
@@ -12,10 +13,10 @@ interface FollowingProps {
 }
 
 export function Following({ refs }: FollowingProps) {
-  const following_fragment = usePaginationFragment<any, Following_following$key>(
-    FollowingFragment,
-    refs,
-  );
+  const following_fragment = usePaginationFragment<
+    viewerVIEWERQuery,
+    Following_following$key
+  >(FollowingFragment, refs);
   const following = following_fragment.data;
 
   return (

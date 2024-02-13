@@ -39,7 +39,7 @@ But like everything else, GraphQL and Relay have their own strengths and weaknes
 - **Confusing documentation**: The relay docs feel like they were written by someone who knew the library so well that they assumed most of us will just know about some of its features , even on my second attempt to rewrite a previous Application I still found them confusing. 
   
 - **Typescript gymnastics**: Relay auto generates the types for you without need for [graphql-codegen](https://the-guild.dev/graphql/codegen) , but you have to pass in the correct generated types to the corresponding hooks to get the type safety , it's not always intuitive and the documentation doesn't properly explain it.
-  
+
 - **Suspense based data fetching**: Suspense is great but it relies on Suspense Boundaries with fallbacks for handling loading state and error boundaries to catch thrown errors , with one fetcher function doing all the data fetching if it throws an error while fetching it makes auto recovering or showing appropriate error UIs difficult as Error boundaries are not supported in server side React  and have a clunky clear error method which isn't the best UX
   
 - **The upfront cost**: While Relay is very clever about some common pain points like pagination and  cache invalidation , the upfront code you to write can be overwhelming coupled with the confusing documentation features and the manual work required in other GraphQL client can feel like a better compromise
@@ -241,6 +241,33 @@ while in relay the mutation would be much simpler and the cache update would be 
 ```
 This pain point can be ignored because it sets you up for an easier experienced own the road
 
+
+**Skill issues I overcame:**:
+Some of the issues I had with Relay initially just boiled down to skill issues around  React and Typescript 
+
+
+- Types for `usePaginatedFragment`
+      
+    before 
+      
+    ```tsx
+       const frag_data = usePaginationFragment<Fragment_name$data,any>(SomeFragment, refs);
+      const some_fragment = frag_data.data as Fragment_name$data;
+    ```
+    Doing an as type casting felt wrong and rightly so. because the fix was so simple 
+    ```tsx
+      const frag_data = usePaginationFragment<any,Fragment_name$key>(SomeFragment, ref);
+      const some_fragment = frag_data.data
+
+    ```
+Relay auto generates `Fragment_name$key` and  `Fragment_name$data` types , the  `Fragment_name$key` is what should be passed into the `usePaginationFragment` hook and the `Fragment_name$data` is what the actual fragment will be of type of , it's not supposed to be used directly inside the hooks.
+
+Also note the paginated fragment takes in the `Fragment_name$key` as it's second type parameter unlike the `useFragment` hook that only accepts one type parameter where we pass in `Fragment_name$key`
+
+```tsx
+   const frag_data = useFragment<Fragment_name$key>(SomeFragment, ref);
+   const paginated_frag_data = usePaginationFragment<any,Fragment_name$key>(SomeFragment, ref);
+```
 
 **It's still awesome though:**
 With all that said relay is still awesome , so awesome it inspired the React server components and the best way to do GraphQL in react

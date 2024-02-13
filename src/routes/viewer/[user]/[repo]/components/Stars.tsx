@@ -1,15 +1,16 @@
 import React from "react";
 import { usePaginationFragment, graphql } from "@/lib/relay/modules";
 import { Stars_stargazers$key } from "./__generated__/Stars_stargazers.graphql";
+import { RepoFullRepositoryQuery } from "../__generated__/RepoFullRepositoryQuery.graphql";
 interface StarsProps {
   data: Stars_stargazers$key | null;
 }
 
 export const Stars: React.FC<StarsProps> = ({ data }) => {
-  const fragData = usePaginationFragment<any, Stars_stargazers$key>(
-    StarGazersFragment,
-    data,
-  );
+  const fragData = usePaginationFragment<
+    RepoFullRepositoryQuery,
+    Stars_stargazers$key
+  >(StarGazersFragment, data);
 
   const frags = fragData.data;
   if (!frags) return null;

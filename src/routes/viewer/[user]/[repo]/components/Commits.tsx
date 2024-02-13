@@ -7,6 +7,7 @@ import { Link } from "rakkasjs";
 import { Github } from "lucide-react";
 
 import { usePaginationFragment, graphql } from "@/lib/relay/modules";
+import { RepoFullRepositoryQuery } from "../__generated__/RepoFullRepositoryQuery.graphql";
 
 dayjs.extend(relativeTime);
 interface CommitsProps {
@@ -14,10 +15,10 @@ interface CommitsProps {
 }
 
 export function Commits({ data }: CommitsProps) {
-  const fragData = usePaginationFragment<any, Commits_history$key>(
-    CommitsOnBranchFragment,
-    data,
-  );
+  const fragData = usePaginationFragment<
+    RepoFullRepositoryQuery,
+    Commits_history$key
+  >(CommitsOnBranchFragment, data);
   const commits = fragData?.data;
 
   if (!commits) return null;
