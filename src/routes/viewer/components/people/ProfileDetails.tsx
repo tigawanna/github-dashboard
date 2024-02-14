@@ -112,7 +112,7 @@ export function ProfileDetails({ profile_details_key }: ProfileDetailsProps) {
                           unfollowThem(user_fragment?.id as string)
                         }
                         className="
-                rounded-md   "
+                rounded-md   hover:bg-error"
                       >
                         {"Unfollow"}
                       </Button>
@@ -120,7 +120,7 @@ export function ProfileDetails({ profile_details_key }: ProfileDetailsProps) {
                       <Button
                         onClick={() => followThem(user_fragment?.id as string)}
                         className="
-                   rounded-md "
+                   rounded-md hover:bg-success"
                       >
                         {user_fragment?.isFollowingViewer
                           ? "Follow back"

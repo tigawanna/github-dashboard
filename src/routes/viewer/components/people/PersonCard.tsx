@@ -110,7 +110,7 @@ export const PersonCard: React.FC<PersonCardProps> = ({ personRef }) => {
                   className=" rounded-md hover:bg-success hover:brightness-90 w-full"
                 >
                   {dev?.isFollowingViewer ? "Follow back" : "Follow"}
-                  {"Unfollow"}{" "}
+                
                   {isFollowMutationInFlight && (
                     <Loader className="animate-spin" />
                   )}
