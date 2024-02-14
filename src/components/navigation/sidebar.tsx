@@ -13,7 +13,7 @@ export function Sidebar({}: SidebarProps) {
   ];
   return (
     <header
-      className=" min-h-[99vh]  flex flex-col  justify-center items-center bg-base-300  
+      className=" h-screen  flex flex-col  justify-center items-center bg-base-300  
     z-30 gap-1 "
     >
       <div className="w-full h-full flex flex-col justify-center items-center p-2 pb-12 pt-3 gap-5">

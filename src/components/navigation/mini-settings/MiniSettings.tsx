@@ -54,7 +54,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
   //     return { viewer: null, error: error.message };
   //   }
   // });
-const query = useViewer()
+  const query = useViewer();
 
   const mutation = useMutation(
     async () => {
@@ -84,7 +84,7 @@ const query = useViewer()
             qc.invalidateQueries(["viewer"]);
             const new_url = new URL(current);
             new_url.pathname = "/auth";
-            new_url.searchParams.set("return_to",current.pathname);
+            new_url.searchParams.set("return_to", current.pathname);
             navigate(new_url.toString());
             //  return <Redirect href={new_url.toString()} />;
           }
@@ -92,7 +92,7 @@ const query = useViewer()
       },
     },
   );
-  const viewer = query.data?.viewer
+  const viewer = query.data?.viewer;
 
   // console.log(" ====  logging out with url  ===== ", current.pathname);
   // if (mutation.data?.success) {
@@ -102,9 +102,9 @@ const query = useViewer()
   //   return <Redirect href={new_url.toString()} />;
   // }
 
-  if (!viewer) {
-    return null;
-  }
+  // if (!viewer) {
+  //   return null;
+  // }
 
   return (
     <DropdownMenu>
@@ -112,36 +112,50 @@ const query = useViewer()
         <Button className="relative h-7 w-7 rounded-full">
           <Avatar className="h-8 w-8">
             <AvatarImage src={viewer?.avatarUrl} alt="github viewer" />
-            <AvatarFallback>{viewer?.login?.slice(0, 2)}</AvatarFallback>
+            {viewer ? (
+              <AvatarFallback>{viewer?.login?.slice(0, 2)}</AvatarFallback>
+            ) : (
+              <AvatarFallback>{"n/a"}</AvatarFallback>
+            )}
           </Avatar>
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-fit">
-        <DropdownMenuLabel className="font-bold text-xl">
-          Viewer
-        </DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <ThemeToggle />
-        <DropdownMenuSeparator />
-        <div className="flex flex-col gap-1 p-3">
+      {viewer ? (
+        <DropdownMenuContent className="w-fit">
+          <DropdownMenuLabel className="font-bold text-xl">
+            Viewer
+          </DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuLabel className="font-bold">Theme</DropdownMenuLabel>
+          <ThemeToggle />
+          <DropdownMenuSeparator />
           <div className="flex flex-col gap-1 p-3">
-            <div>@{viewer?.login}</div>
-            <div>{viewer?.name}</div>
-            <div>{viewer?.email}</div>
-          </div>
+            <div className="flex flex-col gap-1 p-3">
+              <div>@{viewer?.login}</div>
+              <div>{viewer?.name}</div>
+              <div>{viewer?.email}</div>
+            </div>
 
-          <Button
-            type="button"
-            onClick={() => mutation.mutateAsync()}
-            disabled={mutation.isLoading}
-            variant={"outline"}
-            className="flex justify-center items-center gap-2"
-          >
-            Logout{" "}
-            {mutation.isLoading && <Loader className="w-4 h-4 animate-spin" />}
-          </Button>
-        </div>
-      </DropdownMenuContent>
+            <Button
+              type="button"
+              onClick={() => mutation.mutateAsync()}
+              disabled={mutation.isLoading}
+              variant={"outline"}
+              className="flex justify-center items-center gap-2"
+            >
+              Logout{" "}
+              {mutation.isLoading && (
+                <Loader className="w-4 h-4 animate-spin" />
+              )}
+            </Button>
+          </div>
+        </DropdownMenuContent>
+      ) : (
+        <DropdownMenuContent className="w-fit">
+          <DropdownMenuLabel className="font-bold">Theme</DropdownMenuLabel>
+          <ThemeToggle />
+        </DropdownMenuContent>
+      )}
     </DropdownMenu>
   );
 }
