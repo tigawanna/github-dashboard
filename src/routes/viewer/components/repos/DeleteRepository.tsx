@@ -15,19 +15,19 @@ import { useMutation, usePageContext } from "rakkasjs";
 import { deleteRepositories } from "./mutations/repo_mutations";
 import { hotToast } from "@/components/wrappers/toast";
 import { useRelayEnvironment } from "@/lib/relay/modules";
-interface RepoCardDeleteProps {
+interface DeleteRepositoryProps {
   open: boolean;
   selected: ItemList[];
   setSelected: (selected: ItemList[] | null) => void;
   setOpen: (open: boolean) => void;
 }
 
-export function RepoCardDelete({
+export function DeleteRepository({
   open,
   selected,
   setOpen,
   setSelected,
-}: RepoCardDeleteProps) {
+}: DeleteRepositoryProps) {
   const { locals } = usePageContext();
   const token = locals?.pb?.authStore.model?.accessToken;
   const enviroment = useRelayEnvironment();

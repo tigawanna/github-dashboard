@@ -2,7 +2,7 @@ import { graphql, useFragment } from "@/lib/relay/modules";
 import { GeneralInfo_info$key } from "./__generated__/GeneralInfo_info.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { Star, Github, Lock, BookDashed, Bolt, Globe } from "lucide-react";
+import { Github, Lock, BookDashed, Bolt, Globe } from "lucide-react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 import { SiVisualstudiocode } from "react-icons/si";
@@ -10,9 +10,9 @@ import { Link } from "rakkasjs";
 import { NumberStats } from "@/components/shared/NumberStats";
 import { BooleanStats } from "@/components/shared/BooleanStats";
 import { ImBlocked } from "react-icons/im";
-import { RepoCardStar } from "@/routes/viewer/components/repos/RepoCardStar";
 import { RepositoryActions } from "@/routes/viewer/components/repos/RepositoryActions";
 import { useViewer } from "@/lib/pb/hooks/useViewer";
+import { StarRepository } from "@/routes/viewer/components/repos/StarRepository";
 
 dayjs.extend(relativeTime);
 
@@ -44,7 +44,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
               <NumberStats Icon={BiGitRepoForked} stat={fragData?.forkCount} />
               {/* <NumberStats Icon={Star} stat={fragData?.stargazerCount} /> */}
               {fragData?.stargazerCount && (
-                <RepoCardStar
+                <StarRepository
                   id={fragData.id}
                   stargazerCount={fragData?.stargazerCount}
                   viewerHasStarred={fragData?.viewerHasStarred}

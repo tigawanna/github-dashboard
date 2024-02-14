@@ -9,8 +9,8 @@ import {
 } from "@/components/shadcn/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
-import { RepoCardDelete } from "./RepoCardDelete";
 import { useState } from "react";
+import { DeleteRepository } from "./DeleteRepository";
 
 interface RepositoryActionsProps {
   local_viewer: LocalViewer | null;
@@ -53,7 +53,7 @@ export function RepositoryActions({
             </DropdownMenuItem>
           )} */}
           {CAN_DELETE && (
-            <RepoCardDelete
+            <DeleteRepository
               open={open}
               setOpen={setOpen}
               setSelected={() => {}}

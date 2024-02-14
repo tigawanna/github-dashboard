@@ -9,10 +9,10 @@ import { RepoCard } from "./RepoCard";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
 import { Edit } from "lucide-react";
-import { RepoCardDelete } from "./RepoCardDelete";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { useRepoSelector } from "./hooks/selectRepos";
 import { viewerVIEWERQuery } from "../../__generated__/viewerVIEWERQuery.graphql";
+import { DeleteRepository } from "./DeleteRepository";
 
 
 interface ViewerReposProps {
@@ -73,7 +73,7 @@ export function ViewerRepos({ viewer, local_viewer }: ViewerReposProps) {
 
           <div className="flex items-center justify-center gap-3">
             {editing&&selected && selected.length > 0 && (
-              <RepoCardDelete
+              <DeleteRepository
                 open={open}
                 setOpen={setOpen}
                 setSelected={setSelected}

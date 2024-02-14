@@ -8,10 +8,10 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { RepositoryActions } from "./RepositoryActions";
-import { RepoCardStar } from "./RepoCardStar";
 import { FaGithub } from "react-icons/fa";
 import { ItemList } from "./types";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
+import { StarRepository } from "./StarRepository";
 dayjs.extend(relativeTime);
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
@@ -162,7 +162,7 @@ export function RepoCard({
         <div className="flex gap-1 justify-center items-center">
           <BiGitRepoForked /> {repo?.forkCount}
         </div>
-        <RepoCardStar
+        <StarRepository
           id={repo.id}
           stargazerCount={repo?.stargazerCount}
           viewerHasStarred={repo?.viewerHasStarred}

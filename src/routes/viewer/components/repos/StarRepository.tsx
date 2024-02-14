@@ -1,24 +1,24 @@
 import { Star } from "lucide-react";
 import { graphql, useMutation } from "@/lib/relay/modules";
-import { RepoCardStardAddStarMutation } from "./__generated__/RepoCardStardAddStarMutation.graphql";
-import { RepoCardStardRemoveStarMutation } from "./__generated__/RepoCardStardRemoveStarMutation.graphql";
 import { hotToast } from "@/components/wrappers/toast";
+import { StarRepositoryAddStarMutation } from "./__generated__/StarRepositoryAddStarMutation.graphql";
+import { StarRepositoryRemoveStarMutation } from "./__generated__/StarRepositoryRemoveStarMutation.graphql";
 
-interface RepoCardStarProps {
+interface StarRepositoryProps {
   id: string;
   viewerHasStarred: boolean;
   stargazerCount: number;
 }
 
-export function RepoCardStar({
+export function StarRepository({
   id,
   stargazerCount,
   viewerHasStarred,
-}: RepoCardStarProps) {
+}: StarRepositoryProps) {
   const [starMutation, isStarMutationInFlight] =
-    useMutation<RepoCardStardAddStarMutation>(AddStarMutation);
+    useMutation<StarRepositoryAddStarMutation>(AddStarMutation);
   const [unStarMutation, isUnStarMutationInFlight] =
-    useMutation<RepoCardStardRemoveStarMutation>(RemoveStarMutation);
+    useMutation<StarRepositoryRemoveStarMutation>(RemoveStarMutation);
 
   const is_starring = isStarMutationInFlight || isUnStarMutationInFlight;
   const star_classnames = viewerHasStarred ? "fill-yellow-400" : "";
@@ -61,7 +61,7 @@ export function RepoCardStar({
 }
 
 export const AddStarMutation = graphql`
-  mutation RepoCardStardAddStarMutation($starrableId: ID!) {
+  mutation StarRepositoryAddStarMutation($starrableId: ID!) {
     addStar(input: { starrableId: $starrableId, clientMutationId: "" }) {
       starrable {
         id
@@ -73,7 +73,7 @@ export const AddStarMutation = graphql`
 `;
 
 export const RemoveStarMutation = graphql`
-  mutation RepoCardStardRemoveStarMutation($starrableId: ID!) {
+  mutation StarRepositoryRemoveStarMutation($starrableId: ID!) {
     removeStar(input: { starrableId: $starrableId, clientMutationId: "" }) {
       starrable {
         id

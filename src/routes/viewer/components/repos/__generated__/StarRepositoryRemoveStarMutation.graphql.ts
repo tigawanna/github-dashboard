@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdb21a31d53fca27818a21ffc04f98ba>>
+ * @generated SignedSource<<abdff8532566484b950aebde62e0326f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type RepoCardStardAddStarMutation$variables = {
+export type StarRepositoryRemoveStarMutation$variables = {
   starrableId: string;
 };
-export type RepoCardStardAddStarMutation$data = {
-  readonly addStar: {
+export type StarRepositoryRemoveStarMutation$data = {
+  readonly removeStar: {
     readonly starrable: {
       readonly id: string;
       readonly stargazerCount: number;
@@ -21,9 +21,9 @@ export type RepoCardStardAddStarMutation$data = {
     } | null | undefined;
   } | null | undefined;
 };
-export type RepoCardStardAddStarMutation = {
-  response: RepoCardStardAddStarMutation$data;
-  variables: RepoCardStardAddStarMutation$variables;
+export type StarRepositoryRemoveStarMutation = {
+  response: StarRepositoryRemoveStarMutation$data;
+  variables: StarRepositoryRemoveStarMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -78,14 +78,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "RepoCardStardAddStarMutation",
+    "name": "StarRepositoryRemoveStarMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AddStarPayload",
+        "concreteType": "RemoveStarPayload",
         "kind": "LinkedField",
-        "name": "addStar",
+        "name": "removeStar",
         "plural": false,
         "selections": [
           {
@@ -113,14 +113,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "RepoCardStardAddStarMutation",
+    "name": "StarRepositoryRemoveStarMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "AddStarPayload",
+        "concreteType": "RemoveStarPayload",
         "kind": "LinkedField",
-        "name": "addStar",
+        "name": "removeStar",
         "plural": false,
         "selections": [
           {
@@ -150,16 +150,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ba18b80009ded37f6d5a82062f4895d0",
+    "cacheID": "1df9439614448809e6a0fddad491cc51",
     "id": null,
     "metadata": {},
-    "name": "RepoCardStardAddStarMutation",
+    "name": "StarRepositoryRemoveStarMutation",
     "operationKind": "mutation",
-    "text": "mutation RepoCardStardAddStarMutation(\n  $starrableId: ID!\n) {\n  addStar(input: {starrableId: $starrableId, clientMutationId: \"\"}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      viewerHasStarred\n    }\n  }\n}\n"
+    "text": "mutation StarRepositoryRemoveStarMutation(\n  $starrableId: ID!\n) {\n  removeStar(input: {starrableId: $starrableId, clientMutationId: \"\"}) {\n    starrable {\n      __typename\n      id\n      stargazerCount\n      viewerHasStarred\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "32f6bbbf5e390d75654c86325e306329";
+(node as any).hash = "93174f95f770aafefa460d2870d1c3e5";
 
 export default node;
