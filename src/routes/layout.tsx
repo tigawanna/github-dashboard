@@ -26,14 +26,14 @@ function Layout({ children }: LayoutProps) {
             isAnimating={location && location?.pending ? true : false}
           />
         </ClientSuspense>
-        <div className="w-full flex gap-3">
-          <div className="w-10 sm:hidden flex flex-col justify-center gap-3 relative ">
-            <Menu
-              className="h-8 w-8 absolute top-[2%] left-[25%] z-40 "
-              onClick={() => setOpen(!open)}
-            />
+        <div className="w-full flex gap-3 relative">
+          <div className="sm:hidden flex flex-col justify-center gap-3 absolute top-[1%] right-[3%] ">
+            <Menu className="h-8 w-8  z-40 " onClick={() => setOpen(!open)} />
             {open && (
-              <div onClick={() => setOpen(!open)} className="sm:hidden w-full flex h-screen gap-2 animate-in fade-in zoom-in">
+              <div
+                onClick={() => setOpen(!open)}
+                className="sm:hidden w-full flex z-40 h-screen gap-2 animate-in fade-in zoom-in"
+              >
                 <Sidebar />
               </div>
             )}
@@ -44,7 +44,7 @@ function Layout({ children }: LayoutProps) {
           <div className="w-full flex flex-col  gap-2 ">
             {open && (
               <div
-                className="sm:hidden fixed top-0 left-10 w-full h-screen z-40
+                className="sm:hidden fixed top-0 right-10 w-full h-screen z-40
               animate-in fade-in zoom-in bg-base-300/60"
                 onClick={() => setOpen(!open)}
               ></div>
