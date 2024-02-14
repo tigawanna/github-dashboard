@@ -2,14 +2,14 @@ import { SiVisualstudiocode } from "react-icons/si";
 import { FiActivity } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
 import { Link } from "rakkasjs";
-import { Github, History, Info, Lock, Star } from "lucide-react";
+import { History, Lock } from "lucide-react";
 import { ViewerRepos_repositories$data } from "./__generated__/ViewerRepos_repositories.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { RepositoryActions } from "./RepositoryActions";
 import { RepoCardStar } from "./RepoCardStar";
-
+import { FaGithub } from "react-icons/fa";
 import { ItemList } from "./types";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 dayjs.extend(relativeTime);
@@ -43,25 +43,25 @@ export function RepoCard({
     <li
       key={edge?.node?.id}
       className="bg-base-300 rounded-lg flex-grow
-                min-h-fit  md:h-[420px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
+                min-h-fit  md:h-[400px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1 relative"
     >
       <div
-        className="flex flex-col cursor-pointer  w-full gap-1 "
+        className="w-full flex flex-col cursor-pointer gap-1 "
         onClick={() => {}}
         data-tip={repo.description}
       >
         <img
           height={300}
           width={300}
-          className=" w-full md:h-[200px] object-cover dark:brightness-50 hover:brightness-75"
+          className=" w-full  md:h-[200px] object-cover dark:brightness-50 hover:brightness-75"
           loading="lazy"
           src={repo?.openGraphImageUrl}
         />
-        <div className="flex gap-3 bg-base-200 h-full">
+        <div className="w-full flex gap-3 bg-base-200 h-full">
           <Link
             href={"/viewer/" + repo.nameWithOwner}
-            className="w-full max-w-[92%]  p-2 hover:bg-accent/20 flex flex-col gap-2"
+            className="w-full  p-2 hover:bg-accent/20 flex flex-col gap-2"
           >
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -89,17 +89,22 @@ export function RepoCard({
               })}
             </div>
           </Link>
-          <div className=" min-h-[50px] p-2 gap-2 flex flex-col items-center justify-between">
-          <RepositoryActions
-            owner={repo.owner.login}
-            local_viewer={local_viewer}
-            viewerCanAdminister={repo.viewerCanAdminister}
-            isFork={repo.isFork}
-            forkingAllowed={repo.forkingAllowed}
-            id={repo.id}
-            nameWithOwner={repo.nameWithOwner}
-          />
-          {editing &&(
+
+          <div className="p-2 gap-2 absolute right-[2%] z-40 bg-base-300 flex flex-col items-center justify-between">
+            <RepositoryActions
+              owner={repo.owner.login}
+              local_viewer={local_viewer}
+              viewerCanAdminister={repo.viewerCanAdminister}
+              isFork={repo.isFork}
+              forkingAllowed={repo.forkingAllowed}
+              id={repo.id}
+              nameWithOwner={repo.nameWithOwner}
+            />
+          </div>
+
+          <div className="p-2 gap-2 flex flex-col items-center justify-between">
+
+            {editing && (
               <div className="absolute right-[2%] top-[2%] z-30 p-3 bg-base-300 rounded-lg">
                 <Checkbox
                   className="h-7 w-7  border-2 border-accent"
@@ -114,7 +119,6 @@ export function RepoCard({
                 />
               </div>
             )}
-
           </div>
         </div>
         {/*  description and last commit message */}
@@ -185,7 +189,7 @@ export function RepoCard({
             href={repo.url}
             className="hover:text-accent border rounded-full border-base-content p-0.5"
           >
-            <Github className="h-5 w-5" />
+            <FaGithub className="h-5 w-5" />
           </Link>
         </div>
       </div>

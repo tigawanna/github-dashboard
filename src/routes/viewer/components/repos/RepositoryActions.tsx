@@ -1,4 +1,4 @@
-import { Star } from "lucide-react";
+import { GitFork, Star } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -40,7 +40,7 @@ export function RepositoryActions({
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <MoreVertical />
+        <MoreVertical className="" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Actions</DropdownMenuLabel>
@@ -61,6 +61,12 @@ export function RepositoryActions({
                 { id, name: nameWithOwner.split("/")[1], nameWithOwner },
               ]}
             />
+          )}
+          {CAN_FORK && (
+            <div className="w-full flex p-2 gap-2 items-center bg-base-300 rounded-lg">
+              <GitFork className="w-4 h-4" />
+              <div className="">fork</div>
+            </div>
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

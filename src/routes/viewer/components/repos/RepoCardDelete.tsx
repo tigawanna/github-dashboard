@@ -3,7 +3,6 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
-
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -15,7 +14,7 @@ import { ItemList } from "./types";
 import { useMutation, usePageContext } from "rakkasjs";
 import { deleteRepositories } from "./mutations/repo_mutations";
 import { hotToast } from "@/components/wrappers/toast";
-import {  useRelayEnvironment } from "@/lib/relay/modules";
+import { useRelayEnvironment } from "@/lib/relay/modules";
 interface RepoCardDeleteProps {
   open: boolean;
   selected: ItemList[];
@@ -37,7 +36,7 @@ export function RepoCardDelete({
     onSuccess: (data) => {
       // console.log("succesfully deleted repos", data);
       setSelected(null);
-      (data.successfull.length>0)&&
+      data.successfull.length > 0 &&
         data.successfull?.forEach((item) => {
           enviroment.applyUpdate({
             storeUpdater: (store) => {
@@ -48,8 +47,7 @@ export function RepoCardDelete({
       hotToast({
         title: "Done",
         mixed: {
-          successfull: 
-          `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull.map((item)=>item.name + "\n").join(", \n")}`,
+          successfull: `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull.map((item) => item.name + "\n").join(", \n")}`,
           failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed.map((item) => item.repo + " : " + item.issue + "\n").join(", ")}`,
         },
         type: "mixed",
@@ -70,7 +68,10 @@ export function RepoCardDelete({
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <Trash className="h-6 w-6 text-red-700 hover:fill-red-700 " />
+        <div className="w-full flex gap-2 items-center bg-base-300 rounded-lg">
+          <Trash className="h-6 w-6 text-red-700 hover:fill-red-700 " />
+          <div className="">delete</div>
+        </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

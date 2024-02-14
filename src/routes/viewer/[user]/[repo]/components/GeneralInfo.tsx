@@ -2,7 +2,7 @@ import { graphql, useFragment } from "@/lib/relay/modules";
 import { GeneralInfo_info$key } from "./__generated__/GeneralInfo_info.graphql";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
-import { Star, Github, Lock, BookDashed, Bolt } from "lucide-react";
+import { Star, Github, Lock, BookDashed, Bolt, Globe } from "lucide-react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 import { SiVisualstudiocode } from "react-icons/si";
@@ -37,7 +37,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
           <p>{fragData?.description}</p>
           {/* recent activity ,fork count,star count ,visibility  */}
           <div
-            className="w-full  text-sm  flex flex-col md:flex-row md:flex-wrap
+            className="w-full   text-sm  flex flex-col md:flex-wrap
             md:items-center justify-start items-start p-2 gap-1 md:gap-3"
           >
             <div className=" flex items-center justify-evenly gap-3">
@@ -55,7 +55,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
               )}
             </div>
 
-            <div className="flex gap-2 justify-evenly"></div>
+    
 
             {fragData?.id && fragData.nameWithOwner && local_viewer?.viewer && (
               <RepositoryActions
@@ -78,6 +78,16 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
               {fragData?.visibility === "PRIVATE" ? (
                 <Lock className="text-error" />
               ) : null}
+              {fragData?.homepageUrl && (
+                <Link
+                  target="_blank"
+                  rel="noreferrer"
+                  href={fragData?.homepageUrl}
+                  className="text-blue-500 hover:text-accent"
+                >
+                  <Globe className="h-5 w-5" />
+                </Link>
+              )}
               {fragData?.url && (
                 <Link
                   target="_blank"
@@ -176,12 +186,14 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
         </div>
         {/* image */}
         <img
-          className="w-full md:w-[40%] h-auto aspect-square md:aspect-video object-fit rounded-lg dark:brightness-50"
+          className="w-full md:w-[40%] h-auto  md:aspect-video object-fit rounded-lg dark:brightness-50"
+          alt={fragData?.nameWithOwner}
           height={200}
           width={200}
           src={fragData?.openGraphImageUrl}
         />
       </div>
+      {/* languages */}
       {fragData?.languages?.nodes && fragData?.languages?.nodes?.length > 0 && (
         <div className="h-full flex flex-wrap gap-2 px-2">
           {fragData?.languages?.nodes?.map((item) => {
@@ -202,6 +214,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
           })}
         </div>
       )}
+      {/* topics */}
       {fragData?.repositoryTopics?.nodes &&
         fragData?.repositoryTopics?.nodes?.length > 0 && (
           <div className="h-full flex flex-wrap items-center gap-2 px-2">
