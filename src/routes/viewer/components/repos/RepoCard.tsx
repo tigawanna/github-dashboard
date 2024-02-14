@@ -58,10 +58,10 @@ export function RepoCard({
           loading="lazy"
           src={repo?.openGraphImageUrl}
         />
-        <div className="w-full flex gap-3 bg-base-200 h-full">
+        <div className="w-full flex gap-3 bg-base-200 hover:text-secondary h-full">
           <Link
             href={"/viewer/" + repo.nameWithOwner}
-            className="w-full  p-2 hover:bg-accent/20 flex flex-col gap-2"
+            className="w-full  p-2  flex flex-col gap-2"
           >
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>

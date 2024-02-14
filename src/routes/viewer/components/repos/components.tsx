@@ -48,11 +48,11 @@ interface FilterReposProps {}
 export function FilterRepos({}: FilterReposProps) {
   const { params, setParams } = useRepoSearchQuery();
   const order_by_selects: { value: RepositoryOrderField; label: string }[] = [
-    { label: "pushed", value: "PUSHED_AT" },
-    { label: "name", value: "NAME" },
-    { label: "stars", value: "STARGAZERS" },
-    { label: "updated", value: "UPDATED_AT" },
-    { label: "created", value: "CREATED_AT" },
+    { label: "PUSHED AT", value: "PUSHED_AT" },
+    { label: "NAME", value: "NAME" },
+    { label: "STARs", value: "STARGAZERS" },
+    { label: "UPDATED", value: "UPDATED_AT" },
+    { label: "CREATED", value: "CREATED_AT" },
   ];
   const checked = params.ifk === "true";
   return (
@@ -103,7 +103,7 @@ export function FilterRepos({}: FilterReposProps) {
       <div className="flex justify-center items-center gap-3 w-full ">
         <Checkbox
           id="is_fork"
-          className="h-7 w-7"
+          className="h-7 w-7 border border-accent"
           checked={checked}
           onCheckedChange={(value: boolean) => {
             setParams({ ...params, ifk: value ? "true" : "false" });
@@ -113,7 +113,7 @@ export function FilterRepos({}: FilterReposProps) {
           htmlFor="is_fork"
           className="font-medium  leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
         >
-          is fork
+          Is Fork
         </label>
       </div>
     </div>
