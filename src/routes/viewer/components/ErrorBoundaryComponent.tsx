@@ -39,6 +39,7 @@ export default function ViewerErrorBoundaryComponent({
           // Splits the current URL pathname by "/" and removes the last segment, then joins the remaining segments with "/" to create a new URL.
 
           const url = current.pathname.split("/").slice(0, -1).join("/");
+          console.log(" auth error in viewr error bounadry , redirecting ", url);
           navigate(url, { replace: true });
           // window.location.href = url.toString();
           // history.back();

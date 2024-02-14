@@ -44,7 +44,7 @@ function Layout({ children }: LayoutProps) {
           <div className="w-full flex flex-col  gap-2 ">
             {open && (
               <div
-                className="sm:hidden fixed top-0 right-10 w-full h-screen z-40
+                className="sm:hidden fixed top-0 right-[20%] w-full h-screen z-40
               animate-in fade-in zoom-in bg-base-300/60"
                 onClick={() => setOpen(!open)}
               ></div>
@@ -54,7 +54,7 @@ function Layout({ children }: LayoutProps) {
                 <BreadCrumbs />
               </ClientSuspense>
             </div>
-            <div className="w-full  h-[95vh] md:pl-6 px-1 flex flex-col overflow-y-auto gap-2 ">
+            <div className="w-full  h-[95vh] md:pl-6 p-2 flex flex-col overflow-y-auto gap-2 ">
               <ErrorBoundaryComponent>{children}</ErrorBoundaryComponent>
             </div>
           </div>

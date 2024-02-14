@@ -7,8 +7,16 @@ import { RequestContext } from "rakkasjs";
 import { PocketBaseClient } from "./lib/pb/client";
 import PocketBase from "pocketbase";
 function createRelayEnvironment(ctx: RequestContext) {
-  // console.log("=== createRelayEnvironment pocketbase  ===== ",ctx.locals.pb.authStore.model);
-  const token = ctx.cookie.gh_token;
+  const pb_auth = ctx.locals?.pb?.authStore?.model;
+  // console.log("=== createRelayEnvironment pocketbase  ===== ",ctx);
+  // console.log("=== pb_auth  ===== ",pb_auth);
+  //  when is dev mode check for a personal access token if  githu accessToken from pocketbase auth  is not found
+  const gh_pat = import.meta.env.RAKKAS_GH_PAT;
+  const is_dev = import.meta.env.DEV;
+  const pb_pat = pb_auth?.accessToken;
+  const token = is_dev ? pb_pat || gh_pat : pb_pat;
+  console.log(" token ===",token)
+  // const token = ctx.cookie.gh_token;
   return new Environment({
     network: Network.create((request, variables, cacheConfig, uploadables) =>
       fetchFn({
