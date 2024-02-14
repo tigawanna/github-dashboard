@@ -125,9 +125,7 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
           <DropdownMenuLabel className="font-bold text-xl">
             Viewer
           </DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuLabel className="font-bold">Theme</DropdownMenuLabel>
-          <ThemeToggle />
+
           <DropdownMenuSeparator />
           <div className="flex flex-col gap-1 p-3">
             <div className="flex flex-col gap-1 p-3">
@@ -149,6 +147,8 @@ export function MiniSettingsModal({}: MiniSettingsModalProps) {
               )}
             </Button>
           </div>
+          <DropdownMenuSeparator />
+        <ThemeToggle />
         </DropdownMenuContent>
       ) : (
         <DropdownMenuContent className="w-fit">
