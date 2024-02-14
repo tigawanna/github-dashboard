@@ -256,7 +256,7 @@ Some of the issues I had with Relay initially just boiled down to skill issues a
     ```
     Doing an as type casting felt wrong and rightly so. because the fix was so simple 
     ```tsx
-      const frag_data = usePaginationFragment<any,Fragment_name$key>(SomeFragment, ref);
+      const frag_data = usePaginationFragment<MainQuery,Fragment_name$key>(SomeFragment, ref);
       const some_fragment = frag_data.data
 
     ```
@@ -266,8 +266,242 @@ Also note the paginated fragment takes in the `Fragment_name$key` as it's second
 
 ```tsx
    const frag_data = useFragment<Fragment_name$key>(SomeFragment, ref);
-   const paginated_frag_data = usePaginationFragment<any,Fragment_name$key>(SomeFragment, ref);
+   const paginated_frag_data = usePaginationFragment<MainQuery,Fragment_name$key>(SomeFragment, ref);
 ```
+The `MainQuery` type is the type for the main query that the fragment is part of
+```graphql
+export const mainQuery = graphql`
+  query MainQuery() {
+    stuff {
+      ...Fragment_name
+    }
+  }
+`;
+```
+ - Fragment Refs
+
+```tsx
+  const query = useLazyLoadQuery<MainQuery>(mainQuery)
+```
+this query then becomes a ref that should be passed into the fragment query hooks as the second argument the first argument being the fragment 
+
+```graphql
+export const SomeFragment = graphql`
+  fragment Fragment_name on Stuff {
+  edges {
+    node {
+      id
+      name
+      createdAt
+    }
+  }  
+
+  }
+`
+```
+
+```tsx
+      const frag_data = usePaginationFragment<MainQuery,Fragment_name$key>(SomeFragment, ref);
+      const some_fragment = frag_data.data
+```
+
+which leads me to another accidental discovery I made while figuring out a way to pass the refs into the fragment components with the correct types , a typescript helper type `FragmentRef` is exposed by relay 
+
+```tsx
+  refs?: {
+    readonly " $fragmentSpreads": FragmentRefs<
+      | "Fragment_name"
+      | "Fragment_history"
+  >;
+  } | null;
+```
+
+Will have a type we can pass into a component that houses the components for `Fragment_name` and `Fragment_history` avoiding  having to use the `any` type
+
+- Dealing with read only types
+
+Relay will return all query types and read only and this might become a problem if you have a query result that returns an array of 
+```ts
+type OneItem = {
+id
+name 
+createdAt
+}
+```
+Normally if you wanted to have an ItemCard component you would simply
+
+```tsx
+type ItemList = OneItem[]
+{items.mao((item) => (
+  <ItemCard key={item.id} item={item} />
+))}
+type ItemCardItem = ItemList[number]
+
+finction ItemCard({ item }:ItemCardItem) {
+  return <div>{item.name}</div>;
+}
+```
+But indexing with a number is  not allowed with readonly arrays in Typescript
+
+```ts
+type Items = ReadOnlyArray<ItemList>
+// ❌ not allowed
+type ItemCardItem = ItemList[number]
+```
+So i made a helper type to convert ReadOnlyArray to Array
+
+```ts
+type ReadonlyToRegular<T> = T extends ReadonlyArray<infer U> ? Array<U> : never;
+type Items = ReadOnlyArray<ItemList>
+type ItemCardItem = ReadonlyToRegular<ItemList>[number]
+```
+
+- How to use React 18 features
+  - Suspense boundaries
+  These are mostly used to wrap components that are doing data fetching , but I kept making the mistake of forgetting them and triggering the global Suspense boundary causing the whole page to flicker when data was loading  ,
+  Or I would wrap the list instead of the whole component 
+
+```tsx
+<!-- ❌ -->
+  function SomeList() {
+    const { loading, error, data } = useQuery(SOME_QUERY, {
+      variables: { first: 10 },
+    })
+    return(
+      <Suspense fallback={<div>Loading...</div>}>
+        <div>This is a data fetching component</div>;
+      </Suspense>
+    ) 
+  }
+  ```
+```tsx
+<!--  ✅ -->
+function ParentComponent() {
+  return(
+    <Suspense fallback={<div>Loading...</div>}>
+      <SomeList />
+      </Suspense>
+
+  )
+  
+}
+  function SomeList() {
+    const { loading, error, data } = useQuery(SOME_QUERY, {
+      variables: { first: 10 },
+    })
+    return(
+        <div>This is a data fetching component</div>;
+    ) 
+  }
+  ```
+  - Skipping the suspense fallback with `useTransition`
+      I had a search component which would make a bunch or request  while one is typing which would trigger the suspense boundary of the parent component covering the whole page the search box included ,one possible work around could have been to hoist the input and the associated `useState` and pass in the current keyword to the SearchResults component which would also house the data fetching logic and wrap that with a suspense boundary .
+      Or we could wrap the `setState` with a startTransition to mark the key inputs as more important and render everything else in the background and show the results when ready without a suspense boundary.
+      
+      ```tsx
+        const [, startTransition] = useTransition();
+        const [keyword, setKeyword] = useState("");
+
+        const { loading, error, data } = useQuery(SOME_QUERY, {
+          variables: { query: keyword, first:19 },
+
+        })
+
+        return(
+          <div>
+            <input value={keyword} 
+            <!-- ❌ will cause flickers
+            onChange={(e) => {
+              setKeyword(e.target.value)
+   
+            }} -->
+            <!-- ✅ -->
+            onChange={(e) => {
+              startTransition(() => {
+              setKeyword(e.target.value)
+              })
+            }}
+            />
+  
+            <Suspense fallback={<div>Loading...</div>}>
+              <SearchResults data={data} />
+            </Suspense>
+          </div>
+        )
+
+      ```
+
+      As an addition i also relied on the URL and serach params to store the variables , makes shring URls eas and state is still maitatined after a refresh
+
+```tsx
+export function useDebouncedValue<T = any>(value: T, delay: number) {
+  const [isDebouncing, setIsDebouncing] = useState(false);
+  const [debouncedValue, setDebouncedValue] = useState<T>(value);
+
+  useEffect(() => {
+    setIsDebouncing(true);
+    const timer = setTimeout(() => {
+      setDebouncedValue(value);
+      setIsDebouncing(false);
+    }, delay);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [value, delay]);
+
+  return { debouncedValue, setDebouncedValue,isDebouncing };
+}
+
+
+import { useTransition, useState, useEffect } from "react";
+import { navigate, useLocation } from "rakkasjs";
+import { SearchType } from "./__generated__/SearchListQuery.graphql";
+
+export function useGithubSearch() {
+  const { current } = useLocation();
+  const initSearchType = current.searchParams.get("st") as SearchType | null;
+  const initSearchValue = current.searchParams.get("sq") ?? "";
+
+  const [, startTransition] = useTransition();
+  const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
+    initSearchValue,
+    5000,
+  );
+  const [searchType, setSearchType] = useState<SearchType>(
+    initSearchType ?? "REPOSITORY",
+  );
+  useEffect(() => {
+    if (debouncedValue !== initSearchValue) {
+      setDebouncedValue(initSearchValue);
+    }
+  }, []);
+  useEffect(() => {
+    const new_url = new URL(current);
+    if (debouncedValue && debouncedValue !== initSearchValue) {
+      new_url.searchParams.set("sq", debouncedValue);
+    }
+    if (searchType && searchType !== initSearchType) {
+      new_url.searchParams.set("st", searchType);
+    }
+    startTransition(() => {
+      navigate(new_url.toString());
+    });
+  }, [debouncedValue, searchType]);
+
+  return {
+    debouncedValue,
+    setDebouncedValue,
+    isDebouncing,
+    searchType,
+    setSearchType,
+    startTransition,
+    current,
+  };
+}
+
+```
+
 
 **It's still awesome though:**
 With all that said relay is still awesome , so awesome it inspired the React server components and the best way to do GraphQL in react

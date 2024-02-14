@@ -1,9 +1,6 @@
 import {
   graphql,
   usePaginationFragment,
-
-  useRelayEnvironment,
-  commitLocalUpdate,
 } from "@/lib/relay/modules";
 import { ViewerRepos_repositories$key } from "./__generated__/ViewerRepos_repositories.graphql";
 import { FilterRepos } from "./components";
