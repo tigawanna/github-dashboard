@@ -99,10 +99,8 @@ export function RepoCard({
             id={repo.id}
             nameWithOwner={repo.nameWithOwner}
           />
-          {editing &&
-            !repo.isInOrganization &&
-            repo.viewerPermission === "ADMIN" && (
-              <div className="right-[3%] bottom-[27%] z-40">
+          {editing &&(
+              <div className="absolute right-[2%] top-[2%] z-30 p-3 bg-base-300 rounded-lg">
                 <Checkbox
                   className="h-7 w-7  border-2 border-accent"
                   checked={selected}
