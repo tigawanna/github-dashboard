@@ -11,6 +11,7 @@ import { MoreVertical } from "lucide-react";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
 import { DeleteRepository } from "./DeleteRepository";
+import { ForkRepository } from "./ForkRepository";
 
 interface RepositoryActionsProps {
   local_viewer: LocalViewer | null;
@@ -63,10 +64,14 @@ export function RepositoryActions({
             />
           )}
           {CAN_FORK && (
-            <div className="w-full flex p-2 gap-2 items-center bg-base-300 rounded-lg">
-              <GitFork className="w-4 h-4" />
-              <div className="">fork</div>
-            </div>
+            <ForkRepository
+              open={open}
+              setOpen={setOpen}
+              setSelected={() => {}}
+              selected={[
+                { id, name: nameWithOwner.split("/")[1], nameWithOwner },
+              ]}
+            />
           )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

@@ -79,14 +79,15 @@ export function GithubUserTabs({ refs }: GithubUserTabsProps) {
           </TabsTrigger>
         </TabsList>
 
-        <TabsContent value="repos" className="">
+        <TabsContent value="repos" className="w-full">
           {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
               <ViewerRepos viewer={refs} local_viewer={data.viewer} />
             </Suspense>
           )}
         </TabsContent>
-        <TabsContent value="stars">
+        
+        <TabsContent value="stars" className="w-full">
           {refs && (
             <Suspense fallback={<ViewerReposSuspenseFallback />}>
               <ViewerStarerdRepos viewer={refs} local_viewer={data.viewer} />

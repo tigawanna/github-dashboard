@@ -29,45 +29,10 @@ export function ViewerStarerdRepos({
 
   const { unselectItem, selectItem } = useRepoSelector();
 
-
   return (
     <div className="w-full h-full flex gap-2 flex-col  items-center justify-center">
       <div className="w-full bg-base-200 sticky top-0 flex flex-wrap justify-evenly">
         <FilterStarredRepos />
-        {/* <div className=" flex items-center justify-center gap-3">
-          <Edit
-            onClick={() => setEditing(!editing)}
-            className="h-7 w-7 hover:text-orange-500"
-          />
-          {editing && (
-            <Checkbox
-              className="h-7 w-7 border border-accent"
-              checked={is_all_selected}
-              onClick={() => {
-                if (is_all_selected) {
-                  deselectAll();
-                } else {
-                  // @ts-expect-error
-                  selectAll(repos);
-                }
-              }}
-            />
-          )}
-          {editing && selected && selected?.length > 0 && (
-            <div className="badge badge-sm">{selected?.length}</div>
-          )}
-
-          <div className="flex items-center justify-center gap-3">
-            {selected && selected.length > 0 && (
-              <RepoCardDelete
-                open={open}
-                setOpen={setOpen}
-                setSelected={setSelected}
-                selected={selected}
-              />
-            )}
-          </div>
-        </div> */}
       </div>
       <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
         {repos &&
