@@ -5,13 +5,13 @@ import { Link } from "rakkasjs";
 import { History, Lock } from "lucide-react";
 import { ViewerRepos_repositories$data } from "./__generated__/ViewerRepos_repositories.graphql";
 import dayjs from "dayjs";
-import relativeTime from "dayjs/plugin/relativeTime";
 import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { RepositoryActions } from "./RepositoryActions";
 import { FaGithub } from "react-icons/fa";
 import { ItemList } from "./types";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { StarRepository } from "./StarRepository";
+import relativeTime from "dayjs/plugin/relativeTime";
 dayjs.extend(relativeTime);
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>

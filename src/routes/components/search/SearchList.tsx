@@ -32,6 +32,7 @@ export function SearchList({
     type: searchType,
   });
 
+  console.log("==== query  ==== ",query)
   return (
     <div className="w-full h-full flex  overflow-auto">
       <Tabs
@@ -42,8 +43,8 @@ export function SearchList({
         className="w-full h-full "
       >
         <TabsList className="grid w-full grid-cols-2 sticky top-0 z-50">
-          <TabsTrigger value="REPOSITORY">Repositories</TabsTrigger>
-          <TabsTrigger value="USER">Users</TabsTrigger>
+          <TabsTrigger value="REPOSITORY">Repositories {query?.search?.repositoryCount===0?"":query?.search?.repositoryCount}</TabsTrigger>
+          <TabsTrigger value="USER">Users {query?.search?.userCount===0?"":query?.search?.userCount} </TabsTrigger>
         </TabsList>
 
         <TabsContent value="REPOSITORY" className="z-30">

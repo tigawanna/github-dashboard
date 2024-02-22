@@ -5,7 +5,6 @@ import { oneClickOauthLogin } from "@/lib/pb/client";
 import { tryCatchWrapper } from "@/utils/helpers/async";
 import { Loader } from "lucide-react";
 import {
-  navigate,
   useLocation,
   useMutation,
   usePageContext,
@@ -21,7 +20,7 @@ export function OAuthproviders({}: OAuthprovidersProps) {
   const [selectedScopes, setScopes] = useState(githubScopes.slice(0, 2));
   const { locals } = usePageContext();
   const qc = useQueryClient();
-  const { current } = useLocation();
+
   
   const mutation = useMutation(
     () => {

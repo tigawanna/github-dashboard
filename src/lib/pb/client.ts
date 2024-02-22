@@ -48,7 +48,7 @@ export async function triggerOuathLogin(pb:PocketBaseClient,options: OAuth2AuthC
 
 export async function oneClickOauthLogin(pb:PocketBase,options: OAuth2AuthConfig) {
   try {
-    // const authData = await pb.collection('pocketbook_user').authWithOAuth2({ provider});
+ 
     const authData = await pb
       .collection("github_oauth")
       .authWithOAuth2<RecordManualTypes>(options);
