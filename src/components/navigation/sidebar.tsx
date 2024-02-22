@@ -13,8 +13,8 @@ export function Sidebar({}: SidebarProps) {
   ];
   return (
     <header
-      className=" h-screen  flex flex-col  justify-center items-center bg-base-300  
-    z-30 gap-1 "
+      className=" h-[99dvh] flex flex-col  justify-center items-center bg-base-300  
+    z-30 gap-1 pb-5"
     >
       <div className="w-full h-full flex flex-col justify-center items-center p-2 pb-12 pt-3 gap-5">
         <div className="h-full flex flex-col gap-3 items-center justify-end divide-y-2">
