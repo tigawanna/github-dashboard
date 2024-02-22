@@ -32,7 +32,7 @@ export function SearchList({
     type: searchType,
   });
 
-  console.log("==== query  ==== ",query)
+  // console.log("==== query  ==== ",query)
   return (
     <div className="w-full h-full flex  overflow-auto">
       <Tabs
