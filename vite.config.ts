@@ -1,17 +1,27 @@
-import relay from "vite-plugin-relay";
-import { defineConfig, loadEnv } from "vite";
-import rakkas from "rakkasjs/vite-plugin";
-import tsconfigPaths from "vite-tsconfig-paths";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import tailwindcss from "@tailwindcss/vite";
+import analyze from "rollup-plugin-analyzer";
 
-const env = loadEnv("", process.cwd(), "");
-Object.assign(process.env, env);
-
+// https://vite.dev/config/
 export default defineConfig({
-  ssr: {
-    external: ["rakkasjs/node-adapter"],
-  },
-  plugins: [relay, tsconfigPaths(), react(), rakkas({adapter:"vercel"})],
+  plugins: [
+    TanStackRouterVite({
+      routeToken: "layout", // <-- Add this line
+      autoCodeSplitting: true,
+    }),
+    react(),
+    tailwindcss(),
+    tsconfigPaths(),
+    analyze({
+      // highlight the modules with size > 40kb
+      filter(moduleObject) {
+        return moduleObject.size > 40000;
+      },
+    }),
+  ],
   server: {
     port: 3000,
     host: true,

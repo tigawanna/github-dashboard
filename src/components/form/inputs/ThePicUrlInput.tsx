@@ -1,4 +1,4 @@
-import { Image, X } from "lucide-react";
+import { X } from "lucide-react";
 import { useState, useRef } from "react";
 
 import { twMerge } from "tailwind-merge";
@@ -28,7 +28,7 @@ export function ThePicUrlInput({
   return (
     <div
       className={twMerge(
-        "flex flex-col w-full rounded-lg gap-4",
+        "flex w-full flex-col gap-4 rounded-lg",
         container_classname,
       )}
     >
@@ -37,9 +37,9 @@ export function ThePicUrlInput({
           className="w-full"
           onClick={() => ref.current?.className.replace("hidden", "")}
         >
-          <div className=" md:h-fit ">
+          <div className="md:h-fit">
             <img
-              className="aspect-square  w-aut0 max-w-[250px]  object-cover md:h-auto "
+              className="w-aut0 aspect-square max-w-[250px] object-cover md:h-auto"
               // className='border-6 h-[100px]'
               src={pic}
               height={100}
@@ -50,14 +50,14 @@ export function ThePicUrlInput({
       ) : null}
 
       {editing && (
-        <div className="  flex  min-w-[60%] items-center justify-center">
+        <div className="flex min-w-[60%] items-center justify-center">
           <input
             type="url"
             title="add your image url"
             placeholder="add image url"
             ref={ref}
             value={pic}
-            className="input input-bordered border-accent input-sm w-full"
+            className="input input-sm input-bordered w-full border-accent"
             onChange={(e) => handleChange(e)}
           />
           <X onClick={() => setPic("")} className="h-7 w-7" />

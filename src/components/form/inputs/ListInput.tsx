@@ -52,16 +52,15 @@ export function TheListInput<T>({
 
   const items = input[field_key] as string[];
   return (
-    <div className="flex w-full flex-col gap-3 ">
-      <div className="flex  w-full flex-wrap gap-2 ">
+    <div className="flex w-full flex-col gap-3">
+      <div className="flex w-full flex-wrap gap-2">
         <h1 className="font bold gap- border-b border-b-accent p-1 font-bold">
           {field_name}
         </h1>
         {items.map((item, idx) => (
           <div
             key={item + idx}
-            className="flex items-center justify-between gap-2 rounded-xl 
-           border border-accent px-2 hover:bg-base-300"
+            className="flex items-center justify-between gap-2 rounded-xl border border-accent px-2 hover:bg-base-300"
           >
             {item}
             {editing && (

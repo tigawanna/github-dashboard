@@ -24,10 +24,10 @@ export function ProfilePic({ img_url, setFileImage }: ProfilePicProps) {
     setFileImage && setFileImage(input_pic);
   }
   return (
-    <div className="md:min-w-[200px] aspect-square bg-accent/20 flex flex-col items-center justify-center border">
+    <div className="flex aspect-square flex-col items-center justify-center border bg-accent/20 md:min-w-[200px]">
       {typeof pic === "string" && pic.length > 0 ? (
         <div className="avatar" onClick={() => ref.current?.click()}>
-          <div className=" rounded ">
+          <div className="rounded">
             <img className="max-w-md" src={pic} height={"300"} width={"400"} />
           </div>
         </div>

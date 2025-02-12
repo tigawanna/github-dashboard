@@ -1,6 +1,7 @@
 import { Label } from "@/components/shadcn/ui/label";
 import { Textarea } from "@/components/shadcn/ui/textarea";
-import React, { useState } from "react";
+import type React from "react";
+import { useState } from "react";
 import { twMerge } from "tailwind-merge";
 
 interface TheTextAreaProps<T>
@@ -40,12 +41,12 @@ export function TheTextAreaInput<T>({
     >
       <Label
         htmlFor={field_key as string}
-        className={twMerge("font-serif text-sm ", props.label_classname)}
+        className={twMerge("font-serif text-sm", props.label_classname)}
       >
         {field_name as string}
       </Label>
       {editing ? (
-        <div className="flex w-full flex-col ">
+        <div className="flex w-full flex-col">
           <Textarea
             onKeyDown={(e) => {
               setError(undefined);
@@ -65,7 +66,7 @@ export function TheTextAreaInput<T>({
       ) : (
         <div
           className={twMerge(
-            "w-full border-b px-2 py-1 ",
+            "w-full border-b px-2 py-1",
             props.output_classname,
           )}
         >

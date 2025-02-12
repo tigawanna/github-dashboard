@@ -76,7 +76,7 @@ export function TheStringListInput<T>({
         props.container_classname,
       )}
     >
-      <div className="flex  w-full flex-wrap ietms-center gap-2 ">
+      <div className="ietms-center flex w-full flex-wrap gap-2">
         <h1 className={twMerge("font-serif text-sm", props.label_classname)}>
           {field_name}
         </h1>
@@ -85,7 +85,7 @@ export function TheStringListInput<T>({
             return (
               <div
                 key={item + idx}
-                className="flex items-center justify-between gap-2 btn btn-xs btn-outline"
+                className="btn btn-outline btn-xs flex items-center justify-between gap-2"
               >
                 {item}
                 {editing && (

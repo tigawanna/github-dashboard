@@ -36,7 +36,7 @@ export function TheTimeInput<T>({
         {field_name as string}
       </label>
       {editing ? (
-        <div className="flex w-full flex-col  ">
+        <div className="flex w-full flex-col">
           <input
             {...props}
             id={field_key as string}
@@ -44,7 +44,7 @@ export function TheTimeInput<T>({
             type="date"
             title={props.placeholder}
             className={twMerge(
-              "input input-bordered input-sm w-full border-accent",
+              "input input-sm input-bordered w-full border-accent",
               props.className,
             )}
           />

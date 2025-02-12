@@ -1,4 +1,4 @@
-import { concatErrors } from "@/utils/helpers/concaterrors";
+import { concatErrors } from "@/utils/errors";
 
 interface ErrorOutputProps {
   error: {
@@ -10,9 +10,9 @@ interface ErrorOutputProps {
 export function ErrorOutput({ error }: ErrorOutputProps) {
   // console.log("error ", error);
   return (
-    <div className="w-[90%] h-full flex items-center justify-center m-1 p-2 ">
-      <div className="w-full h-full flex items-center justify-center m-1 p-2 bg-base-300 rounded-lg">
-        <p className="text-center  p-[10%] text-error ">
+    <div className="m-1 flex h-full w-[90%] items-center justify-center p-2">
+      <div className="m-1 flex h-full w-full items-center justify-center rounded-lg bg-error/5 p-2">
+        <p className="p-[5%] text-center text-lg text-error">
           {concatErrors(error.message)}
           {/* {JSON.stringify(concatErrors(error))} */}
         </p>

@@ -1,0 +1,434 @@
+[
+  {
+    "id": "xbeqi8mrlar7b5t",
+    "name": "property_user",
+    "type": "auth",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "pjbcvj2s",
+        "name": "role",
+        "type": "select",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["staff", "tenant", "user"]
+        }
+      },
+      {
+        "system": false,
+        "id": "tdye2kpy",
+        "name": "pnone",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "jolw48ou",
+        "name": "avatarUrl",
+        "type": "url",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "exceptDomains": null,
+          "onlyDomains": null
+        }
+      },
+      {
+        "system": false,
+        "id": "pdjm8lyy",
+        "name": "staff",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "oaggjwaw3gz12ah",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "n0nr2eeo",
+        "name": "tenant",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "ene4oiyp951jqq2",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "eisnqrax",
+        "name": "user",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "ftrh16vgkvygnbe",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "bm1rxb00",
+        "name": "verification_status",
+        "type": "select",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["initial", "pending", "resolved"]
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id = id",
+    "viewRule": "@request.auth.id = id",
+    "createRule": "",
+    "updateRule": "@request.auth.id = id",
+    "deleteRule": null,
+    "options": {
+      "allowEmailAuth": true,
+      "allowOAuth2Auth": true,
+      "allowUsernameAuth": true,
+      "exceptEmailDomains": null,
+      "manageRule": null,
+      "minPasswordLength": 8,
+      "onlyEmailDomains": null,
+      "onlyVerified": false,
+      "requireEmail": false
+    }
+  },
+  {
+    "id": "cvtakohtxaagiat",
+    "name": "property_bills",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "dfbbwmy1",
+        "name": "shop",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "zb1etrv0i3olw5p",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": []
+        }
+      },
+      {
+        "system": false,
+        "id": "pgqw1q5j",
+        "name": "elec_readings",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "mgmpe07w",
+        "name": "water_readings",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "z9zcyynw",
+        "name": "month",
+        "type": "number",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "nyjjvpyp",
+        "name": "year",
+        "type": "number",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      }
+    ],
+    "indexes": [
+      "CREATE UNIQUE INDEX `idx_r0bKVqc` ON `property_bills` (\n  `shop`,\n  `month`,\n  `year`\n)"
+    ],
+    "listRule": "@request.auth.id ?= @collection.property_staff_list.id",
+    "viewRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "createRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "updateRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "zb1etrv0i3olw5p",
+    "name": "property_shops",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "jobum3wf",
+        "name": "shop_number",
+        "type": "text",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "zfihv44m",
+        "name": "tenant",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "ene4oiyp951jqq2",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      },
+      {
+        "system": false,
+        "id": "fxuqtyg7",
+        "name": "utils",
+        "type": "select",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "maxSelect": 1,
+          "values": ["elec", "water", "both", "none"]
+        }
+      },
+      {
+        "system": false,
+        "id": "ijqtrydc",
+        "name": "order",
+        "type": "number",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "noDecimal": false
+        }
+      },
+      {
+        "system": false,
+        "id": "54slue9t",
+        "name": "is_vacant",
+        "type": "bool",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {}
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.staff.id ?= @collection.property_staff_list.id",
+    "viewRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "createRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "updateRule": "@request.auth.verified = true && @request.auth.role=\"staff\"",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "oaggjwaw3gz12ah",
+    "name": "property_staff_list",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "x9wfgkv0",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "ahdahgwl",
+        "name": "account",
+        "type": "relation",
+        "required": true,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "xbeqi8mrlar7b5t",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id ?= @collection.property_staff_list.account",
+    "viewRule": "@request.auth.id ?= @collection.property_staff_list.account",
+    "createRule": null,
+    "updateRule": "@request.auth.id = id",
+    "deleteRule": null,
+    "options": {}
+  },
+  {
+    "id": "ene4oiyp951jqq2",
+    "name": "property_tenants_list",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "qpyzfpxq",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "0g1vixdr",
+        "name": "account",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "xbeqi8mrlar7b5t",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": "@request.auth.id ?= @collection.property_tenants_list.account || @request.auth.id ?= @collection.property_staff_list.account",
+    "viewRule": "(@request.auth.id ?= @collection.property_tenants_list.account)|| (@request.auth.id ?= @collection.property_staff_list.account)",
+    "createRule": "@request.auth.id ?= @collection.property_staff_list.account",
+    "updateRule": "(@request.auth.id ?= @collection.property_tenants_list.account) && (@request.auth.id = id)",
+    "deleteRule": "@request.auth.id ?= @collection.property_staff_list.account",
+    "options": {}
+  },
+  {
+    "id": "ftrh16vgkvygnbe",
+    "name": "property_users_list",
+    "type": "base",
+    "system": false,
+    "schema": [
+      {
+        "system": false,
+        "id": "mrvz9odk",
+        "name": "name",
+        "type": "text",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "min": null,
+          "max": null,
+          "pattern": ""
+        }
+      },
+      {
+        "system": false,
+        "id": "ipq5dhko",
+        "name": "account",
+        "type": "relation",
+        "required": false,
+        "presentable": false,
+        "unique": false,
+        "options": {
+          "collectionId": "xbeqi8mrlar7b5t",
+          "cascadeDelete": false,
+          "minSelect": null,
+          "maxSelect": 1,
+          "displayFields": null
+        }
+      }
+    ],
+    "indexes": [],
+    "listRule": null,
+    "viewRule": "@request.auth.id = id",
+    "createRule": "@request.auth.id != \"\"",
+    "updateRule": "@request.auth.id = id",
+    "deleteRule": "@request.auth.id = id",
+    "options": {}
+  }
+]

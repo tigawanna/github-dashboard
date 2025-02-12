@@ -24,8 +24,8 @@ export function SubmitButton({
       disabled={disabled ?? loading}
       className={twMerge(
         loading
-          ? "btn btn-sm btn-outline btn-disabled brightness-90 m-2"
-          : "btn btn-sm btn-outline m-2",
+          ? "btn btn-disabled btn-outline btn-sm m-2 brightness-90"
+          : "btn btn-outline btn-sm m-2",
         className,
       )}
       onClick={() => action && action()}

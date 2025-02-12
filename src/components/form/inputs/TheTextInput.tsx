@@ -1,7 +1,7 @@
 import { twMerge } from "tailwind-merge";
 import { Input } from "@/components/shadcn/ui/input";
 import { Label } from "@/components/shadcn/ui/label";
-import { ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 interface TheTextInputProps<T>
   extends React.InputHTMLAttributes<HTMLInputElement> {
@@ -58,18 +58,18 @@ export function TheTextInput<T>({
     <div
       key={field_key as string}
       className={twMerge(
-        "flex w-full flex-col justify-center gap-1 ",
+        "flex w-full flex-col justify-center gap-2",
         props.container_classname,
       )}
     >
       <Label
         htmlFor={field_key as string}
-        className={twMerge("font-serif font-semibold ", props.label_classname)}
+        className={twMerge("font-serif font-semibold", props.label_classname)}
       >
         {field_name as string}
       </Label>
       {editing ? (
-        <div className="flex flex-col ">
+        <div className="flex w-full flex-col">
           <Input
             {...props}
             value={value}
