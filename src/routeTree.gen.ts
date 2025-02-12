@@ -19,6 +19,7 @@ import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as UserIndexImport } from './routes/$user/index'
 import { Route as UserRepositoriesIndexImport } from './routes/$user/repositories/index'
 import { Route as UserGistsIndexImport } from './routes/$user/gists/index'
+import { Route as UserRepositoriesRepoIndexImport } from './routes/$user/repositories/$repo/index'
 
 // Create/Update Routes
 
@@ -67,6 +68,12 @@ const UserRepositoriesIndexRoute = UserRepositoriesIndexImport.update({
 const UserGistsIndexRoute = UserGistsIndexImport.update({
   id: '/gists/',
   path: '/gists/',
+  getParentRoute: () => UserLayoutRoute,
+} as any)
+
+const UserRepositoriesRepoIndexRoute = UserRepositoriesRepoIndexImport.update({
+  id: '/repositories/$repo/',
+  path: '/repositories/$repo/',
   getParentRoute: () => UserLayoutRoute,
 } as any)
 
@@ -130,6 +137,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserRepositoriesIndexImport
       parentRoute: typeof UserLayoutImport
     }
+    '/$user/repositories/$repo/': {
+      id: '/$user/repositories/$repo/'
+      path: '/repositories/$repo'
+      fullPath: '/$user/repositories/$repo'
+      preLoaderRoute: typeof UserRepositoriesRepoIndexImport
+      parentRoute: typeof UserLayoutImport
+    }
   }
 }
 
@@ -139,12 +153,14 @@ interface UserLayoutRouteChildren {
   UserIndexRoute: typeof UserIndexRoute
   UserGistsIndexRoute: typeof UserGistsIndexRoute
   UserRepositoriesIndexRoute: typeof UserRepositoriesIndexRoute
+  UserRepositoriesRepoIndexRoute: typeof UserRepositoriesRepoIndexRoute
 }
 
 const UserLayoutRouteChildren: UserLayoutRouteChildren = {
   UserIndexRoute: UserIndexRoute,
   UserGistsIndexRoute: UserGistsIndexRoute,
   UserRepositoriesIndexRoute: UserRepositoriesIndexRoute,
+  UserRepositoriesRepoIndexRoute: UserRepositoriesRepoIndexRoute,
 }
 
 const UserLayoutRouteWithChildren = UserLayoutRoute._addFileChildren(
@@ -160,6 +176,7 @@ export interface FileRoutesByFullPath {
   '/auth': typeof AuthIndexRoute
   '/$user/gists': typeof UserGistsIndexRoute
   '/$user/repositories': typeof UserRepositoriesIndexRoute
+  '/$user/repositories/$repo': typeof UserRepositoriesRepoIndexRoute
 }
 
 export interface FileRoutesByTo {
@@ -170,6 +187,7 @@ export interface FileRoutesByTo {
   '/auth': typeof AuthIndexRoute
   '/$user/gists': typeof UserGistsIndexRoute
   '/$user/repositories': typeof UserRepositoriesIndexRoute
+  '/$user/repositories/$repo': typeof UserRepositoriesRepoIndexRoute
 }
 
 export interface FileRoutesById {
@@ -182,6 +200,7 @@ export interface FileRoutesById {
   '/auth/': typeof AuthIndexRoute
   '/$user/gists/': typeof UserGistsIndexRoute
   '/$user/repositories/': typeof UserRepositoriesIndexRoute
+  '/$user/repositories/$repo/': typeof UserRepositoriesRepoIndexRoute
 }
 
 export interface FileRouteTypes {
@@ -195,6 +214,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/$user/gists'
     | '/$user/repositories'
+    | '/$user/repositories/$repo'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -204,6 +224,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/$user/gists'
     | '/$user/repositories'
+    | '/$user/repositories/$repo'
   id:
     | '__root__'
     | '/'
@@ -214,6 +235,7 @@ export interface FileRouteTypes {
     | '/auth/'
     | '/$user/gists/'
     | '/$user/repositories/'
+    | '/$user/repositories/$repo/'
   fileRoutesById: FileRoutesById
 }
 
@@ -258,7 +280,8 @@ export const routeTree = rootRoute
       "children": [
         "/$user/",
         "/$user/gists/",
-        "/$user/repositories/"
+        "/$user/repositories/",
+        "/$user/repositories/$repo/"
       ]
     },
     "/about": {
@@ -280,6 +303,10 @@ export const routeTree = rootRoute
     },
     "/$user/repositories/": {
       "filePath": "$user/repositories/index.tsx",
+      "parent": "/$user"
+    },
+    "/$user/repositories/$repo/": {
+      "filePath": "$user/repositories/$repo/index.tsx",
       "parent": "/$user"
     }
   }

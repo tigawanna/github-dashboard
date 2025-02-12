@@ -6,7 +6,6 @@ const eepositoryOrderOptions = [
   "PUSHED_AT",
   "CREATED_AT",
   "NAME",
-  "PERMISSION",
   "STARGAZERS",
   "UPDATED_AT",
 ] as const;
@@ -25,7 +24,7 @@ const searchparams = z.object({
   }),
 });
 export const Route = createFileRoute("/$user/repositories/")({
-  // validateSearch: (search) => searchparams.parse(search),
+  validateSearch: (search) => searchparams.parse(search),
   component: RouteComponent,
 });
 
