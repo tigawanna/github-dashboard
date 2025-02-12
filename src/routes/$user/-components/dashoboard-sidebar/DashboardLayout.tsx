@@ -55,7 +55,7 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
           </div>
         </header>
         {/* main content */}
-        <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen bg-accent/10">
+        <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
           <IsographEnvironmentProvider environment={environment}>
             <Suspense fallback={<RouterPendingComponent/>}>
               <Outlet />

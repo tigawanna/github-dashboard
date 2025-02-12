@@ -1,30 +1,38 @@
 import { envVariables } from "@/env";
-import {  useRouteContext, } from "@tanstack/react-router";
+import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { useRouteContext } from "@tanstack/react-router";
 
+export function viewerQueryOptions(token: string) {
+  return queryOptions({
+    queryKey: ["viewer"],
+    queryFn: async () => {
+      return fetchCurrentViewer(token);
+    },
+    staleTime: 1000 * 60 * 60,
+  });
+}
 export function useViewer() {
-  // const routeApi = getRouteApi("__root__");
-  // const data = routeApi.useLoaderData();
-    const {viewer,PAT} = useRouteContext({
-    from: '__root__',
-  })
+  const { PAT } = useRouteContext({
+    from: "__root__",
+  });
+ const viewerQuery = useSuspenseQuery(viewerQueryOptions(PAT ?? ""));
+ const viewer = viewerQuery.data;
   function logoutMutation() {
     return new Promise<boolean>((resolve, reject) => {
-    setTimeout(() => {
-      try {
-        resolve(true);
-      } catch (error) {
-        resolve(false);
-      }
-    })
-    })
+      setTimeout(() => {
+        try {
+          resolve(true);
+        } catch (error) {
+          resolve(false);
+        }
+      });
+    });
   }
-  return {viewer,logoutMutation};
+  return { viewer, logoutMutation };
 }
 
-
-
 const GITHUB_API_URL = "https://api.github.com/user";
- // Replace with your GitHub token
+// Replace with your GitHub token
 
 export interface GitHubViewer {
   login: string;
@@ -61,7 +69,7 @@ export interface GitHubViewer {
   updated_at: string;
 }
 
-export async function fetchCurrentViewer(token: string): Promise<GitHubViewer|undefined > {
+export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | undefined> {
   const response = await fetch(GITHUB_API_URL, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -78,20 +86,19 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer|un
     return;
   }
   const user = (await response.json()) as GitHubViewer | undefined;
-  console.log("Github Viewer === ", user);
+  // console.log("Github Viewer === ", user);
   return user;
 }
 
-
-export function getPAT(){
-  if(envVariables.VITE_PAT){
-    return envVariables.VITE_PAT
+export function getPAT() {
+  if (envVariables.VITE_PAT) {
+    return envVariables.VITE_PAT;
   }
-  if(typeof window !== "undefined"){
-    const PAT = localStorage.getItem("PAT")
-    if(!PAT){
-      return
+  if (typeof window !== "undefined") {
+    const PAT = localStorage.getItem("PAT");
+    if (!PAT) {
+      return;
     }
-    return PAT
+    return PAT;
   }
 }
