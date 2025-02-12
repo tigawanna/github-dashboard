@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<689629dce1b7ff80dac3f41b3497edbc>>
+ * @generated SignedSource<<d8274ac41f6288d0f56dc7af3d54e0d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type UserPageQuery$variables = {
 };
 export type UserPageQuery$data = {
   readonly user: {
-    readonly " $fragmentSpreads": FragmentRefs<"UserInfo">;
+    readonly " $fragmentSpreads": FragmentRefs<"UserInfo" | "UserStats">;
   } | null | undefined;
 };
 export type UserPageQuery = {
@@ -37,6 +37,23 @@ v1 = [
     "name": "login",
     "variableName": "login"
   }
+],
+v2 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "totalCount",
+  "storageKey": null
+},
+v4 = [
+  (v3/*: any*/)
 ];
 return {
   "fragment": {
@@ -57,6 +74,11 @@ return {
             "args": null,
             "kind": "FragmentSpread",
             "name": "UserInfo"
+          },
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "UserStats"
           }
         ],
         "storageKey": null
@@ -176,6 +198,221 @@ return {
             "kind": "ScalarField",
             "name": "url",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "RepositoryConnection",
+            "kind": "LinkedField",
+            "name": "repositories",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalDiskUsage",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "repositories(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "StarredRepositoryConnection",
+            "kind": "LinkedField",
+            "name": "starredRepositories",
+            "plural": false,
+            "selections": [
+              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isOverLimit",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "starredRepositories(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "FollowerConnection",
+            "kind": "LinkedField",
+            "name": "followers",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "followers(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "FollowingConnection",
+            "kind": "LinkedField",
+            "name": "following",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "following(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "RepositoryConnection",
+            "kind": "LinkedField",
+            "name": "watching",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "watching(first:1)"
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ContributionsCollection",
+            "kind": "LinkedField",
+            "name": "contributionsCollection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalCommitContributions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalIssueContributions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalPullRequestContributions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalPullRequestReviewContributions",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalRepositoriesWithContributedIssues",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalRepositoriesWithContributedPullRequests",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalRepositoriesWithContributedCommits",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "totalRepositoriesWithContributedPullRequestReviews",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "IssueConnection",
+            "kind": "LinkedField",
+            "name": "issues",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "issues(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "PullRequestConnection",
+            "kind": "LinkedField",
+            "name": "pullRequests",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "pullRequests(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "OrganizationConnection",
+            "kind": "LinkedField",
+            "name": "organizations",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "organizations(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "GistConnection",
+            "kind": "LinkedField",
+            "name": "gists",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "gists(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "PackageConnection",
+            "kind": "LinkedField",
+            "name": "packages",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "packages(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "DiscussionConnection",
+            "kind": "LinkedField",
+            "name": "repositoryDiscussions",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "repositoryDiscussions(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "SponsorConnection",
+            "kind": "LinkedField",
+            "name": "sponsors",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "sponsors(first:1)"
+          },
+          {
+            "alias": null,
+            "args": (v2/*: any*/),
+            "concreteType": "SponsorConnection",
+            "kind": "LinkedField",
+            "name": "sponsoring",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "sponsoring(first:1)"
           }
         ],
         "storageKey": null
@@ -183,16 +420,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b50937c9d430b48dc1e7d4af5d1786ff",
+    "cacheID": "11540771146442166f0cbfc46d62175b",
     "id": null,
     "metadata": {},
     "name": "UserPageQuery",
     "operationKind": "query",
-    "text": "query UserPageQuery(\n  $login: String!\n) {\n  user(login: $login) {\n    ...UserInfo\n    id\n  }\n}\n\nfragment UserInfo on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n"
+    "text": "query UserPageQuery(\n  $login: String!\n) {\n  user(login: $login) {\n    ...UserInfo\n    ...UserStats\n    id\n  }\n}\n\nfragment UserInfo on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment UserStats on User {\n  repositories(first: 1) {\n    totalCount\n    totalDiskUsage\n  }\n  starredRepositories(first: 1) {\n    totalCount\n    isOverLimit\n  }\n  followers(first: 1) {\n    totalCount\n  }\n  following(first: 1) {\n    totalCount\n  }\n  watching(first: 1) {\n    totalCount\n  }\n  contributionsCollection {\n    totalCommitContributions\n    totalIssueContributions\n    totalPullRequestContributions\n    totalPullRequestReviewContributions\n    totalRepositoriesWithContributedIssues\n    totalRepositoriesWithContributedPullRequests\n    totalRepositoriesWithContributedCommits\n    totalRepositoriesWithContributedPullRequestReviews\n  }\n  issues(first: 1) {\n    totalCount\n  }\n  pullRequests(first: 1) {\n    totalCount\n  }\n  organizations(first: 1) {\n    totalCount\n  }\n  gists(first: 1) {\n    totalCount\n  }\n  packages(first: 1) {\n    totalCount\n  }\n  repositoryDiscussions(first: 1) {\n    totalCount\n  }\n  sponsors(first: 1) {\n    totalCount\n  }\n  sponsoring(first: 1) {\n    totalCount\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5ec9c99ea4a17c56f333a6718d7600e9";
+(node as any).hash = "ea80781ff906258232b05ec2cce3a310";
 
 export default node;

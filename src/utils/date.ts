@@ -35,11 +35,17 @@ export function getPrevMonthandYear(month_num?: number) {
  * using Intl.RelativeTimeFormat
  */
 export function getRelativeTimeString(
-  date: Date | number,
+  date: Date | number | string,
   lang = navigator.language,
 ): string {
   // Allow dates or times to be passed
-  const timeMs = typeof date === "number" ? date : date.getTime();
+
+  const timeMs =
+    typeof date === "string"
+      ? new Date(date).getTime()
+      : typeof date === "number"
+      ? date
+      : date.getTime();
 
   // Get the amount of seconds between the given date and now
   const deltaSeconds = Math.round((timeMs - Date.now()) / 1000);

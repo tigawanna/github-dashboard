@@ -4,10 +4,11 @@ import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 import tailwindcss from "@tailwindcss/vite";
 import analyze from "rollup-plugin-analyzer";
-
+import relay from "vite-plugin-relay";
 // https://vite.dev/config/
 export default defineConfig({
   plugins: [
+    relay,
     TanStackRouterVite({
       routeToken: "layout", // <-- Add this line
       autoCodeSplitting: true,

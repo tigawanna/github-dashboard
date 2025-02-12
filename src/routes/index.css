@@ -85,3 +85,20 @@
   }
 
 }
+
+
+.stats{
+  @apply w-full h-full flex flex-wrap items-center justify-center;
+}
+.stat{
+  @apply  w-fit flex-grow bg-base-300/60;
+}
+.stat-title{
+  @apply text-xl;
+}
+.stat-value{
+  @apply text-6xl text-center;
+}
+.stat-desc{
+  @apply text-lg text-center;
+}
