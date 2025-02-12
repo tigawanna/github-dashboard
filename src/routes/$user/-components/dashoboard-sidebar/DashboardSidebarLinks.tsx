@@ -13,6 +13,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/shadcn/ui/tooltip";
+import { useViewer } from "@/lib/viewer/use-viewer";
 import { Link, useLocation } from "@tanstack/react-router";
 
 interface DashboardSidebarLinksProps {}
@@ -20,6 +21,10 @@ interface DashboardSidebarLinksProps {}
 export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
   const { state, setOpen, setOpenMobile, isMobile } = useSidebar();
   const { pathname } = useLocation();
+  const {viewer} = useViewer()
+  if(!viewer){
+    return null
+  }
   return (
     <SidebarGroup className="h-full bg-base-100 ">
       <SidebarGroupLabel>House keeping</SidebarGroupLabel>
@@ -45,6 +50,7 @@ export function DashboardSidebarLinks({}: DashboardSidebarLinksProps) {
                       <Link
                         className="flex items-center gap-[10%]"
                         to={item.href}
+                        params={{ user: viewer?.login }}
                         onClick={() => {
                           if (isMobile) {
                             setOpen(false);

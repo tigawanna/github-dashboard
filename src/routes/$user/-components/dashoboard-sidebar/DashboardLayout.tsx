@@ -10,24 +10,23 @@ import { Separator } from "@/components/shadcn/ui/separator";
 import { Outlet, useRouteContext } from "@tanstack/react-router";
 import { DashboardSidebarHeader } from "./DashboardSidebarHeader";
 import { DashboardSidebarLinks } from "./DashboardSidebarLinks";
-// import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { TSRBreadCrumbs } from "@/lib/tanstack/router/TSRBreadCrumbs";
 import { DashboardTheme } from "./DashboardTheme";
 import { Helmet } from "@/components/wrappers/custom-helmet";
-import { useIsographEnviroment } from "@/lib/isograph/client";
-import { IsographEnvironmentProvider } from "@isograph/react";
 import { Suspense } from "react";
-import { ThemeToggle } from "@/components/themes/ThemeToggle";
 import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { RouterPendingComponent } from "@/lib/tanstack/router/RouterPendingComponent";
+import {  createRelayEnvironment } from "@/lib/relay/RelayEnvironment";
+import { RelayEnvironmentProvider } from "react-relay";
 
 interface DashboardLayoutProps {
   sidebar_props?: React.ComponentProps<typeof Sidebar>;
 }
 
 export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
-  const {PAT} = useRouteContext({from:"__root__"});
-  const environment = useIsographEnviroment(PAT!);
+  const { PAT } = useRouteContext({
+    from: "/$user",
+  });
   return (
     <SidebarProvider defaultOpen={false}>
       <Helmet title="Github| Dashboard" description="Dashboard for Github" />
@@ -56,11 +55,11 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
         </header>
         {/* main content */}
         <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
-          <IsographEnvironmentProvider environment={environment}>
-            <Suspense fallback={<RouterPendingComponent/>}>
+          <RelayEnvironmentProvider environment={createRelayEnvironment(PAT!)}>
+            <Suspense fallback={<RouterPendingComponent />}>
               <Outlet />
             </Suspense>
-          </IsographEnvironmentProvider>
+          </RelayEnvironmentProvider>
         </div>
       </SidebarInset>
     </SidebarProvider>
