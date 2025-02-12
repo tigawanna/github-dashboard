@@ -17,10 +17,6 @@ export function MainNavbar({}: MainNavbarProps) {
       <Link to="/about" className="text-lg">
         About
       </Link>
-      <Link to="/dashboard" className="text-lg">
-        About
-      </Link>
-
       <ThemeToggle/>
       <MainNavbarUser/>
     </div>

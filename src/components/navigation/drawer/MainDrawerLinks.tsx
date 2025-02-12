@@ -33,12 +33,12 @@ export function MainDrawerLinks({}: MainDrawerLinksProps) {
                   to={"/$user"}
                   params={{ user: viewer?.login }}
                   className=" w-full  hover:text-primary  gap-3 flex items-center justify-between  bg-base-300">
-  {                <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300">
+                  <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300">
                     <AvatarImage src={viewer.avatar_url} alt={viewer.login} />
                     <AvatarFallback className="rounded-lg">
                       {viewer.name?.slice(0, 2)}
                     </AvatarFallback>
-                  </Avatar>}
+                  </Avatar>
                   {(state === "expanded" || isMobile) && (
                     <div className="flex w-full p-2">{viewer?.login}</div>
                   )}

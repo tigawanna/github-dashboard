@@ -26,6 +26,7 @@ export const Route = createRootRouteWithContext<{
   PAT?: string;
 }>()({
   component: RootComponent,
+  validateSearch: (search) => searchparams.parse(search),
   beforeLoad: async (ctx) => {
     const viewer = await ctx.context.queryClient.ensureQueryData(viewerQueryOptions(ctx.context.PAT!));
       if (!viewer) {
@@ -38,5 +39,4 @@ export const Route = createRootRouteWithContext<{
     viewer,
   };
   },
-  validateSearch: (search) => searchparams.parse(search),
 });
