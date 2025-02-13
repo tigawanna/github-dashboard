@@ -9,13 +9,15 @@ import { useViewer } from "@/lib/viewer/use-viewer";
 import { DeleteRepository } from "./repo-card/DeleteRepository";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
-import { TailwindContainerIndicator, TailwindIndicator } from "@/components/navigation/tailwind-indicator";
+import { useParams } from "@tanstack/react-router";
+
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
 }
 
 export function UserRepos({ user_repos_key }: UserReposProps) {
+  const {user} = useParams({from:"/$user"})
   const { viewer } = useViewer();
   const [editing, setEditing] = useState(false);
   const [open, setOpen] = useState(false);
@@ -75,6 +77,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
           repos.map((edge) => {
             return (
               <RepoCard
+                user={user}
                 key={edge?.node?.id}
                 edge={edge}
                 local_viewer={viewer}

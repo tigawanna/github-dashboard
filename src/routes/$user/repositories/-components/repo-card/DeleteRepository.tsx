@@ -25,7 +25,7 @@ interface DeleteRepositoryProps {
 }
 
 export function DeleteRepository({ open, selected, setOpen, setSelected }: DeleteRepositoryProps) {
-  const { PAT } = useRouteContext({ from: "/$user/repositories/" });
+  const { PAT } = useRouteContext({ from: "__root__" });
   const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
 

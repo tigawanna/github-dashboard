@@ -21,6 +21,7 @@ export type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
   local_viewer: Partial<GitHubViewer> | null;
+  user:string;
   editing: boolean;
   selected: boolean;
   selectItem: (item: ItemList) => void;
@@ -31,6 +32,7 @@ export function RepoCard({
   edge,
   local_viewer,
   editing,
+  user,
   selected,
   selectItem,
   unselectItem,
@@ -75,7 +77,8 @@ export function RepoCard({
         <div className="w-full flex gap-3 p-2 brightness-75 hover:text-secondary h-full">
           {/* TODO  crate this page */}
           <Link
-            to={"/viewer/" + repo.nameWithOwner}
+            to="/$user/repositories/$repo"
+            params={{ user,repo: repo.name }}
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -168,20 +171,20 @@ export function RepoCard({
 
         {repo?.diskUsage && <div className="flex">{formatKilobytes(repo?.diskUsage)}</div>}
         <div className="flex gap-3 justify-center items-center">
-          <Link
+          <a
             target="_blank"
             rel="noreferrer"
-            to={vslink}
+            href={vslink}
             className="text-blue-500 hover:text-accent">
             <VscVscodeInsiders className="h-5 w-5" />
-          </Link>
-          <Link
+          </a>
+          <a
             target="_blank"
             rel="noreferrer"
-            to={repo.url}
+            href={repo.url}
             className="hover:text-accent border rounded-full border-base-content p-0.5">
             <FaGithub className="h-5 w-5" />
-          </Link>
+          </a>
         </div>
       </div>
     </li>
