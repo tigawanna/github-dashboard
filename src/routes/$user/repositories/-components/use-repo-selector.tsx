@@ -1,6 +1,7 @@
 import { useState } from "react";
-import { ItemList } from "../types";
-import { OneRepoEdge } from "../RepoCard";
+import { OneRepoEdge } from "./repo-card/RepoCard";
+import { ItemList } from "./types";
+
 
 export function useRepoSelector() {
   const [selected, setSelected] = useState<ItemList[] | undefined | null>(null);

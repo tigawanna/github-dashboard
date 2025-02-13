@@ -1,6 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
-
+import { UserReposPage } from "./-components/UserReposPage";
+import { Suspense } from "react";
+import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
 
 const eepositoryOrderOptions = [
   "PUSHED_AT",
@@ -17,11 +19,11 @@ const searchparams = z.object({
   orderBy: z.object({
     field: z.enum(eepositoryOrderOptions).default("PUSHED_AT"),
     direction: z.enum(directionOptions).default("DESC"),
-  }),
+  }).optional(),
   starOrder: z.object({
     field: z.enum(starOrderOptions).default("STARRED_AT"),
     direction: z.enum(directionOptions).default("DESC"),
-  }),
+  }).optional(),
 });
 export const Route = createFileRoute("/$user/repositories/")({
   validateSearch: (search) => searchparams.parse(search),
@@ -29,5 +31,9 @@ export const Route = createFileRoute("/$user/repositories/")({
 });
 
 function RouteComponent() {
-  return <div>Hello "/dashboard/repositories/"!</div>;
+  return (
+    <Suspense fallback={<CardsListSuspenseFallback />}>
+      <UserReposPage />
+    </Suspense>
+  );
 }

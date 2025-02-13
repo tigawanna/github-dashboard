@@ -1,4 +1,3 @@
-import { GitFork, Star } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,13 +7,13 @@ import {
   DropdownMenuTrigger,
 } from "@/components/shadcn/ui/dropdown-menu";
 import { MoreVertical } from "lucide-react";
-import { LocalViewer } from "@/lib/relay/RelayEnvironment";
 import { useState } from "react";
 import { DeleteRepository } from "./DeleteRepository";
 import { ForkRepository } from "./ForkRepository";
+import { GitHubViewer } from "@/lib/viewer/use-viewer";
 
 interface RepositoryActionsProps {
-  local_viewer: LocalViewer | null;
+  local_viewer: Partial<GitHubViewer> | null;
   viewerCanAdminister: boolean;
   owner: string;
   forkingAllowed: boolean;

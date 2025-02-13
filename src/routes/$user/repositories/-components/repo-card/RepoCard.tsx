@@ -3,7 +3,7 @@ import { BiGitRepoForked } from "react-icons/bi";
 import { History, Lock } from "lucide-react";
 import { RepositoryActions } from "./RepositoryActions";
 import { FaGithub } from "react-icons/fa";
-import { ItemList } from "./types";
+import { ItemList } from "../types";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { StarRepository } from "./StarRepository";
 import { UserRepos_repositories$data } from "../__generated__/UserRepos_repositories.graphql";
@@ -11,6 +11,7 @@ import { getRelativeTimeString } from "@/utils/date";
 import { GitHubViewer } from "@/lib/viewer/use-viewer";
 import { Link } from "@tanstack/react-router";
 import { VscVscodeInsiders } from "react-icons/vsc";
+import { formatKilobytes } from "@/utils/bytes";
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
 type RepoEdges = UserRepos_repositories$data["repositories"]["edges"];
@@ -164,14 +165,14 @@ export function RepoCard({
           </div>
         ) : null}
 
-        <div className="flex">{repo?.diskUsage} kbs</div>
+        {repo?.diskUsage && <div className="flex">{formatKilobytes(repo?.diskUsage)}</div>}
         <div className="flex gap-3 justify-center items-center">
           <Link
             target="_blank"
             rel="noreferrer"
             to={vslink}
             className="text-blue-500 hover:text-accent">
-            <VscVscodeInsiders  className="h-5 w-5" />
+            <VscVscodeInsiders className="h-5 w-5" />
           </Link>
           <Link
             target="_blank"

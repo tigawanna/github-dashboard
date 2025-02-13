@@ -8,13 +8,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/shadcn/ui/alert-dialog";
-
 import { Trash } from "lucide-react";
-import { ItemList } from "./types";
-// import { useMutation, usePageContext } from "rakkasjs";
-import { deleteRepositories } from "./mutations/repo_mutations";
-import { hotToast } from "@/components/wrappers/toast";
-import { useRelayEnvironment } from "@/lib/relay/modules";
+import { ItemList } from "../types";
+import { useRelayEnvironment } from "react-relay";
+import { useRouteContext } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
+import { deleteRepositories } from "../extra-mutations/repo_mutations";
+import { makeHotToast } from "@/components/toasters";
+
 interface DeleteRepositoryProps {
   open: boolean;
   selected: ItemList[];
@@ -22,17 +23,13 @@ interface DeleteRepositoryProps {
   setOpen: (open: boolean) => void;
 }
 
-export function DeleteRepository({
-  open,
-  selected,
-  setOpen,
-  setSelected,
-}: DeleteRepositoryProps) {
-  const { locals } = usePageContext();
-  const token = locals?.pb?.authStore.model?.accessToken;
+export function DeleteRepository({ open, selected, setOpen, setSelected }: DeleteRepositoryProps) {
+  const { PAT } = useRouteContext({ from: "/$user/repositories/" });
+  const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
 
-  const mutation = useMutation(() => deleteRepositories(selected, token), {
+  const mutation = useMutation({
+    mutationFn: () => deleteRepositories(selected, token),
     onSuccess: (data) => {
       // console.log("succesfully deleted repos", data);
       setSelected(null);
@@ -44,23 +41,28 @@ export function DeleteRepository({
             },
           });
         });
-      hotToast({
-        title: "Done",
-        mixed: {
-          successfull: `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull.map((item) => item.name + "\n").join(", \n")}`,
-          failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed.map((item) => item.repo + " : " + item.issue + "\n").join(", ")}`,
-        },
-        type: "mixed",
-        duration: 7000,
-      });
+        makeHotToast({
+          title: "Done",
+          mixed: {
+            successfull: `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull
+              .map((item) => item.name + "\n")
+              .join(", \n")}`,
+            failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed
+              .map((item) => item.repo + " : " + item.issue + "\n")
+              .join(", ")}`,
+          },
+          variant: "mixed",
+          duration: 7000,
+        });
+
 
       setOpen(false);
     },
     onError(error: any) {
-      hotToast({
+      makeHotToast({
         title: "Error",
-        description: "Issue deleting repositories",
-        type: "error",
+        description: "Issue deleting repositories \n" + error.message,
+        variant: "error",
       });
     },
   });
@@ -75,9 +77,7 @@ export function DeleteRepository({
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>
-            Are you absolutely sure you want to delete?
-          </AlertDialogTitle>
+          <AlertDialogTitle>Are you absolutely sure you want to delete?</AlertDialogTitle>
           <ul className="flex flex-col w-[90%] ml-4">
             {selected.map((item, idx) => {
               return (
@@ -90,11 +90,8 @@ export function DeleteRepository({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction
-            className="bg-error/50"
-            onClick={() => mutation.mutate()}
-          >
-            {mutation.isLoading ? "Deleting..." : "Delete"}
+          <AlertDialogAction className="bg-error/50" onClick={() => mutation.mutate()}>
+            {mutation.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>

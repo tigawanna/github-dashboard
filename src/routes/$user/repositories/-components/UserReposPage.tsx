@@ -17,8 +17,8 @@ export function UserReposPage({}: UserReposPageProps) {
           login: user,
           isFork,
           orderBy: {
-            field: orderBy.field ?? "PUSHED_AT",
-            direction: orderBy.direction ?? "DESC",
+            field: orderBy?.field ?? "PUSHED_AT",
+            direction: orderBy?.direction ?? "DESC",
           }
         },{
             fetchKey: "user/usrrtabs",
@@ -26,7 +26,7 @@ export function UserReposPage({}: UserReposPageProps) {
         }
       );
   return (
-  <div className="w-full h-full flex flex-col items-center justify-center">
+  <div className="w-full h-full p-3">
     <UserRepos user_repos_key={query.user}/>
   </div>
 );

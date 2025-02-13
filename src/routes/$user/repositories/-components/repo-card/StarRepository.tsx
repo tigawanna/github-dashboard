@@ -1,8 +1,8 @@
 import { Star } from "lucide-react";
-import { graphql, useMutation } from "@/lib/relay/modules";
-import { hotToast } from "@/components/wrappers/toast";
+import { graphql, useMutation } from "react-relay";
 import { StarRepositoryAddStarMutation } from "./__generated__/StarRepositoryAddStarMutation.graphql";
 import { StarRepositoryRemoveStarMutation } from "./__generated__/StarRepositoryRemoveStarMutation.graphql";
+import { makeHotToast } from "@/components/toasters";
 
 interface StarRepositoryProps {
   id: string;
@@ -10,11 +10,7 @@ interface StarRepositoryProps {
   stargazerCount: number;
 }
 
-export function StarRepository({
-  id,
-  stargazerCount,
-  viewerHasStarred,
-}: StarRepositoryProps) {
+export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRepositoryProps) {
   const [starMutation, isStarMutationInFlight] =
     useMutation<StarRepositoryAddStarMutation>(AddStarMutation);
   const [unStarMutation, isUnStarMutationInFlight] =
@@ -32,11 +28,10 @@ export function StarRepository({
             unStarMutation({
               variables: { starrableId: id },
               onError(error) {
-                hotToast({
+                makeHotToast({
                   title: "Error starring",
-                  type: "error",
+                  variant: "error",
                   description: error.message,
-                  autoClose: false,
                 });
               },
             });
@@ -44,11 +39,10 @@ export function StarRepository({
             starMutation({
               variables: { starrableId: id },
               onError: (error) => {
-                hotToast({
+                makeHotToast({
                   title: "Error starring",
-                  type: "error",
+                  variant: "error",
                   description: error.message,
-                  autoClose: false,
                 });
               },
             });
