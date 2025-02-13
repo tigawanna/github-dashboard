@@ -3,6 +3,7 @@ import {
   AlertDialogAction,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -70,7 +71,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected }: Delet
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild>
-        <div className="w-full flex gap-2 items-center bg-base-300 rounded-lg">
+        <div className="w-full flex gap-2 border border-error bg-error/10 hover:bg-error/30 py-1 px-2 items-center b rounded-2xl">
           <Trash className="h-6 w-6 text-red-700 hover:fill-red-700 " />
           <div className="">delete</div>
         </div>
@@ -78,6 +79,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected }: Delet
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure you want to delete?</AlertDialogTitle>
+          <AlertDialogDescription>This action will permanently delete the selected repos</AlertDialogDescription>
           <ul className="flex flex-col w-[90%] ml-4">
             {selected.map((item, idx) => {
               return (

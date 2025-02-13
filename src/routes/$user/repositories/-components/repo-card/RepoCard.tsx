@@ -42,14 +42,29 @@ export function RepoCard({
   return (
     <li
       key={edge?.node?.id}
-      className="bg-primary/10  rounded-2xl border border-primary
+      className="bg-primary/10 relative  rounded-2xl border border-primary
         min-h-fit  md:h-[350px] w-[95%] @repos:w-[95%] @md/repos:lg:w-[45%] @2xl/repos:md:w-[45%] @2xl/repos:lg:w-[30%]  flex-col
-        justify-between items-center relative @container">
+        justify-between items-center  ">
       {/* <div className="text-3xl font-bold @2xl/repos:lg:bg-accent">uwu</div> */}
       <div
         className="w-full flex flex-col cursor-pointer gap-1 "
         onClick={() => {}}
         data-tip={repo.description}>
+        {editing && (
+          <div className="absolute  top-0 left-0 bg-base-300 rounded-2xl  z-50 p-3  ">
+            <Checkbox
+              className="h-7 w-7  border-6 border-accent"
+              checked={selected}
+              onClick={() => {
+                if (selected) {
+                  unselectItem(repo);
+                } else {
+                  selectItem(repo);
+                }
+              }}
+            />
+          </div>
+        )}
         <img
           height={150}
           width={150}
@@ -98,23 +113,7 @@ export function RepoCard({
             />
           </div>
 
-          <div className="p-2 gap-2 flex flex-col items-center justify-between">
-            {editing && (
-              <div className="absolute right-[2%] top-[2%] z-30 p-3 bg-accent rounded-lg">
-                <Switch
-                  className="h-7 w-7  border-2 border-accent"
-                  checked={selected}
-                  onClick={() => {
-                    if (selected) {
-                      unselectItem(repo);
-                    } else {
-                      selectItem(repo);
-                    }
-                  }}
-                />
-              </div>
-            )}
-          </div>
+          <div className="p-2 gap-2 flex flex-col items-center justify-between"></div>
         </div>
         {/*  description and last commit message */}
         <div className="w-full flex flex-col p-1 gap-2">

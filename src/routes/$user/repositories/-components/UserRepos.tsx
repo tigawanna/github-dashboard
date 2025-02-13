@@ -35,11 +35,11 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full bg-base-200 sticky -top-2 flex flex-wrap justify-evenly z-30 p-1">
         {/* <FilterRepos /> */}
-        <div className=" flex flex-wrap items-center justify-center gap-3">
+        <div className=" flex flex-wrap w-full items-center justify-center gap-[5%]">
           <Edit onClick={() => setEditing(!editing)} className="h-7 w-7 hover:text-orange-500" />
           {editing && (
             <Checkbox
-              className="h-7 w-7 border border-accent"
+              className="h-7 w-7 border-6 border-accent  "
               checked={is_all_selected}
               onClick={() => {
                 if (is_all_selected) {
@@ -52,7 +52,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
             />
           )}
           {editing && selected && selected?.length > 0 && (
-            <div className="badge badge-sm">{selected?.length}</div>
+            <div className="border border-primary p-1 text-xl rounded-xl">{selected?.length}</div>
           )}
 
           <div className="flex items-center justify-center gap-3">
@@ -68,7 +68,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
         </div>
       </div>
       <ul className="flex flex-wrap gap-5 w-full @container/repos items-center justify-center">
-        <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindContainerIndicator/></div>
+        {/* <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindContainerIndicator/></div> */}
         {/* <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindIndicator/></div> */}
 
         {repos &&
