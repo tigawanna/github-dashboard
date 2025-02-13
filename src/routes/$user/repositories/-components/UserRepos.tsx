@@ -9,6 +9,7 @@ import { useViewer } from "@/lib/viewer/use-viewer";
 import { DeleteRepository } from "./repo-card/DeleteRepository";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
+import { TailwindContainerIndicator, TailwindIndicator } from "@/components/navigation/tailwind-indicator";
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
@@ -66,7 +67,10 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
           </div>
         </div>
       </div>
-      <ul className="flex flex-wrap gap-5 w-full items-center justify-center">
+      <ul className="flex flex-wrap gap-5 w-full @container/repos items-center justify-center">
+        <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindContainerIndicator/></div>
+        {/* <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindIndicator/></div> */}
+
         {repos &&
           repos.map((edge) => {
             return (

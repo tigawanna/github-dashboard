@@ -2,7 +2,7 @@ export function TailwindIndicator() {
   if (!import.meta.env.DEV) return null;
 
   return (
-    <div className="fixed left-[50%] top-[1.5%] z-50 flex size-8 items-center justify-center bg-base-100 font-bold">
+    <div className=" flex items-center rounded-2xl  justify-center bg-primary font-bold">
       <div className="block sm:hidden">xs</div>
       <div className="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
         sm
@@ -17,12 +17,12 @@ export function TailwindIndicator() {
 export function TailwindContainerIndicator() {
   if (!import.meta.env.DEV) return null;
   return (
-    <div className="flex gap-2">
-      <div className="@sm:flex @md:hidden hidden">SM</div>
-      <div className="@sm:hidden @md:flex @lg:hidden hidden">MD</div>
-      <div className="@md:hidden @lg:flex @xl:hidden hidden">LG</div>
-      <div className="@md:hidden @lg:hidden @xl:flex hidden">XL</div>
-      <div className="@md:hidden @lg:hidden @xl:hidden @2xl:flex hidden">2XL</div>
+    <div className="flex gap-2 bg-primary p-1 rounded-2xl">
+      <div className="@sm:flex @md:hidden hidden">Container SM</div>
+      <div className="@sm:hidden @md:flex @lg:hidden hidden">Container MD</div>
+      <div className="@md:hidden @lg:flex @xl:hidden hidden">Container LG</div>
+      <div className="@sm:hidden @md:hidden @lg:hidden @xl:flex @2xl:hidden hidden">Container XL</div>
+      <div className="@md:hidden @lg:hidden @xl:hidden @2xl:flex hidden">Container 2XL</div>
     </div>
   );
 }

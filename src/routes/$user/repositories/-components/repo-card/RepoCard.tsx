@@ -12,6 +12,7 @@ import { GitHubViewer } from "@/lib/viewer/use-viewer";
 import { Link } from "@tanstack/react-router";
 import { VscVscodeInsiders } from "react-icons/vsc";
 import { formatKilobytes } from "@/utils/bytes";
+import { Switch } from "@/components/shadcn/ui/switch";
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
 type RepoEdges = UserRepos_repositories$data["repositories"]["edges"];
@@ -41,31 +42,32 @@ export function RepoCard({
   return (
     <li
       key={edge?.node?.id}
-      className="bg-base-300 rounded-lg flex-grow
-                min-h-fit  md:h-[400px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
-                 justify-between items-center p-1 relative">
+      className="bg-primary/10  rounded-2xl border border-primary
+        min-h-fit  md:h-[350px] w-[95%] @repos:w-[95%] @md/repos:lg:w-[45%] @2xl/repos:md:w-[45%] @2xl/repos:lg:w-[30%]  flex-col
+        justify-between items-center relative @container">
+      {/* <div className="text-3xl font-bold @2xl/repos:lg:bg-accent">uwu</div> */}
       <div
         className="w-full flex flex-col cursor-pointer gap-1 "
         onClick={() => {}}
         data-tip={repo.description}>
         <img
-          height={300}
-          width={300}
-          className=" w-full  md:h-[200px] object-cover dark:brightness-50 hover:brightness-75"
+          height={150}
+          width={150}
+          className="object-cover rounded-t-2xl aspect-video w-full max-h-[150px] @sm:h-[150px] dark:brightness-50 hover:brightness-75"
           loading="lazy"
           src={repo?.openGraphImageUrl}
         />
-        <div className="w-full flex gap-3 bg-base-200 hover:text-secondary h-full">
-          {/* TODO crate this page */}
-          <Link to={"/viewer/" + repo.nameWithOwner} className="w-full  p-2  flex flex-col gap-2">
+        <div className="w-full flex gap-3 p-2 brightness-75 hover:text-secondary h-full">
+          {/* TODO  crate this page */}
+          <Link
+            to={"/viewer/" + repo.nameWithOwner}
+            className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
-              <div className="flex gap-1 items-center">
-                <div className="text-sm line-clamp-1">{repo.description}</div>
-              </div>
+              <div className="text-sm line-clamp-1">{repo.description}</div>
             </div>
-
-            <div className="flex truncate  gap-1">
+            {/* repository Languages */}
+            <div className="flex flex-wrap w-full  gap-1">
               {repo?.languages?.edges?.map((item) => {
                 if (!item) return null;
                 return (
@@ -98,8 +100,8 @@ export function RepoCard({
 
           <div className="p-2 gap-2 flex flex-col items-center justify-between">
             {editing && (
-              <div className="absolute right-[2%] top-[2%] z-30 p-3 bg-base-300 rounded-lg">
-                <Checkbox
+              <div className="absolute right-[2%] top-[2%] z-30 p-3 bg-accent rounded-lg">
+                <Switch
                   className="h-7 w-7  border-2 border-accent"
                   checked={selected}
                   onClick={() => {

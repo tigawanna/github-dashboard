@@ -9,7 +9,9 @@ export function RootComponent() {
 
   return (
     <div className="content min-h-screen w-full">
+      <div className="size-8 fixed right-[2%] top-[1%] "> 
       <TailwindIndicator />
+      </div>
       <Outlet />
       <TanStackRouterDevtools position="bottom-left" />
       <ReactQueryDevtools buttonPosition="bottom-right" />
