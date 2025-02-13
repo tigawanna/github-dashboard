@@ -49,7 +49,7 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
           }
         }}
       />
-      {stargazerCount}
+      {stargazerCount>0&& <span>{stargazerCount}</span>}
     </div>
   );
 }

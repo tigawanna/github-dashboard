@@ -3,8 +3,9 @@ import { FragmentRefs, graphql } from "relay-runtime";
 import { Commits } from "./Commits";
 import { Branches_refs$key } from "./__generated__/Branches_refs.graphql";
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/shadcn/ui/accordion";
-import { OneUserRepoPageQuery } from "../__generated__/OneUserRepoPageQuery.graphql";
+
 import { usePaginationFragment } from "react-relay";
+import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
 interface BranchesProps {
   data: Branches_refs$key | null;
 }

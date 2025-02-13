@@ -58,6 +58,7 @@
     "react-relay": "18.2.0",
     "react-resizable-panels": "^2.1.7",
     "react-responsive-pagination": "^2.10.1",
+    "recharts": "^2.15.1",
     "relay-runtime": "18.2.0",
     "tailwind-merge": "^3.0.1",
     "tailwindcss": "^4.0.0",
