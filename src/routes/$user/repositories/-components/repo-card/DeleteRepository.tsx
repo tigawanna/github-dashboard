@@ -17,14 +17,16 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteRepositories } from "../extra-mutations/repo_mutations";
 import { makeHotToast } from "@/components/toasters";
 
+
 interface DeleteRepositoryProps {
   open: boolean;
   selected: ItemList[];
   setSelected: (selected: ItemList[] | null) => void;
   setOpen: (open: boolean) => void;
+  canDelete?: boolean;
 }
 
-export function DeleteRepository({ open, selected, setOpen, setSelected }: DeleteRepositoryProps) {
+export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete }: DeleteRepositoryProps) {
   const { PAT } = useRouteContext({ from: "__root__" });
   const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
@@ -70,29 +72,28 @@ export function DeleteRepository({ open, selected, setOpen, setSelected }: Delet
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <div className="w-full flex gap-2 border border-error bg-error/10 hover:bg-error/30 py-1 px-2 items-center b rounded-2xl">
-          <Trash className="h-6 w-6 text-red-700 hover:fill-red-700 " />
-          <div className="">delete</div>
+      <AlertDialogTrigger asChild disabled={!canDelete}>
+        <div  className="w-full flex gap-2 group items-center justify-between p-2 hover:bg-primary/20">
+          Delete
+          <Trash className="size-5 text-error group-hover:fill-error" />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure you want to delete?</AlertDialogTitle>
-          <AlertDialogDescription>This action will permanently delete the selected repos</AlertDialogDescription>
-          <ul className="flex flex-col w-[90%] ml-4">
-            {selected.map((item, idx) => {
-              return (
-                <li key={item.id}>
-                  {idx + 1}. {item.nameWithOwner}
-                </li>
-              );
-            })}
+          <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+          <AlertDialogDescription>
+            This action will permanently delete the selected repositories:
+            {selected.map((item) => item.nameWithOwner).join(", ")}
+          </AlertDialogDescription>
+          <ul className="list-disc pl-5 mt-2">
+            {selected.map((item) => (
+              <li key={item.id}>{item.nameWithOwner}</li>
+            ))}
           </ul>
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction className="bg-error/50" onClick={() => mutation.mutate()}>
+          <AlertDialogAction  onClick={() => mutation.mutate()}>
             {mutation.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

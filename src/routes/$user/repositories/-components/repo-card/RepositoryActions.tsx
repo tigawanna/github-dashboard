@@ -37,13 +37,14 @@ export function RepositoryActions({
 
   if (!CAN_FORK && !CAN_DELETE) return null;
   const [open, setOpen] = useState(false);
+  const [selectedAction,setSelectedAction]=useState<"delete"|"fork">("delete")
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <MoreVertical className="" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Actions</DropdownMenuLabel>
+      <DropdownMenuContent className="w-fit min-w-64">
+        <DropdownMenuLabel className="text-xl font-bold">Actionssss</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           {/* {CAN_DELETE && (
@@ -52,26 +53,22 @@ export function RepositoryActions({
               <DropdownMenuShortcut>⇧⌘D</DropdownMenuShortcut>
             </DropdownMenuItem>
           )} */}
-          {CAN_DELETE && (
-            <DeleteRepository
-              open={open}
-              setOpen={setOpen}
-              setSelected={() => {}}
-              selected={[
-                { id, name: nameWithOwner.split("/")[1], nameWithOwner },
-              ]}
-            />
-          )}
-          {CAN_FORK && (
-            <ForkRepository
-              open={open}
-              setOpen={setOpen}
-              setSelected={() => {}}
-              selected={[
-                { id, name: nameWithOwner.split("/")[1], nameWithOwner },
-              ]}
-            />
-          )}
+
+          <DeleteRepository
+            open={open}
+            setOpen={setOpen}
+            setSelected={() => {}}
+            selected={[{ id, name: nameWithOwner.split("/")[1], nameWithOwner }]}
+            canDelete={CAN_DELETE}
+          />
+
+          <ForkRepository
+            open={open}
+            setOpen={setOpen}
+            setSelected={() => {}}
+            selected={[{ id, name: nameWithOwner.split("/")[1], nameWithOwner }]}
+            canFork={CAN_FORK}
+          />
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
       </DropdownMenuContent>

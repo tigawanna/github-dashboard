@@ -1,8 +1,10 @@
+import { Alert } from "@/components/shadcn/ui/alert";
 import { ItemList } from "../types";
 import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -15,22 +17,30 @@ interface ForkRepositoryProps {
   selected: ItemList[];
   setSelected: (selected: ItemList[] | null) => void;
   setOpen: (open: boolean) => void;
+  canFork?: boolean;
 }
 
 // TODO modifify this to be a fork dialog since it was copied fro m delete dialog
 
-export function ForkRepository({ open, selected, setOpen, setSelected }: ForkRepositoryProps) {
+export function ForkRepository({ open, selected, setOpen, setSelected,canFork }: ForkRepositoryProps) {
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <div className="w-full flex p-2 gap-2 items-center bg-base-300 rounded-lg">
+      <AlertDialogTrigger asChild disabled={!canFork}>
+        <div className="w-full flex gap-2 items-center justify-between p-2 hover:bg-primary/20">
+          <div className="">Fork</div>
           <GitFork className="w-4 h-4" />
-          <div className="">fork</div>
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <AlertDialogTitle>Are you absolutely sure you want to fork</AlertDialogTitle>
+          <AlertDialogTitle>Proceed to fork</AlertDialogTitle>
+          <AlertDialogDescription className="">
+            Create a fork of the selected repositories
+            <div className="sr-only">
+            {selected.map(item=>item.nameWithOwner).join(",-> ")}
+            </div>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
           <ul className="flex flex-col w-[90%] ml-4">
             {selected.map((item, idx) => {
               return (
@@ -40,7 +50,6 @@ export function ForkRepository({ open, selected, setOpen, setSelected }: ForkRep
               );
             })}
           </ul>
-        </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
           {/* <AlertDialogAction

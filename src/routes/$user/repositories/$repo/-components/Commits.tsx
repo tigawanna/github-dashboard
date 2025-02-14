@@ -76,14 +76,14 @@ export const Commit: React.FC<CommitProps> = ({ commit }) => {
   const vslink = `https://vscode.dev/${commit?.node?.url}`;
   return (
     <div className="w-full p-1 m-1 border rounded flex items-center  flex-wrap">
-      <div className="w-fit mx-1  font-bold text-purple-900 dark:text-purple-200">
+      <div className="w-fit mx-1  font-bold ">
         {commit?.node?.author?.name}
       </div>
       <div className="w-fit text-sm p-1">
         {getRelativeTimeString(commit?.node?.committedDate)}
       </div>
 
-      <div className="w-fit  m-1 font-serif break-all text-purple-900 dark:text-purple-200 text-sm">
+      <div className="w-fit  m-1 font-serif break-all  text-sm">
         {commit?.node?.message}
       </div>
 
@@ -92,7 +92,7 @@ export const Commit: React.FC<CommitProps> = ({ commit }) => {
           target="_blank"
           rel="noreferrer"
           href={vslink}
-          className="text-blue-500 hover:text-accent"
+          className="hover:text-accent"
         >
        <VscVscodeInsiders className="h-5 w-5" />
         </a>

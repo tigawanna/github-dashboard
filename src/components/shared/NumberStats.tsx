@@ -14,9 +14,13 @@ if(!stat){
   return null
 }
 return (
-  <div className={twMerge("flex items-center bg-red-700 justify-evenly gap-1", className)}>
+  <div
+    className={twMerge(
+      "min-w-fit flex items-center justify-evenly gap-1 bg-primary/90 px-3 py-0 rounded-3xl",
+      className
+    )}>
     <span className="font-bold">{stat}</span>
-    <Icon className={twMerge("h-4 w-4", iconClassName)} />
+    <Icon className={twMerge("size-5", iconClassName)} />
   </div>
 );
 }

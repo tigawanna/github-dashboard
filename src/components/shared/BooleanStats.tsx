@@ -22,7 +22,7 @@ export function BooleanStats({
   return (
     <div
       className={twMerge(
-        "min-w-fit flex items-center justify-evenly gap-1 bg-base-300 px-2 py-1 rounded-lg",
+        "min-w-fit flex items-center justify-evenly gap-1 bg-primary/20 px-2 py-1 rounded-2xl",
         className,
       )}
     >

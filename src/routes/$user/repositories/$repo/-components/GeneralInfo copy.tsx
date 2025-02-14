@@ -1,14 +1,5 @@
 import { GeneralInfo_info$key } from "./__generated__/GeneralInfo_info.graphql";
-import {
-  Lock,
-  BookDashed,
-  Bolt,
-  Globe,
-  Star,
-  Activity,
-  GitForkIcon,
-  GithubIcon,
-} from "lucide-react";
+import {  Lock, BookDashed, Bolt, Globe, Star } from "lucide-react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 
@@ -29,100 +20,49 @@ import { BooleanStats } from "@/components/shared/BooleanStats";
 import { NumberStats } from "@/components/shared/NumberStats";
 import { getRelativeTimeString } from "@/utils/date";
 import { formatKilobytes } from "@/utils/bytes";
-import { Button } from "@/components/shadcn/ui/button";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "@/components/shadcn/ui/card";
-import { Badge } from "@/components/shadcn/ui/badge";
-import {
-  GithubLanguages,
-  OneGithubRepoLanguages,
-} from "../../-components/github-languages/OneGithubRepoLanguages";
-import { Suspense } from "react";
+
+
 
 interface GeneralInfoProps {
   data?: GeneralInfo_info$key | null;
 }
 
 export function GeneralInfo({ data }: GeneralInfoProps) {
-  const fragData = useFragment<GeneralInfo_info$key>(repoGeneralInfoFragment, data);
+  const fragData = useFragment<GeneralInfo_info$key>(
+    repoGeneralInfoFragment,
+    data,
+  );
   const { viewer: local_viewer } = useViewer();
-
-  const repository = fragData;
-  if (!repository) return null;
-  const [repoowner, reponame] = repository.nameWithOwner.split("/");
+  // console.log({ fragData });
+console.log(" == fragData  == ", fragData);
+fragData?.stargazerCount&&console.log("true")
   return (
     <div className="w-full h-full flex flex-col gap-3 divide-y divide-solid divide-base-200  p-5">
-      <Card className="w-full">
-        <CardHeader className="space-y-4">
-          <div className="flex items-start justify-between">
-            <div className="space-y-1">
-              <CardTitle className="text-2xl font-bold">
-                {repository.nameWithOwner}
-                {repository.visibility === "PRIVATE" && (
-                  <Lock className="ml-2 inline-block h-5 w-5 text-muted-foreground" />
-                )}
-              </CardTitle>
-              <CardDescription className="text-muted-foreground">
-                {repository.description}
-              </CardDescription>
-              {/* repository topics */}
-              {repository?.repositoryTopics?.nodes &&
-                repository?.repositoryTopics?.nodes.length > 0 && (
-                  <div className="flex flex-wrap gap-2">
-                    {repository?.repositoryTopics?.nodes.map((topic) => (
-                      <div
-                        key={topic?.id}
-                        className="text-xs text-primary border border-primary rounded-4xl px-1 py-0 ">
-                        {topic?.topic.name}
-                      </div>
-                    ))}
-                  </div>
-                )}
-            </div>
-            {/* repository external links */}
-            <div className="flex space-x-2">
-              {repository.homepageUrl && (
-                <Button variant="ghost" size="icon" asChild>
-                  <a href={repository.homepageUrl} target="_blank" rel="noreferrer">
-                    <Globe className="h-5 w-5" />
-                  </a>
-                </Button>
-              )}
-              <Button variant="ghost" size="icon" asChild>
-                <a href={`https://vscode.dev/${repository.url}`} target="_blank" rel="noreferrer">
-                  <VscVscodeInsiders className="h-5 w-5" />
-                </a>
-              </Button>
-              <Button variant="ghost" size="icon" asChild>
-                <a href={repository.url} target="_blank" rel="noreferrer">
-                  <FaGithub className="h-5 w-5" />
-                </a>
-              </Button>
-            </div>
-          </div>
+      <div className="w-full h-full flex flex-col md:flex-row gap-2 px-2 ">
+        <div className="w-full h-full flex flex-col justify-evenly  gap-2 ">
+          {/* name with owner */}
+          <h1 className="text-5xl md:text-5xl ">{fragData?.nameWithOwner}</h1>
+          <p>{fragData?.description}</p>
+          {/* recent activity ,fork count,star count ,visibility  */}
+          <div
+            className="w-full gap-3 text-sm  flex  outline 
+            md:items-center justify-start items-start p-2  md:gap-3">
+            <div className=" flex   items-center justify-evenly gap-3">
+              <NumberStats Icon={BiGitRepoForked} stat={fragData?.forkCount} />
+              {/* <NumberStats Icon={Star} stat={fragData?.stargazerCount} /> */}
 
-          <div className="flex flex-wrap gap-6">
-            <div className="flex items-center space-x-1">
-              <Star className="h-4 w-4" />
-              <span>{repository.stargazerCount}</span>
+              {(fragData?.stargazerCount&&fragData?.stargazerCount > 0) && (
+                <StarRepository
+                  id={fragData.id}
+                  stargazerCount={fragData?.stargazerCount}
+                  viewerHasStarred={fragData?.viewerHasStarred}
+                />
+              )}
+              {fragData?.diskUsage && (
+                <div className="flex">{formatKilobytes(fragData?.diskUsage)}</div>
+              )}
             </div>
-            <div className="flex items-center space-x-1">
-              <GitForkIcon className="h-4 w-4" />
-              <span>{repository.forkCount}</span>
-            </div>
-            <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit ">
-              <FiActivity /> {getRelativeTimeString(fragData?.pushedAt)}
-            </div>
-            {fragData?.diskUsage && (
-              <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit">
-                {formatKilobytes(fragData?.diskUsage)}
-              </div>
-            )}
+
             {fragData?.id && fragData.nameWithOwner && local_viewer && (
               <RepositoryActions
                 owner={local_viewer?.login}
@@ -134,13 +74,42 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
                 nameWithOwner={fragData?.nameWithOwner}
               />
             )}
-          </div>
-        </CardHeader>
 
-        <CardContent className="space-y-4">
-          <Suspense fallback={<GithubLanguages data={{ Markdown: 200 }} width={500} />}>
-            <OneGithubRepoLanguages owner={repoowner} repo={reponame} />
-          </Suspense>
+            <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit ">
+              <FiActivity /> {getRelativeTimeString(fragData?.pushedAt)}
+            </div>
+
+            <div className="flex gap-3 justify-evenly items-center">
+              {fragData?.visibility === "PRIVATE" ? <Lock className="text-error" /> : null}
+              {fragData?.homepageUrl && (
+                <Link
+                  target="_blank"
+                  rel="noreferrer"
+                  to={fragData?.homepageUrl}
+                  className="text-blue-500 hover:text-accent">
+                  <Globe className="h-5 w-5" />
+                </Link>
+              )}
+              {fragData?.url && (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={`https://vscode.dev/${fragData?.url}`}
+                  className="text-blue-500 hover:text-accent">
+                  <VscVscodeInsiders className="h-5 w-5" />
+                </a>
+              )}
+              {fragData?.url && (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  href={fragData?.url}
+                  className="hover:text-accent border rounded-full border-base-content p-0.5">
+                  <FaGithub className="h-5 w-5" />
+                </a>
+              )}
+            </div>
+          </div>
           {/* is boolean fields */}
           <div className="flex flex-wrap gap-2 divide-accent ">
             {fragData?.isArchived && (
@@ -153,7 +122,7 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
             {fragData?.isFork && (
               <BooleanStats
                 stat={fragData?.isFork}
-                description="Is Fork"
+                description="Fork"
                 className="bg-green-950"
                 Icon={BiGitRepoForked}
               />
@@ -182,7 +151,9 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
                 Icon={Bolt}
               />
             )}
-
+          </div>
+          {/* is boolean fields */}
+          <div className="flex flex-wrap gap-2 divide-accent  *:bg-base-300 *:px-2 *:py-1 *:rounded-lg">
             <BooleanStats
               stat={fragData?.hasDiscussionsEnabled}
               description="Discussions Enabled"
@@ -191,21 +162,50 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
             <BooleanStats stat={fragData?.hasProjectsEnabled} description="Project Enabled" />
             <BooleanStats stat={fragData?.hasWikiEnabled} description="Wiki Enabled" />
           </div>
-          {/* <div className="flex flex-wrap gap-1">
-            {repository.languages?.nodes?.map((language) => {
-              if (!language) return null;
-              return (
-                <div
-                  key={language.name}
-                  className="inline-flex items-center rounded-full border px-2.5 py-0.5 text-xs font-semibold"
-                  style={{ borderColor: language.color ?? "" }}>
-                  {language.name}
-                </div>
-              );
-            })}
-          </div> */}
-        </CardContent>
-      </Card>
+        </div>
+        {/* image */}
+        <img
+          className="w-full md:w-[40%] h-auto  md:aspect-video object-fit rounded-lg dark:brightness-50"
+          alt={fragData?.nameWithOwner}
+          height={200}
+          width={200}
+          src={fragData?.openGraphImageUrl}
+        />
+      </div>
+      {/* languages */}
+      {fragData?.languages?.nodes && fragData?.languages?.nodes?.length > 0 && (
+        <div className="h-full flex flex-wrap gap-2 px-2 ">
+          {fragData?.languages?.nodes?.map((item) => {
+            if (!item) return null;
+            return (
+              <div
+                key={item?.id}
+                style={{
+                  borderStyle: "solid",
+                  borderWidth: "2px",
+                  borderColor: item?.color ?? "",
+                }}
+                className=" rounded-2xl text-xs  break-all px-2">
+                {item?.name}
+              </div>
+            );
+          })}
+        </div>
+      )}
+      {/* topics */}
+      {fragData?.repositoryTopics?.nodes && fragData?.repositoryTopics?.nodes?.length > 0 && (
+        <div className="h-full flex flex-wrap items-center gap-2 px-2">
+          <h3 className="font-bold text-secondary">topics :</h3>
+          {fragData?.repositoryTopics?.nodes?.map((item) => {
+            if (!item) return null;
+            return (
+              <div key={item?.id} className=" rounded-lg text-xs  break-all px-2 badge bg-base-300">
+                {item?.topic?.name}
+              </div>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
