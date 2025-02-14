@@ -60,15 +60,15 @@
 }
 
 .markdown code {
-  @apply font-mono text-sm inline bg-base-100/60 rounded-2xl px-1 py-2 my-5;
+  @apply font-mono text-sm inline bg-base-100/60 rounded-2xl px-1 py-2 my-5 overflow-auto;
 }
 
 .markdown pre {
-  @apply bg-base-200/60 rounded-2xl p-2;
+  @apply bg-base-200/60 rounded-2xl p-2 overflow-auto;
 }
 
 .markdown pre code {
-  @apply block bg-transparent p-0 overflow-visible rounded-2xl my-5;
+  @apply block bg-transparent p-0 overflow-visible rounded-2xl my-5 ;
 }
 
 .markdown ul {
@@ -84,7 +84,7 @@
 }
 
 .markdown table {
-  @apply text-base border-base-300;
+  @apply text-base border-base-300 overflow-auto;
 }
 
 .markdown th {
@@ -97,7 +97,7 @@
 
 /* Override pygments style background color. */
 .markdown .highlight pre {
-  @apply bg-base-200/40 !important;
+  @apply bg-base-200/40 !important overflow-auto;
 }
 
 .markdown pre {

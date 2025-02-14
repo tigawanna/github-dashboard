@@ -5,15 +5,16 @@ import { getGithubREADME } from "./getOneRepomarkdown";
 interface OneGithubRepoREADMEProps {
   repo: string;
   owner: string;
+  branch?: string;
 }
 
-export  function OneGithubRepoREADME({ owner, repo }: OneGithubRepoREADMEProps) {
+export  function OneGithubRepoREADME({ owner, repo,branch="main" }: OneGithubRepoREADMEProps) {
   // const data = await getGithubREADME({ owner, repo });
   const query = useSuspenseQuery({
-    queryKey: ["readme", repo, owner],
+    queryKey: ["readme", repo, owner,branch],
     queryFn: async() =>{
       try {
-        const data = await getGithubREADME({ owner, repo })
+        const data = await getGithubREADME({ owner, repo,branch });
         if(!data){
           return {
             result:null,

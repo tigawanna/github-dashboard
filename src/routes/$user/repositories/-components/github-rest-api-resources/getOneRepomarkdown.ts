@@ -4,11 +4,12 @@ import { convertMarkdownToHtml } from "./convertMarkdownToHtml";
 interface GetRepoREADME {
   repo: string;
   owner: string;
+  branch?: string;
 }
-export async function getGithubREADME({ repo, owner }: GetRepoREADME) {
+export async function getGithubREADME({ repo, owner, branch="main" }: GetRepoREADME) {
   try {
     const response = await fetch(
-      `https://raw.githubusercontent.com/${owner}/${repo}/main/README.md`,
+      `https://raw.githubusercontent.com/${owner}/${repo}/${branch}/README.md`,
     );
     if (!response.ok) {
       throw new Error(response.statusText);

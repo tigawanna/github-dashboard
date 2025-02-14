@@ -1,10 +1,9 @@
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@radix-ui/react-tabs";
 import { graphql } from "relay-runtime";
 import { Branches } from "./Branches";
 import { GeneralInfo } from "./GeneralInfo";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
 import { useLazyLoadQuery } from "react-relay";
-import { Navigate, redirect, useParams } from "@tanstack/react-router";
+import { Navigate, useParams } from "@tanstack/react-router";
 import { makeHotToast } from "@/components/toasters";
 import { Stars } from "./Stars";
 import { Suspense } from "react";
@@ -26,13 +25,14 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
     });
     return <Navigate to=".." />;
   }
+ const defaultBranchName = query.repository.defaultBranchRef?.name
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full h-full">
         <div className="w-full flex-col  ">
           <GeneralInfo data={query.repository} />
           <Suspense fallback={<div className="w-full h-full bg-base-200 skeleton">.</div>}>
-            <OneGithubRepoREADME owner={user} repo={repo} />
+            <OneGithubRepoREADME owner={user} repo={repo} branch={defaultBranchName}/>
           </Suspense>
           <div className="w-full flex-col p-2 gap-2 ">
             <Branches data={query.repository} />
@@ -60,6 +60,10 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
 export const oneREPOquery = graphql`
   query OneUserRepoPageQuery($repoowner: String!, $reponame: String!) {
     repository(owner: $repoowner, name: $reponame) {
+      defaultBranchRef {
+        name
+        id
+      }
       ...GeneralInfo_info
       ...Stars_stargazers
       ...Branches_refs
