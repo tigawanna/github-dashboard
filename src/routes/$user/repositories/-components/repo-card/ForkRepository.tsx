@@ -25,12 +25,9 @@ interface ForkRepositoryProps {
 
 // TODO modifify this to be a fork dialog since it was copied fro m delete dialog
 
-export function ForkRepository({ open, selected, setOpen, setSelected,canFork,selectedAction,setSelectedAction }: ForkRepositoryProps) {
+export function ForkRepository({ open, selected, setOpen, setSelected,canFork }: ForkRepositoryProps) {
   return (
-    <AlertDialog open={open} onOpenChange={(open)=>{
-      setOpen(open)
-      setSelectedAction?.("fork")
-    }}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild disabled={!canFork}>
         <div className="w-full flex gap-2 items-center justify-between p-2 hover:bg-primary/20">
           <div className="">Fork</div>

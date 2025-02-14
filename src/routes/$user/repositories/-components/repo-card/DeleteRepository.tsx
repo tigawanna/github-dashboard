@@ -24,11 +24,9 @@ interface DeleteRepositoryProps {
   setSelected: (selected: ItemList[] | null) => void;
   setOpen: (open: boolean) => void;
   canDelete?: boolean;
-  selectedAction?: "delete" | "fork";
-  setSelectedAction?: React.Dispatch<React.SetStateAction<"delete" | "fork">>;
 }
 
-export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete,setSelectedAction,selectedAction }: DeleteRepositoryProps) {
+export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete }: DeleteRepositoryProps) {
   const { PAT } = useRouteContext({ from: "__root__" });
   const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
@@ -73,10 +71,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
   });
 
   return (
-    <AlertDialog open={open} onOpenChange={(open)=>{
-      setOpen(open);
-      setSelectedAction?.("delete")
-    }}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild disabled={!canDelete}>
         <div  className="w-full flex gap-2 group items-center justify-between p-2 hover:bg-primary/20">
           Delete
@@ -98,7 +93,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction  onClick={() => mutation.mutate()}>
+          <AlertDialogAction   onClick={() => mutation.mutate()}>
             {mutation.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

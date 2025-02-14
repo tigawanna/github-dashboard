@@ -37,7 +37,8 @@ export function RepositoryActions({
 
   if (!CAN_FORK && !CAN_DELETE) return null;
   const [selectedAction,setSelectedAction]=useState<"delete"|"fork">("delete")
-  const [open, setOpen] = useState(false);
+  const [openFork, setOpenFork] = useState(false);
+  const [openDelete, setOpenDelete] = useState(false);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -55,16 +56,16 @@ export function RepositoryActions({
           )} */}
 
           <DeleteRepository
-            open={open}
-            setOpen={setOpen}
+            open={openDelete}
+            setOpen={setOpenDelete}
             setSelected={() => {}}
             selected={[{ id, name: nameWithOwner.split("/")[1], nameWithOwner }]}
             canDelete={CAN_DELETE}
           />
 
           <ForkRepository
-            open={open}
-            setOpen={setOpen}
+            open={openFork}
+            setOpen={setOpenFork}
             setSelected={() => {}}
             selected={[{ id, name: nameWithOwner.split("/")[1], nameWithOwner }]}
             canFork={CAN_FORK}
