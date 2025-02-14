@@ -125,3 +125,25 @@ export const CommitsOnBranchFragment = graphql`
 `;
 
 ```
+
+
+
+if i had to degine relay (graphql client) i would say it makes easy things hard to do and hard things easy to do (compared to apollo, urql and the rest)
+1:06 PM · Feb 14, 2025
+·
+66
+ Views
+View post engagements
+
+Dennis 🇰🇪
+@tigawanna
+·
+3h
+nested pagination is one of the thing that will make you cry in apollo ( even single depth agination is not fun since you have to merge the object in chache yourself )
+
+Relay on the other hand makes you write their not sostraight forward DSL and it handle the rest with ease
+Dennis 🇰🇪
+@tigawanna
+·
+2h
+query will fetch your first 3 branches with thier first 5 nested commits each and you can hit load more at any level without worrying  about how they're stiched together in the cache

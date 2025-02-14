@@ -1,0 +1,49 @@
+import { useSuspenseQuery } from "@tanstack/react-query";
+import { getGithubREADME } from "./getOneRepomarkdown";
+
+
+interface OneGithubRepoREADMEProps {
+  repo: string;
+  owner: string;
+}
+
+export  function OneGithubRepoREADME({ owner, repo }: OneGithubRepoREADMEProps) {
+  // const data = await getGithubREADME({ owner, repo });
+  const query = useSuspenseQuery({
+    queryKey: ["readme", repo, owner],
+    queryFn: async() =>{
+      try {
+        const data = await getGithubREADME({ owner, repo })
+        if(!data){
+          return {
+            result:null,
+            error:"no parsable readme"
+          }
+        }
+        return {
+          result:data,
+          error:null
+        }
+      } catch (error) {
+        return {
+          result:null,
+          error:"no parsable readme"
+        }
+      }
+      },
+    staleTime: 1000 * 60 * 60 * 24,
+  })
+  const data = query?.data?.result
+  if (!data) {
+    return null;
+  }
+console.log(" === data ==== ",data)
+  return (
+    <div
+      id="readme"
+      className="w-[95%] md:w-[85%]  h-full bg-base-200/30 p-5 rounded-xl ">
+      <h2 className="text-2xl font-bold text-start w-full capitalize">{repo} readme</h2>
+      <div className="markdown" dangerouslySetInnerHTML={{ __html: data }} />
+    </div>
+  );
+}

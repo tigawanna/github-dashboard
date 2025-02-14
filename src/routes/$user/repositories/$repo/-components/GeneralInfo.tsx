@@ -41,7 +41,7 @@ import { Badge } from "@/components/shadcn/ui/badge";
 import {
   GithubLanguages,
   OneGithubRepoLanguages,
-} from "../../-components/github-languages/OneGithubRepoLanguages";
+} from "../../-components/github-rest-api-resources/OneGithubRepoLanguages";
 import { Suspense } from "react";
 
 interface GeneralInfoProps {
