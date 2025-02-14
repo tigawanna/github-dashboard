@@ -5,28 +5,18 @@ import {
   Bolt,
   Globe,
   Star,
-  Activity,
   GitForkIcon,
-  GithubIcon,
 } from "lucide-react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
-
-// import { NumberStats } from "@/components/shared/NumberStats";
-// import { BooleanStats } from "@/components/shared/BooleanStats";
-// import { RepositoryActions } from "@/routes/viewer/components/repos/RepositoryActions";
-// import { StarRepository } from "@/routes/viewer/components/repos/StarRepository";
 import { ImBlocked } from "react-icons/im";
 import { useFragment } from "react-relay";
 import { graphql } from "relay-runtime";
-import { Link } from "@tanstack/react-router";
 import { VscVscodeInsiders } from "react-icons/vsc";
 import { FaGithub } from "react-icons/fa";
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { StarRepository } from "../../-components/repo-card/StarRepository";
 import { RepositoryActions } from "../../-components/repo-card/RepositoryActions";
 import { BooleanStats } from "@/components/shared/BooleanStats";
-import { NumberStats } from "@/components/shared/NumberStats";
 import { getRelativeTimeString } from "@/utils/date";
 import { formatKilobytes } from "@/utils/bytes";
 import { Button } from "@/components/shadcn/ui/button";
@@ -37,7 +27,6 @@ import {
   CardContent,
   CardDescription,
 } from "@/components/shadcn/ui/card";
-import { Badge } from "@/components/shadcn/ui/badge";
 import {
   GithubLanguages,
   OneGithubRepoLanguages,

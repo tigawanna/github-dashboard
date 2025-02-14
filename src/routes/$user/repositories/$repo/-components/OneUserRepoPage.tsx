@@ -8,6 +8,7 @@ import { makeHotToast } from "@/components/toasters";
 import { Stars } from "./Stars";
 import { Suspense } from "react";
 import { OneGithubRepoREADME } from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
 
 interface OneUserRepoPageProps {}
 
@@ -25,33 +26,41 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
     });
     return <Navigate to=".." />;
   }
- const defaultBranchName = query.repository.defaultBranchRef?.name
+  const defaultBranchName = query.repository.defaultBranchRef?.name;
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full h-full">
         <div className="w-full flex-col  ">
           <GeneralInfo data={query.repository} />
-          <Suspense fallback={<div className="w-full h-full bg-base-200 skeleton">.</div>}>
-            <OneGithubRepoREADME owner={user} repo={repo} branch={defaultBranchName}/>
-          </Suspense>
-          <div className="w-full flex-col p-2 gap-2 ">
+
+          {/* <div className="w-full flex-col p-2 gap-2 ">
             <Branches data={query.repository} />
             <Stars data={query.repository} />
-          </div>
+          </div> */}
 
-          {/* <div className="  ">
+          <div className="  ">
             <Tabs defaultValue="branches" className="w-full h-full ">
-              <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
+              <TabsList className="grid w-full grid-cols-3">
+                <TabsTrigger value="readme">README</TabsTrigger>
                 <TabsTrigger value="branches">Branches</TabsTrigger>
                 <TabsTrigger value="stars">Stargazers</TabsTrigger>
               </TabsList>
 
-              <TabsContent value="branches" className="">
+              <TabsContent value="readme" className="">
+                <Suspense fallback={<div className="w-full h-full bg-base-200 skeleton">.</div>}>
+                  <OneGithubRepoREADME owner={user} repo={repo} branch={defaultBranchName} />
+                </Suspense>
               </TabsContent>
+
+              <TabsContent value="branches" className="">
+                <Branches data={query.repository} />
+              </TabsContent>
+
               <TabsContent value="stars">
+                <Stars data={query.repository} />
               </TabsContent>
             </Tabs>
-          </div> */}
+          </div>
         </div>
       </div>
     </div>
