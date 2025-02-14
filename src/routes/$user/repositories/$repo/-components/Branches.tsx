@@ -36,7 +36,7 @@ export function Branches({ data }: BranchesProps) {
 
       {!fragData.isLoadingNext && fragData.hasNext ? (
         <button
-          className="m-2 hover:text-purple-400 shadow-lg hover:shadow-purple"
+          className="m-2 hover:text-primary/70 shadow-lg hover:shadow-purple"
           onClick={() => {
             fragData.loadNext(5);
           }}
@@ -73,15 +73,9 @@ export function Branch({ branch }: BranchProps) {
   if (!branch?.node?.name) return null;
   return (
     <div className="w-[97%] flex-col-center p-2 m-1 border-2 ">
-      {/* <div className="w-[100%]  flex items-center justify-between">
-        <div className="text-lg  font-mono font-bold ">
-          {branch?.node?.name} branch
-        </div>
-          <ChevronDown onClick={() => setOpen(!open)} />
-      </div> */}
       <Accordion type="single" collapsible className="w-full">
         <AccordionItem value={branch?.node?.name}>
-          <AccordionTrigger>{branch?.node?.name} branch</AccordionTrigger>
+          <AccordionTrigger className="py-2 hover:text-primary">{branch?.node?.name} branch</AccordionTrigger>
           <AccordionContent>
             <div className="w-full ">
               <Commits data={branch?.node?.target} />
@@ -89,11 +83,6 @@ export function Branch({ branch }: BranchProps) {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-      {/* {open ? (
-        <div className="w-full ">
-          <Commits data={branch?.node?.target} />
-        </div>
-      ) : null} */}
     </div>
   );
 };

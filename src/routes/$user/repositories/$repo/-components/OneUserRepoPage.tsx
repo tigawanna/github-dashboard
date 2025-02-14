@@ -29,8 +29,13 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
       <div className="w-full h-full">
         <div className="w-full flex-col  ">
           <GeneralInfo data={query.repository} />
+                  <div className="w-full flex-col p-2 gap-2 ">
+                <Branches data={query.repository} />
+                <Stars data={query.repository} />
 
-          <div className="  ">
+                  </div>
+
+          {/* <div className="  ">
             <Tabs defaultValue="branches" className="w-full h-full ">
               <TabsList className="grid w-full grid-cols-2 md:grid-cols-4">
                 <TabsTrigger value="branches">Branches</TabsTrigger>
@@ -38,13 +43,11 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
               </TabsList>
 
               <TabsContent value="branches" className="">
-                <Branches data={query.repository} />
               </TabsContent>
               <TabsContent value="stars">
-                <Stars data={query.repository} />
               </TabsContent>
             </Tabs>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
