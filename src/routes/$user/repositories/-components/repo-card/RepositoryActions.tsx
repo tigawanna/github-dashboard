@@ -36,8 +36,8 @@ export function RepositoryActions({
   const CAN_DELETE = local_viewer?.login === owner && viewerCanAdminister;
 
   if (!CAN_FORK && !CAN_DELETE) return null;
-  const [open, setOpen] = useState(false);
   const [selectedAction,setSelectedAction]=useState<"delete"|"fork">("delete")
+  const [open, setOpen] = useState(false);
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
