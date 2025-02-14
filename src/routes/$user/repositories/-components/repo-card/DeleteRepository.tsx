@@ -9,13 +9,14 @@ import {
   AlertDialogTitle,
   AlertDialogTrigger,
 } from "@/components/shadcn/ui/alert-dialog";
-import { Trash } from "lucide-react";
+import { Trash, X } from "lucide-react";
 import { ItemList } from "../types";
 import { useRelayEnvironment } from "react-relay";
 import { useRouteContext } from "@tanstack/react-router";
 import { useMutation } from "@tanstack/react-query";
 import { deleteRepositories } from "../extra-mutations/repo_mutations";
 import { makeHotToast } from "@/components/toasters";
+import { FaHatWizard } from "react-icons/fa";
 
 
 interface DeleteRepositoryProps {
@@ -81,8 +82,8 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-          <AlertDialogDescription>
-            This action will permanently delete the selected repositories:
+          <AlertDialogDescription className="flex gap-1">
+           <FaHatWizard/> This action will permanently delete the selected repositories:
             {selected.map((item) => item.nameWithOwner).join(", ")}
           </AlertDialogDescription>
           <ul className="list-disc pl-5 mt-2">
@@ -92,8 +93,8 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
           </ul>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
-          <AlertDialogAction   onClick={() => mutation.mutate()}>
+          <AlertDialogCancel>Cancel </AlertDialogCancel>
+          <AlertDialogAction className="btn btn-error bg-error/23 hover:bg-error/70"    onClick={() => mutation.mutate()}>
             {mutation.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>
