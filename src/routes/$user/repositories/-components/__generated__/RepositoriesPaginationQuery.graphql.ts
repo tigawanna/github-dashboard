@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80fad26bdd7cc5558525acc1dc6abaa3>>
+ * @generated SignedSource<<b86e1cb0b36234ca81eebd6aeebbe3a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,7 +40,7 @@ var v0 = {
   "name": "after"
 },
 v1 = {
-  "defaultValue": 10,
+  "defaultValue": 2,
   "kind": "LocalArgument",
   "name": "first"
 },
@@ -195,18 +195,18 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "kind": "ScalarField",
-                    "name": "totalCount",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "RepositoryEdge",
                     "kind": "LinkedField",
                     "name": "edges",
                     "plural": true,
                     "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "cursor",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -560,13 +560,6 @@ return {
                           (v7/*: any*/)
                         ],
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "cursor",
-                        "storageKey": null
                       }
                     ],
                     "storageKey": null
@@ -609,6 +602,13 @@ return {
                       }
                     ],
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -635,16 +635,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3ca4e33f66e9ccbdfc29dcafe78d975f",
+    "cacheID": "a2267c55217a48fa71bed63034d75e67",
     "id": null,
     "metadata": {},
     "name": "RepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment UserRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    totalCount\n    edges {\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        isInOrganization\n        forkingAllowed\n        isFork\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query RepositoriesPaginationQuery(\n  $after: String\n  $first: Int = 2\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment UserRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        isInOrganization\n        forkingAllowed\n        isFork\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "89d5f96737c5f2d5b82ebe130ec285a9";
+(node as any).hash = "005063e3d723fe5ff749cc8ed1c705ad";
 
 export default node;

@@ -52,11 +52,17 @@ export async function fetchFn({
       throw new Error(resp.statusText);
     }
     const json = await resp.json();
-    // console.log(" ====== RELAY FETCHER JSON ============== ", json);
+    console.log(" ====== RELAY FETCHER JSON ============== ", json);
     // GraphQL returns exceptions (for example, a missing required variable) in the "errors"
     // property of the response. If any exceptions occurred when processing the request,
     // throw an error to indicate to the developer what went wrong.
-    if (Array.isArray(json.errors)) {
+    if (json.data&&Array.isArray(json.errors)) {
+      const { errors,...rest} = json;
+      console.log("====== RELAY FETCHER PARTIAL DATA ========",rest)
+      console.log("====== RELAY FETCHER PARTIAL ERROR ========",json.errors)
+      return rest
+    }
+    if (!json.data&&Array.isArray(json.errors)) {
       throw new Error(
         `Error fetching GraphQL query '${request.name}' with variables '${JSON.stringify(
           variables

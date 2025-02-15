@@ -23,11 +23,11 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
   const [open, setOpen] = useState(false);
   const { deselectAll, selectAll, selected, unselectItem, selectItem, setSelected } =
     useRepoSelector();
-  const repo_fragment = usePaginationFragment<UserReposPageQuery, UserRepos_repositories$key>(
+  const fragData = usePaginationFragment<UserReposPageQuery, UserRepos_repositories$key>(
     RepositoriesFragment,
     user_repos_key
   );
-  const repo_response = repo_fragment.data?.repositories;
+  const repo_response = fragData.data?.repositories;
   const repos = repo_response?.edges;
   const is_all_selected = selected && selected.length === repos?.length ? true : false;
   if (!viewer) {
@@ -75,10 +75,12 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
 
         {repos &&
           repos.map((edge) => {
+            // console.log("repo", edge?.node?.id);
             return (
               <RepoCard
                 user={user}
-                key={edge?.node?.id}
+                // @ts-expect-error
+                key={edge?.node?.id+edge?.node?.nameWithOwner}
                 edge={edge}
                 local_viewer={viewer}
                 editing={editing}
@@ -88,6 +90,20 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
               />
             );
           })}
+        <div className="w-full flex justify-center items-center p-2">
+          {fragData.isLoadingNext ? (
+            <div className="w-full flex justify-center text-center">loading more...</div>
+          ) : null}
+          {!fragData.isLoadingNext && fragData.hasNext ? (
+            <button
+              className="btn btn-wide btn-sm btn-ghost"
+              onClick={() => {
+                fragData.loadNext(2);
+              }}>
+              --- load more ---
+            </button>
+          ) : null}
+        </div>
       </ul>
     </div>
   );
@@ -95,7 +111,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
 export const RepositoriesFragment = graphql`
   fragment UserRepos_repositories on User
   @argumentDefinitions(
-    first: { type: "Int", defaultValue: 10 }
+    first: { type: "Int", defaultValue: 2 }
     after: { type: "String" }
     orderBy: { type: "RepositoryOrder", defaultValue: { field: PUSHED_AT, direction: DESC } }
     isFork: { type: "Boolean", defaultValue: false }
@@ -103,8 +119,8 @@ export const RepositoriesFragment = graphql`
   @refetchable(queryName: "RepositoriesPaginationQuery") {
     repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork)
       @connection(key: "Repositories_repositories") {
-      totalCount
       edges {
+        cursor
         node {
           id
           name

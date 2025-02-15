@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8ee9cc862bc6d47b74922bc17d14318>>
+ * @generated SignedSource<<744b82dcbde8247f64c6a6bebadd5374>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type UserRepos_repositories$data = {
   readonly id: string;
   readonly repositories: {
     readonly edges: ReadonlyArray<{
+      readonly cursor: string;
       readonly node: {
         readonly description: string | null | undefined;
         readonly diskUsage: number | null | undefined;
@@ -135,7 +136,7 @@ return {
       "name": "after"
     },
     {
-      "defaultValue": 10,
+      "defaultValue": 2,
       "kind": "LocalArgument",
       "name": "first"
     },
@@ -206,18 +207,18 @@ return {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "RepositoryEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
           "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            },
             {
               "alias": null,
               "args": null,
@@ -572,13 +573,6 @@ return {
                 }
               ],
               "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "cursor",
-              "storageKey": null
             }
           ],
           "storageKey": null
@@ -621,6 +615,13 @@ return {
             }
           ],
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -632,6 +633,6 @@ return {
 };
 })();
 
-(node as any).hash = "89d5f96737c5f2d5b82ebe130ec285a9";
+(node as any).hash = "005063e3d723fe5ff749cc8ed1c705ad";
 
 export default node;
