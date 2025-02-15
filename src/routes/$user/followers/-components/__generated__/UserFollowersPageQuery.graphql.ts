@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbb0927f395fdc4d306652909e495ef8>>
+ * @generated SignedSource<<a9ca6c6045799b766d42246d38c6b90b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type UserFollowersPageQuery$variables = {
 };
 export type UserFollowersPageQuery$data = {
   readonly user: {
-    readonly " $fragmentSpreads": FragmentRefs<"UserFollowersFragment_following">;
+    readonly " $fragmentSpreads": FragmentRefs<"UserFollowersFragment">;
   } | null | undefined;
 };
 export type UserFollowersPageQuery = {
@@ -70,7 +70,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "UserFollowersFragment_following"
+            "name": "UserFollowersFragment"
           }
         ],
         "storageKey": null
@@ -96,9 +96,9 @@ return {
           {
             "alias": null,
             "args": (v2/*: any*/),
-            "concreteType": "FollowingConnection",
+            "concreteType": "FollowerConnection",
             "kind": "LinkedField",
-            "name": "following",
+            "name": "followers",
             "plural": false,
             "selections": [
               {
@@ -109,6 +109,13 @@ return {
                 "name": "edges",
                 "plural": true,
                 "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -218,13 +225,6 @@ return {
                       }
                     ],
                     "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "cursor",
-                    "storageKey": null
                   }
                 ],
                 "storageKey": null
@@ -276,16 +276,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "following(first:10)"
+            "storageKey": "followers(first:10)"
           },
           {
             "alias": null,
             "args": (v2/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "UserFollowersFragment_following",
+            "key": "UserFollowersFragment_followers",
             "kind": "LinkedHandle",
-            "name": "following"
+            "name": "followers"
           },
           (v3/*: any*/)
         ],
@@ -294,16 +294,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d47d588e30d4e470b1d01ca93815b0b8",
+    "cacheID": "f6f17f3abb8300e466a69eabaf68036a",
     "id": null,
     "metadata": {},
     "name": "UserFollowersPageQuery",
     "operationKind": "query",
-    "text": "query UserFollowersPageQuery(\n  $login: String!\n) {\n  user(login: $login) {\n    ...UserFollowersFragment_following\n    id\n  }\n}\n\nfragment UserFollowersFragment_following on User {\n  following(first: 10) {\n    edges {\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFragmentCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n"
+    "text": "query UserFollowersPageQuery(\n  $login: String!\n) {\n  user(login: $login) {\n    ...UserFollowersFragment\n    id\n  }\n}\n\nfragment UserFollowersFragment on User {\n  followers(first: 10) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFragmentCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7dedbdad90886b0d89e4a634586c9cb0";
+(node as any).hash = "52dbb32a11f2ae179d3bf722568cea47";
 
 export default node;

@@ -1,9 +1,12 @@
-import { Droplet, Home, LayoutDashboard, NotepadText, SearchSlash, ShieldCheck, Store, User, Users, Wallet, Zap } from "lucide-react";
+import {  Home, SearchSlash, Store, User} from "lucide-react";
+import { RiGitRepositoryCommitsLine } from "react-icons/ri";
+import { TbUsersGroup, TbUsers } from "react-icons/tb";
 
 export const dashboard_routes = [
   { name: "profile", href: "/$user", icon: <User /> },
-  { name: "repositories", href: "/$user/repositories", icon: <Store /> },
-  { name: "gists", href: "/$user/gists", icon: <Store /> },
+  { name: "repositories", href: "/$user/repositories", icon: <RiGitRepositoryCommitsLine /> },
+  { name: "followinf", href: "/$user/following", icon: <TbUsers /> },
+  { name: "followers", href: "/$user/followers", icon: <TbUsersGroup /> },
 ] as const;
 
 

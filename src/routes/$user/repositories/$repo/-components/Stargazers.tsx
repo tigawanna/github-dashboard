@@ -18,10 +18,10 @@ export const Stargazers: React.FC<StargazersProps> = ({ stargazers_key }) => {
   if (!frags) return null;
   return (
     <div className="w-full h-full flex justify-center flex-wrap @container/stars gap-2">
-    <div className="w-full  flex justify-center">
+    {/* <div className="w-full  flex justify-center">
       <TailwindIndicator/>
       <TailwindContainerIndicator/>
-      </div>
+      </div> */}
       {frags.stargazers.edges?.map((stg, idx) => {
         if (!stg?.node) return
         return <UserFragmentCard user_fragment_key={stg?.node} key={stg.cursor} />;

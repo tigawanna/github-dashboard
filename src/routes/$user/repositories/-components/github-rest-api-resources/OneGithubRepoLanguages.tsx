@@ -28,7 +28,7 @@ export function OneGithubRepoLanguages({ repo, owner }: OneGithubRepoLanguagesPr
     queryFn: fetchLanguages,
     staleTime: 1000 * 60 * 60 * 24,
   });
-  const data= query.data.result
+  const data= query?.data?.result
   // console.log( "OneGithubrepolanguage data ==== ",data)
   if (!data) {
     return null;
@@ -71,7 +71,7 @@ export function GithubLanguages(props: GithubLanguagesProps) {
                 <div
                   className="min-w-3  rounded-lg w-full h-4"
                   style={{
-                    backgroundColor: colors[k as keyof typeof colors]["color"] ?? "",
+                    backgroundColor: colors?.[k as keyof typeof colors]?.["color"] ?? "",
                   }}>
                   .
                 </div>
@@ -88,7 +88,7 @@ export function GithubLanguages(props: GithubLanguagesProps) {
                 <span
                   className="w-3 h-3"
                   style={{
-                    backgroundColor: colors[language as keyof typeof colors]["color"] ?? "",
+                    backgroundColor: colors?.[language as keyof typeof colors]?.["color"] ?? "",
                     borderRadius: "50%",
                     display: "inline-block",
                   }}

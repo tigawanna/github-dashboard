@@ -57,7 +57,7 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
   const oneuser = data;
 
   return (
-    <Card className="flex flex-col justify-between p-1 md:@2xl:w-[48%] flex-grow xl:w-[30%]  @2xl:lg:w-[48%] rounded-2xl border-primary/30  bg-primary/10  transition-colors [&:has(a:hover)]:bg-secondary/10 ">
+    <Card className="flex flex-col justify-between p-1 @2xl:md:w-[48%] @2xl:lg:w-[48%] @2xl:xl:w-[24%] @2xl:2xl:w-[24%] @2xl:2xl:max-w-[24%]  flex-grow lg:w-[30%]  rounded-2xl border-primary/30  bg-primary/10  transition-colors [&:has(a:hover)]:bg-secondary/10 ">
       <CardHeader className="flex   justify-between items-srart p-0 gap-4 pr-3">
         <Link
           className="hover:text-secondary flex gap-2 group"
@@ -96,12 +96,12 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
             </div>
           )}
           {oneuser.company && (
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 line-clamp-2">
               <Building className="h-4 w-4 text-muted-foreground" />
-              <span>{oneuser.company}</span>
+              <span className="line-clamp-1">{oneuser.company}</span>
             </div>
           )}
-          {oneuser.twitterUsername && (
+          {/* {oneuser.twitterUsername && (
             <div className="flex items-center gap-2">
               <FaTwitter className="h-4 w-4 text-muted-foreground" />
               <a
@@ -126,7 +126,7 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
               className="text-blue-500 hover:underline">
               GitHub Profile
             </a>
-          </div>
+          </div> */}
         </div>
         <div className="w-full ">
           {!oneuser.isViewer ? (
