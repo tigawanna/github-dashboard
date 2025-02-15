@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae76529ea3b429b312819b4699c8bae7>>
+ * @generated SignedSource<<c63bb688be8c4cafc403f650be27771d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -157,6 +157,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "login",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "name",
                             "storageKey": null
                           },
@@ -172,6 +179,13 @@ return {
                             "args": null,
                             "kind": "ScalarField",
                             "name": "avatarUrl",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "bio",
                             "storageKey": null
                           },
                           (v4/*: any*/),
@@ -243,16 +257,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9036e2f6afb175329ee36da378022e2f",
+    "cacheID": "fba78e92db42290d5bfd2f879b75315f",
     "id": null,
     "metadata": {},
     "name": "StarsPaginationQuery",
     "operationKind": "query",
-    "text": "query StarsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Stars_stargazers_2HEEH6\n    id\n  }\n}\n\nfragment Stars_stargazers_2HEEH6 on Repository {\n  stargazers(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        name\n        email\n        avatarUrl\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query StarsPaginationQuery(\n  $after: String\n  $first: Int = 5\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Stars_stargazers_2HEEH6\n    id\n  }\n}\n\nfragment Stars_stargazers_2HEEH6 on Repository {\n  stargazers(first: $first, after: $after) {\n    edges {\n      cursor\n      node {\n        login\n        name\n        email\n        avatarUrl\n        bio\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7f455772f1e40cffbb7cd204e90a1a48";
+(node as any).hash = "22418bcf05c88aa2e353a510875f2e05";
 
 export default node;

@@ -3,10 +3,10 @@ import { Branches } from "./Branches";
 import { GeneralInfo } from "./GeneralInfo";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
 import { useLazyLoadQuery } from "react-relay";
-import { Navigate, useParams } from "@tanstack/react-router";
+import { Navigate, useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { makeHotToast } from "@/components/toasters";
-import { Stars } from "./Stars";
-import { Suspense } from "react";
+import { Stargazers } from "./Stargazers";
+import { Suspense, useTransition } from "react";
 import { OneGithubRepoREADME } from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
 
@@ -14,6 +14,13 @@ interface OneUserRepoPageProps {}
 
 export function OneUserRepoPage({}: OneUserRepoPageProps) {
   const { repo, user } = useParams({ from: "/$user/repositories/$repo/" });
+  const { tab } = useSearch({
+    from: "/$user/repositories/$repo/",
+  });
+  const navigate = useNavigate({
+    from: "/$user/repositories/$repo",
+  });
+  const [, startTransition] = useTransition();
   const query = useLazyLoadQuery<OneUserRepoPageQuery>(oneREPOquery, {
     reponame: repo,
     repoowner: user,
@@ -27,19 +34,24 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
     return <Navigate to=".." />;
   }
   const defaultBranchName = query.repository.defaultBranchRef?.name;
+
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full h-full">
         <div className="w-full flex-col  ">
           <GeneralInfo data={query.repository} />
-
-          {/* <div className="w-full flex-col p-2 gap-2 ">
-            <Branches data={query.repository} />
-            <Stars data={query.repository} />
-          </div> */}
-
           <div className="  ">
-            <Tabs defaultValue="branches" className="w-full h-full ">
+            <Tabs
+              defaultValue={tab ?? "readme"}
+              onValueChange={(value) => {
+                navigate({
+                  search: {
+                    tab: value as typeof tab,
+                  },
+                  viewTransition: false,
+                });
+              }}
+              className="w-full h-full ">
               <TabsList className="grid w-full grid-cols-3">
                 <TabsTrigger value="readme">README</TabsTrigger>
                 <TabsTrigger value="branches">Branches</TabsTrigger>
@@ -57,7 +69,7 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
               </TabsContent>
 
               <TabsContent value="stars">
-                <Stars data={query.repository} />
+                <Stargazers stargazers_key={query.repository} />
               </TabsContent>
             </Tabs>
           </div>
@@ -74,7 +86,7 @@ export const oneREPOquery = graphql`
         id
       }
       ...GeneralInfo_info
-      ...Stars_stargazers
+      ...Stargazers_stargazers
       ...Branches_refs
     }
   }

@@ -1,5 +1,5 @@
 import { GeneralInfo_info$key } from "./__generated__/GeneralInfo_info.graphql";
-import { Lock, BookDashed, Bolt, Globe, Star, GitForkIcon } from "lucide-react";
+import { Lock, BookDashed, Bolt, Globe,GitForkIcon } from "lucide-react";
 import { BiGitRepoForked } from "react-icons/bi";
 import { FiActivity } from "react-icons/fi";
 import { ImBlocked } from "react-icons/im";
@@ -26,7 +26,10 @@ import {
 } from "../../-components/github-rest-api-resources/OneGithubRepoLanguages";
 import { Suspense } from "react";
 import { StarRepository } from "../../-components/repo-card/StarRepository";
-import { TailwindContainerIndicator, TailwindIndicator } from "@/components/navigation/tailwind-indicator";
+import {
+  TailwindContainerIndicator,
+  TailwindIndicator,
+} from "@/components/navigation/tailwind-indicator";
 
 interface GeneralInfoProps {
   data?: GeneralInfo_info$key | null;
@@ -42,9 +45,8 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
   return (
     <div className="w-full h-full @container flex flex-col gap-3 divide-y divide-solid divide-base-200  p-5">
       <div className="flex gap-3 w-full justify-center">
-            <TailwindIndicator />
-            <TailwindContainerIndicator />
-
+        {/* <TailwindIndicator />
+            <TailwindContainerIndicator /> */}
       </div>
       <Card className="w-full">
         <CardHeader className="space-y-4">

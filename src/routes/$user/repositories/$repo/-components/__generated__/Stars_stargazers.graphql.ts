@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<262777880974f3b9bd3071773c936b66>>
+ * @generated SignedSource<<e557080f68bff907340b9221b0309fcf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,9 @@ export type Stars_stargazers$data = {
       readonly cursor: string;
       readonly node: {
         readonly avatarUrl: any;
+        readonly bio: string | null | undefined;
         readonly email: string;
+        readonly login: string;
         readonly name: string | null | undefined;
       };
     } | null | undefined> | null | undefined;
@@ -120,6 +122,13 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
+                  "name": "login",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
                   "name": "name",
                   "storageKey": null
                 },
@@ -135,6 +144,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "avatarUrl",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "bio",
                   "storageKey": null
                 },
                 {
@@ -205,6 +221,6 @@ return {
 };
 })();
 
-(node as any).hash = "7f455772f1e40cffbb7cd204e90a1a48";
+(node as any).hash = "22418bcf05c88aa2e353a510875f2e05";
 
 export default node;

@@ -186,7 +186,7 @@
 
 
 .markdown {
-  @apply text-base-content leading-normal break-words p-2;
+  @apply text-base-content leading-normal break-words p-2 max-w-[90vw]; 
   overflow-x: scroll;
   line-height: 2;
 }
@@ -395,3 +395,7 @@ hue-6-2: #e6c07b
     padding: 1rem;
   }
 }
+
+/* .no-transition {
+  view-transition-name: none;
+} */

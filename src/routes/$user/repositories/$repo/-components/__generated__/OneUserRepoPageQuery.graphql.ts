@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c873116b03b0962f17ff0ac477ff9747>>
+ * @generated SignedSource<<446fd154c8b6e550aebc1816f6f8fb4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type OneUserRepoPageQuery$data = {
       readonly id: string;
       readonly name: string;
     } | null | undefined;
-    readonly " $fragmentSpreads": FragmentRefs<"Branches_refs" | "GeneralInfo_info" | "Stars_stargazers">;
+    readonly " $fragmentSpreads": FragmentRefs<"Branches_refs" | "GeneralInfo_info" | "Stargazers_stargazers">;
   } | null | undefined;
 };
 export type OneUserRepoPageQuery = {
@@ -223,7 +223,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "Stars_stargazers"
+            "name": "Stargazers_stargazers"
           },
           {
             "args": null,
@@ -543,8 +543,23 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v4/*: any*/),
                       (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "login",
+                        "storageKey": null
+                      },
                       (v12/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "bio",
+                        "storageKey": null
+                      },
                       {
                         "alias": null,
                         "args": null,
@@ -552,7 +567,56 @@ return {
                         "name": "avatarUrl",
                         "storageKey": null
                       },
-                      (v4/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "company",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "twitterUsername",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isFollowingViewer",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "viewerIsFollowing",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isViewer",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "location",
+                        "storageKey": null
+                      },
+                      (v7/*: any*/),
                       (v13/*: any*/)
                     ],
                     "storageKey": null
@@ -569,7 +633,7 @@ return {
             "args": (v10/*: any*/),
             "filters": null,
             "handle": "connection",
-            "key": "Stars_stargazers",
+            "key": "Stargazers_stargazers",
             "kind": "LinkedHandle",
             "name": "stargazers"
           },
@@ -751,16 +815,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ab15ef7756ed8aa62828bd859bc65664",
+    "cacheID": "d5f71502f0f43dda737105de0f95eb8c",
     "id": null,
     "metadata": {},
     "name": "OneUserRepoPageQuery",
     "operationKind": "query",
-    "text": "query OneUserRepoPageQuery(\n  $repoowner: String!\n  $reponame: String!\n) {\n  repository(owner: $repoowner, name: $reponame) {\n    defaultBranchRef {\n      name\n      id\n    }\n    ...GeneralInfo_info\n    ...Stars_stargazers\n    ...Branches_refs\n    id\n  }\n}\n\nfragment Branches_refs on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 3) {\n    totalCount\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    totalCount\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment GeneralInfo_info on Repository {\n  id\n  url\n  description\n  nameWithOwner\n  openGraphImageUrl\n  projectsUrl\n  projectsResourcePath\n  pushedAt\n  diskUsage\n  homepageUrl\n  resourcePath\n  visibility\n  viewerPermission\n  repositoryTopics(first: 20) {\n    nodes {\n      id\n      topic {\n        name\n        id\n      }\n    }\n  }\n  languages(first: 20) {\n    nodes {\n      color\n      name\n      id\n    }\n  }\n  primaryLanguage {\n    color\n    id\n    name\n  }\n  forkCount\n  stargazerCount\n  hasDiscussionsEnabled\n  hasIssuesEnabled\n  hasProjectsEnabled\n  hasWikiEnabled\n  forkingAllowed\n  isArchived\n  isDisabled\n  isFork\n  isLocked\n  isPrivate\n  isTemplate\n  isUserConfigurationRepository\n  viewerHasStarred\n  viewerCanAdminister\n}\n\nfragment Stars_stargazers on Repository {\n  stargazers(first: 5) {\n    edges {\n      cursor\n      node {\n        name\n        email\n        avatarUrl\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query OneUserRepoPageQuery(\n  $repoowner: String!\n  $reponame: String!\n) {\n  repository(owner: $repoowner, name: $reponame) {\n    defaultBranchRef {\n      name\n      id\n    }\n    ...GeneralInfo_info\n    ...Stargazers_stargazers\n    ...Branches_refs\n    id\n  }\n}\n\nfragment Branches_refs on Repository {\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 3) {\n    totalCount\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ...Commits_history\n          id\n        }\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n\nfragment Commits_history on Commit {\n  history(first: 5) {\n    totalCount\n    edges {\n      node {\n        committedDate\n        author {\n          name\n          email\n        }\n        message\n        url\n        pushedDate\n        authoredDate\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment GeneralInfo_info on Repository {\n  id\n  url\n  description\n  nameWithOwner\n  openGraphImageUrl\n  projectsUrl\n  projectsResourcePath\n  pushedAt\n  diskUsage\n  homepageUrl\n  resourcePath\n  visibility\n  viewerPermission\n  repositoryTopics(first: 20) {\n    nodes {\n      id\n      topic {\n        name\n        id\n      }\n    }\n  }\n  languages(first: 20) {\n    nodes {\n      color\n      name\n      id\n    }\n  }\n  primaryLanguage {\n    color\n    id\n    name\n  }\n  forkCount\n  stargazerCount\n  hasDiscussionsEnabled\n  hasIssuesEnabled\n  hasProjectsEnabled\n  hasWikiEnabled\n  forkingAllowed\n  isArchived\n  isDisabled\n  isFork\n  isLocked\n  isPrivate\n  isTemplate\n  isUserConfigurationRepository\n  viewerHasStarred\n  viewerCanAdminister\n}\n\nfragment Stargazers_stargazers on Repository {\n  stargazers(first: 5) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n\nfragment UserFragmentCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6138de79a92dfa4e9765b87ad0e6ab23";
+(node as any).hash = "03ea9cba53278fdf2e25fdd2a31dc1a7";
 
 export default node;

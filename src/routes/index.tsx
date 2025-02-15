@@ -1,5 +1,4 @@
-import { MainNavbar } from "@/components/navigation/navbar/MainNavbar";
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute} from "@tanstack/react-router";
 import { MainDrawer } from "../components/navigation/drawer/MainDrawer";
 import { MainDrawerLinks } from "../components/navigation/drawer/MainDrawerLinks";
 import { MainDrawerFooter } from "@/components/navigation/drawer/MainDrawerFooter";

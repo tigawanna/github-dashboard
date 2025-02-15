@@ -86,6 +86,7 @@ export function getRelativeTimeString(
   return rtf.format(Math.floor(deltaSeconds / divisor), units[unitIndex]||"hour");
 }
 
+export const formatRelativeDate = getRelativeTimeString
 
 export function isdateGreater(date1: Date|string, date2: Date|string) {
   if(typeof date1 === "string") date1 = new Date(date1);
