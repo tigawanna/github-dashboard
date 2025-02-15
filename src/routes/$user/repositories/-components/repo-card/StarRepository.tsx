@@ -19,13 +19,11 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
   const is_starring = isStarMutationInFlight || isUnStarMutationInFlight;
   const star_classnames = viewerHasStarred ? "fill-yellow-400" : "";
   const is_starring_classname = is_starring ? "animate-spin" : "";
-  console.log({
-    stargazerCount,
-  });
+
   return (
-    <div className="flex gap-1 text-xl justify-center items-center ">
+    <div className="flex h-full gap-1 text-lg justify-center items-center ">
       <Star
-        className={`size-7 outline-0 border-0 ${star_classnames} ${is_starring_classname}`}
+        className={`size-5 outline-0 border-0 hover:size-7 cursor-pointer ${star_classnames} ${is_starring_classname}`}
         onClick={() => {
           if (viewerHasStarred) {
             unStarMutation({
@@ -52,7 +50,7 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
           }
         }}
       />
-     {stargazerCount}
+      <div className="h-full flex  justify-center items-center">{stargazerCount}</div>
     </div>
   );
 }

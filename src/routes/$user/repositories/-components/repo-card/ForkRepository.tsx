@@ -31,7 +31,7 @@ export function ForkRepository({ open, selected, setOpen, setSelected,canFork }:
       <AlertDialogTrigger asChild disabled={!canFork}>
         <div className="w-full flex gap-2 items-center justify-between p-2 hover:bg-primary/20">
           <div className="">Fork</div>
-          <GitFork className="w-4 h-4" />
+          <GitFork className="size-5" />
         </div>
       </AlertDialogTrigger>
       <AlertDialogContent>

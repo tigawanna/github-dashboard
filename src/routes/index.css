@@ -379,3 +379,19 @@ hue-6-2: #e6c07b
 .hljs-link {
   text-decoration: underline;
 }
+
+
+#readme p {
+  width: 100%;
+  text-align: center;
+  padding: 0.2rem;
+
+  &:has(> a) {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+}

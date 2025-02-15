@@ -156,7 +156,7 @@ export function RepoCard({
           <FiActivity /> {getRelativeTimeString(repo?.pushedAt)}
         </div>
         <div className="flex gap-1 justify-center items-center">
-          <BiGitRepoForked /> {repo?.forkCount}
+          <BiGitRepoForked className=""/> {repo?.forkCount}
         </div>
         <StarRepository
           id={repo.id}

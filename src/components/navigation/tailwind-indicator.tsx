@@ -2,7 +2,7 @@ export function TailwindIndicator() {
   if (!import.meta.env.DEV) return null;
 
   return (
-    <div className=" flex items-center rounded-2xl  justify-center bg-primary font-bold">
+    <div className=" flex items-center rounded-2xl p-1  justify-center bg-primary font-bold">
       <div className="block sm:hidden">xs</div>
       <div className="hidden sm:block md:hidden lg:hidden xl:hidden 2xl:hidden">
         sm

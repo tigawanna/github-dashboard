@@ -29,7 +29,7 @@ export function OneGithubRepoLanguages({ repo, owner }: OneGithubRepoLanguagesPr
     staleTime: 1000 * 60 * 60 * 24,
   });
   const data= query.data.result
-  console.log( "OneGithubrepolanguage data ==== ",data)
+  // console.log( "OneGithubrepolanguage data ==== ",data)
   if (!data) {
     return null;
   }
