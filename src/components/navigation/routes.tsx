@@ -1,6 +1,7 @@
 import { Droplet, Home, LayoutDashboard, NotepadText, SearchSlash, ShieldCheck, Store, User, Users, Wallet, Zap } from "lucide-react";
 
 export const dashboard_routes = [
+  { name: "profile", href: "/$user", icon: <User /> },
   { name: "repositories", href: "/$user/repositories", icon: <Store /> },
   { name: "gists", href: "/$user/gists", icon: <Store /> },
 ] as const;
