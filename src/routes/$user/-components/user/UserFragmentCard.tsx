@@ -12,6 +12,7 @@ import { useState } from "react";
 import { makeHotToast } from "@/components/toasters";
 import { getRelativeTimeString } from "@/utils/date";
 import { Link } from "@tanstack/react-router";
+import { TailwindContainerIndicator } from "@/components/navigation/tailwind-indicator";
 
 interface UserFragmentCardProps {
   user_fragment_key: UserFragmentCard_user$key;
@@ -56,54 +57,38 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
   const oneuser = data;
 
   return (
-    <Card className="w-full max-w-2xl">
-      <CardHeader className="flex flex-row items-center gap-4">
-        <Link className="hover:text-primary" to="/$user" params={{ user: oneuser.login }}>
+    <Card className="flex flex-col justify-between p-1 md:@2xl:w-[48%] flex-grow xl:w-[30%]  @2xl:lg:w-[48%] rounded-2xl border-primary/30  bg-primary/10  transition-colors [&:has(a:hover)]:bg-secondary/10 ">
+      <CardHeader className="flex   justify-between items-srart p-0 gap-4 pr-3">
+        <Link
+          className="hover:text-secondary flex gap-2 group"
+          to="/$user"
+          params={{ user: oneuser.login }}>
           <Avatar className="h-24 w-24">
             <AvatarImage src={oneuser.avatarUrl} alt={oneuser.login} />
             <AvatarFallback>{oneuser.login.charAt(0)}</AvatarFallback>
           </Avatar>
-          <div className="flex flex-col">
+          <div className="flex flex-col p-1">
             <CardTitle className="text-2xl">{oneuser.name}</CardTitle>
-            <p className="text-sm text-muted-foreground">@{oneuser.login}</p>
-            <CardDescription className="text-sm text-muted-foreground">
-              {oneuser.bio}
-            </CardDescription>
+            <p className="text-sm text-muted-foreground group-hover:text-secondary/60">
+              @{oneuser.login}
+            </p>
+            {oneuser.email && (
+              <div className="flex items-center gap-2 text-xs">
+                <Mail className="h-4 w-4 text-muted-foreground " />
+                <span>{oneuser.email}</span>
+              </div>
+            )}
           </div>
         </Link>
-        <div className="flex-center">
-          {!oneuser.isViewer ? (
-            <div className="w-full  flex-center">
-              {yes ? (
-                <Button
-                  size={"sm"}
-                  onClick={() => unfollowThem(oneuser.id)}
-                  className=" rounded-md hover:bg-warning  hover:brightness-90 w-full">
-                  {"Unfollow"} {isUnFollowMutationInFlight && <Loader className="animate-spin" />}
-                </Button>
-              ) : (
-                <Button
-                  size={"sm"}
-                  onClick={() => followThem(oneuser.id)}
-                  className=" rounded-md hover:bg-success hover:brightness-90 w-full">
-                  {oneuser.isFollowingViewer ? "Follow back" : "Follow"}
-
-                  {isFollowMutationInFlight && <Loader className="animate-spin" />}
-                </Button>
-              )}
-            </div>
-          ) : null}
-        </div>
       </CardHeader>
-      <CardContent className="grid gap-4">
-        {oneuser.bio && <p className="text-sm">{oneuser.bio}</p>}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm">
-          {oneuser.email && (
-            <div className="flex items-center gap-2">
-              <Mail className="h-4 w-4 text-muted-foreground" />
-              <span>{oneuser.email}</span>
-            </div>
-          )}
+      <CardContent className="flex  flex-col justify-between gap-4 p-1 px-2 ">
+        {oneuser.bio && (
+          <CardDescription className="text-sm text-muted-foreground line-clamp-1">
+            {oneuser.bio}
+          </CardDescription>
+        )}
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-sm ">
           {oneuser.location && (
             <div className="flex items-center gap-2">
               <MapPin className="h-4 w-4 text-muted-foreground" />
@@ -143,10 +128,29 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
             </a>
           </div>
         </div>
-        <div className="flex gap-4 text-sm text-muted-foreground">
-          <span>{oneuser.isFollowingViewer ? "Follows you" : "Doesn't follow you"}</span>
-          <span>•</span>
-          <span>{oneuser.viewerIsFollowing ? "You're following" : "You're not following"}</span>
+        <div className="w-full ">
+          {!oneuser.isViewer ? (
+            <div className="w-full  flex-center">
+              {yes ? (
+                <Button
+                  size={"sm"}
+                  variant={"destructive"}
+                  onClick={() => unfollowThem(oneuser.id)}
+                  className=" rounded-md hover:bg-warning  hover:brightness-90 w-full">
+                  {"Unfollow"} {isUnFollowMutationInFlight && <Loader className="animate-spin" />}
+                </Button>
+              ) : (
+                <Button
+                  size={"sm"}
+                  onClick={() => followThem(oneuser.id)}
+                  className=" rounded-md hover:bg-success hover:brightness-90 w-full">
+                  {oneuser.isFollowingViewer ? "Follow back" : "Follow"}
+
+                  {isFollowMutationInFlight && <Loader className="animate-spin" />}
+                </Button>
+              )}
+            </div>
+          ) : null}
         </div>
       </CardContent>
     </Card>

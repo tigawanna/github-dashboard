@@ -3,6 +3,7 @@ import { Stargazers_stargazers$key } from "./__generated__/Stargazers_stargazers
 import { graphql, usePaginationFragment } from "react-relay";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
 import { UserFragmentCard } from "@/routes/$user/-components/user/UserFragmentCard";
+import { TailwindContainerIndicator, TailwindIndicator } from "@/components/navigation/tailwind-indicator";
 interface StargazersProps {
   stargazers_key: Stargazers_stargazers$key | null;
 }
@@ -14,26 +15,30 @@ export const Stargazers: React.FC<StargazersProps> = ({ stargazers_key }) => {
   );
 
   const frags = fragData.data;
-  console.log({frags})
   if (!frags) return null;
   return (
-    <div className="w-full h-full flex-center-col">
+    <div className="w-full h-full flex justify-center flex-wrap @container/stars gap-2">
+    <div className="w-full  flex justify-center">
+      <TailwindIndicator/>
+      <TailwindContainerIndicator/>
+      </div>
       {frags.stargazers.edges?.map((stg, idx) => {
         if (!stg?.node) return
-        console.log("  stg.node.__id ", stg.node);
         return <UserFragmentCard user_fragment_key={stg?.node} key={stg.cursor} />;
       })}
-      {fragData.isLoadingNext ? <div className="w-full flex-center">loading more...</div> : null}
 
+      <div className="w-full flex justify-center items-center p-2">
+      {fragData.isLoadingNext ? <div className="w-full flex justify-center text-center">loading more...</div> : null}
       {!fragData.isLoadingNext && fragData.hasNext ? (
         <button
-          className="m-2 hover:primary shadow-lg hover:shadow-primary"
+          className="btn btn-wide btn-sm btn-ghost"
           onClick={() => {
             fragData.loadNext(5);
           }}>
           --- load more ---
         </button>
       ) : null}
+      </div>
     </div>
   );
 };
