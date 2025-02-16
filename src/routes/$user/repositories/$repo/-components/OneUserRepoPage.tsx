@@ -20,7 +20,7 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
   const navigate = useNavigate({
     from: "/$user/repositories/$repo",
   });
-  const [, startTransition] = useTransition();
+
   const query = useLazyLoadQuery<OneUserRepoPageQuery>(oneREPOquery, {
     reponame: repo,
     repoowner: user,

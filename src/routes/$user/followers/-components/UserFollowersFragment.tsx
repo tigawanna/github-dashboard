@@ -3,6 +3,7 @@ import { graphql } from "relay-runtime";
 import { UserFollowersPageQuery } from "./__generated__/UserFollowersPageQuery.graphql";
 import { UserFragmentCard } from "../../-components/user/UserFragmentCard";
 import { UserFollowersFragment$key } from "./__generated__/UserFollowersFragment.graphql";
+import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 
 interface UserFollowersFragmentProps {
 followers_key: UserFollowersFragment$key
@@ -25,19 +26,7 @@ return (
         if (!stg?.node) return
         return <UserFragmentCard user_fragment_key={stg?.node} key={stg.cursor} />;
       })}
-
-      <div className="w-full flex justify-center items-center p-2">
-      {fragData.isLoadingNext ? <div className="w-full flex justify-center text-center">loading more...</div> : null}
-      {!fragData.isLoadingNext && fragData.hasNext ? (
-        <button
-          className="btn btn-wide btn-sm btn-ghost"
-          onClick={() => {
-            fragData.loadNext(5);
-          }}>
-          --- load more ---
-        </button>
-      ) : null}
-      </div>
+     <LoadMoreButton frag={fragData}/>
     </div>
 );
 }

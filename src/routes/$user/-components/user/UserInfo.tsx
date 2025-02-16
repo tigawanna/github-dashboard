@@ -19,20 +19,20 @@ interface UserInfoProps {
 }
 
 export function UserInfo({ user_info_key }: UserInfoProps) {
-  const user_fragment = useFragment<UserInfo$key>(UserInfoFragmant, user_info_key);
+  const fragData = useFragment<UserInfo$key>(UserInfoFragmant, user_info_key);
   const extradetails = {
-    company: user_fragment?.company,
-    email: user_fragment?.email,
-    location: user_fragment?.location,
-    twitter: user_fragment?.twitterUsername,
+    company: fragData?.company,
+    email: fragData?.email,
+    location: fragData?.location,
+    twitter: fragData?.twitterUsername,
   };
 
-  const [yes, setYes] = useState<any>(user_fragment?.viewerIsFollowing);
+  const [yes, setYes] = useState<any>(fragData?.viewerIsFollowing);
   const [followMutation] = useMutation<UserInfofollowMutation>(FOLLOWUSER);
   const [unfollowMutation] = useMutation<UserInfounfollowMutation>(UNFOLLOWUSER);
   // const [active, setActive] = useState<string>("");
   // const username = user?.login as string;
-  const admin = user_fragment?.isViewer;
+  const admin = fragData?.isViewer;
   //console.log("og user",admin)
   const followThem = (their_id: string) => {
     setYes(true);
@@ -45,18 +45,18 @@ export function UserInfo({ user_info_key }: UserInfoProps) {
   return (
     <div className="w-full flex">
       <Helmet
-        title={user_fragment?.login}
-        description={user_fragment?.bio ?? "Github user profile"}
-        // og:title={user_fragment?.login}
-        // og:description={user_fragment?.bio ?? "Github user profile"}
-        // og:image={user_fragment?.avatarUrl}
+        title={fragData?.login}
+        description={fragData?.bio ?? "Github user profile"}
+        // og:title={fragData?.login}
+        // og:description={fragData?.bio ?? "Github user profile"}
+        // og:image={fragData?.avatarUrl}
       />
       <div className="w-full flex flex-col items-center justify-center  p-2  ">
         <div className="p-1 h-full w-full flex flex-col md:flex-row items-center">
           <img
             className="
            h-[100%] w-[100%] md:w-[30%] lg:w-[20%] object-cover aspect-square rounded-[5%]  p-1"
-            src={user_fragment?.avatarUrl as string}
+            src={fragData?.avatarUrl as string}
             alt=""
             height={200}
             width={200}
@@ -67,11 +67,11 @@ export function UserInfo({ user_info_key }: UserInfoProps) {
            p-3  m-2 w-full  bg-base-200 rounded-lg shadow-lg
            font-sans  h-full">
             <div className="text-[15px] w-full ">
-              <div className=" text-[15px] md:text-xl font-bold  ">{user_fragment?.name}</div>
-              <div className="text-[15px] md:text-lg ">@{user_fragment?.login}</div>
-              <div className="text-[15px] max-w-[80%] bg-base-100  p-1">{user_fragment?.bio}</div>
+              <div className=" text-[15px] md:text-xl font-bold  ">{fragData?.name}</div>
+              <div className="text-[15px] md:text-lg ">@{fragData?.login}</div>
+              <div className="text-[15px] max-w-[80%] bg-base-100  p-1">{fragData?.bio}</div>
               <div className="text-[15px]">
-                Joined {" :"} {getRelativeTimeString(user_fragment?.createdAt)}
+                Joined {" :"} {getRelativeTimeString(fragData?.createdAt)}
               </div>
             </div>
 
@@ -85,17 +85,17 @@ export function UserInfo({ user_info_key }: UserInfoProps) {
                   <div>
                     {yes ? (
                       <Button
-                        onClick={() => unfollowThem(user_fragment?.id as string)}
+                        onClick={() => unfollowThem(fragData?.id as string)}
                         className="
                 rounded-md   hover:bg-error">
                         {"Unfollow"}
                       </Button>
                     ) : (
                       <Button
-                        onClick={() => followThem(user_fragment?.id as string)}
+                        onClick={() => followThem(fragData?.id as string)}
                         className="
                    rounded-md hover:bg-success">
-                        {user_fragment?.isFollowingViewer ? "Follow back" : "Follow"}
+                        {fragData?.isFollowingViewer ? "Follow back" : "Follow"}
                       </Button>
                     )}
                   </div>

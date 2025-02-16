@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf06e646df7d8a0f22dbdf1372d044fc>>
+ * @generated SignedSource<<0cf4e20d890b7d842c3416394d0b3da0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -605,12 +605,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "21c2706d6b5090a0e7a02bc112fd0808",
+    "cacheID": "e8314c5f55356f90bdbbd34a1788890d",
     "id": null,
     "metadata": {},
     "name": "UserReposPageQuery",
     "operationKind": "query",
-    "text": "query UserReposPageQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 2, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        description\n        pushedAt\n        diskUsage\n        url\n        visibility\n        forkCount\n        openGraphImageUrl\n        isInOrganization\n        forkingAllowed\n        isFork\n        viewerHasStarred\n        viewerPermission\n        viewerCanAdminister\n        owner {\n          __typename\n          login\n          id\n          url\n          avatarUrl\n        }\n        languages(first: 20) {\n          edges {\n            node {\n              id\n              color\n              name\n            }\n          }\n        }\n        releases(first: 1) {\n          nodes {\n            name\n            publishedAt\n            id\n          }\n        }\n        stargazerCount\n        refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n          edges {\n            node {\n              name\n              id\n              target {\n                __typename\n                ... on Commit {\n                  history(first: 1) {\n                    edges {\n                      node {\n                        committedDate\n                        author {\n                          name\n                        }\n                        message\n                        id\n                      }\n                    }\n                  }\n                }\n                id\n              }\n            }\n          }\n        }\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query UserReposPageQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 2, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCard_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();

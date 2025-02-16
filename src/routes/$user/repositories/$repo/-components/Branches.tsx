@@ -6,6 +6,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 
 import { usePaginationFragment } from "react-relay";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
+import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 interface BranchesProps {
   data: Branches_refs$key | null;
 }
@@ -30,20 +31,7 @@ export function Branches({ data }: BranchesProps) {
           return <Branch branch={branch} key={branch?.node?.id} />;
         })}
       </div>
-      {fragData.isLoadingNext ? (
-        <div className="w-full flex-center">loading more...</div>
-      ) : null}
-
-      {!fragData.isLoadingNext && fragData.hasNext ? (
-        <button
-          className="m-2 hover:text-primary/70 shadow-lg hover:shadow-purple"
-          onClick={() => {
-            fragData.loadNext(5);
-          }}
-        >
-          --- load more ---
-        </button>
-      ) : null}
+      <LoadMoreButton frag={fragData}/>
     </div>
   );
 }

@@ -4,6 +4,7 @@ import { UserFragmentCard } from "../../-components/user/UserFragmentCard";
 import { UserFollowingFragment$key } from "./__generated__/UserFollowingFragment.graphql";
 import { UserFollowingPageQuery } from "./__generated__/UserFollowingPageQuery.graphql";
 import { TailwindIndicator, TailwindContainerIndicator } from "@/components/navigation/tailwind-indicator";
+import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 
 
 interface UserFollowingFragmentProps {
@@ -27,19 +28,7 @@ return (
         if (!stg?.node) return
         return <UserFragmentCard user_fragment_key={stg?.node} key={stg.cursor} />;
       })}
-
-      <div className="w-full flex justify-center items-center p-2">
-      {fragData.isLoadingNext ? <div className="w-full flex justify-center text-center">loading more...</div> : null}
-      {!fragData.isLoadingNext && fragData.hasNext ? (
-        <button
-          className="btn btn-wide btn-sm btn-ghost"
-          onClick={() => {
-            fragData.loadNext(5);
-          }}>
-          --- load more ---
-        </button>
-      ) : null}
-      </div>
+    <LoadMoreButton frag={fragData}/>
     </div>
 );
 }

@@ -8,8 +8,8 @@ interface UserStatsProps {
 }
 
 export function UserStats({ user_info_key }: UserStatsProps) {
-  const user_fragment = useFragment<UserStats$key>(UserStatsFragmant, user_info_key);
-  const data = user_fragment!;
+  const fragData = useFragment<UserStats$key>(UserStatsFragmant, user_info_key);
+  const data = fragData!;
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="stats  shadow gap-3">

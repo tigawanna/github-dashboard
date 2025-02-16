@@ -10,14 +10,14 @@ import { DeleteRepository } from "./repo-card/DeleteRepository";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
 import { useParams } from "@tanstack/react-router";
-
+import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
 }
 
 export function UserRepos({ user_repos_key }: UserReposProps) {
-  const {user} = useParams({from:"/$user"})
+  const { user } = useParams({ from: "/$user" });
   const { viewer } = useViewer();
   const [editing, setEditing] = useState(false);
   const [open, setOpen] = useState(false);
@@ -33,7 +33,6 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
   if (!viewer) {
     return null;
   }
-  console.log(" == repos ===",repos)
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full bg-base-200 sticky -top-2 flex flex-wrap justify-evenly z-30 p-1">
@@ -71,9 +70,6 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
         </div>
       </div>
       <ul className="flex flex-wrap gap-5 w-full @container/repos items-center justify-center">
-        {/* <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindContainerIndicator/></div> */}
-        {/* <div className="w-full p-2 gap-1 text-3xl flex justify-center"><TailwindIndicator/></div> */}
-
         {repos &&
           repos.map((edge) => {
             // console.log("repo", edge?.node?.id);
@@ -81,30 +77,18 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
               <RepoCard
                 user={user}
                 // @ts-expect-error
-                key={edge?.node?.id+edge?.node?.nameWithOwner}
+                key={edge?.node?.id + edge?.node?.nameWithOwner}
                 edge={edge}
                 local_viewer={viewer}
                 editing={editing}
-                selected={selected ? selected.some((i) => i.id === edge?.node?.id) : false}
+                // selected={selected ? selected.some((i) => i.id === edge?.node?.id) : false}
+                getSelected={(id) => selected?.some((i) => i.id === id) ?? false}
                 selectItem={selectItem}
                 unselectItem={unselectItem}
               />
             );
           })}
-        <div className="w-full flex justify-center items-center p-2">
-          {fragData.isLoadingNext ? (
-            <div className="w-full flex justify-center text-center">loading more...</div>
-          ) : null}
-          {!fragData.isLoadingNext && fragData.hasNext ? (
-            <button
-              className="btn btn-wide btn-sm btn-ghost"
-              onClick={() => {
-                fragData.loadNext(1);
-              }}>
-              --- load more ---
-            </button>
-          ) : null}
-        </div>
+        <LoadMoreButton frag={fragData} />
       </ul>
     </div>
   );
@@ -117,79 +101,13 @@ export const RepositoriesFragment = graphql`
     orderBy: { type: "RepositoryOrder", defaultValue: { field: PUSHED_AT, direction: DESC } }
     isFork: { type: "Boolean", defaultValue: false }
   )
-  @refetchable(queryName: "RepositoriesPaginationQuery") {
+  @refetchable(queryName: "UserReposPaginationQuery") {
     repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork)
-      @connection(key: "UserRepos_repositories") {
+      @connection(key: "UserRepos_repositories", filters: ["orderBy", "isFork"]) {
       edges {
         cursor
         node {
-          id
-          name
-          nameWithOwner
-          description
-          pushedAt
-          diskUsage
-          url
-          visibility
-          forkCount
-          openGraphImageUrl
-          isInOrganization
-          forkingAllowed
-          isFork
-          viewerHasStarred
-          viewerPermission
-          viewerCanAdminister
-
-          owner {
-            login
-            id
-            url
-            avatarUrl
-          }
-
-          languages(first: 20) {
-            edges {
-              node {
-                id
-                color
-                name
-              }
-            }
-          }
-          releases(first: 1) {
-            nodes {
-              name
-              publishedAt
-            }
-          }
-          stargazerCount
-          refs(
-            refPrefix: "refs/heads/"
-            orderBy: { direction: DESC, field: TAG_COMMIT_DATE }
-            first: 2
-          ) {
-            edges {
-              node {
-                name
-                id
-                target {
-                  ... on Commit {
-                    history(first: 1) {
-                      edges {
-                        node {
-                          committedDate
-                          author {
-                            name
-                          }
-                          message
-                        }
-                      }
-                    }
-                  }
-                }
-              }
-            }
-          }
+          ...RepoCard_reposiotory
         }
       }
       pageInfo {

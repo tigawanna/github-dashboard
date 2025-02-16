@@ -13,6 +13,9 @@ import { Link } from "@tanstack/react-router";
 import { VscVscodeInsiders } from "react-icons/vsc";
 import { formatKilobytes } from "@/utils/bytes";
 import { Switch } from "@/components/shadcn/ui/switch";
+import { graphql } from "relay-runtime";
+import { RepoCard_reposiotory$key } from "./__generated__/RepoCard_reposiotory.graphql";
+import { useFragment } from "react-relay";
 
 // type GetTypeAtIndex<Arr extends ReadonlyArray<T>,index extends number>
 type RepoEdges = UserRepos_repositories$data["repositories"]["edges"];
@@ -21,9 +24,10 @@ export type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
   local_viewer: Partial<GitHubViewer> | null;
-  user:string;
+  user: string;
   editing: boolean;
-  selected: boolean;
+  // selected: boolean;
+  getSelected: (id: string) => boolean;
   selectItem: (item: ItemList) => void;
   unselectItem: (item: ItemList) => void;
 }
@@ -33,17 +37,19 @@ export function RepoCard({
   local_viewer,
   editing,
   user,
-  selected,
+  getSelected,
+  // selected,
   selectItem,
   unselectItem,
 }: RepoCardProps) {
-  const repo = edge?.node;
+  const fragData = useFragment<RepoCard_reposiotory$key>(RepoFragment, edge?.node);
+  const repo = fragData;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
-
+  const selected = getSelected(repo.id);
   return (
     <li
-      key={edge?.node?.id}
+      key={repo.id}
       className="bg-primary/10 relative  rounded-2xl border border-primary
         min-h-fit  md:h-[350px] w-[95%] @repos:w-[95%] @md/repos:lg:w-[45%] @2xl/repos:md:w-[45%] @2xl/repos:lg:w-[30%]  flex-col
         justify-between items-center  ">
@@ -78,7 +84,7 @@ export function RepoCard({
           {/* TODO  crate this page */}
           <Link
             to="/$user/repositories/$repo"
-            params={{ user,repo: repo.name }}
+            params={{ user, repo: repo.name }}
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -156,7 +162,7 @@ export function RepoCard({
           <FiActivity /> {getRelativeTimeString(repo?.pushedAt)}
         </div>
         <div className="flex gap-1 justify-center items-center">
-          <BiGitRepoForked className=""/> {repo?.forkCount}
+          <BiGitRepoForked className="" /> {repo?.forkCount}
         </div>
         <StarRepository
           id={repo.id}
@@ -190,3 +196,71 @@ export function RepoCard({
     </li>
   );
 }
+
+export const RepoFragment = graphql`
+  fragment RepoCard_reposiotory on Repository {
+    id
+    name
+    nameWithOwner
+    description
+    pushedAt
+    diskUsage
+    url
+    visibility
+    forkCount
+    openGraphImageUrl
+    isInOrganization
+    forkingAllowed
+    isFork
+    viewerHasStarred
+    viewerPermission
+    viewerCanAdminister
+
+    owner {
+      login
+      id
+      url
+      avatarUrl
+    }
+
+    languages(first: 20) {
+      edges {
+        node {
+          id
+          color
+          name
+        }
+      }
+    }
+    releases(first: 1) {
+      nodes {
+        name
+        publishedAt
+      }
+    }
+    stargazerCount
+    refs(refPrefix: "refs/heads/", orderBy: { direction: DESC, field: TAG_COMMIT_DATE }, first: 2) {
+      edges {
+        node {
+          name
+          id
+          target {
+            ... on Commit {
+              history(first: 1) {
+                edges {
+                  node {
+                    committedDate
+                    author {
+                      name
+                    }
+                    message
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`;

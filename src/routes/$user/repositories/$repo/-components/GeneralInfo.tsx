@@ -26,20 +26,17 @@ import {
 } from "../../-components/github-rest-api-resources/OneGithubRepoLanguages";
 import { Suspense } from "react";
 import { StarRepository } from "../../-components/repo-card/StarRepository";
-import {
-  TailwindContainerIndicator,
-  TailwindIndicator,
-} from "@/components/navigation/tailwind-indicator";
+
 
 interface GeneralInfoProps {
   data?: GeneralInfo_info$key | null;
 }
 
 export function GeneralInfo({ data }: GeneralInfoProps) {
-  const reposirory = useFragment<GeneralInfo_info$key>(repoGeneralInfoFragment, data);
+  const fragData = useFragment<GeneralInfo_info$key>(repoGeneralInfoFragment, data);
   const { viewer: local_viewer } = useViewer();
 
-  const repository = reposirory;
+  const repository = fragData;
   if (!repository) return null;
   const [repoowner, reponame] = repository.nameWithOwner.split("/");
   return (
@@ -123,22 +120,22 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
               <span>{repository.forkCount}</span>
             </div>
             <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit ">
-              <FiActivity /> {getRelativeTimeString(reposirory?.pushedAt)}
+              <FiActivity /> {getRelativeTimeString(fragData?.pushedAt)}
             </div>
-            {reposirory?.diskUsage && (
+            {fragData?.diskUsage && (
               <div className="text-sm font-bold flex gap-1 justify-center items-center min-w-fit">
-                {formatKilobytes(reposirory?.diskUsage)}
+                {formatKilobytes(fragData?.diskUsage)}
               </div>
             )}
-            {reposirory?.id && reposirory.nameWithOwner && local_viewer && (
+            {fragData?.id && fragData.nameWithOwner && local_viewer && (
               <RepositoryActions
                 owner={local_viewer?.login}
                 local_viewer={local_viewer}
-                viewerCanAdminister={reposirory?.viewerCanAdminister ?? false}
-                isFork={reposirory?.isFork ?? false}
-                forkingAllowed={reposirory?.forkingAllowed ?? false}
-                id={reposirory?.id}
-                nameWithOwner={reposirory?.nameWithOwner}
+                viewerCanAdminister={fragData?.viewerCanAdminister ?? false}
+                isFork={fragData?.isFork ?? false}
+                forkingAllowed={fragData?.forkingAllowed ?? false}
+                id={fragData?.id}
+                nameWithOwner={fragData?.nameWithOwner}
               />
             )}
           </div>
@@ -150,57 +147,57 @@ export function GeneralInfo({ data }: GeneralInfoProps) {
           </Suspense>
           {/* is boolean fields */}
           <div className="flex flex-wrap gap-2 divide-accent ">
-            {reposirory?.isArchived && (
+            {fragData?.isArchived && (
               <BooleanStats
-                stat={reposirory?.isArchived}
+                stat={fragData?.isArchived}
                 description="Archived"
                 className="bg-yellow-950"
               />
             )}
-            {reposirory?.isFork && (
+            {fragData?.isFork && (
               <BooleanStats
-                stat={reposirory?.isFork}
+                stat={fragData?.isFork}
                 description="Is Fork"
                 className="bg-green-950"
                 Icon={BiGitRepoForked}
               />
             )}
-            {reposirory?.isLocked && (
+            {fragData?.isLocked && (
               <BooleanStats
-                stat={reposirory?.isLocked}
+                stat={fragData?.isLocked}
                 description="Locker"
                 className="bg-orange-950"
                 Icon={Lock}
               />
             )}
-            {reposirory?.isPrivate && (
-              <BooleanStats stat={reposirory?.isPrivate} description="Private" Icon={ImBlocked} />
+            {fragData?.isPrivate && (
+              <BooleanStats stat={fragData?.isPrivate} description="Private" Icon={ImBlocked} />
             )}
-            {reposirory?.isDisabled && (
-              <BooleanStats stat={reposirory?.isDisabled} description="Disabled" Icon={ImBlocked} />
+            {fragData?.isDisabled && (
+              <BooleanStats stat={fragData?.isDisabled} description="Disabled" Icon={ImBlocked} />
             )}
-            {reposirory?.isTemplate && (
+            {fragData?.isTemplate && (
               <BooleanStats
-                stat={reposirory?.isTemplate}
+                stat={fragData?.isTemplate}
                 description="Template"
                 Icon={BookDashed}
               />
             )}
-            {reposirory?.isUserConfigurationRepository && (
+            {fragData?.isUserConfigurationRepository && (
               <BooleanStats
-                stat={reposirory?.isUserConfigurationRepository}
+                stat={fragData?.isUserConfigurationRepository}
                 description="Config Repo"
                 Icon={Bolt}
               />
             )}
 
             <BooleanStats
-              stat={reposirory?.hasDiscussionsEnabled}
+              stat={fragData?.hasDiscussionsEnabled}
               description="Discussions Enabled"
             />
-            <BooleanStats stat={reposirory?.hasIssuesEnabled} description="Issues Enabled" />
-            <BooleanStats stat={reposirory?.hasProjectsEnabled} description="Project Enabled" />
-            <BooleanStats stat={reposirory?.hasWikiEnabled} description="Wiki Enabled" />
+            <BooleanStats stat={fragData?.hasIssuesEnabled} description="Issues Enabled" />
+            <BooleanStats stat={fragData?.hasProjectsEnabled} description="Project Enabled" />
+            <BooleanStats stat={fragData?.hasWikiEnabled} description="Wiki Enabled" />
           </div>
         </CardContent>
       </Card>

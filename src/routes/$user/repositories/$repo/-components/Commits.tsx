@@ -6,6 +6,7 @@ import { getRelativeTimeString } from "@/utils/date";
 import { usePaginationFragment } from "react-relay";
 import { graphql } from "relay-runtime";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
+import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 
 
 interface CommitsProps {
@@ -31,20 +32,7 @@ export function Commits({ data }: CommitsProps) {
           <Commit commit={commit} key={commit?.node?.pushedDate + index} />
         );
       })}
-      {fragData.isLoadingNext ? (
-        <div className="w-full flex-center">loading more...</div>
-      ) : null}
-
-      {!fragData.isLoadingNext && fragData.hasNext ? (
-        <button
-          className="m-2 hover:text-accent shadow-lg hover:shadow-base-300"
-          onClick={() => {
-            fragData.loadNext(5);
-          }}
-        >
-          --- load more ---
-        </button>
-      ) : null}
+         <LoadMoreButton frag={fragData}/>
     </div>
   );
 }

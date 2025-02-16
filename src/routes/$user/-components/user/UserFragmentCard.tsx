@@ -1,26 +1,24 @@
 import { Button } from "@/components/shadcn/ui/button";
 import { Card, CardHeader, CardTitle, CardContent, CardDescription } from "@/components/shadcn/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@radix-ui/react-avatar";
-import { Mail, MapPin, Building, Calendar, LinkIcon, Loader } from "lucide-react";
+import { Mail, MapPin, Building, Loader } from "lucide-react";
 import { useFragment, useMutation } from "react-relay";
 import { graphql } from "relay-runtime";
 import { UserFragmentCard_user$key } from "./__generated__/UserFragmentCard_user.graphql";
-import { FaTwitter } from "react-icons/fa";
 import { UserFragmentCardfollowMutation } from "./__generated__/UserFragmentCardfollowMutation.graphql";
 import { UserFragmentCardunfollowMutation } from "./__generated__/UserFragmentCardunfollowMutation.graphql";
 import { useState } from "react";
 import { makeHotToast } from "@/components/toasters";
-import { getRelativeTimeString } from "@/utils/date";
 import { Link } from "@tanstack/react-router";
-import { TailwindContainerIndicator } from "@/components/navigation/tailwind-indicator";
+
 
 interface UserFragmentCardProps {
   user_fragment_key: UserFragmentCard_user$key;
 }
 
 export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
-  const data = useFragment(UserFragment, user_fragment_key);
-  const [yes, setYes] = useState<any>(data?.viewerIsFollowing);
+  const fragData = useFragment(UserFragment, user_fragment_key);
+  const [yes, setYes] = useState<any>(fragData?.viewerIsFollowing);
   const [followMutation, isFollowMutationInFlight] =
     useMutation<UserFragmentCardfollowMutation>(FOLLOWUSER);
   const [unfollowMutation, isUnFollowMutationInFlight] =
@@ -53,8 +51,8 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
     });
   };
 
-  if (!data) return null;
-  const oneuser = data;
+  if (!fragData) return null;
+  const oneuser = fragData;
 
   return (
     <Card className="flex flex-col justify-between p-1 @2xl:md:w-[48%] @2xl:lg:w-[48%] @2xl:xl:w-[24%] @2xl:2xl:w-[24%] @2xl:2xl:max-w-[24%]  flex-grow lg:w-[30%]  rounded-2xl border-primary/30  bg-primary/10  transition-colors [&:has(a:hover)]:bg-secondary/10 ">
