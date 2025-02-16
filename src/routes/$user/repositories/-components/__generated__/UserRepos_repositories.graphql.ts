@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<744b82dcbde8247f64c6a6bebadd5374>>
+ * @generated SignedSource<<385f7c4295dfbd8898d30eab4495469f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -201,7 +201,7 @@ return {
       ],
       "concreteType": "RepositoryConnection",
       "kind": "LinkedField",
-      "name": "__Repositories_repositories_connection",
+      "name": "__UserRepos_repositories_connection",
       "plural": false,
       "selections": [
         {
@@ -633,6 +633,6 @@ return {
 };
 })();
 
-(node as any).hash = "005063e3d723fe5ff749cc8ed1c705ad";
+(node as any).hash = "abf24da4a15b2027491e32d0eb9a017c";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b86e1cb0b36234ca81eebd6aeebbe3a5>>
+ * @generated SignedSource<<604ba58ff48fe6e130661dc29d62ea2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -621,7 +621,7 @@ return {
                   "isFork"
                 ],
                 "handle": "connection",
-                "key": "Repositories_repositories",
+                "key": "UserRepos_repositories",
                 "kind": "LinkedHandle",
                 "name": "repositories"
               }
@@ -645,6 +645,6 @@ return {
 };
 })();
 
-(node as any).hash = "005063e3d723fe5ff749cc8ed1c705ad";
+(node as any).hash = "abf24da4a15b2027491e32d0eb9a017c";
 
 export default node;

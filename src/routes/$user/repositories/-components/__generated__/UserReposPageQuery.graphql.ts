@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2f2ab24392bb5461f2ad6e4d978dd13>>
+ * @generated SignedSource<<cf06e646df7d8a0f22dbdf1372d044fc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -594,7 +594,7 @@ return {
               "isFork"
             ],
             "handle": "connection",
-            "key": "Repositories_repositories",
+            "key": "UserRepos_repositories",
             "kind": "LinkedHandle",
             "name": "repositories"
           },

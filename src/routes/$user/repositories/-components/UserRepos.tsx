@@ -33,6 +33,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
   if (!viewer) {
     return null;
   }
+  console.log(" == repos ===",repos)
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full bg-base-200 sticky -top-2 flex flex-wrap justify-evenly z-30 p-1">
@@ -98,7 +99,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
             <button
               className="btn btn-wide btn-sm btn-ghost"
               onClick={() => {
-                fragData.loadNext(2);
+                fragData.loadNext(1);
               }}>
               --- load more ---
             </button>
@@ -118,7 +119,7 @@ export const RepositoriesFragment = graphql`
   )
   @refetchable(queryName: "RepositoriesPaginationQuery") {
     repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork)
-      @connection(key: "Repositories_repositories") {
+      @connection(key: "UserRepos_repositories") {
       edges {
         cursor
         node {

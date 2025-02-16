@@ -21,7 +21,7 @@ export function UserReposPage({}: UserReposPageProps) {
             direction: orderBy?.direction ?? "DESC",
           }
         },{
-            fetchKey: "user/usrrtabs",
+            fetchKey: "user/repos",
             fetchPolicy: "store-and-network",
         }
       );
