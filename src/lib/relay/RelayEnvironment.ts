@@ -85,6 +85,7 @@ export function createRelayEnvironment(token: string) {
       })
     ),
     store: new Store(new RecordSource()),
+    isServer: false,
   });
 }
 

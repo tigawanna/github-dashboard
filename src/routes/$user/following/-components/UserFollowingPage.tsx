@@ -1,5 +1,4 @@
 import { graphql } from "relay-runtime";
-
 import { useLazyLoadQuery } from "react-relay";
 import { Navigate, useParams } from "@tanstack/react-router";
 import { UserFollowingFragment } from "./UserFollowingFragment";

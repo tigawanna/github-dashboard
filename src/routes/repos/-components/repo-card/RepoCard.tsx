@@ -1,17 +1,11 @@
 import { FiActivity } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
 import { History, Lock } from "lucide-react";
-import { RepositoryActions } from "./RepositoryActions";
 import { FaGithub } from "react-icons/fa";
 import { ItemList } from "../types";
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
-import { StarRepository } from "./StarRepository";
 import { UserRepos_repositories$data } from "../__generated__/UserRepos_repositories.graphql";
-import { getRelativeTimeString } from "@/utils/date";
-import { GitHubViewer } from "@/lib/viewer/use-viewer";
-import { Link } from "@tanstack/react-router";
 import { VscVscodeInsiders } from "react-icons/vsc";
-import { formatKilobytes } from "@/utils/bytes";
 import { graphql } from "relay-runtime";
 import { RepoCard_reposiotory$key } from "./__generated__/RepoCard_reposiotory.graphql";
 import { useFragment } from "react-relay";
@@ -22,7 +16,6 @@ type ReadonlyToRegular<T> = T extends ReadonlyArray<infer U> ? Array<U> : never;
 export type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
-  local_viewer: Partial<GitHubViewer> | null;
   user: string;
   editing: boolean;
   // selected: boolean;
@@ -33,7 +26,6 @@ interface RepoCardProps {
 
 export function RepoCard({
   edge,
-  local_viewer,
   editing,
   user,
   getSelected,
@@ -81,9 +73,7 @@ export function RepoCard({
         />
         <div className="w-full flex gap-3 p-2 brightness-75 hover:text-secondary h-full">
           {/* TODO  crate this page */}
-          <Link
-            to="/$user/repositories/$repo"
-            params={{ user, repo: repo.name }}
+          <div
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -107,19 +97,9 @@ export function RepoCard({
                 );
               })}
             </div>
-          </Link>
-
-          <div className="p-2 gap-2 absolute right-[2%] z-40 bg-base-300 flex flex-col items-center justify-between">
-            <RepositoryActions
-              owner={repo.owner.login}
-              local_viewer={local_viewer}
-              viewerCanAdminister={repo.viewerCanAdminister}
-              isFork={repo.isFork}
-              forkingAllowed={repo.forkingAllowed}
-              id={repo.id}
-              nameWithOwner={repo.nameWithOwner}
-            />
           </div>
+
+
 
           <div className="p-2 gap-2 flex flex-col items-center justify-between"></div>
         </div>
@@ -128,11 +108,6 @@ export function RepoCard({
           {repo?.releases?.nodes?.[0] && (
             <div className="w-full text-sm flex gap-3  overflow-clip">
               <span>Release: {repo?.releases?.nodes?.[0]?.name}</span>
-              <span>
-                {" "}
-                {/* {dayjs(repo?.releases?.nodes?.[0]?.publishedAt).fromNow()} */}
-                {getRelativeTimeString(repo?.releases?.nodes?.[0]?.publishedAt)}
-              </span>
             </div>
           )}
 
@@ -157,24 +132,14 @@ export function RepoCard({
         </div>
       </div>
       <div className="w-full  text-[15px] text-sm  flex justify-between p-2">
-        <div className="text-[12px] font-bold flex gap-1 justify-center items-center">
-          <FiActivity /> {getRelativeTimeString(repo?.pushedAt)}
-        </div>
         <div className="flex gap-1 justify-center items-center">
           <BiGitRepoForked className="" /> {repo?.forkCount}
         </div>
-        <StarRepository
-          id={repo.id}
-          stargazerCount={repo?.stargazerCount}
-          viewerHasStarred={repo?.viewerHasStarred}
-        />
         {repo?.visibility === "PRIVATE" ? (
           <div className="flex gap-1 justify-center items-center">
             <Lock className="text-error" />
           </div>
         ) : null}
-
-        {repo?.diskUsage && <div className="flex">{formatKilobytes(repo?.diskUsage)}</div>}
         <div className="flex gap-3 justify-center items-center">
           <a
             target="_blank"
@@ -197,7 +162,7 @@ export function RepoCard({
 }
 
 export const RepoFragment = graphql`
-  fragment RepoCard_reposiotory on Repository {
+  fragment RepoCarde_reposiotory on Repository {
     id
     name
     nameWithOwner

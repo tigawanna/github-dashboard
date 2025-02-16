@@ -3,7 +3,7 @@ import { UserInfo } from "./UserInfo";
 import { useLazyLoadQuery } from "react-relay";
 import { UserPageQuery } from "./__generated__/UserPageQuery.graphql";
 import { useParams } from "@tanstack/react-router";
-import { UserStats } from "./UserStats";
+// import { UserStats } from "./UserStats";
 
 interface UserPageProps {
 
@@ -34,7 +34,7 @@ export function UserPage({}:UserPageProps){
 return (
  <div className='w-full h-full min-h-screen flex flex-col items-center '>
     <UserInfo user_info_key={query.user}/>
-    <UserStats user_info_key={query.user}/>
+    {/* <UserStats user_info_key={query.user}/> */}
  </div>
 );
 }
@@ -46,7 +46,7 @@ export const userQuery = graphql`
   {
     user(login: $login) {
       ...UserInfo
-      ...UserStats
+      # ...UserStats
       #   ...Following_following
       #   ...Followers_followers
       #   ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
