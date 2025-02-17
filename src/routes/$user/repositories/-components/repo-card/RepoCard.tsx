@@ -83,6 +83,7 @@ export function RepoCard({
           {/* TODO  crate this page */}
           <Link
             to="/$user/repositories/$repo"
+            preload={false}
             params={{ user, repo: repo.name }}
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">

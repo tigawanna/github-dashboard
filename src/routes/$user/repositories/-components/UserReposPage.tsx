@@ -1,7 +1,5 @@
-import { useLoaderData, useParams, useSearch } from "@tanstack/react-router";
-import { useLazyLoadQuery, usePreloadedQuery } from "react-relay";
-import { graphql } from "relay-runtime";
-import { UserReposPageQuery } from "./__generated__/UserReposPageQuery.graphql";
+import { useLoaderData} from "@tanstack/react-router";
+import { usePreloadedQuery } from "react-relay";
 import { UserRepos } from "./UserRepos";
 
 import { UserPageLoaderQuery } from "../../__generated__/UserPageLoaderQuery.graphql";
@@ -36,19 +34,3 @@ export function UserReposPage({}: UserReposPageProps) {
     </div>
   );
 }
-
-// export const userQuery = graphql`
-//   query UserReposPageQuery(
-//     $login: String!
-//     $isFork: Boolean
-//     $orderBy: RepositoryOrder
-//     # $starOrder: StarOrder
-//   ) {
-//     user(login: $login) {
-//       #   ...Following_following
-//       #   ...Followers_followers
-//       ...UserRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-//       #   ...ViewerStarerdRepos_repositories @arguments(orderByStarredRepos: $starOrder)
-//     }
-//   }
-// `;

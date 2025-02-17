@@ -70,7 +70,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
           </div>
         </div>
       </div>
-      <ul className="flex flex-wrap gap-5 w-full @container/repos items-center justify-center">
+      <ul className="flex flex-wrap gap-5 w-full h-full @container/repos items-center justify-center">
         {repos &&
           repos.map((edge) => {
             // console.log("repo", edge?.node?.id);

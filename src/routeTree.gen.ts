@@ -18,7 +18,6 @@ import { Route as IndexImport } from './routes/index'
 import { Route as AuthIndexImport } from './routes/auth/index'
 import { Route as UserIndexImport } from './routes/$user/index'
 import { Route as UserRepositoriesIndexImport } from './routes/$user/repositories/index'
-import { Route as UserReposIndexImport } from './routes/$user/repos/index'
 import { Route as UserGistsIndexImport } from './routes/$user/gists/index'
 import { Route as UserFollowingIndexImport } from './routes/$user/following/index'
 import { Route as UserFollowersIndexImport } from './routes/$user/followers/index'
@@ -65,12 +64,6 @@ const UserIndexRoute = UserIndexImport.update({
 const UserRepositoriesIndexRoute = UserRepositoriesIndexImport.update({
   id: '/repositories/',
   path: '/repositories/',
-  getParentRoute: () => UserLayoutRoute,
-} as any)
-
-const UserReposIndexRoute = UserReposIndexImport.update({
-  id: '/repos/',
-  path: '/repos/',
   getParentRoute: () => UserLayoutRoute,
 } as any)
 
@@ -165,13 +158,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UserGistsIndexImport
       parentRoute: typeof UserLayoutImport
     }
-    '/$user/repos/': {
-      id: '/$user/repos/'
-      path: '/repos'
-      fullPath: '/$user/repos'
-      preLoaderRoute: typeof UserReposIndexImport
-      parentRoute: typeof UserLayoutImport
-    }
     '/$user/repositories/': {
       id: '/$user/repositories/'
       path: '/repositories'
@@ -196,7 +182,6 @@ interface UserLayoutRouteChildren {
   UserFollowersIndexRoute: typeof UserFollowersIndexRoute
   UserFollowingIndexRoute: typeof UserFollowingIndexRoute
   UserGistsIndexRoute: typeof UserGistsIndexRoute
-  UserReposIndexRoute: typeof UserReposIndexRoute
   UserRepositoriesIndexRoute: typeof UserRepositoriesIndexRoute
   UserRepositoriesRepoIndexRoute: typeof UserRepositoriesRepoIndexRoute
 }
@@ -206,7 +191,6 @@ const UserLayoutRouteChildren: UserLayoutRouteChildren = {
   UserFollowersIndexRoute: UserFollowersIndexRoute,
   UserFollowingIndexRoute: UserFollowingIndexRoute,
   UserGistsIndexRoute: UserGistsIndexRoute,
-  UserReposIndexRoute: UserReposIndexRoute,
   UserRepositoriesIndexRoute: UserRepositoriesIndexRoute,
   UserRepositoriesRepoIndexRoute: UserRepositoriesRepoIndexRoute,
 }
@@ -225,7 +209,6 @@ export interface FileRoutesByFullPath {
   '/$user/followers': typeof UserFollowersIndexRoute
   '/$user/following': typeof UserFollowingIndexRoute
   '/$user/gists': typeof UserGistsIndexRoute
-  '/$user/repos': typeof UserReposIndexRoute
   '/$user/repositories': typeof UserRepositoriesIndexRoute
   '/$user/repositories/$repo': typeof UserRepositoriesRepoIndexRoute
 }
@@ -239,7 +222,6 @@ export interface FileRoutesByTo {
   '/$user/followers': typeof UserFollowersIndexRoute
   '/$user/following': typeof UserFollowingIndexRoute
   '/$user/gists': typeof UserGistsIndexRoute
-  '/$user/repos': typeof UserReposIndexRoute
   '/$user/repositories': typeof UserRepositoriesIndexRoute
   '/$user/repositories/$repo': typeof UserRepositoriesRepoIndexRoute
 }
@@ -255,7 +237,6 @@ export interface FileRoutesById {
   '/$user/followers/': typeof UserFollowersIndexRoute
   '/$user/following/': typeof UserFollowingIndexRoute
   '/$user/gists/': typeof UserGistsIndexRoute
-  '/$user/repos/': typeof UserReposIndexRoute
   '/$user/repositories/': typeof UserRepositoriesIndexRoute
   '/$user/repositories/$repo/': typeof UserRepositoriesRepoIndexRoute
 }
@@ -272,7 +253,6 @@ export interface FileRouteTypes {
     | '/$user/followers'
     | '/$user/following'
     | '/$user/gists'
-    | '/$user/repos'
     | '/$user/repositories'
     | '/$user/repositories/$repo'
   fileRoutesByTo: FileRoutesByTo
@@ -285,7 +265,6 @@ export interface FileRouteTypes {
     | '/$user/followers'
     | '/$user/following'
     | '/$user/gists'
-    | '/$user/repos'
     | '/$user/repositories'
     | '/$user/repositories/$repo'
   id:
@@ -299,7 +278,6 @@ export interface FileRouteTypes {
     | '/$user/followers/'
     | '/$user/following/'
     | '/$user/gists/'
-    | '/$user/repos/'
     | '/$user/repositories/'
     | '/$user/repositories/$repo/'
   fileRoutesById: FileRoutesById
@@ -348,7 +326,6 @@ export const routeTree = rootRoute
         "/$user/followers/",
         "/$user/following/",
         "/$user/gists/",
-        "/$user/repos/",
         "/$user/repositories/",
         "/$user/repositories/$repo/"
       ]
@@ -376,10 +353,6 @@ export const routeTree = rootRoute
     },
     "/$user/gists/": {
       "filePath": "$user/gists/index.tsx",
-      "parent": "/$user"
-    },
-    "/$user/repos/": {
-      "filePath": "$user/repos/index.tsx",
       "parent": "/$user"
     },
     "/$user/repositories/": {
