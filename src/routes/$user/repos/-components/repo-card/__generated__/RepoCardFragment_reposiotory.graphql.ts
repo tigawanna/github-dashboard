@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e84564e66ce4a4af137a1555fbfece0>>
+ * @generated SignedSource<<74293d7d8fafe8d31204acbe7a97fe6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ReaderFragment } from 'relay-runtime';
 export type RepositoryPermission = "ADMIN" | "MAINTAIN" | "READ" | "TRIAGE" | "WRITE" | "%future added value";
 export type RepositoryVisibility = "INTERNAL" | "PRIVATE" | "PUBLIC" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type RepoCardTest_reposiotory$data = {
+export type RepoCardFragment_reposiotory$data = {
   readonly description: string | null | undefined;
   readonly diskUsage: number | null | undefined;
   readonly forkCount: number;
@@ -72,11 +72,11 @@ export type RepoCardTest_reposiotory$data = {
   readonly viewerHasStarred: boolean;
   readonly viewerPermission: RepositoryPermission | null | undefined;
   readonly visibility: RepositoryVisibility;
-  readonly " $fragmentType": "RepoCardTest_reposiotory";
+  readonly " $fragmentType": "RepoCardFragment_reposiotory";
 };
-export type RepoCardTest_reposiotory$key = {
-  readonly " $data"?: RepoCardTest_reposiotory$data;
-  readonly " $fragmentSpreads": FragmentRefs<"RepoCardTest_reposiotory">;
+export type RepoCardFragment_reposiotory$key = {
+  readonly " $data"?: RepoCardFragment_reposiotory$data;
+  readonly " $fragmentSpreads": FragmentRefs<"RepoCardFragment_reposiotory">;
 };
 
 const node: ReaderFragment = (function(){
@@ -112,7 +112,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "RepoCardTest_reposiotory",
+  "name": "RepoCardFragment_reposiotory",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -457,6 +457,6 @@ return {
 };
 })();
 
-(node as any).hash = "d89946c8f3c6c90be5f5b8a14af21519";
+(node as any).hash = "eb95037bfb1761e9dd5ba547d5383484";
 
 export default node;

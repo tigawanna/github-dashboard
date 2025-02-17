@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d401091a082fee5e11e368e5342bd0f2>>
+ * @generated SignedSource<<23c05fd92ea233370d164dd5ce19e753>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,21 +16,21 @@ export type RepositoryOrder = {
   direction: OrderDirection;
   field: RepositoryOrderField;
 };
-export type ReposTestPaginationQuery$variables = {
+export type ReposPaginationQuery$variables = {
   after?: string | null | undefined;
   first?: number | null | undefined;
   id: string;
   isFork?: boolean | null | undefined;
   orderBy?: RepositoryOrder | null | undefined;
 };
-export type ReposTestPaginationQuery$data = {
+export type ReposPaginationQuery$data = {
   readonly node: {
-    readonly " $fragmentSpreads": FragmentRefs<"ReposTest_repositories">;
+    readonly " $fragmentSpreads": FragmentRefs<"Repos_repositories">;
   } | null | undefined;
 };
-export type ReposTestPaginationQuery = {
-  response: ReposTestPaginationQuery$data;
-  variables: ReposTestPaginationQuery$variables;
+export type ReposPaginationQuery = {
+  response: ReposPaginationQuery$data;
+  variables: ReposPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -137,7 +137,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ReposTestPaginationQuery",
+    "name": "ReposPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -150,7 +150,7 @@ return {
           {
             "args": (v6/*: any*/),
             "kind": "FragmentSpread",
-            "name": "ReposTest_repositories"
+            "name": "Repos_repositories"
           }
         ],
         "storageKey": null
@@ -169,7 +169,7 @@ return {
       (v2/*: any*/)
     ],
     "kind": "Operation",
-    "name": "ReposTestPaginationQuery",
+    "name": "ReposPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -621,7 +621,7 @@ return {
                   "isFork"
                 ],
                 "handle": "connection",
-                "key": "ReposTest_repositories",
+                "key": "Repos_repositories",
                 "kind": "LinkedHandle",
                 "name": "repositories"
               }
@@ -635,16 +635,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2bfde782d9879d91febba46f7ead817b",
+    "cacheID": "53aad883efdf46f8eb408b7639babee4",
     "id": null,
     "metadata": {},
-    "name": "ReposTestPaginationQuery",
+    "name": "ReposPaginationQuery",
     "operationKind": "query",
-    "text": "query ReposTestPaginationQuery(\n  $after: String\n  $first: Int = 2\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...ReposTest_repositories_2NdkU6\n    id\n  }\n}\n\nfragment RepoCardTest_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment ReposTest_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCardTest_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query ReposPaginationQuery(\n  $after: String\n  $first: Int = 2\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...Repos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment RepoCardTest_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Repos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCardTest_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "0d7cfdb33f17ca790d869d09d26f909f";
+(node as any).hash = "b5f6bf554d73cd9e1056a500a64fddf8";
 
 export default node;

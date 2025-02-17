@@ -7,6 +7,7 @@ import { loadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 import { UserPageLoaderQuery } from './__generated__/UserPageLoaderQuery.graphql';
 import { z } from 'zod';
+import { layoutUserPageLoaderQuery } from './__generated__/layoutUserPageLoaderQuery.graphql';
 
 
 const eepositoryOrderOptions = [
@@ -45,13 +46,10 @@ export const Route = createFileRoute("/$user")({
     const { isFork, orderBy } = ctx.deps;
     const relayEnv = ctx.context.relayEnviroment!;
     // console.log("relay env in loader  === ",relayEnv)
-    const queryReference = loadQuery<UserPageLoaderQuery>(
+    const queryReference = loadQuery<layoutUserPageLoaderQuery>(
       relayEnv,
       userQuery,
-      { login: user, 
-        isFork:isFork??false,
-        orderBy
-      },
+      { login: user, isFork: isFork ?? false, orderBy },
       { fetchPolicy: "store-or-network" }
     );
     return queryReference;
@@ -69,7 +67,7 @@ export const Route = createFileRoute("/$user")({
 });
 
 export const userQuery = graphql`
-  query UserPageLoaderQuery($login: String!, $isFork: Boolean, $orderBy: RepositoryOrder) {
+  query layoutUserPageLoaderQuery($login: String!, $isFork: Boolean, $orderBy: RepositoryOrder) {
     user(login: $login) {
       ...UserInfo
       # ...UserStats

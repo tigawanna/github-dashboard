@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73462c2cc660b01c6ed210555d58299c>>
+ * @generated SignedSource<<1a64d1aa522a585dac56ca00a0f53eeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type Repos_repositories$data = {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
       readonly node: {
-        readonly " $fragmentSpreads": FragmentRefs<"RepoCarde_reposiotory">;
+        readonly " $fragmentSpreads": FragmentRefs<"RepoCardTest_reposiotory">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
     readonly pageInfo: {
@@ -142,7 +142,7 @@ return {
                 {
                   "args": null,
                   "kind": "FragmentSpread",
-                  "name": "RepoCarde_reposiotory"
+                  "name": "RepoCardTest_reposiotory"
                 },
                 {
                   "alias": null,
@@ -219,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "de9692fbbdbebfe267f0dc777d4eec47";
+(node as any).hash = "b5f6bf554d73cd9e1056a500a64fddf8";
 
 export default node;

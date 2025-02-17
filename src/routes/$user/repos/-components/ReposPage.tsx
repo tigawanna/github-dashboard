@@ -4,12 +4,16 @@ import { graphql } from "relay-runtime";
 
 import { Repos } from "./Repos";
 import { UserReposPageQuery } from "./__generated__/UserReposPageQuery.graphql";
+import { useParams } from "@tanstack/react-router";
 
 interface ReposPageProps {}
 
 
 export function ReposPage({}: ReposPageProps) {
-     const user = "tigawanna"
+  const {user} = useParams({
+    from:"/$user/repos/"
+  })
+    //  const user = "tigawanna"
       const query = useLazyLoadQuery<UserReposPageQuery>(
         userQuery,
         {
@@ -36,13 +40,9 @@ export const userQuery = graphql`
     $login: String!
     $isFork: Boolean
     $orderBy: RepositoryOrder
-    # $starOrder: StarOrder
   ) {
     user(login: $login) {
-      #   ...Following_following
-      #   ...Followers_followers
       ...Repos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-      #   ...ViewerStarerdRepos_repositories @arguments(orderByStarredRepos: $starOrder)
     }
   }
 `;

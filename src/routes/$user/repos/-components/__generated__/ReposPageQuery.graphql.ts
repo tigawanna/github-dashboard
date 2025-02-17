@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09e2023c484a5bed52c574d4a4bfe3d4>>
+ * @generated SignedSource<<26580ae10a1f5cef2face41133431bc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -605,12 +605,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "16195eabdaadfbb2acdff2bbac86b125",
+    "cacheID": "d93a71e85881e17578b7658165489364",
     "id": null,
     "metadata": {},
     "name": "ReposPageQuery",
     "operationKind": "query",
-    "text": "query ReposPageQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...Repos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCarde_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Repos_repositories_3LFRQw on User {\n  repositories(first: 2, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCarde_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query ReposPageQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...Repos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCardTest_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment Repos_repositories_3LFRQw on User {\n  repositories(first: 2, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCardTest_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();

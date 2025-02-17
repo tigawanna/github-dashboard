@@ -8,26 +8,31 @@ import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 import {  UserRepos_repositories$key } from "./__generated__/UserRepos_repositories.graphql";
+import { useViewer } from "@/lib/viewer/use-viewer";
+import { DeleteRepository } from "./repo-card/DeleteRepository";
+import { useParams } from "@tanstack/react-router";
 
 interface ReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
 }
 
 export function Repos({ user_repos_key }: ReposProps) {
-  const user = "tigawanna"
+  const { user } = useParams({ from: "/$user" });
   const [editing, setEditing] = useState(false);
   const [open, setOpen] = useState(false);
   const { deselectAll, selectAll, selected, unselectItem, selectItem, setSelected } =
     useRepoSelector();
-
+  const { viewer } = useViewer();
   const fragData = usePaginationFragment<UserReposPageQuery, UserRepos_repositories$key>(
     RepositoriesFragment,
     user_repos_key
   );
+    if (!viewer) {
+      return null;
+    }
   const repo_response = fragData.data?.repositories;
   const repos = repo_response?.edges;
   const is_all_selected = selected && selected.length === repos?.length ? true : false;
-
   return (
     <div className="w-full h-full flex flex-col items-center justify-center">
       <div className="w-full bg-base-200 sticky -top-2 flex flex-wrap justify-evenly z-30 p-1">
@@ -52,6 +57,16 @@ export function Repos({ user_repos_key }: ReposProps) {
             <div className="border border-primary p-1 text-xl rounded-xl">{selected?.length}</div>
           )}
 
+          <div className="flex items-center justify-center gap-3">
+            {editing && selected && selected.length > 0 && (
+              <DeleteRepository
+                open={open}
+                setOpen={setOpen}
+                setSelected={setSelected}
+                selected={selected}
+              />
+            )}
+          </div>
         </div>
       </div>
       <ul className="flex flex-wrap gap-5 w-full @container/repos items-center justify-center">
@@ -64,6 +79,7 @@ export function Repos({ user_repos_key }: ReposProps) {
                 // @ts-expect-error
                 key={edge?.node?.id + edge?.cursor}
                 edge={edge}
+                local_viewer={viewer}
                 editing={editing}
                 // selected={selected ? selected.some((i) => i.id === edge?.node?.id) : false}
                 getSelected={(id) => selected?.some((i) => i.id === id) ?? false}
@@ -91,7 +107,7 @@ export const RepositoriesFragment = graphql`
       edges {
         cursor
         node {
-          ...RepoCarde_reposiotory
+          ...RepoCardTest_reposiotory
         }
       }
       pageInfo {
