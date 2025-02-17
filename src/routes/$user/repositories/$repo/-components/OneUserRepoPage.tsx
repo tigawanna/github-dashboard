@@ -9,6 +9,7 @@ import { Stargazers } from "./Stargazers";
 import { Suspense, useTransition } from "react";
 import { OneGithubRepoREADME } from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
+import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
 
 interface OneUserRepoPageProps {}
 
@@ -65,11 +66,15 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
               </TabsContent>
 
               <TabsContent value="branches" className="">
-                <Branches data={query.repository} />
+                <Suspense fallback={<CardsListSuspenseFallback />}>
+                  <Branches data={query.repository} />
+                </Suspense>
               </TabsContent>
 
               <TabsContent value="stars">
-                <Stargazers stargazers_key={query.repository} />
+                <Suspense fallback={<CardsListSuspenseFallback />}>
+                  <Stargazers stargazers_key={query.repository} />
+                </Suspense>
               </TabsContent>
             </Tabs>
           </div>

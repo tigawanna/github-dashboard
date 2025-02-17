@@ -27,7 +27,7 @@ interface DeleteRepositoryProps {
   canDelete?: boolean;
 }
 
-export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete }: DeleteRepositoryProps) {
+export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete=true }: DeleteRepositoryProps) {
   const { PAT } = useRouteContext({ from: "__root__" });
   const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
@@ -74,17 +74,17 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild disabled={!canDelete}>
-        <div  className="flex gap-2 group items-center justify-between p-2 hover:bg-primary/20">
+        <div  className="flex gap-2 group items-center btn  btn-wide justify-between p-2 hover:bg-primary/20">
           Delete
           <Trash className="size-5 text-error group-hover:fill-error" />
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className="max-h-[90vh] overflow-auto">
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="flex gap-1">
            <FaHatWizard/> This action will permanently delete the selected repositories:
-            {selected.map((item) => item.nameWithOwner).join(", ")}
+            {/* {selected.map((item) => item.nameWithOwner).join(", ")} */}
           </AlertDialogDescription>
           <ul className="list-disc pl-5 mt-2">
             {selected.map((item) => (

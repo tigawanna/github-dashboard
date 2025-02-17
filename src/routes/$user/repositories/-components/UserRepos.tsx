@@ -11,7 +11,7 @@ import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
 import { useParams } from "@tanstack/react-router";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
-import { RepoFiltersSelect } from "./RepoFiltersSelect";
+import { RepoFiltersSelect, RepoIsForkSwitch, RepoOrderSelect } from "./RepoFiltersSelect";
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
@@ -31,17 +31,34 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
   );
   const repo_response = fragData.data?.repositories;
   const repos = repo_response?.edges;
-  const is_all_selected = selected && selected.length === repos?.length ? true : false;
+  const validRepos = repos?.filter((i) => i?.node && i?.node?.viewerPermission === "ADMIN");
+  const is_all_selected = selected && selected.length === validRepos?.length ? true : false;
   if (!viewer) {
     return null;
   }
   return (
     <div className="w-full h-full flex flex-col items-center justify-between">
-      <div className="w-full bg-base-200 sticky -top-1 left-0 right-0 flex flex-wrap justify-evenly z-30 ">
+      <div className="w-full bg-base-200 sticky mb-4 -top-1 left-0 right-0 flex flex-wrap justify-evenly z-40 md:z-30 ">
         {/* <FilterRepos /> */}
-        <div className=" flex flex-wrap w-full bg-primary/10 items-center justify-center md:justify-end gap-[2%] rounded-2xl py-2">
-          <RepoFiltersSelect />
-          <Edit onClick={() => setEditing(!editing)} className="h-7 w-7 hover:text-orange-500" />
+        <div className=" flex flex-wrap w-full  items-center justify-center md:justify-end gap-5 rounded-2xl py-2">
+          <RepoOrderSelect />
+          <RepoIsForkSwitch />
+          <Edit onClick={() => setEditing(!editing)} className="size-6 hover:text-primary" />
+
+          {editing && selected && selected?.length > 0 && (
+            <div className=" p-1  rounded-xl">{selected?.length}</div>
+          )}
+
+          <div className="flex items-center justify-center gap-3">
+            {editing && selected && selected.length > 0 && (
+              <DeleteRepository
+                open={open}
+                setOpen={setOpen}
+                setSelected={setSelected}
+                selected={selected}
+              />
+            )}
+          </div>
           {editing && (
             <Checkbox
               className="h-7 w-7 border-6 border-accent  "
@@ -56,35 +73,19 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
               }}
             />
           )}
-          {editing && selected && selected?.length > 0 && (
-            <div className=" p-1 text-xl rounded-xl">{selected?.length}</div>
-          )}
-
-          <div className="flex items-center justify-center gap-3">
-            {editing && selected && selected.length > 0 && (
-              <DeleteRepository
-                open={open}
-                setOpen={setOpen}
-                setSelected={setSelected}
-                selected={selected}
-              />
-            )}
-          </div>
         </div>
       </div>
       <ul className="flex flex-wrap gap-5 w-full h-full @container/repos items-center justify-center">
         {repos &&
-          repos.map((edge) => {
-            // console.log("repo", edge?.node?.id);
+          repos.map((edge, idx) => {
+            if (!edge?.node) return;
             return (
               <RepoCard
                 user={user}
-                // @ts-expect-error
-                key={edge?.node?.id + edge?.cursor}
+                key={edge?.node?.id}
                 edge={edge}
                 local_viewer={viewer}
                 editing={editing}
-                // selected={selected ? selected.some((i) => i.id === edge?.node?.id) : false}
                 getSelected={(id) => selected?.some((i) => i.id === id) ?? false}
                 selectItem={selectItem}
                 unselectItem={unselectItem}

@@ -20,13 +20,14 @@ export function RepoFiltersSelect({}: RepoFiltersSelectProps) {
   return (
     <div
       data-trans={transitioning}
-      className="flex flex-wrap items-center gap-2 justify-center data-[&[data-trans=true]]:animate-pulse ">
-      <RepoOrderSelect startTransition={startTransition} />
-      <RepoIsForkSwitch startTransition={startTransition} />
+      className="flex flex-wrap items-center gap-3 justify-center data-[&[data-trans=true]]:animate-pulse ">
+      <RepoOrderSelect  />
+      <RepoIsForkSwitch  />
     </div>
   );
 }
-export function RepoOrderSelect({ startTransition }: RepoFiltersProps) {
+export function RepoOrderSelect() {
+    const [transitioning, startTransition] = useTransition();
   const { orderBy } = useSearch({
     from: "/$user",
   });
@@ -93,7 +94,8 @@ export function RepoOrderSelect({ startTransition }: RepoFiltersProps) {
     </div>
   );
 }
-export function RepoIsForkSwitch({ startTransition }: RepoFiltersProps) {
+export function RepoIsForkSwitch() {
+    const [transitioning, startTransition] = useTransition();
   const { isFork } = useSearch({
     from: "/$user",
   });

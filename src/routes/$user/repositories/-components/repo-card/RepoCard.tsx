@@ -92,11 +92,11 @@ export function RepoCard({
             </div>
             {/* repository Languages */}
             <div className="flex flex-wrap w-full  gap-1">
-              {repo?.languages?.edges?.map((item) => {
+              {repo?.languages?.edges?.map((item,idx) => {
                 if (!item) return null;
                 return (
                   <div
-                    key={item.node.id}
+                    key={item.node.id + item.node.name+idx}
                     style={{
                       borderStyle: "solid",
                       borderWidth: "1px",
@@ -157,7 +157,7 @@ export function RepoCard({
           </div>
         </div>
       </div>
-      <div className="w-full  text-[15px] text-sm  flex justify-between p-2">
+      <div className="w-full  text-[15px] text-sm  flex gap-3 flex-wrap items-center justify-evenly p-2">
         <div className="text-[12px] font-bold flex gap-1 justify-center items-center">
           <FiActivity /> {getRelativeTimeString(repo?.pushedAt)}
         </div>
