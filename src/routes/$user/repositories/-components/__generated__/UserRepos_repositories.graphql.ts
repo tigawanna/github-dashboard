@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bfd4b8f1922f6f639f42ed7485e35001>>
+ * @generated SignedSource<<a262ca642ee6ab2edeea368b16c1a9ae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ReaderFragment } from 'relay-runtime';
+export type RepositoryPermission = "ADMIN" | "MAINTAIN" | "READ" | "TRIAGE" | "WRITE" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type UserRepos_repositories$data = {
   readonly id: string;
@@ -16,6 +17,10 @@ export type UserRepos_repositories$data = {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
       readonly node: {
+        readonly id: string;
+        readonly name: string;
+        readonly nameWithOwner: string;
+        readonly viewerPermission: RepositoryPermission | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"RepoCard_reposiotory">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
@@ -39,7 +44,14 @@ import UserReposPaginationQuery_graphql from './UserReposPaginationQuery.graphql
 const node: ReaderFragment = (function(){
 var v0 = [
   "repositories"
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [
     {
@@ -48,7 +60,7 @@ return {
       "name": "after"
     },
     {
-      "defaultValue": 2,
+      "defaultValue": 24,
       "kind": "LocalArgument",
       "name": "first"
     },
@@ -139,6 +151,28 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "nameWithOwner",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "viewerPermission",
+                  "storageKey": null
+                },
                 {
                   "args": null,
                   "kind": "FragmentSpread",
@@ -206,19 +240,13 @@ return {
       ],
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
-    }
+    (v1/*: any*/)
   ],
   "type": "User",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "ffc47345a0ffa6cc4a765b24eee022cc";
+(node as any).hash = "88897bf562c3b0b6aa960d1dbcebece5";
 
 export default node;

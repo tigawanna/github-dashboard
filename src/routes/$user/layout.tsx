@@ -42,9 +42,7 @@ export const Route = createFileRoute("/$user")({
   loader(ctx) {
     const { user } = ctx.params;
     const { isFork, orderBy } = ctx.deps;
-    console.log(" ===  ctx .deps == ",ctx.deps)
     const relayEnv = ctx.context.relayEnviroment!;
-    // console.log("relay env in loader  === ",relayEnv)
     const queryReference = loadQuery<layoutUserPageLoaderQuery>(
       relayEnv,
       userQuery,

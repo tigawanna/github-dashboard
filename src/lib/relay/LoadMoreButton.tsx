@@ -19,7 +19,7 @@ export function LoadMoreButton<
       <button
         className="btn btn-wide btn-sm btn-ghost"
         onClick={() => {
-          frag.loadNext(10);
+          frag.loadNext(12);
         }}>
         {frag.isLoadingNext ? "loading..." : "--- load more ---"}
       </button>

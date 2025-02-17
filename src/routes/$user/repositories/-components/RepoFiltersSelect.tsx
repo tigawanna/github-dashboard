@@ -1,5 +1,5 @@
 import { useNavigate, useSearch } from "@tanstack/react-router";
-import { repositoryOrderOptions, directionOptions, starOrderOptions } from "../../layout";
+import { repositoryOrderOptions, directionOptions } from "../../layout";
 import {
   Select,
   SelectContent,
@@ -9,15 +9,24 @@ import {
 } from "@/components/shadcn/ui/select";
 import { Label } from "@/components/shadcn/ui/label";
 import { Switch } from "@/components/shadcn/ui/switch";
+import { useTransition } from "react";
 interface RepoFiltersSelectProps {}
+interface RepoFiltersProps {
+  startTransition: React.TransitionStartFunction;
+}
 
 export function RepoFiltersSelect({}: RepoFiltersSelectProps) {
-  return <div className="  flex flex-wrap items-center gap-2 justify-center">
-    <RepoOrderSelect/>
-    <RepoIsForkSwitch/>
-  </div>;
+  const [transitioning, startTransition] = useTransition();
+  return (
+    <div
+      data-trans={transitioning}
+      className="flex flex-wrap items-center gap-2 justify-center data-[&[data-trans=true]]:animate-pulse ">
+      <RepoOrderSelect startTransition={startTransition} />
+      <RepoIsForkSwitch startTransition={startTransition} />
+    </div>
+  );
 }
-export function RepoOrderSelect() {
+export function RepoOrderSelect({ startTransition }: RepoFiltersProps) {
   const { orderBy } = useSearch({
     from: "/$user",
   });
@@ -31,21 +40,28 @@ export function RepoOrderSelect() {
       {/* Order by */}
       <Select
         onValueChange={(value) =>
-          navigate({
-            search: {
-              orderBy: {
-                direction: orderByDirection,
-                field: value as (typeof repositoryOrderOptions)[number],
+          startTransition(() =>
+            navigate({
+              search: {
+                orderBy: {
+                  direction: orderByDirection,
+                  field: value as (typeof repositoryOrderOptions)[number],
+                },
               },
-            },
-          })
+              viewTransition:false
+            })
+          )
         }>
         <SelectTrigger className="max-w-[180px] w-fit">
           <SelectValue placeholder={repositoryOrderOptions[0]} />
         </SelectTrigger>
         <SelectContent>
           {repositoryOrderOptions.map((item) => {
-            return <SelectItem key={item} value={item}>{item}</SelectItem>;
+            return (
+              <SelectItem key={item} value={item}>
+                {item}
+              </SelectItem>
+            );
           })}
         </SelectContent>
       </Select>
@@ -77,7 +93,7 @@ export function RepoOrderSelect() {
     </div>
   );
 }
-export function RepoIsForkSwitch() {
+export function RepoIsForkSwitch({ startTransition }: RepoFiltersProps) {
   const { isFork } = useSearch({
     from: "/$user",
   });
@@ -88,14 +104,14 @@ export function RepoIsForkSwitch() {
   return (
     <div className="flex items-center space-x-2">
       <Switch
-      checked={isFork}
-      className="border border-primary"
-      onCheckedChange={(value) => {
-        navigate({ search: { isFork: value } })
-        }} id="is_fork_switch" />
+        checked={isFork}
+        className="border border-primary"
+        onCheckedChange={(value) => {
+          startTransition(() => navigate({ search: { isFork: value }, viewTransition: false }));
+        }}
+        id="is_fork_switch"
+      />
       <Label htmlFor="is_fork_switch">Is Fork</Label>
     </div>
   );
 }
-
-

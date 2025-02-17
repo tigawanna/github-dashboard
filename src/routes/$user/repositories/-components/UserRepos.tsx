@@ -39,7 +39,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
     <div className="w-full h-full flex flex-col items-center justify-between">
       <div className="w-full bg-base-200 sticky -top-1 left-0 right-0 flex flex-wrap justify-evenly z-30 ">
         {/* <FilterRepos /> */}
-        <div className=" flex flex-wrap w-full bg-primary/10 items-center justify-center md:justify-end gap-[5%] rounded-2xl py-2">
+        <div className=" flex flex-wrap w-full bg-primary/10 items-center justify-center md:justify-end gap-[2%] rounded-2xl py-2">
           <RepoFiltersSelect />
           <Edit onClick={() => setEditing(!editing)} className="h-7 w-7 hover:text-orange-500" />
           {editing && (
@@ -57,7 +57,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
             />
           )}
           {editing && selected && selected?.length > 0 && (
-            <div className="border border-primary p-1 text-xl rounded-xl">{selected?.length}</div>
+            <div className=" p-1 text-xl rounded-xl">{selected?.length}</div>
           )}
 
           <div className="flex items-center justify-center gap-3">
@@ -99,7 +99,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
 export const RepositoriesFragment = graphql`
   fragment UserRepos_repositories on User
   @argumentDefinitions(
-    first: { type: "Int", defaultValue: 2 }
+    first: { type: "Int", defaultValue: 24 }
     after: { type: "String" }
     orderBy: { type: "RepositoryOrder", defaultValue: { field: PUSHED_AT, direction: DESC } }
     isFork: { type: "Boolean", defaultValue: false }
@@ -110,6 +110,10 @@ export const RepositoriesFragment = graphql`
       edges {
         cursor
         node {
+          id
+          name
+          nameWithOwner
+          viewerPermission
           ...RepoCard_reposiotory
         }
       }

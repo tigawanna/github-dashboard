@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c05265b29e0de33fc2035eba6221f9ec>>
+ * @generated SignedSource<<7dbeca4002ef7430b234fc52e235305f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -271,17 +271,16 @@ v25 = [
   (v23/*: any*/),
   (v24/*: any*/)
 ],
-v26 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 2
-},
-v27 = [
-  (v26/*: any*/),
+v26 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 24
+  },
   (v4/*: any*/),
   (v5/*: any*/)
 ],
-v28 = [
+v27 = [
   {
     "kind": "Literal",
     "name": "first",
@@ -409,7 +408,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v27/*: any*/),
+            "args": (v26/*: any*/),
             "concreteType": "RepositoryConnection",
             "kind": "LinkedField",
             "name": "repositories",
@@ -439,6 +438,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "nameWithOwner",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "viewerPermission",
                         "storageKey": null
                       },
                       {
@@ -516,13 +522,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "viewerPermission",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "viewerCanAdminister",
                         "storageKey": null
                       },
@@ -592,7 +591,7 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": (v28/*: any*/),
+                        "args": (v27/*: any*/),
                         "concreteType": "ReleaseConnection",
                         "kind": "LinkedField",
                         "name": "releases",
@@ -631,7 +630,11 @@ return {
                       {
                         "alias": null,
                         "args": [
-                          (v26/*: any*/),
+                          {
+                            "kind": "Literal",
+                            "name": "first",
+                            "value": 2
+                          },
                           {
                             "kind": "Literal",
                             "name": "orderBy",
@@ -683,7 +686,7 @@ return {
                                         "selections": [
                                           {
                                             "alias": null,
-                                            "args": (v28/*: any*/),
+                                            "args": (v27/*: any*/),
                                             "concreteType": "CommitHistoryConnection",
                                             "kind": "LinkedField",
                                             "name": "history",
@@ -772,7 +775,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v27/*: any*/),
+            "args": (v26/*: any*/),
             "filters": [
               "orderBy",
               "isFork"
@@ -788,12 +791,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b2a20b0957412101fc6e5f56b6205403",
+    "cacheID": "849a017198652f701eda14bda1dec930",
     "id": null,
     "metadata": {},
     "name": "layoutUserPageLoaderQuery",
     "operationKind": "query",
-    "text": "query layoutUserPageLoaderQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserInfo\n    ...UserFollowingFragment\n    ...UserFollowersFragment\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserFollowersFragment on User {\n  followers(first: 10) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFollowingFragment on User {\n  following(first: 10) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFragmentCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment UserInfo on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 2, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        ...RepoCard_reposiotory\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query layoutUserPageLoaderQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserInfo\n    ...UserFollowingFragment\n    ...UserFollowersFragment\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserFollowersFragment on User {\n  followers(first: 10) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFollowingFragment on User {\n  following(first: 10) {\n    edges {\n      cursor\n      node {\n        ...UserFragmentCard_user\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n\nfragment UserFragmentCard_user on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment UserInfo on User {\n  id\n  name\n  login\n  email\n  bio\n  avatarUrl\n  company\n  twitterUsername\n  createdAt\n  isFollowingViewer\n  viewerIsFollowing\n  isViewer\n  location\n  url\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 24, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();
