@@ -11,6 +11,7 @@ import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Edit } from "lucide-react";
 import { useParams } from "@tanstack/react-router";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
+import { RepoFiltersSelect } from "./RepoFiltersSelect";
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
@@ -35,10 +36,11 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
     return null;
   }
   return (
-    <div className="w-full h-full flex flex-col items-center justify-center">
-      <div className="w-full bg-base-200 sticky -top-2 flex flex-wrap justify-evenly z-30 p-1">
+    <div className="w-full h-full flex flex-col items-center justify-between">
+      <div className="w-full bg-base-200 sticky -top-1 left-0 right-0 flex flex-wrap justify-evenly z-30 ">
         {/* <FilterRepos /> */}
-        <div className=" flex flex-wrap w-full items-center justify-center gap-[5%]">
+        <div className=" flex flex-wrap w-full bg-primary/10 items-center justify-center md:justify-end gap-[5%] rounded-2xl py-2">
+          <RepoFiltersSelect />
           <Edit onClick={() => setEditing(!editing)} className="h-7 w-7 hover:text-orange-500" />
           {editing && (
             <Checkbox

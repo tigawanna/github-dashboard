@@ -1,35 +1,33 @@
-import { fetchCurrentViewer } from '@/lib/viewer/use-viewer'
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, redirect } from '@tanstack/react-router'
 import { DashboardLayout } from './-components/dashoboard-sidebar/DashboardLayout'
 import { returnTo } from '@/lib/tanstack/router/utils';
 import { createRelayEnvironment } from '@/lib/relay/RelayEnvironment';
 import { loadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
-import { UserPageLoaderQuery } from './__generated__/UserPageLoaderQuery.graphql';
 import { z } from 'zod';
 import { layoutUserPageLoaderQuery } from './__generated__/layoutUserPageLoaderQuery.graphql';
 
 
-const eepositoryOrderOptions = [
+export const repositoryOrderOptions = [
   "PUSHED_AT",
   "CREATED_AT",
   "NAME",
   "STARGAZERS",
   "UPDATED_AT",
 ] as const;
-const starOrderOptions = ["STARRED_AT"] as const;
-const directionOptions = ["ASC", "DESC"] as const;
+export const starOrderOptions = ["STARRED_AT"] as const;
+export const directionOptions = ["ASC", "DESC"] as const;
 
 const searchparams = z.object({
   isFork: z.boolean().default(false).optional(),
   orderBy: z.object({
-    field: z.enum(eepositoryOrderOptions).default("PUSHED_AT"),
+    field: z.enum(repositoryOrderOptions).default("PUSHED_AT"),
     direction: z.enum(directionOptions).default("DESC"),
   }).optional(),
-  // starOrder: z.object({
-  //   field: z.enum(starOrderOptions).default("STARRED_AT"),
-  //   direction: z.enum(directionOptions).default("DESC"),
-  // }).optional(),
+  starOrder: z.object({
+    field: z.enum(starOrderOptions).default("STARRED_AT"),
+    direction: z.enum(directionOptions).default("DESC"),
+  }).optional(),
 });
 
 export const Route = createFileRoute("/$user")({
@@ -53,10 +51,10 @@ export const Route = createFileRoute("/$user")({
       // { login: user, isFork: isFork ?? false, orderBy },
       {
         login: user,
-        isFork: false,
+        isFork:isFork||false,
         orderBy: {
-          field: "PUSHED_AT",
-          direction: "DESC",
+          field: orderBy?.field||"PUSHED_AT",
+          direction: orderBy?.direction||"DESC",
         },
       },
       { fetchPolicy: "store-or-network" }

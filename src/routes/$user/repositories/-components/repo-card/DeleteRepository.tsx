@@ -74,7 +74,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild disabled={!canDelete}>
-        <div  className="w-full flex gap-2 group items-center justify-between p-2 hover:bg-primary/20">
+        <div  className="flex gap-2 group items-center justify-between p-2 hover:bg-primary/20">
           Delete
           <Trash className="size-5 text-error group-hover:fill-error" />
         </div>
