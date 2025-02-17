@@ -1,8 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { z } from "zod";
 import { UserReposPage } from "./-components/UserReposPage";
-import { Suspense } from "react";
-import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
+
 
 const eepositoryOrderOptions = [
   "PUSHED_AT",
@@ -27,13 +26,6 @@ const searchparams = z.object({
 });
 export const Route = createFileRoute("/$user/repositories/")({
   validateSearch: (search) => searchparams.parse(search),
-  component: RouteComponent,
+  component: UserReposPage,
 });
 
-function RouteComponent() {
-  return (
-    <Suspense fallback={<CardsListSuspenseFallback />}>
-      <UserReposPage />
-    </Suspense>
-  );
-}

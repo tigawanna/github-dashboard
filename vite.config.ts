@@ -12,6 +12,7 @@ export default defineConfig({
     TanStackRouterVite({
       routeToken: "layout", // <-- Add this line
       autoCodeSplitting: true,
+      routeFileIgnorePattern:"__generated__/*"
     }),
     react(),
     tailwindcss(),

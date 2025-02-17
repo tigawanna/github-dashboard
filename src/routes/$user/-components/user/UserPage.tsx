@@ -1,8 +1,11 @@
 import { graphql } from "relay-runtime";
 import { UserInfo } from "./UserInfo";
-import { useLazyLoadQuery } from "react-relay";
+import { useLazyLoadQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
 import { UserPageQuery } from "./__generated__/UserPageQuery.graphql";
-import { useParams } from "@tanstack/react-router";
+import { useLoaderData, useParams } from "@tanstack/react-router";
+import { UserPageLoaderQuery } from "../../__generated__/UserPageLoaderQuery.graphql";
+import { userQuery } from "../../layout";
+
 // import { UserStats } from "./UserStats";
 
 interface UserPageProps {
@@ -10,26 +13,12 @@ interface UserPageProps {
 }
 
 export function UserPage({}:UserPageProps){
+
   const {user} = useParams({from:"/$user"})
-  const query = useLazyLoadQuery<UserPageQuery>(
-    userQuery,
-    {
-      login: user,
-    //   isFork,
-    //   orderBy: {
-    //     field: order_by ?? "PUSHED_AT",
-    //     direction: order_by_dir ?? "DESC",
-    //   },
-    //   starOrder: {
-    //     direction: star_order_by_dir ?? "DESC",
-    //     field: "STARRED_AT",
-    //   },
-    // },
-    // {
-    //   fetchKey: "user/usrrtabs",
-    //   fetchPolicy: "store-and-network",
-    }
-  );
+  const preloadedQueryRef = useLoaderData({from:"/$user"})
+  const query = usePreloadedQuery < UserPageLoaderQuery>(userQuery, preloadedQueryRef);
+  
+
 
 return (
  <div className='w-full h-full min-h-screen flex flex-col items-center '>
@@ -39,18 +28,3 @@ return (
 );
 }
 
-export const userQuery = graphql`
-  query UserPageQuery($login: String!) # $isFork: Boolean
-  # $orderBy: RepositoryOrder
-  # $starOrder: StarOrder
-  {
-    user(login: $login) {
-      ...UserInfo
-      # ...UserStats
-      #   ...Following_following
-      #   ...Followers_followers
-      #   ...ViewerRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-      #   ...ViewerStarerdRepos_repositories @arguments(orderByStarredRepos: $starOrder)
-    }
-  }
-`;

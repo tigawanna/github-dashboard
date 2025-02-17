@@ -16,7 +16,6 @@ import { Helmet } from "@/components/wrappers/custom-helmet";
 import { Suspense } from "react";
 import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { RouterPendingComponent } from "@/lib/tanstack/router/RouterPendingComponent";
-import {  createRelayEnvironment } from "@/lib/relay/RelayEnvironment";
 import { RelayEnvironmentProvider } from "react-relay";
 
 interface DashboardLayoutProps {
@@ -24,7 +23,7 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
-  const { PAT } = useRouteContext({
+  const { relayEnviroment } = useRouteContext({
     from: "/$user",
   });
   return (
@@ -55,7 +54,7 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
         </header>
         {/* main content */}
         <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
-          <RelayEnvironmentProvider environment={createRelayEnvironment(PAT!)}>
+          <RelayEnvironmentProvider environment={relayEnviroment!}>
             <Suspense fallback={<RouterPendingComponent />}>
               <Outlet />
             </Suspense>

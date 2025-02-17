@@ -12,6 +12,7 @@ import { RootComponent } from "./-components/RootComponent";
 import { z } from "zod";
 import { fetchCurrentViewer, viewerQueryOptions } from "@/lib/viewer/use-viewer";
 import { returnTo } from "@/lib/tanstack/router/utils";
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
 
 const searchparams = z.object({
   globalPage: z.number().optional(),
@@ -26,6 +27,7 @@ export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   viewer: Awaited<ReturnType<typeof fetchCurrentViewer> | undefined>;
   PAT?: string;
+  relayEnviroment?:RelayModernEnvironment;
 }>()({
   validateSearch: (search) => searchparams.parse(search),
   component: RootComponent,
