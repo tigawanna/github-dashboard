@@ -1,20 +1,15 @@
 import { graphql } from "relay-runtime";
 import { UserInfo } from "./UserInfo";
-import { useLazyLoadQuery, usePreloadedQuery, useQueryLoader } from "react-relay";
-import { UserPageQuery } from "./__generated__/UserPageQuery.graphql";
-import { useLoaderData, useParams } from "@tanstack/react-router";
+import { usePreloadedQuery } from "react-relay";
+import { useLoaderData } from "@tanstack/react-router";
 import { UserPageLoaderQuery } from "../../__generated__/UserPageLoaderQuery.graphql";
 import { userQuery } from "../../layout";
-
-// import { UserStats } from "./UserStats";
 
 interface UserPageProps {
 
 }
 
 export function UserPage({}:UserPageProps){
-
-  const {user} = useParams({from:"/$user"})
   const preloadedQueryRef = useLoaderData({from:"/$user"})
   const query = usePreloadedQuery < UserPageLoaderQuery>(userQuery, preloadedQueryRef);
   

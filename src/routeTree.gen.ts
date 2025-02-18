@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ProfileImport } from './routes/profile'
+import { Route as ErrorImport } from './routes/error'
 import { Route as AboutImport } from './routes/about'
 import { Route as UserLayoutImport } from './routes/$user/layout'
 import { Route as IndexImport } from './routes/index'
@@ -29,6 +30,12 @@ import { Route as UserRepositoriesRepoIndexImport } from './routes/$user/reposit
 const ProfileRoute = ProfileImport.update({
   id: '/profile',
   path: '/profile',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ErrorRoute = ErrorImport.update({
+  id: '/error',
+  path: '/error',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -121,6 +128,13 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/error': {
+      id: '/error'
+      path: '/error'
+      fullPath: '/error'
+      preLoaderRoute: typeof ErrorImport
       parentRoute: typeof rootRoute
     }
     '/profile': {
@@ -219,6 +233,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/$user': typeof UserLayoutRouteWithChildren
   '/about': typeof AboutRoute
+  '/error': typeof ErrorRoute
   '/profile': typeof ProfileRoute
   '/$user/': typeof UserIndexRoute
   '/auth': typeof AuthIndexRoute
@@ -233,6 +248,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/error': typeof ErrorRoute
   '/profile': typeof ProfileRoute
   '/$user': typeof UserIndexRoute
   '/auth': typeof AuthIndexRoute
@@ -249,6 +265,7 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/$user': typeof UserLayoutRouteWithChildren
   '/about': typeof AboutRoute
+  '/error': typeof ErrorRoute
   '/profile': typeof ProfileRoute
   '/$user/': typeof UserIndexRoute
   '/auth/': typeof AuthIndexRoute
@@ -266,6 +283,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$user'
     | '/about'
+    | '/error'
     | '/profile'
     | '/$user/'
     | '/auth'
@@ -279,6 +297,7 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
+    | '/error'
     | '/profile'
     | '/$user'
     | '/auth'
@@ -293,6 +312,7 @@ export interface FileRouteTypes {
     | '/'
     | '/$user'
     | '/about'
+    | '/error'
     | '/profile'
     | '/$user/'
     | '/auth/'
@@ -309,6 +329,7 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   UserLayoutRoute: typeof UserLayoutRouteWithChildren
   AboutRoute: typeof AboutRoute
+  ErrorRoute: typeof ErrorRoute
   ProfileRoute: typeof ProfileRoute
   AuthIndexRoute: typeof AuthIndexRoute
 }
@@ -317,6 +338,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   UserLayoutRoute: UserLayoutRouteWithChildren,
   AboutRoute: AboutRoute,
+  ErrorRoute: ErrorRoute,
   ProfileRoute: ProfileRoute,
   AuthIndexRoute: AuthIndexRoute,
 }
@@ -334,6 +356,7 @@ export const routeTree = rootRoute
         "/",
         "/$user",
         "/about",
+        "/error",
         "/profile",
         "/auth/"
       ]
@@ -355,6 +378,9 @@ export const routeTree = rootRoute
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/error": {
+      "filePath": "error.tsx"
     },
     "/profile": {
       "filePath": "profile.tsx"

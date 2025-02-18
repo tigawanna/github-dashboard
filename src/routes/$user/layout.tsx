@@ -73,6 +73,7 @@ export const Route = createFileRoute("/$user")({
       relayEnviroment: createRelayEnvironment(token),
     };
   },
+  staleTime: 1000 * 60 * 60,
 });
 
 export const userQuery = graphql`
