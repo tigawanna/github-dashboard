@@ -1,0 +1,19 @@
+query getViewerRecentlyPushedRepos {
+  viewer {
+    hovercard {
+      contexts {
+        message
+        octicon
+      }
+    }
+
+    lists(first: 3) {
+      edges {
+        node {
+          name
+          description
+        }
+      }
+    }
+  }
+}

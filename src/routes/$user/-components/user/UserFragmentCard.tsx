@@ -60,6 +60,7 @@ export function UserFragmentCard({ user_fragment_key }: UserFragmentCardProps) {
         <Link
           className="hover:text-secondary flex gap-2 group"
           to="/$user"
+          preload={false}
           params={{ user: oneuser.login }}>
           <Avatar className="h-24 w-24">
             <AvatarImage src={oneuser.avatarUrl} alt={oneuser.login} />
