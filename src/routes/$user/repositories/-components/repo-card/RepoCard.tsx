@@ -22,13 +22,13 @@ type ReadonlyToRegular<T> = T extends ReadonlyArray<infer U> ? Array<U> : never;
 export type OneRepoEdge = ReadonlyToRegular<RepoEdges>[number];
 interface RepoCardProps {
   edge: OneRepoEdge | null | undefined;
-  local_viewer: Partial<GitHubViewer> | null;
+  local_viewer?: Partial<GitHubViewer> | null;
   user: string;
-  editing: boolean;
+  editing?: boolean;
   // selected: boolean;
-  getSelected: (id: string) => boolean;
-  selectItem: (item: ItemList) => void;
-  unselectItem: (item: ItemList) => void;
+  getSelected?: (id: string) => boolean;
+  selectItem?: (item: ItemList) => void;
+  unselectItem?: (item: ItemList) => void;
 }
 
 export function RepoCard({
@@ -45,7 +45,8 @@ export function RepoCard({
   const repo = fragData;
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
-  const selected = getSelected(repo.id);
+  const selected = getSelected?.(repo.id);
+
   return (
     <li
       key={repo.id}
@@ -64,9 +65,9 @@ export function RepoCard({
               checked={selected}
               onClick={() => {
                 if (selected) {
-                  unselectItem(repo);
+                  unselectItem?.(repo);
                 } else {
-                  selectItem(repo);
+                  selectItem?.(repo);
                 }
               }}
             />
@@ -84,7 +85,7 @@ export function RepoCard({
           <Link
             to="/$user/repositories/$repo"
             preload={false}
-            params={{ user, repo: repo.name }}
+            params={{ user:repo?.owner?.login, repo: repo.name }}
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
               <div className="text-2xl font-bold">{repo?.name}</div>
@@ -92,11 +93,11 @@ export function RepoCard({
             </div>
             {/* repository Languages */}
             <div className="flex flex-wrap w-full  gap-1">
-              {repo?.languages?.edges?.map((item,idx) => {
+              {repo?.languages?.edges?.map((item, idx) => {
                 if (!item) return null;
                 return (
                   <div
-                    key={item.node.id + item.node.name+idx}
+                    key={item.node.id + item.node.name + idx}
                     style={{
                       borderStyle: "solid",
                       borderWidth: "1px",
@@ -110,17 +111,19 @@ export function RepoCard({
             </div>
           </Link>
 
-          <div className="p-2 gap-2 absolute right-[2%] z-40 bg-base-300 flex flex-col items-center justify-between">
-            <RepositoryActions
-              owner={repo.owner.login}
-              local_viewer={local_viewer}
-              viewerCanAdminister={repo.viewerCanAdminister}
-              isFork={repo.isFork}
-              forkingAllowed={repo.forkingAllowed}
-              id={repo.id}
-              nameWithOwner={repo.nameWithOwner}
-            />
-          </div>
+          {local_viewer && (
+            <div className="p-2 gap-2 absolute right-[2%] z-40 bg-base-300 flex flex-col items-center justify-between">
+              <RepositoryActions
+                owner={repo.owner.login}
+                local_viewer={local_viewer}
+                viewerCanAdminister={repo.viewerCanAdminister}
+                isFork={repo.isFork}
+                forkingAllowed={repo.forkingAllowed}
+                id={repo.id}
+                nameWithOwner={repo.nameWithOwner}
+              />
+            </div>
+          )}
 
           <div className="p-2 gap-2 flex flex-col items-center justify-between"></div>
         </div>

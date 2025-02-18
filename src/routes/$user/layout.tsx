@@ -32,21 +32,21 @@ const searchparams = z.object({
 
 export const Route = createFileRoute("/$user")({
   validateSearch: (search) => searchparams.parse(search),
-  loaderDeps({ search: { isFork , orderBy } }) {
+  loaderDeps({ search: { isFork , orderBy,starOrder } }) {
     return {
       isFork,
       orderBy,
+      starOrder
     };
   },
   component: DashboardLayout,
   loader(ctx) {
     const { user } = ctx.params;
-    const { isFork, orderBy } = ctx.deps;
+    const { isFork, orderBy, starOrder } = ctx.deps;
     const relayEnv = ctx.context.relayEnviroment!;
     const queryReference = loadQuery<layoutUserPageLoaderQuery>(
       relayEnv,
       userQuery,
-      // { login: user, isFork: isFork ?? false, orderBy },
       {
         login: user,
         isFork:isFork||false,
@@ -54,6 +54,10 @@ export const Route = createFileRoute("/$user")({
           field: orderBy?.field||"PUSHED_AT",
           direction: orderBy?.direction||"DESC",
         },
+         starOrder: {
+          field: starOrder?.field||"STARRED_AT",
+          direction: starOrder?.direction||"DESC",
+         }
       },
       { fetchPolicy: "store-or-network" }
     );
@@ -72,13 +76,19 @@ export const Route = createFileRoute("/$user")({
 });
 
 export const userQuery = graphql`
-  query layoutUserPageLoaderQuery($login: String!, $isFork: Boolean, $orderBy: RepositoryOrder) {
+  query layoutUserPageLoaderQuery(
+    $login: String!
+    $isFork: Boolean
+    $orderBy: RepositoryOrder
+    $starOrder: StarOrder
+  ) {
     user(login: $login) {
       ...UserInfo
       # ...UserStats
       ...UserFollowingFragment
       ...UserFollowersFragment
       ...UserRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
+      ...UserStarredRepos_repositories @arguments(orderByStarredRepos: $starOrder)
     }
   }
 `;
