@@ -33,6 +33,7 @@ const searchparams = z.object({
 
 export const Route = createFileRoute("/$user")({
   validateSearch: (search) => searchparams.parse(search),
+  component: DashboardLayout,
   loaderDeps({ search: { isFork , orderBy,starOrder } }) {
     return {
       isFork,
@@ -40,7 +41,6 @@ export const Route = createFileRoute("/$user")({
       starOrder
     };
   },
-  component: DashboardLayout,
   loader(ctx) {
     const { user } = ctx.params;
     const { isFork, orderBy, starOrder } = ctx.deps;

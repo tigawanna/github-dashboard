@@ -1,10 +1,10 @@
-import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
+import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
+import { starredUserPageLoaderQuery } from "../__generated__/starredUserPageLoaderQuery.graphql";
 import { useLoaderData } from "@tanstack/react-router";
 import { Suspense } from "react";
 import { usePreloadedQuery } from "react-relay";
-import { userQuery } from "../../layout";
 import { UserStarredRepos } from "./UserStarredRepos";
-import { layoutUserPageLoaderQuery } from "../../__generated__/layoutUserPageLoaderQuery.graphql";
+import { userStarredReposQuery } from "..";
 
 
 interface UserStarredRepospageProps {
@@ -12,8 +12,11 @@ interface UserStarredRepospageProps {
 }
 
 export function UserStarredReposPage({}: UserStarredRepospageProps) {
-  const preloadedQueryRef = useLoaderData({ from: "/$user" });
-  const query = usePreloadedQuery<layoutUserPageLoaderQuery>(userQuery, preloadedQueryRef);
+  const preloadedQueryRef = useLoaderData({ from: "/$user/starred/" });
+  const query = usePreloadedQuery<starredUserPageLoaderQuery>(
+    userStarredReposQuery,
+    preloadedQueryRef
+  );
   return (
     <div className="w-full h-full p-3">
       <Suspense fallback={<CardsListSuspenseFallback />}>

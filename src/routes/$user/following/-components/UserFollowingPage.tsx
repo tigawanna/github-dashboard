@@ -2,15 +2,16 @@ import { usePreloadedQuery } from "react-relay";
 import { Navigate, useLoaderData } from "@tanstack/react-router";
 import { UserFollowingFragment } from "./UserFollowingFragment";
 import { UserPageLoaderQuery } from "../../__generated__/UserPageLoaderQuery.graphql";
-import { userQuery } from "../../layout";
+
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
 import { Suspense } from "react";
+import { userFollowingReposQuery } from "..";
 
 interface UserFollowingPageProps {}
 
 export function UserFollowingPage({}: UserFollowingPageProps) {
-  const preloadedQueryRef = useLoaderData({ from: "/$user" });
-  const query = usePreloadedQuery<UserPageLoaderQuery>(userQuery, preloadedQueryRef);
+  const preloadedQueryRef = useLoaderData({ from: "/$user/following/" });
+  const query = usePreloadedQuery<UserPageLoaderQuery>(userFollowingReposQuery, preloadedQueryRef);
   if (!query.user) {
     return <Navigate to=".." />;
   }
