@@ -33,12 +33,12 @@ const searchparams = z.object({
 
 export const Route = createFileRoute("/$user")({
   validateSearch: (search) => searchparams.parse(search),
-  component: DashboardLayout,
-  loaderDeps({ search: { isFork , orderBy,starOrder } }) {
+
+  loaderDeps({ search: { isFork, orderBy, starOrder } }) {
     return {
       isFork,
       orderBy,
-      starOrder
+      starOrder,
     };
   },
   loader(ctx) {
@@ -50,20 +50,21 @@ export const Route = createFileRoute("/$user")({
       userQuery,
       {
         login: user,
-        isFork:isFork||false,
+        isFork: isFork || false,
         orderBy: {
-          field: orderBy?.field||"PUSHED_AT",
-          direction: orderBy?.direction||"DESC",
+          field: orderBy?.field || "PUSHED_AT",
+          direction: orderBy?.direction || "DESC",
         },
-         starOrder: {
-          field: starOrder?.field||"STARRED_AT",
-          direction: starOrder?.direction||"DESC",
-         }
+        starOrder: {
+          field: starOrder?.field || "STARRED_AT",
+          direction: starOrder?.direction || "DESC",
+        },
       },
       { fetchPolicy: "store-or-network" }
     );
     return queryReference;
   },
+  component: DashboardLayout,
   async beforeLoad(ctx) {
     const token = ctx.context.PAT;
     if (!token || !ctx.context.viewer) {
@@ -74,7 +75,6 @@ export const Route = createFileRoute("/$user")({
       relayEnviroment: createRelayEnvironment(token),
     };
   },
-  staleTime: 1000 * 60 * 60,
 });
 
 export const userQuery = graphql`

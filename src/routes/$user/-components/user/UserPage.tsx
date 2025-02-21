@@ -1,7 +1,7 @@
-import { graphql } from "relay-runtime";
+
 import { UserInfo } from "./UserInfo";
-import { useLazyLoadQuery, usePreloadedQuery } from "react-relay";
-import {  useLoaderData, useParams, useSearch } from "@tanstack/react-router";
+import { usePreloadedQuery } from "react-relay";
+import {  useLoaderData } from "@tanstack/react-router";
 import { Suspense, useState, useTransition } from "react";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
@@ -9,7 +9,6 @@ import { UserRepos } from "../../repositories/-components/UserRepos";
 import { UserStarredRepos } from "../../starred/-components/UserStarredRepos";
 import { UserFollowersFragment } from "../../followers/-components/UserFollowersFragment";
 import { UserFollowingFragment } from "../../following/-components/UserFollowingFragment";
-import { UserPageLoaderQuery } from "./__generated__/UserPageLoaderQuery.graphql";
 import { layoutUserPageLoaderQuery } from "../../__generated__/layoutUserPageLoaderQuery.graphql";
 import { userQuery } from "../../layout";
 
@@ -69,20 +68,4 @@ return (
 );
 }
 
-// export const userQuery = graphql`
-//   query UserPageLoaderQuery(
-//     $login: String!
-//     $isFork: Boolean
-//     $orderBy: RepositoryOrder
-//     $starOrder: StarOrder
-//   ) {
-//     user(login: $login) {
-//       ...UserInfo
-//       # ...UserStats
-//       ...UserFollowingFragment
-//       ...UserFollowersFragment
-//       ...UserRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-//       ...UserStarredRepos_repositories @arguments(orderByStarredRepos: $starOrder)
-//     }
-//   }
-// `;
+

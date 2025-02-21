@@ -15,7 +15,7 @@ export const dashboard_routes = [
       </div>
     ),
   },
-  { name: "followinf", href: "/$user/following", icon: <TbUsers /> },
+  { name: "following", href: "/$user/following", icon: <TbUsers /> },
   { name: "followers", href: "/$user/followers", icon: <TbUsersGroup /> },
 ] as const;
 
