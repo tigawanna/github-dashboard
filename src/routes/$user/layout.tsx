@@ -2,10 +2,9 @@ import { createFileRoute, redirect } from '@tanstack/react-router'
 import { DashboardLayout } from './-components/dashoboard-sidebar/DashboardLayout'
 import { returnTo } from '@/lib/tanstack/router/utils';
 import { createRelayEnvironment } from '@/lib/relay/RelayEnvironment';
-import { loadQuery } from 'react-relay';
 import { graphql } from 'relay-runtime';
 import { z } from 'zod';
-import { layoutUserPageLoaderQuery } from './__generated__/layoutUserPageLoaderQuery.graphql';
+
 
 
 export const repositoryOrderOptions = [

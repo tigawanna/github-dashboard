@@ -19,24 +19,15 @@ const searchparams = z.object({
   globalSearch: z.string().optional(),
 });
 
-// const list = createRouteMask({
-
-// })
-
 export const Route = createRootRouteWithContext<{
   queryClient: QueryClient;
   viewer: Awaited<ReturnType<typeof fetchCurrentViewer> | undefined>;
   PAT?: string;
-  relayEnviroment?:RelayModernEnvironment;
+  relayEnviroment?: RelayModernEnvironment;
 }>()({
   validateSearch: (search) => searchparams.parse(search),
   component: RootComponent,
   beforeLoad: async (ctx) => {
-    // const isPATvalid = await fetchCurrentViewer(ctx.context.PAT!);
-    // console.log("isPATvalid === ", isPATvalid);
-    // if(!isPATvalid){
-    //   throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-    // }
     const viewer = await ctx.context.queryClient.ensureQueryData(
       viewerQueryOptions(ctx.context.PAT!)
     );
@@ -44,13 +35,8 @@ export const Route = createRootRouteWithContext<{
       ctx.context.PAT = undefined;
       ctx.context.viewer = undefined;
       throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-      return {
-        ...ctx.context,
-        PAT: undefined,
-        viewer: undefined,
-      };
     }
-    // ctx.context.viewer = viewer;
+
     return {
       ...ctx.context,
       viewer,
