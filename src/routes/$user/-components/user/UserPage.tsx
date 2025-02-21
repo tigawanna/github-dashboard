@@ -1,7 +1,7 @@
 import { graphql } from "relay-runtime";
 import { UserInfo } from "./UserInfo";
-import { useLazyLoadQuery } from "react-relay";
-import {  useParams, useSearch } from "@tanstack/react-router";
+import { useLazyLoadQuery, usePreloadedQuery } from "react-relay";
+import {  useLoaderData, useParams, useSearch } from "@tanstack/react-router";
 import { Suspense, useState, useTransition } from "react";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback copy";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
@@ -10,6 +10,8 @@ import { UserStarredRepos } from "../../starred/-components/UserStarredRepos";
 import { UserFollowersFragment } from "../../followers/-components/UserFollowersFragment";
 import { UserFollowingFragment } from "../../following/-components/UserFollowingFragment";
 import { UserPageLoaderQuery } from "./__generated__/UserPageLoaderQuery.graphql";
+import { layoutUserPageLoaderQuery } from "../../__generated__/layoutUserPageLoaderQuery.graphql";
+import { userQuery } from "../../layout";
 
 
 interface UserPageProps {
@@ -19,32 +21,8 @@ interface UserPageProps {
 export function UserPage({}:UserPageProps){
 const [pending, startTransition] = useTransition();
 const [tab, setTab] = useState("repos");
-  const {user} = useParams({
-    from:"/$user/"
-  })
-  const {isFork,orderBy,starOrder} = useSearch({
-    from:"/$user/"
-  })
-  // const preloadedQueryRef = useLoaderData({from:"/$user"})
-  const query = useLazyLoadQuery<UserPageLoaderQuery>(
-    userQuery,
-    {
-      login: user,
-      isFork: isFork || false,
-      orderBy: {
-        field: orderBy?.field || "PUSHED_AT",
-        direction: orderBy?.direction || "DESC",
-      },
-      starOrder: {
-        field: starOrder?.field || "STARRED_AT",
-        direction: starOrder?.direction || "DESC",
-      },
-    },
-    { fetchPolicy: "store-or-network" }
-  );
-  // const query = usePreloadedQuery<layoutUserPageLoaderQuery>(userQuery, preloadedQueryRef);
-
-
+const preloadedQueryRef = useLoaderData({from:"/$user"})
+const query = usePreloadedQuery<layoutUserPageLoaderQuery>(userQuery, preloadedQueryRef);
 
 return (
   <div className="w-full h-full min-h-screen flex flex-col items-center ">
@@ -91,20 +69,20 @@ return (
 );
 }
 
-export const userQuery = graphql`
-  query UserPageLoaderQuery(
-    $login: String!
-    $isFork: Boolean
-    $orderBy: RepositoryOrder
-    $starOrder: StarOrder
-  ) {
-    user(login: $login) {
-      ...UserInfo
-      # ...UserStats
-      ...UserFollowingFragment
-      ...UserFollowersFragment
-      ...UserRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
-      ...UserStarredRepos_repositories @arguments(orderByStarredRepos: $starOrder)
-    }
-  }
-`;
+// export const userQuery = graphql`
+//   query UserPageLoaderQuery(
+//     $login: String!
+//     $isFork: Boolean
+//     $orderBy: RepositoryOrder
+//     $starOrder: StarOrder
+//   ) {
+//     user(login: $login) {
+//       ...UserInfo
+//       # ...UserStats
+//       ...UserFollowingFragment
+//       ...UserFollowersFragment
+//       ...UserRepos_repositories @arguments(isFork: $isFork, orderBy: $orderBy)
+//       ...UserStarredRepos_repositories @arguments(orderByStarredRepos: $starOrder)
+//     }
+//   }
+// `;

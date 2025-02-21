@@ -9,7 +9,7 @@ import { layoutUserPageLoaderQuery } from "../../__generated__/layoutUserPageLoa
 interface UserReposPageProps {}
 
 export function UserReposPage({}: UserReposPageProps) {
-  const preloadedQueryRef = useLoaderData({ from: "/$user" });
+  const preloadedQueryRef = useLoaderData({ from: "/$user/repositories/" });
   const query = usePreloadedQuery<layoutUserPageLoaderQuery>(userQuery, preloadedQueryRef);
   return (
     <div className="w-full h-full p-3">

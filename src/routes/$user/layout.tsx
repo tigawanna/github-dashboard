@@ -4,6 +4,8 @@ import { returnTo } from '@/lib/tanstack/router/utils';
 import { createRelayEnvironment } from '@/lib/relay/RelayEnvironment';
 import { graphql } from 'relay-runtime';
 import { z } from 'zod';
+import { loadQuery } from 'react-relay';
+import { layoutUserPageLoaderQuery } from './__generated__/layoutUserPageLoaderQuery.graphql';
 
 
 
@@ -39,29 +41,29 @@ export const Route = createFileRoute("/$user")({
     };
   },
   component: DashboardLayout,
-  // loader(ctx) {
-  //   const { user } = ctx.params;
-  //   const { isFork, orderBy, starOrder } = ctx.deps;
-  //   const relayEnv = ctx.context.relayEnviroment!;
-  //   const queryReference = loadQuery<layoutUserPageLoaderQuery>(
-  //     relayEnv,
-  //     userQuery,
-  //     {
-  //       login: user,
-  //       isFork:isFork||false,
-  //       orderBy: {
-  //         field: orderBy?.field||"PUSHED_AT",
-  //         direction: orderBy?.direction||"DESC",
-  //       },
-  //        starOrder: {
-  //         field: starOrder?.field||"STARRED_AT",
-  //         direction: starOrder?.direction||"DESC",
-  //        }
-  //     },
-  //     { fetchPolicy: "store-or-network" }
-  //   );
-  //   return queryReference;
-  // },
+  loader(ctx) {
+    const { user } = ctx.params;
+    const { isFork, orderBy, starOrder } = ctx.deps;
+    const relayEnv = ctx.context.relayEnviroment!;
+    const queryReference = loadQuery<layoutUserPageLoaderQuery>(
+      relayEnv,
+      userQuery,
+      {
+        login: user,
+        isFork:isFork||false,
+        orderBy: {
+          field: orderBy?.field||"PUSHED_AT",
+          direction: orderBy?.direction||"DESC",
+        },
+         starOrder: {
+          field: starOrder?.field||"STARRED_AT",
+          direction: starOrder?.direction||"DESC",
+         }
+      },
+      { fetchPolicy: "store-or-network" }
+    );
+    return queryReference;
+  },
   async beforeLoad(ctx) {
     const token = ctx.context.PAT;
     if (!token || !ctx.context.viewer) {
