@@ -3,7 +3,6 @@ import { graphql } from "relay-runtime";
 import { UserFragmentCard } from "../../-components/user/UserFragmentCard";
 import { UserFollowingFragment$key } from "./__generated__/UserFollowingFragment.graphql";
 import { UserFollowingPageQuery } from "./__generated__/UserFollowingPageQuery.graphql";
-import { TailwindIndicator, TailwindContainerIndicator } from "@/components/navigation/tailwind-indicator";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 
 

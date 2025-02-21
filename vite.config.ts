@@ -16,8 +16,8 @@ export default defineConfig({
       
     }),
     react(),
-    tailwindcss(),
     tsconfigPaths(),
+    tailwindcss(),
     analyze({
       // highlight the modules with size > 40kb
       filter(moduleObject) {

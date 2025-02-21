@@ -399,3 +399,25 @@ hue-6-2: #e6c07b
 /* .no-transition {
   view-transition-name: none;
 } */
+
+/* Hide the default scroll bar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 12px;
+  border-radius: "50%";
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-base-100 glass;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-accent/70;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-accent;
+}
