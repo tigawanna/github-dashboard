@@ -6,8 +6,8 @@ interface OpenCloseDrawerIconsProps {
 }
 
 export function OpenCloseDrawerIcons({}:OpenCloseDrawerIconsProps){
-const { state, isMobile } = useSidebar();
-if(state === "expanded" || isMobile){
+const { state } = useSidebar();
+if(state === "expanded" ){
     return (<ChevronsLeft />)
 }
 return <ChevronsRight />

@@ -1,7 +1,6 @@
 import { useSidebar } from "@/components/shadcn/ui/sidebar";
-import { useLocation } from "@tanstack/react-router";
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { BadgeCheck, Bell, ChevronsUpDown, ShieldCheck, User } from "lucide-react";
+import { BadgeCheck, Bell, ChevronsUpDown, User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,

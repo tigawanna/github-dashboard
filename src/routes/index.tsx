@@ -3,6 +3,7 @@ import { MainDrawer } from "../components/navigation/drawer/MainDrawer";
 import { MainDrawerLinks } from "../components/navigation/drawer/MainDrawerLinks";
 import { MainDrawerFooter } from "@/components/navigation/drawer/MainDrawerFooter";
 
+
 export const Route = createFileRoute("/")({
   component: Index,
 });

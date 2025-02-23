@@ -1,4 +1,4 @@
-import { StrictMode, Suspense } from "react";
+import { Suspense } from "react";
 import ReactDOM from "react-dom/client";
 import { createRouter } from "@tanstack/react-router";
 // Import the generated route tree
@@ -10,6 +10,7 @@ import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react
 import React from "react";
 import { App } from "./App";
 import { getPAT } from "./lib/viewer/use-viewer";
+
 
 export const queryClient = new QueryClient({
   mutationCache: new MutationCache({
