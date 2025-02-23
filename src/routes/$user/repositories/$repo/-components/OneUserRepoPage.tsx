@@ -6,7 +6,7 @@ import { useLazyLoadQuery } from "react-relay";
 import { Navigate, useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { makeHotToast } from "@/components/toasters";
 import { Stargazers } from "./Stargazers";
-import { Suspense, useTransition } from "react";
+import { Suspense, useState, useTransition } from "react";
 import { OneGithubRepoREADME } from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
@@ -14,10 +14,12 @@ import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCard
 interface OneUserRepoPageProps {}
 
 export function OneUserRepoPage({}: OneUserRepoPageProps) {
+  const [isPending, startTransition] = useTransition();
+  const [tab,setTabs] = useState("readme")
   const { repo, user } = useParams({ from: "/$user/repositories/$repo/" });
-  const { tab } = useSearch({
-    from: "/$user/repositories/$repo/",
-  });
+  // const { tab } = useSearch({
+  //   from: "/$user/repositories/$repo/",
+  // });
   const navigate = useNavigate({
     from: "/$user/repositories/$repo",
   });
@@ -45,12 +47,15 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
             <Tabs
               defaultValue={tab ?? "readme"}
               onValueChange={(value) => {
-                navigate({
-                  search: {
-                    tab: value as typeof tab,
-                  },
-                  viewTransition: false,
-                });
+                startTransition(() => {
+                  setTabs(value)
+                })
+                // navigate({
+                //   search: {
+                //     tab: value as typeof tab,
+                //   },
+                //   viewTransition: false,
+                // });
               }}
               className="w-full h-full ">
               <TabsList className="grid w-full grid-cols-3">

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const viteEnvSchema = z.object({
-    VITE_PAT: z.string(),
+    VITE_PAT: z.string().optional(),
     VITE_PB_URL: z.string().url(),
 })
 
