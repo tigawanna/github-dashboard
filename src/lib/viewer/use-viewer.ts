@@ -121,7 +121,11 @@ export async function getVerifiedPAT() {
     if (!PAT) {
       return;
     }
-    return await verifyGithubPAT(PAT);
+    const viewer = await verifyGithubPAT(PAT);
+    if(!viewer){
+      localStorage.removeItem("PAT");
+  }
+    return PAT
   }
 }
 

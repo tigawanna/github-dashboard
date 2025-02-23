@@ -10,7 +10,7 @@ import "./index.css";
 import { QueryClient } from "@tanstack/react-query";
 import { RootComponent } from "./-components/RootComponent";
 import { z } from "zod";
-import { fetchCurrentViewer, viewerQueryOptions } from "@/lib/viewer/use-viewer";
+import { fetchCurrentViewer, getPAT, getVerifiedPAT, viewerQueryOptions } from "@/lib/viewer/use-viewer";
 import { returnTo } from "@/lib/tanstack/router/utils";
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
 
@@ -28,15 +28,20 @@ export const Route = createRootRouteWithContext<{
   validateSearch: (search) => searchparams.parse(search),
   component: RootComponent,
   beforeLoad: async (ctx) => {
+    const PAT = await getVerifiedPAT()
+    if(!PAT){
+      ctx.context.PAT = undefined;
+      ctx.context.viewer = undefined;
+      throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
+    }
     const viewer = await ctx.context.queryClient.ensureQueryData(
-      viewerQueryOptions(ctx.context.PAT!)
+      viewerQueryOptions(PAT!)
     );
     if (!viewer) {
       ctx.context.PAT = undefined;
       ctx.context.viewer = undefined;
       throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-    }
-
+    }  
     return {
       ...ctx.context,
       viewer,
