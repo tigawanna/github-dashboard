@@ -2,6 +2,10 @@ import { envVariables } from "@/env";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 
+
+
+const GITHUB_API_URL = "https://api.github.com/user";
+
 export function viewerQueryOptions(token: string) {
   return queryOptions({
     queryKey: ["viewer"],
@@ -31,7 +35,6 @@ export function useViewer() {
   return { viewer, logoutMutation };
 }
 
-const GITHUB_API_URL = "https://api.github.com/user";
 // Replace with your GitHub token
 
 export interface GitHubViewer {
@@ -99,6 +102,49 @@ export function getPAT() {
     if (!PAT) {
       return;
     }
+
     return PAT;
+  }
+}
+export async function getVerifiedPAT() {
+  if (envVariables.VITE_PAT) {
+    console.log(" ⚠️⚠️ Using VITE_PAT ⚠️⚠️ ", envVariables.VITE_PAT);
+    return await verifyGithubPAT(envVariables.VITE_PAT);
+  }
+  if (typeof window !== "undefined") {
+    const PAT = localStorage.getItem("PAT");
+    if (!PAT) {
+      return;
+    }
+    return await verifyGithubPAT(PAT);
+  }
+}
+
+export async function verifyGithubPAT(token: string) {
+  try{
+    const response = await fetch(GITHUB_API_URL, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        Accept: "application/vnd.github.v3+json",
+      },
+    });
+
+    if (response.status === 401) {
+      console.error("Github Viewer Unauthorized");
+      return;
+    }
+    if (!response.ok) {
+      console.error("Github Viewer Unauthorized");
+      return;
+    }
+    const user = (await response.json()) as GitHubViewer | undefined;
+    // console.log("Github Viewer === ", user);
+    if(typeof window !== "undefined"){
+      localStorage.setItem("PAT", token);
+    }
+    return user;
+  }catch (error) {
+    console.error("Github Viewer Unauthorized");
+    return;
   }
 }
