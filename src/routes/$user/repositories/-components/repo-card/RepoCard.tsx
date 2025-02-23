@@ -79,6 +79,9 @@ export function RepoCard({
           className="object-cover rounded-t-2xl aspect-video w-full max-h-[150px] @sm:h-[150px] dark:brightness-50 hover:brightness-75"
           loading="lazy"
           src={repo?.openGraphImageUrl}
+          onError={(e) => {
+            e.currentTarget.src = "/github-fallback.png"
+          }}
         />
         <div className="w-full flex gap-3 p-2 brightness-75 hover:text-secondary h-full">
           {/* TODO  crate this page */}
