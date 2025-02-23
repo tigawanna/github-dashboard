@@ -8,10 +8,10 @@ const searchparams = z.object({
 export const Route = createFileRoute("/auth/")({
   validateSearch: (search) => searchparams.parse(search),
   beforeLoad(ctx) {
-    const token = ctx.context.PAT;
-    if (token) {
-      throw redirect({ to: ".."});
-    }
+    // const token = ctx.context.PAT;
+    // if (token) {
+    //   throw redirect({ to: ".."});
+    // }
   },
   component: SigninPage,
 });

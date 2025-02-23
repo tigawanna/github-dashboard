@@ -94,9 +94,9 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | 
 }
 
 export function getPAT() {
-  if (envVariables.VITE_PAT) {
-    return envVariables.VITE_PAT;
-  }
+  // if (envVariables.VITE_PAT) {
+  //   return envVariables.VITE_PAT;
+  // }
   if (typeof window !== "undefined") {
     const PAT = localStorage.getItem("PAT");
     if (!PAT) {
@@ -106,11 +106,16 @@ export function getPAT() {
     return PAT;
   }
 }
-export async function getVerifiedPAT() {
-  if (envVariables.VITE_PAT) {
-    console.log(" ⚠️⚠️ Using VITE_PAT ⚠️⚠️ ", envVariables.VITE_PAT);
-    return await verifyGithubPAT(envVariables.VITE_PAT);
+export function savePAT(PAT: string) {
+  if (typeof window !== "undefined") {
+    localStorage.setItem("PAT", PAT);
   }
+}
+export async function getVerifiedPAT() {
+  // if (envVariables.VITE_PAT) {
+  //   console.log(" ⚠️⚠️ Using VITE_PAT ⚠️⚠️ ", envVariables.VITE_PAT);
+  //   return await verifyGithubPAT(envVariables.VITE_PAT);
+  // }
   if (typeof window !== "undefined") {
     const PAT = localStorage.getItem("PAT");
     if (!PAT) {

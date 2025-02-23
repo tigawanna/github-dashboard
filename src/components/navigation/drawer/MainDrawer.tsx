@@ -45,7 +45,7 @@ export function MainDrawer({ sidebar_props, children, links, header,footer }: Ma
           </div>
         </header>
         {/* main content */}
-        <div data-test="dashboard-layout" className="h-full p-2 min-h-screen ">
+        <div data-test="dashboard-layout" className="h-full w-full justify-center p-2 min-h-screen ">
           {children}
         </div>
       </SidebarInset>

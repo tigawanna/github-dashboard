@@ -26,10 +26,10 @@ export function PATInput({}: PATInputProps) {
   const isdisabled = mutation.isPending || pat.length < 5;
 
   return (
-    <div className="w-full h-full flex flex-col  items-center gap-2 justify-center">
+    <div className="w-full p-2 flex flex-col  items-center gap-2 justify-center">
       <div className=" flex  items-end gap-4 ">
         <div className=" flex flex-col gap-1">
-          <label htmlFor="pat" className="text-xs">
+          <label htmlFor="pat" className="sm">
             Personal Access Token
           </label>
           <input
