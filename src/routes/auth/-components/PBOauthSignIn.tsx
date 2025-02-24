@@ -33,7 +33,6 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
       );
     },
     onSuccess(data, variables, context) {
-      console.log("=== auth data === ", data);
       if (data.data) {
         router.navigate({ to: returnTo });
       }
