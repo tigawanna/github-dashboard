@@ -1,9 +1,13 @@
-import { createFileRoute, useRouteContext} from "@tanstack/react-router";
-import GithubUserCard from "./-components/GithubUsercard";
+import { createFileRoute,useRouteContext} from "@tanstack/react-router";
+import {GithubUserCard} from "./-components/GithubUsercard";
+import { viewerBeforeLoad } from "@/lib/viewer/before-load";
 
 
 export const Route = createFileRoute("/")({
   component: Index,
+  beforeLoad: async (ctx) => {
+    return viewerBeforeLoad(ctx);
+  },
 });
 
 function Index() {

@@ -40,7 +40,7 @@ return (
       </TabsList>
 
       <TabsContent value="repos" className="">
-        <Suspense fallback={<div className="w-full h-full bg-base-200 skeleton">.</div>}>
+        <Suspense fallback={<CardsListSuspenseFallback />}>
           {/* <OneGithubRepoREADME owner={user} repo={repo} branch={defaultBranchName} /> */}
           <UserRepos user_repos_key={query.user} />
         </Suspense>

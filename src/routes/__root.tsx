@@ -13,6 +13,7 @@ import { z } from "zod";
 import { fetchCurrentViewer, getPAT, getVerifiedPAT, viewerQueryOptions } from "@/lib/viewer/use-viewer";
 import { returnTo } from "@/lib/tanstack/router/utils";
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
+import { logRedirected } from "@/utils/log";
 
 const searchparams = z.object({
   globalPage: z.number().optional(),
@@ -27,24 +28,28 @@ export const Route = createRootRouteWithContext<{
 }>()({
   validateSearch: (search) => searchparams.parse(search),
   component: RootComponent,
-  beforeLoad: async (ctx) => {
-    const PAT = await getVerifiedPAT()
-    if(!PAT){
-      ctx.context.PAT = undefined;
-      ctx.context.viewer = undefined;
-      throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-    }
-    const viewer = await ctx.context.queryClient.ensureQueryData(
-      viewerQueryOptions(PAT!)
-    );
-    if (!viewer) {
-      ctx.context.PAT = undefined;
-      ctx.context.viewer = undefined;
-      throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-    }  
-    return {
-      ...ctx.context,
-      viewer,
-    };
-  },
+  // beforeLoad: async (ctx) => {
+  //   const PAT = await getVerifiedPAT()
+  //   if(!PAT || PAT.length < 5){
+  //     console.log("PAT == missing in local storage ==", PAT);
+  //     ctx.context.PAT = undefined;
+  //     ctx.context.viewer = undefined;
+  //     logRedirected(ctx.location.pathname)
+  //     throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
+  //   }
+  //   const viewer = await ctx.context.queryClient.ensureQueryData(
+  //     viewerQueryOptions(PAT!)
+  //   );
+  //   if (!viewer) {
+  //     console.log("=== viewer missing in local storage ==", PAT);
+  //     ctx.context.PAT = undefined;
+  //     ctx.context.viewer = undefined;
+  //     logRedirected(ctx.location.pathname);
+  //     throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
+  //   }  
+  //   return {
+  //     ...ctx.context,
+  //     viewer,
+  //   };
+  // },
 });

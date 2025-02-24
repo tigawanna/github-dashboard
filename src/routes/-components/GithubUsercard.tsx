@@ -17,7 +17,7 @@ type GithubUser = {
   following: number;
 };
 
-export default function GithubUserCard({ user }: { user: GithubUser }) {
+export  function GithubUserCard({ user }: { user: GithubUser }) {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="flex flex-row items-center gap-4">

@@ -6,6 +6,7 @@ import { graphql } from 'relay-runtime';
 import { z } from 'zod';
 import { loadQuery } from 'react-relay';
 import { layoutUserPageLoaderQuery } from './__generated__/layoutUserPageLoaderQuery.graphql';
+import { viewerBeforeLoadWithRelay } from '@/lib/viewer/before-load';
 
 
 
@@ -66,14 +67,7 @@ export const Route = createFileRoute("/$user")({
   },
   component: DashboardLayout,
   async beforeLoad(ctx) {
-    const token = ctx.context.PAT;
-    if (!token || !ctx.context.viewer) {
-      throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-    }
-    return {
-      ...ctx.context,
-      relayEnviroment: createRelayEnvironment(token),
-    };
+    return viewerBeforeLoadWithRelay(ctx);
   },
 });
 

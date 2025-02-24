@@ -1,6 +1,7 @@
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { z } from 'zod';
 import { SigninPage } from './-components/SigninPage';
+import { logRedirected } from '@/utils/log';
 const searchparams = z.object({
   returnTo: z.string(),
 });
@@ -8,10 +9,9 @@ const searchparams = z.object({
 export const Route = createFileRoute("/auth/")({
   validateSearch: (search) => searchparams.parse(search),
   beforeLoad(ctx) {
-    // const token = ctx.context.PAT;
-    // if (token) {
-    //   throw redirect({ to: ".."});
-    // }
+    console.log(" ===== redirected from ======", ctx.location.pathname);
+    logRedirected(ctx.location.pathname);
+
   },
   component: SigninPage,
 });

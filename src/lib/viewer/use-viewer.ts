@@ -1,4 +1,3 @@
-import { envVariables } from "@/env";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 
@@ -22,14 +21,15 @@ export function useViewer() {
  const viewerQuery = useSuspenseQuery(viewerQueryOptions(PAT ?? ""));
  const viewer = viewerQuery.data;
   function logoutMutation() {
-    return new Promise<boolean>((resolve, reject) => {
+    return new Promise<boolean>((resolve) => {
       setTimeout(() => {
         try {
+          removePAT();
           resolve(true);
         } catch (error) {
           resolve(false);
         }
-      });
+      }, 2000);
     });
   }
   return { viewer, logoutMutation };
@@ -72,7 +72,7 @@ export interface GitHubViewer {
   updated_at: string;
 }
 
-export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | undefined> {
+export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | null> {
   const response = await fetch(GITHUB_API_URL, {
     headers: {
       Authorization: `Bearer ${token}`,
@@ -82,13 +82,13 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | 
 
   if (response.status === 401) {
     console.error("Github Viewer Unauthorized");
-    return;
+    return null
   }
   if (!response.ok) {
     console.error("Github Viewer Unauthorized");
-    return;
+    return null
   }
-  const user = (await response.json()) as GitHubViewer | undefined;
+  const user = (await response.json()) as GitHubViewer | null;
   // console.log("Github Viewer === ", user);
   return user;
 }
@@ -109,6 +109,11 @@ export function getPAT() {
 export function savePAT(PAT: string) {
   if (typeof window !== "undefined") {
     localStorage.setItem("PAT", PAT);
+  }
+}
+export function removePAT() {
+  if (typeof window !== "undefined") {
+    localStorage.removeItem("PAT");
   }
 }
 export async function getVerifiedPAT() {
