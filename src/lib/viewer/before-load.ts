@@ -38,6 +38,7 @@ type BeforeLoadContext = BeforeLoadContextOptions<
 
 export async function viewerBeforeLoad<T extends BeforeLoadContext>(ctx: T) {
   const PAT = await getVerifiedPAT();
+  console.log("== pat ==", PAT);
   if (!PAT || PAT.length < 5) {
     ctx.context.PAT = undefined;
     ctx.context.viewer = undefined;

@@ -1,7 +1,7 @@
 import { oneClickOauthLogin, pb } from "@/lib/pb/client";
 import { tryCatchWrapper } from "@/utils/async";
 import { useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { useRouter, useSearch } from "@tanstack/react-router";
+import { invariant, useRouter, useSearch } from "@tanstack/react-router";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
@@ -32,9 +32,13 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
         })
       );
     },
+    meta:{
+      invalidates:["viewer"]
+    },
     onSuccess(data, variables, context) {
       if (data.data) {
-        router.navigate({ to: returnTo });
+         router.invalidate();
+         router.navigate({ to: returnTo });
       }
     },
   });

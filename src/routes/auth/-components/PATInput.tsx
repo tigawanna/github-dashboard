@@ -19,10 +19,14 @@ export function PATInput({}: PATInputProps) {
       const isvalide = await verifyGithubPAT(input);
       return isvalide;
     },
+    meta: {
+      invalidates: ["viewer"],
+    },
     onSuccess(data) {
       if (!data) {
         setError(true);
       } else {
+        router.invalidate()
         router.navigate({ to: returnTo });
       }
     },

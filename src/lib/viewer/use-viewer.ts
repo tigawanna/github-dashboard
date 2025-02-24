@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-query";
-import { useRouteContext } from "@tanstack/react-router";
+import { Navigate, useRouteContext, useRouter } from "@tanstack/react-router";
 
 
 
@@ -20,12 +20,14 @@ export function useViewer() {
   });
  const viewerQuery = useSuspenseQuery(viewerQueryOptions(PAT ?? ""));
  const viewer = viewerQuery.data;
+ const router = useRouter({});
   function logoutMutationFn() {
     return new Promise<boolean>((resolve) => {
       setTimeout(() => {
         try {
           removePAT();
           resolve(true);
+
         } catch (error) {
           resolve(false);
         }
@@ -34,6 +36,11 @@ export function useViewer() {
   }
   const logoutMutation = useMutation({
     mutationFn: logoutMutationFn,
+    onSuccess:async(data, variables, context)=> {
+      if (data) {
+          await router.invalidate()          
+      }
+    },
   });
   return { viewer, logoutMutation };
 }
