@@ -11,8 +11,8 @@ export function SearchPage({}: SearchPageProps) {
         debouncedValue,
         isDebouncing,
         startTransition,
-        setDebouncedValue,
         searchType,
+        setKeyword,
         setSearchType,
       } = useAdvancedGithubSearch();
   return (
@@ -22,8 +22,8 @@ export function SearchPage({}: SearchPageProps) {
         <SearchInputSection
           debouncedValue={debouncedValue}
           isDebouncing={isDebouncing}
+          setKeyword={setKeyword}
           searchType={searchType}
-          setDebouncedValue={setDebouncedValue}
           setSearchType={setSearchType}
           startTransition={startTransition}
         />

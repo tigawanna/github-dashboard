@@ -7,14 +7,8 @@ import { Search } from "lucide-react";
 interface SearchBarProps {}
 
 export function SearchBar({}: SearchBarProps) {
-  const {
-    debouncedValue,
-    isDebouncing,
-    startTransition,
-    setDebouncedValue,
-    searchType,
-    setSearchType,
-  } = useGithubSearch();
+  const { debouncedValue, isDebouncing, startTransition, setKeyword, searchType, setSearchType } =
+    useGithubSearch();
   return (
     <Dialog>
       <DialogTrigger className="w-full">
@@ -38,7 +32,7 @@ export function SearchBar({}: SearchBarProps) {
             debouncedValue={debouncedValue}
             isDebouncing={isDebouncing}
             searchType={searchType}
-            setDebouncedValue={setDebouncedValue}
+            setKeyword={setKeyword}
             setSearchType={setSearchType}
             startTransition={startTransition}
           />

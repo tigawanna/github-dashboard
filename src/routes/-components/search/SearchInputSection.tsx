@@ -15,7 +15,7 @@ import { useLocation } from "@tanstack/react-router";
 interface SearchInputSectionProps {
   isDebouncing: boolean;
   startTransition: React.TransitionStartFunction;
-  setDebouncedValue: React.Dispatch<React.SetStateAction<string>>;
+  setKeyword: React.Dispatch<React.SetStateAction<string>>;
   searchType: SearchType;
   debouncedValue: string;
   setSearchType: React.Dispatch<React.SetStateAction<SearchType>>;
@@ -26,7 +26,7 @@ export function SearchInputSection({
   debouncedValue,
   startTransition,
   searchType,
-  setDebouncedValue,
+  setKeyword,
   setSearchType,
 }: SearchInputSectionProps) {
     const current = useLocation()
@@ -52,7 +52,7 @@ export function SearchInputSection({
             defaultValue={debouncedValue}
             onChange={(e) => {
               startTransition(() => {
-                setDebouncedValue((prev) => {
+                setKeyword((prev) => {
                   return e.target.value;
                 });
               });

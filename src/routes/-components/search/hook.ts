@@ -8,10 +8,10 @@ export function useGithubSearch() {
   const current = useLocation();
   // const initSearchType = current.searchParams.get("st") as SearchType | null;
   // const initSearchValue = current.searchParams.get("sq") ?? "";
-
+  const [keyword,setKeyword] = useState("")
   const [, startTransition] = useTransition();
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
-    "",
+    keyword,
     5000,
   );
   const [searchType, setSearchType] = useState<SearchType>(
@@ -22,6 +22,7 @@ export function useGithubSearch() {
   return {
     debouncedValue,
     setDebouncedValue,
+    setKeyword,
     isDebouncing,
     searchType,
     setSearchType,

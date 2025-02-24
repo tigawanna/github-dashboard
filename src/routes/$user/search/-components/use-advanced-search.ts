@@ -14,19 +14,20 @@ export function useAdvancedGithubSearch() {
   // const initSearchType = current.searchParams.get("st") as SearchType | null;
   // const initSearchValue = current.searchParams.get("sq") ?? "";
   const [, startTransition] = useTransition();
+  const [keyword,setKeyword] = useState("")
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
-    "",
+    keyword,
     5000,
     (debouced) => {
-      // startTransition(() => {
-      //   navigate({
-      //     from: "/$user/search",
-      //     search: {
-      //       q: debouced,
-      //       ...seq,
-      //     },
-      //   })
-      // });
+      startTransition(() => {
+        navigate({
+          from: "/$user/search",
+          search: {
+            q: debouced,
+            ...seq,
+          },
+        })
+      });
     }
   );
 
@@ -38,6 +39,7 @@ export function useAdvancedGithubSearch() {
     searchType,
     setSearchType,
     startTransition,
+    setKeyword,
     current,
   };
 }
