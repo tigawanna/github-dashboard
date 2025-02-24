@@ -38,7 +38,7 @@ type BeforeLoadContext = BeforeLoadContextOptions<
 
 export async function viewerBeforeLoad<T extends BeforeLoadContext>(ctx: T) {
   const PAT = await getVerifiedPAT();
-  console.log("== pat ==", PAT);
+  // console.log("== pat ==", PAT);
   if (!PAT || PAT.length < 5) {
     ctx.context.PAT = undefined;
     ctx.context.viewer = undefined;
@@ -61,7 +61,7 @@ export async function viewerBeforeLoad<T extends BeforeLoadContext>(ctx: T) {
 export async function viewerBeforeLoadWithRelay<T extends BeforeLoadContext>(ctx: T) {
   const PAT = await getVerifiedPAT();
   if (!PAT || PAT.length < 5) {
-    console.log("PAT == missing in local storage ==", PAT);
+    // console.log("PAT == missing in local storage ==", PAT);
     ctx.context.PAT = undefined;
     ctx.context.viewer = undefined;
     logRedirected(ctx.location.pathname);

@@ -19,19 +19,20 @@ export function SearchBar({}: SearchBarProps) {
     <Dialog>
       <DialogTrigger className="w-full">
        <div className="w-full flex items-center justify-end gap-2 px-3">
-       <div className="input border border-base-200 w-full md:w-[60%] "/>
+       <div className="input border border-base-200 w-full md:w-[60%] ">
+        Search for {searchType}
+      </div>
         <Search/>
        </div>
         </DialogTrigger>
       <DialogContent className="w-full min-w-[80%] max-h-[95vh] ">
         <DialogHeader>
-          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogTitle>Search for {searchType}</DialogTitle>
           <DialogDescription>
-            This action cannot be undone. This will permanently delete your account and remove your
-            data from our servers.
+            you can use github's search syntax to refine
           </DialogDescription>
         </DialogHeader>
-        <div className="w-full h-[80vh] flex flex-col items-center justify-center gap-3">
+        <div className="w-full h-[80vh] flex flex-col items-center gap-3">
 
           <SearchInputSection
             debouncedValue={debouncedValue}
