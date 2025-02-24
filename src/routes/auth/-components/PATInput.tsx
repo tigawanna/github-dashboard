@@ -1,6 +1,7 @@
 import { Button } from "@/components/shadcn/ui/button";
 import { verifyGithubPAT } from "@/lib/viewer/use-viewer";
 import { useMutation } from "@tanstack/react-query";
+import { useRouter, useSearch } from "@tanstack/react-router";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 
@@ -9,6 +10,10 @@ interface PATInputProps {}
 export function PATInput({}: PATInputProps) {
   const [pat, setPat] = useState<string>("");
   const [error, setError] = useState(false);
+  const router = useRouter({});
+  const { returnTo } = useSearch({
+    from: "/auth/",
+  });
   const mutation = useMutation({
     mutationFn: async (input: string) => {
       const isvalide = await verifyGithubPAT(input);
@@ -17,6 +22,8 @@ export function PATInput({}: PATInputProps) {
     onSuccess(data) {
       if (!data) {
         setError(true);
+      } else {
+        router.navigate({ to: returnTo });
       }
     },
     onError(error) {
@@ -33,7 +40,7 @@ export function PATInput({}: PATInputProps) {
             Personal Access Token
           </label>
           <input
-           key={error?"error":"success"}
+            key={error ? "error" : "success"}
             type="password"
             data-invalid={error}
             id="pat"

@@ -101,7 +101,7 @@ export function MainDrawerFooter({}: MainDrawerFooterProps) {
             <button
               className="btn btn-error max-w-[98%] w-full"
               onClick={() => {
-                logoutMutation();
+                logoutMutation.mutate();
               }}>
               Logout
             </button>

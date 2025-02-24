@@ -1,9 +1,11 @@
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/shadcn/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import { Badge } from "@/components/shadcn/ui/badge";
-import { MapPin, Users, BookOpen, Link, LayoutDashboard, LogOut } from "lucide-react";
+import { MapPin, Users, BookOpen, Link, LayoutDashboard, LogOut, LogIn, Loader } from "lucide-react";
 import { Button } from "@/components/shadcn/ui/button";
 import {Link as TSRLink} from "@tanstack/react-router"
+import { useViewer } from "@/lib/viewer/use-viewer";
+import { LogoutButton } from "@/lib/viewer/LogoutButton";
 
 type GithubUser = {
   login: string;
@@ -18,6 +20,7 @@ type GithubUser = {
 };
 
 export  function GithubUserCard({ user }: { user: GithubUser }) {
+  const {logoutMutation} = useViewer();
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader className="flex flex-row items-center gap-4">
@@ -68,16 +71,15 @@ export  function GithubUserCard({ user }: { user: GithubUser }) {
         </div>
       </CardContent>
       <CardFooter className="flex justify-between">
+        <div>
+          <LogoutButton/>
 
-          <Button variant="outline">
-            <LogOut className="w-4 h-4 mr-2" />
-            Sign Out
-          </Button>
-
+        </div>
         <Button asChild>
-          <TSRLink to="/$user" params={{user:user.login}}>
+          <TSRLink to="/$user" params={{ user: user.login }}>
             <LayoutDashboard className="w-4 h-4 mr-2" />
             Dashboard
+            <LogIn />
           </TSRLink>
         </Button>
       </CardFooter>

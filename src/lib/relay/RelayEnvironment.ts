@@ -48,18 +48,18 @@ export async function fetchFn({
     });
     if (!resp.ok) {
       // If the response is not okay, then throw an error
-      console.log(" ====== RELAY FETCHER STATUS TEXT ============== ", resp.statusText);
+      // console.log(" ====== RELAY FETCHER STATUS TEXT ============== ", resp.statusText);
       throw new Error(resp.statusText);
     }
     const json = await resp.json();
-    console.log(" ====== RELAY FETCHER JSON ============== ", json);
+    // console.log(" ====== RELAY FETCHER JSON ============== ", json);
     // GraphQL returns exceptions (for example, a missing required variable) in the "errors"
     // property of the response. If any exceptions occurred when processing the request,
     // throw an error to indicate to the developer what went wrong.
     if (json.data&&Array.isArray(json.errors)) {
       const { errors,...rest} = json;
-      console.log("====== RELAY FETCHER PARTIAL DATA ========",rest)
-      console.log("====== RELAY FETCHER PARTIAL ERROR ========",json.errors)
+      // console.log("====== RELAY FETCHER PARTIAL DATA ========",rest)
+      // console.log("====== RELAY FETCHER PARTIAL ERROR ========",json.errors)
       return rest
     }
     if (!json.data&&Array.isArray(json.errors)) {
@@ -71,7 +71,7 @@ export async function fetchFn({
     }
     return json;
   } catch (error) {
-    console.log(" ====== RELAY FETCHER ERROR ============== ", error);
+    // console.log(" ====== RELAY FETCHER ERROR ============== ", error);
     throw error;
   }
 }

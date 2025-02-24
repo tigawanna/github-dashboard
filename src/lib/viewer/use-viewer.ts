@@ -1,4 +1,4 @@
-import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-query";
 import { useRouteContext } from "@tanstack/react-router";
 
 
@@ -20,7 +20,7 @@ export function useViewer() {
   });
  const viewerQuery = useSuspenseQuery(viewerQueryOptions(PAT ?? ""));
  const viewer = viewerQuery.data;
-  function logoutMutation() {
+  function logoutMutationFn() {
     return new Promise<boolean>((resolve) => {
       setTimeout(() => {
         try {
@@ -29,9 +29,12 @@ export function useViewer() {
         } catch (error) {
           resolve(false);
         }
-      }, 2000);
+      }, 5000);
     });
   }
+  const logoutMutation = useMutation({
+    mutationFn: logoutMutationFn,
+  });
   return { viewer, logoutMutation };
 }
 

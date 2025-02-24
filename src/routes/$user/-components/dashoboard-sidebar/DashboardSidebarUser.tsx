@@ -18,6 +18,7 @@ import {
 } from "@/components/shadcn/ui/sidebar";
 import { useViewer } from "@/lib/viewer/use-viewer";
 import { Link, useNavigate } from "@tanstack/react-router";
+import { LogoutButton } from "@/lib/viewer/LogoutButton";
 export function DashboardSidebarUser() {
   const tsrNavigate = useNavigate();
   const { isMobile } = useSidebar();
@@ -26,13 +27,13 @@ export function DashboardSidebarUser() {
   if (!viewer) {
     return null;
   }
-//   const avatarUrl = getFileURL({
-//     collection_id_or_name: "property_user",
-//     fallback: "/avatar.png",
-//     record_id: viewer.id,
-//     file_name: viewer.avatar,
-//   });
-const avatarUrl = viewer.avatar_url
+  //   const avatarUrl = getFileURL({
+  //     collection_id_or_name: "property_user",
+  //     fallback: "/avatar.png",
+  //     record_id: viewer.id,
+  //     file_name: viewer.avatar,
+  //   });
+  const avatarUrl = viewer.avatar_url;
   return (
     <SidebarMenu>
       <SidebarMenuItem>
@@ -41,9 +42,7 @@ const avatarUrl = viewer.avatar_url
             <SidebarMenuButton size="lg" className="">
               <Avatar className="h-8 w-8 rounded-full bg-base-content hover:bg-base-300">
                 <AvatarImage src={avatarUrl} alt={viewer.login} />
-                <AvatarFallback className="rounded-lg">
-                  {viewer.name?.slice(0, 2)}
-                </AvatarFallback>
+                <AvatarFallback className="rounded-lg">{viewer.name?.slice(0, 2)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
                 <span className="truncate font-semibold">{viewer.login}</span>
@@ -89,24 +88,8 @@ const avatarUrl = viewer.avatar_url
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
 
-            {/* <MutationButton
-              className="btn-error max-w-[98%]"
-              onClick={() => {
-                logoutMutation.mutate();
-                tsrNavigate({ to: "/auth", search: { returnTo: "/" } });
-              }}
-              label="Logout"
-              mutation={logoutMutation}
-            /> */}
             <div>
-                <button
-                  className="btn-error max-w-[98%]"
-                  onClick={() => {
-                    logoutMutation();
-                  }}
-                >
-                  Logout
-                </button>
+              <LogoutButton />
             </div>
           </DropdownMenuContent>
         </DropdownMenu>

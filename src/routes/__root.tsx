@@ -1,4 +1,4 @@
-import { createRootRouteWithContext, redirect } from "@tanstack/react-router";
+import { createRootRouteWithContext } from "@tanstack/react-router";
 import "@/view-transition/angled-transition.css";
 import "@/view-transition/wipe-transition.css";
 import "@/view-transition/slides-transition.css";
@@ -10,10 +10,8 @@ import "./index.css";
 import { QueryClient } from "@tanstack/react-query";
 import { RootComponent } from "./-components/RootComponent";
 import { z } from "zod";
-import { fetchCurrentViewer, getPAT, getVerifiedPAT, viewerQueryOptions } from "@/lib/viewer/use-viewer";
-import { returnTo } from "@/lib/tanstack/router/utils";
+import { fetchCurrentViewer } from "@/lib/viewer/use-viewer";
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
-import { logRedirected } from "@/utils/log";
 
 const searchparams = z.object({
   globalPage: z.number().optional(),
@@ -28,28 +26,5 @@ export const Route = createRootRouteWithContext<{
 }>()({
   validateSearch: (search) => searchparams.parse(search),
   component: RootComponent,
-  // beforeLoad: async (ctx) => {
-  //   const PAT = await getVerifiedPAT()
-  //   if(!PAT || PAT.length < 5){
-  //     console.log("PAT == missing in local storage ==", PAT);
-  //     ctx.context.PAT = undefined;
-  //     ctx.context.viewer = undefined;
-  //     logRedirected(ctx.location.pathname)
-  //     throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-  //   }
-  //   const viewer = await ctx.context.queryClient.ensureQueryData(
-  //     viewerQueryOptions(PAT!)
-  //   );
-  //   if (!viewer) {
-  //     console.log("=== viewer missing in local storage ==", PAT);
-  //     ctx.context.PAT = undefined;
-  //     ctx.context.viewer = undefined;
-  //     logRedirected(ctx.location.pathname);
-  //     throw redirect({ to: "/auth", search: { returnTo: returnTo(ctx.location) } });
-  //   }  
-  //   return {
-  //     ...ctx.context,
-  //     viewer,
-  //   };
-  // },
+
 });
