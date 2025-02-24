@@ -5,7 +5,6 @@ import { useLocation, useNavigate, useRouterState, useSearch } from "@tanstack/r
 import { SearchType } from "@/routes/-components/search/__generated__/SearchListQuery.graphql";
 
 export function useAdvancedGithubSearch() {
-  const { status } = useRouterState();
   const current = useLocation();
   const navigate = useNavigate();
   const seq = useSearch({
@@ -23,8 +22,8 @@ export function useAdvancedGithubSearch() {
         navigate({
           from: "/$user/search",
           search: {
-            q: debouced,
             ...seq,
+            q: debouced,
           },
         })
       });

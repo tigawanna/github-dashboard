@@ -5,6 +5,16 @@ import { Navigate, useRouteContext, useRouter } from "@tanstack/react-router";
 
 const GITHUB_API_URL = "https://api.github.com/user";
 
+export function verifiedPATQueryOptions(pat?:string){
+  return queryOptions({
+    queryKey: ["pat", pat],
+    queryFn: async () => {
+      return verifyGithubPAT(pat);
+    },
+    staleTime: 1000 * 60 * 60,
+  });
+}
+
 export function viewerQueryOptions(token: string) {
   return queryOptions({
     queryKey: ["viewer"],
@@ -99,7 +109,7 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | 
     return null
   }
   const user = (await response.json()) as GitHubViewer | null;
-  // console.log("Github Viewer === ", user);
+  console.log("Github Viewer === ", user);
   return user;
 }
 
@@ -136,39 +146,26 @@ export async function getVerifiedPAT() {
     if (!PAT) {
       return;
     }
-    const viewer = await verifyGithubPAT(PAT);
-    if(!viewer){
+    const token = await verifyGithubPAT(PAT);
+    if(!token){
       localStorage.removeItem("PAT");
   }
     return PAT
   }
 }
 
-export async function verifyGithubPAT(token: string) {
+export async function verifyGithubPAT(token?: string) {
   try{
-    const response = await fetch(GITHUB_API_URL, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/vnd.github.v3+json",
-      },
-    });
-
-    if (response.status === 401) {
-      console.error("Github Viewer Unauthorized");
-      return;
+    if(!token){
+      throw new Error("Github Viewer Unauthorized");
     }
-    if (!response.ok) {
-      console.error("Github Viewer Unauthorized");
-      return;
+    const viewer = await fetchCurrentViewer(token);
+    if(!viewer){
+      throw new Error("Github Viewer Unauthorized");
     }
-    const user = (await response.json()) as GitHubViewer | undefined;
-    // console.log("Github Viewer === ", user);
-    if(typeof window !== "undefined"){
-      localStorage.setItem("PAT", token);
-    }
-    return user;
+    return token
   }catch (error) {
     console.error("Github Viewer Unauthorized");
-    return;
+    return null
   }
 }

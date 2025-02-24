@@ -1,10 +1,9 @@
 import { logRedirected } from "@/utils/log";
 import { AnyContext, BeforeLoadContextOptions, redirect, RootRoute } from "@tanstack/react-router";
 import { returnTo } from "../tanstack/router/utils";
-import { fetchCurrentViewer, getVerifiedPAT, viewerQueryOptions } from "./use-viewer";
+import { fetchCurrentViewer, getPAT, getVerifiedPAT, verifiedPATQueryOptions, viewerQueryOptions } from "./use-viewer";
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment";
 import { QueryClient } from "@tanstack/react-query";
-import { RouterTypes } from "../tanstack/router/router-types";
 import { createRelayEnvironment } from "../relay/RelayEnvironment";
 
 // type SearchParams = ((search: Record<string, unknown>) => Record<string, any>)|undefined
@@ -37,8 +36,8 @@ type BeforeLoadContext = BeforeLoadContextOptions<
 >;
 
 export async function viewerBeforeLoad<T extends BeforeLoadContext>(ctx: T) {
-  const PAT = await getVerifiedPAT();
-  // console.log("== pat ==", PAT);
+  const saavedToken = getPAT();
+  const PAT = await ctx.context.queryClient.ensureQueryData(verifiedPATQueryOptions(saavedToken));
   if (!PAT || PAT.length < 5) {
     ctx.context.PAT = undefined;
     ctx.context.viewer = undefined;
@@ -59,7 +58,9 @@ export async function viewerBeforeLoad<T extends BeforeLoadContext>(ctx: T) {
   };
 }
 export async function viewerBeforeLoadWithRelay<T extends BeforeLoadContext>(ctx: T) {
-  const PAT = await getVerifiedPAT();
+  // const PAT = await getVerifiedPAT();
+  const saavedToken = getPAT();
+  const PAT = await ctx.context.queryClient.ensureQueryData(verifiedPATQueryOptions(saavedToken));
   if (!PAT || PAT.length < 5) {
     // console.log("PAT == missing in local storage ==", PAT);
     ctx.context.PAT = undefined;

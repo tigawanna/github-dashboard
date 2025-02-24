@@ -37,7 +37,7 @@ export const queryClient = new QueryClient({
 // Set up a Router instance
 export const router = createRouter({
   routeTree,
-  defaultPreload: "intent",
+  defaultPreload: "render",
   defaultViewTransition: true,
   defaultPendingComponent: () => <RouterPendingComponent />,
   defaultNotFoundComponent: () => <RouterNotFoundComponent />,

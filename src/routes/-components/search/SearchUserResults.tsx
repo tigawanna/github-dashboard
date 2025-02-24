@@ -26,6 +26,7 @@ export function SearchUserResults({ refs }: SearchUserResultsProps) {
     <Link
       to={"/$user"}
       params={{ user: query?.login }}
+      preload={false}
       className="bg-base-300 rounded-lg flex grow gap-2
               w-[95%] md:w-[40%] xl:w-[30%]  
                  justify-between items-center p-1 relative  hover:text-primary">

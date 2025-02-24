@@ -22,6 +22,7 @@ export function SearchRepoResults({ refs }: SearchRepoResultsProps) {
     <Link
       to={`/$user/repositories/$repo`}
       params={{ user, repo }}
+      preload={false}
       className="bg-base-300 rounded-lg grow
                 min-h-fit  md:h-[250px] w-[95%] md:w-[40%] xl:w-[30%]  flex-col
                  justify-between items-center p-1 relative hover:text-primary">
