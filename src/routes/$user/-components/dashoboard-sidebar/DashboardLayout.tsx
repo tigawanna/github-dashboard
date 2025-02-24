@@ -17,6 +17,7 @@ import { Suspense } from "react";
 import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { RouterPendingComponent } from "@/lib/tanstack/router/RouterPendingComponent";
 import { RelayEnvironmentProvider } from "react-relay";
+import { SearchBar } from "@/routes/-components/search/SearchBar";
 
 interface DashboardLayoutProps {
   sidebar_props?: React.ComponentProps<typeof Sidebar>;
@@ -55,6 +56,9 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
         {/* main content */}
         <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
           <RelayEnvironmentProvider environment={relayEnviroment!}>
+            <Suspense fallback={<RouterPendingComponent />}>
+              <SearchBar />
+            </Suspense>
             <Suspense fallback={<RouterPendingComponent />}>
               <Outlet />
             </Suspense>
