@@ -7,7 +7,7 @@ import {
 } from "@/components/shadcn/ui/sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/shadcn/ui/sidebar";
 import { Separator } from "@/components/shadcn/ui/separator";
-import { Outlet, useRouteContext } from "@tanstack/react-router";
+import { Outlet, useLocation, useRouteContext } from "@tanstack/react-router";
 import { DashboardSidebarHeader } from "./DashboardSidebarHeader";
 import { DashboardSidebarLinks } from "./DashboardSidebarLinks";
 import { TSRBreadCrumbs } from "@/lib/tanstack/router/TSRBreadCrumbs";
@@ -24,9 +24,12 @@ interface DashboardLayoutProps {
 }
 
 export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
+  const { pathname } = useLocation();
   const { relayEnviroment } = useRouteContext({
     from: "/$user",
   });
+  const ignoreList = ["/search"];
+  const showSearchBar = !ignoreList.find((path) => pathname.includes(path));
   return (
     <SidebarProvider defaultOpen={false}>
       <Helmet title="Github| Dashboard" description="Dashboard for Github" />
@@ -56,9 +59,11 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
         {/* main content */}
         <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
           <RelayEnvironmentProvider environment={relayEnviroment!}>
-            <Suspense fallback={<RouterPendingComponent />}>
-              <SearchBar />
-            </Suspense>
+            {showSearchBar && (
+              <Suspense fallback={<RouterPendingComponent />}>
+                <SearchBar />
+              </Suspense>
+            )}
             <Suspense fallback={<RouterPendingComponent />}>
               <Outlet />
             </Suspense>

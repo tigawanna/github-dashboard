@@ -1,4 +1,4 @@
-import { Home, SearchSlash, Star, Store, User } from "lucide-react";
+import { Home, Search, SearchSlash, Star, Store, User } from "lucide-react";
 import { RiGitRepositoryCommitsLine } from "react-icons/ri";
 import { TbUsersGroup, TbUsers } from "react-icons/tb";
 
@@ -17,6 +17,7 @@ export const dashboard_routes = [
   },
   { name: "following", href: "/$user/following", icon: <TbUsers /> },
   { name: "followers", href: "/$user/followers", icon: <TbUsersGroup /> },
+  { name: "search", href: "/$user/search", icon: <Search /> },
 ] as const;
 
 export const routes = [
