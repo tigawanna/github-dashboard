@@ -2,6 +2,7 @@ import { SearchType } from "@/routes/-components/search/__generated__/SearchList
 import { RepoInFilters } from "./RepoInFilters";
 import { useState } from "react";
 import { Badge } from "@/components/shadcn/ui/badge";
+import { ForkRangesFilter } from "./ForkRangesFilter";
 
 interface AdvancedGithubFilterProps {
   isDebouncing: boolean;
@@ -17,6 +18,7 @@ export function AdvancedGithubFilter({}:AdvancedGithubFilterProps){
 return (
  <div className='w-full p-2 flex flex-col items-center justify-center'>
   <RepoInFilters  allFilters={allFilters} setAllFilters={setAllFilters}/>
+  <ForkRangesFilter allFilters={allFilters} setAllFilters={setAllFilters}/>
   <div className="w-full flex gap-2">
     {allFilters.map((filter) => (
       <Badge variant={"outline"} key={filter} className="border border-primary rounded-2xl">{filter}</Badge>
