@@ -210,3 +210,15 @@
 ::-webkit-scrollbar-thumb:hover {
   @apply bg-accent;
 }
+
+
+@layer components {
+  .error-border-data {
+    @apply data-[error=true]:border data-[error=true]:border-error;
+  }
+
+  .disabled-container {
+    @apply data-[disabled=true]:opacity-50 data-[disabled=true]:pointer-events-none data-[disabled=true]:cursor-not-allowed;
+  }
+}
+

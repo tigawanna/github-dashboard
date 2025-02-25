@@ -1,5 +1,5 @@
 import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
-import { Navigate, useRouteContext, useRouter } from "@tanstack/react-router";
+import { useRouteContext, useRouter } from "@tanstack/react-router";
 
 
 
@@ -111,7 +111,7 @@ export async function fetchCurrentViewer(token: string): Promise<GitHubViewer | 
     return null
   }
   const user = (await response.json()) as GitHubViewer | null;
-  console.log("Github Viewer === ", user);
+  // console.log("Github Viewer === ", user);
   return user;
 }
 

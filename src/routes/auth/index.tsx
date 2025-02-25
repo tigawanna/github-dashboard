@@ -9,7 +9,7 @@ const searchparams = z.object({
 export const Route = createFileRoute("/auth/")({
   validateSearch: (search) => searchparams.parse(search),
   beforeLoad(ctx) {
-    console.log("auth ctx before load",ctx);
+    // console.log("auth ctx before load",ctx);
   },
   component: SigninPage,
 });
