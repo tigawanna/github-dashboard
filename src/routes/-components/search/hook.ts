@@ -1,4 +1,4 @@
-import { useTransition, useState, useEffect } from "react";
+import { useTransition, useState } from "react";
 
 import { SearchType } from "./__generated__/SearchListQuery.graphql";
 import { useDebouncedValue } from "@/hooks/use-debouncer";

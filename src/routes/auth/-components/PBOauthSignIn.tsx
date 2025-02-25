@@ -5,6 +5,12 @@ import {  useRouter, useSearch } from "@tanstack/react-router";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/shadcn/ui/accordion";
 
 interface PBOauthSignInProps {}
 
@@ -93,44 +99,52 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
 
   return (
     <div className="w-full flex flex-col  justify-center  p-1 items-center gap-5">
-      <div className=" flex flex-col justify-center items-center gap-2">
-        {scopeOptions.map((scope) => (
-          <label
-            key={scope.id}
-            className="flex w-full bg-primary/10 items-start space-x-3 p-3 rounded-lg hover:bg-base-300 transition-colors">
-            <input
-              type="checkbox"
-              className="checkbox checkbox-accent mt-1 border border-accent"
-              checked={selectedScopes.includes(scope.id)}
-              onChange={() => handleScopeToggle(scope.id)}
-            />
-            <div className="flex flex-col">
-              <span className="font-medium text-sm">{scope.label}</span>
-              <span className="text-sm text-base-content/70">{scope.description}</span>
-            </div>
-          </label>
-        ))}
-        {selectedScopes.length === 0 && (
-          <div role="alert" className="alert alert-info alert-outline">
-            <span className="text-xs text-center">
-              if no scopes are selected, the default read-only access to public information will be
-              used
-            </span>
-          </div>
-        )}
-      </div>
-      <button
-        disabled={mutation.isPending}
-        className="btn btn-wide btn-accent w-full"
-        onClick={() => {
-          mutation.mutate(selectedScopes);
-        }}>
-        <FaGithub className="h-5 w-5" />
-        Sign in with GitHub
-        {mutation.isPending && <Loader className="animate-spin h-5 w-5" />}
-      </button>
-      <div className="w-[60%]   flex flex-col items-center justify-center">
-        <div className="divider ">OR</div>
+      <div className="w-[90%] md:w-[70%] lg:w-[50%] rounded-2xl flex flex-col border justify-center  p-5 items-center gap-5">
+        <h1 className="text-2xl font-bold">Sign in with GitHub</h1>
+
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>Adjust token scopes</AccordionTrigger>
+            <AccordionContent className="w-full">
+              <div className=" w-full flex flex-col justify-center items-center gap-2">
+                {scopeOptions.map((scope) => (
+                  <label
+                    key={scope.id}
+                    className="flex w-full bg-primary/10 items-start space-x-3 p-1 rounded-lg hover:bg-base-300 transition-colors">
+                    <input
+                      type="checkbox"
+                      className="checkbox checkbox-accent mt-1 border border-accent"
+                      checked={selectedScopes.includes(scope.id)}
+                      onChange={() => handleScopeToggle(scope.id)}
+                    />
+                    <div className="flex w-full flex-col">
+                      <span className="font-medium text-sm">{scope.label}</span>
+                      <span className="text-sm text-base-content/70">{scope.description}</span>
+                    </div>
+                  </label>
+                ))}
+                {selectedScopes.length === 0 && (
+                  <div role="alert" className="alert alert-info alert-outline">
+                    <span className="text-xs text-center">
+                      if no scopes are selected, the default read-only access to public information
+                      will be used
+                    </span>
+                  </div>
+                )}
+              </div>
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+        <button
+          disabled={mutation.isPending}
+          className="btn btn-wide btn-primary btn-outline w-full"
+          onClick={() => {
+            mutation.mutate(selectedScopes);
+          }}>
+          <FaGithub className="h-5 w-5" />
+          Sign in with GitHub
+          {mutation.isPending && <Loader className="animate-spin h-5 w-5" />}
+        </button>
       </div>
     </div>
   );
