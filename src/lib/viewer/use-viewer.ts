@@ -1,4 +1,4 @@
-import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { queryOptions, useMutation, useQueryClient, useSuspenseQuery } from "@tanstack/react-query";
 import { Navigate, useRouteContext, useRouter } from "@tanstack/react-router";
 
 
@@ -17,7 +17,7 @@ export function verifiedPATQueryOptions(pat?:string){
 
 export function viewerQueryOptions(token: string) {
   return queryOptions({
-    queryKey: ["viewer"],
+    queryKey: ["viewer",token],
     queryFn: async () => {
       return fetchCurrentViewer(token);
     },
@@ -28,6 +28,7 @@ export function useViewer() {
   const { PAT } = useRouteContext({
     from: "__root__",
   });
+  const qc = useQueryClient()
  const viewerQuery = useSuspenseQuery(viewerQueryOptions(PAT ?? ""));
  const viewer = viewerQuery.data;
  const router = useRouter({});
@@ -36,6 +37,7 @@ export function useViewer() {
       setTimeout(() => {
         try {
           removePAT();
+          qc.invalidateQueries(viewerQueryOptions(PAT ?? ""))
           resolve(true);
 
         } catch (error) {
