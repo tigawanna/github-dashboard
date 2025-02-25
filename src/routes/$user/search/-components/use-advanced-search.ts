@@ -1,7 +1,6 @@
-import { useTransition, useState, useEffect } from "react";
-
+import { useTransition, useState } from "react";
 import { useDebouncedValue } from "@/hooks/use-debouncer";
-import { useLocation, useNavigate, useRouterState, useSearch } from "@tanstack/react-router";
+import { useLocation, useNavigate, useSearch } from "@tanstack/react-router";
 import { SearchType } from "@/routes/-components/search/__generated__/SearchListQuery.graphql";
 
 export function useAdvancedGithubSearch() {
@@ -10,13 +9,12 @@ export function useAdvancedGithubSearch() {
   const seq = useSearch({
     from: "/$user/search/",
   });
-  // const initSearchType = current.searchParams.get("st") as SearchType | null;
-  // const initSearchValue = current.searchParams.get("sq") ?? "";
+
   const [, startTransition] = useTransition();
   const [keyword,setKeyword] = useState("")
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
     keyword,
-    5000,
+    3000,
     (debouced) => {
       startTransition(() => {
         navigate({
