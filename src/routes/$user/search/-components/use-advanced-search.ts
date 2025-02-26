@@ -27,7 +27,7 @@ export function useAdvancedGithubSearch() {
       });
     }
   );
-  const searchFilters = seq.filters?.join(" ") 
+  const searchFilters = seq.filters?.join(" ")??"" 
   
   const [searchType, setSearchType] = useState<SearchType>("REPOSITORY");
   return {

@@ -34,13 +34,7 @@ export function AdvancedSearchInputSection({
 
   return (
     <div
-      className="w-full flex items-center justify-center"
-      onKeyDownCapture={(e) => {
-        //  naviaget on hit enter key
-        // if (e.key === "Enter"  && debouncedValue.length > 0) {
-        //   navigate(navigate_to.toString());
-        // }
-      }}>
+      className="w-full flex items-center justify-center">
       <div className="w-full flex items-center justify-center gap-2">
         <div className="w-full relative">
           <Input

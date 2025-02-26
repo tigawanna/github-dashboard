@@ -7,7 +7,7 @@ import {
 } from "@/components/shadcn/ui/sidebar";
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/components/shadcn/ui/sidebar";
 import { Separator } from "@/components/shadcn/ui/separator";
-import { Outlet, useLocation, useRouteContext } from "@tanstack/react-router";
+import { Link, Outlet, useLocation, useParams, useRouteContext } from "@tanstack/react-router";
 import { DashboardSidebarHeader } from "./DashboardSidebarHeader";
 import { DashboardSidebarLinks } from "./DashboardSidebarLinks";
 import { TSRBreadCrumbs } from "@/lib/tanstack/router/TSRBreadCrumbs";
@@ -18,12 +18,16 @@ import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { RouterPendingComponent } from "@/lib/tanstack/router/RouterPendingComponent";
 import { RelayEnvironmentProvider } from "react-relay";
 import { SearchBar } from "@/routes/-components/search/SearchBar";
+import { ExternalLink, Search } from "lucide-react";
 
 interface DashboardLayoutProps {
   sidebar_props?: React.ComponentProps<typeof Sidebar>;
 }
 
 export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
+  const { user } = useParams({
+    from: "/$user",
+  });
   const { pathname } = useLocation();
   const { relayEnviroment } = useRouteContext({
     from: "/$user",
@@ -57,12 +61,23 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
           </div>
         </header>
         {/* main content */}
-        <div data-test="dashboard-layout" className="h-full mt-12 p-2 min-h-screen ">
+        <div data-test="dashboard-layout" className="h-full  p-2 min-h-screen ">
           <RelayEnvironmentProvider environment={relayEnviroment!}>
-            {showSearchBar && (
+            {/* {showSearchBar && (
               <Suspense fallback={<RouterPendingComponent />}>
                 <SearchBar />
               </Suspense>
+            )} */}
+            {showSearchBar && (
+              <Link
+                to="/$user/search"
+                params={{ user }}
+                className="w-full flex cursor-pointer items-center group hover:text-primary  justify-end gap-2 px-3 ">
+                <div className="input border cursor-pointer border-base-200 group-hover:border-primary w-full md:w-[60%] relative">
+                  Search <ExternalLink className="hidden size-3 group-hover:block " />
+                </div>
+                <Search className="absolute right-[3%]" />
+              </Link>
             )}
             <Suspense fallback={<RouterPendingComponent />}>
               <Outlet />
