@@ -2,6 +2,45 @@
 
 A modern GitHub dashboard built with React 19, Relay, and TailwindCSS. View and manage your repositories efficiently!
 
+## ✨ Current Features
+
+### User Interactions
+- 👥 Follow/Unfollow Users
+  - Manage following status
+  - View follower/following counts
+  - Quick user profile access
+
+
+### Repository Details
+- 🌿 Branch Management
+  - List all branches
+  - Branch protection status
+  - Latest commit information
+- 📝 Commit History
+  - View recent commits
+  - Commit details and messages
+  - Author information
+
+
+### Repository Management
+- 🗑️ Bulk Repository Deletion
+  - Select multiple repositories
+  - Confirm and delete in batch
+- 📋 Repository Listing
+  - View all your repositories
+  - Sort by various criteria
+  - Quick access to repository details
+
+### Advanced Search
+- 🔍 Visual Query Builder
+  - Complex GitHub search syntax made easy
+  - Date range filters (created, updated, pushed)
+  - Language filters
+  - Star count filters
+  - Size and fork filters
+
+
+
 ## 🔥 Tech Stack
 
 - ⚛️ React 19 (Latest)
