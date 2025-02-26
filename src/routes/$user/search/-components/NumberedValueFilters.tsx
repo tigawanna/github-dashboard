@@ -1,5 +1,5 @@
 import { Input } from "@/components/shadcn/ui/input";
-import { useState } from "react";
+import { SetStateAction, useState } from "react";
 import {
   Select,
   SelectContent,
@@ -7,18 +7,30 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/shadcn/ui/select";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/shadcn/ui/dialog";
 import { filterComparatorsArray, RepositoryFilter } from "./shared";
 import { Button } from "@/components/shadcn/ui/button";
+import { ChevronsLeftRight } from "lucide-react";
+import { Badge } from "@/components/shadcn/ui/badge";
 
 interface NumberedValueFiltersProps {
-  fieldName: RepositoryFilter;
+  field: RepositoryFilter;
   allFilters: string[];
   setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
+  setOpen: React.Dispatch<SetStateAction<boolean>>;
 }
 
 export function NumberedValueFilters({
-  fieldName,
+  field,
   allFilters,
+  setOpen,
   setAllFilters,
 }: NumberedValueFiltersProps) {
   const [exactValue, setExactValue] = useState(-1);
@@ -36,30 +48,31 @@ export function NumberedValueFilters({
   };
   const sillyRangeState = lessThanValue > greaterThanValue;
   const rangeValuesWillBeIgnored = exactValue > -1;
-  const disableApplyButton = ()=>{
-    if(sillyRangeState){
-      return true
+  const disableApplyButton = () => {
+    if (sillyRangeState) {
+      return true;
     }
-    return false
-  }
+    return false;
+  };
   const updateRangeFilters = () => {
     setAllFilters((prev) => {
-      const newArray = prev.filter((f) => !f.startsWith(fieldName));
+      const newArray = prev.filter((f) => !f.startsWith(field.name));
       if (exactValue > -1) {
-        newArray.push(`${fieldName}${exactValue}`);
+        newArray.push(`${field.name}${exactValue}`);
       } else {
         if (lessThanValue > 0) {
-          newArray.push(`${fieldName}<=${lessThanValue}`);
+          newArray.push(`${field.name}<=${lessThanValue}`);
         }
         if (greaterThanValue > 0) {
-          newArray.push(`${fieldName}>${greaterThanValue}`);
+          newArray.push(`${field.name}>${greaterThanValue}`);
         }
       }
       return newArray;
     });
+    setOpen(false);
   };
   return (
-    <div className="w-full h-full flex flex-col gap-2 items-center justify-center">
+    <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
       <div className="w-full  flex flex-col items-center justify-center">
         <Input
           type="number"
@@ -101,7 +114,7 @@ export function NumberedValueFilters({
             <p className="text-error text-sm">cannot be bigger than greater than value</p>
           )}
         </div>
-        <div className="min-w-fit   px-2">{fieldName}</div>
+        <div className="min-w-fit px-2">{field.name}</div>
         {/* greater than */}
         <div className="w-fit flex-1   flex flex-col items-center justify-center">
           <div
@@ -149,5 +162,45 @@ export function NumberedValueFilters({
         Apply
       </Button>
     </div>
+  );
+}
+
+interface NumberedValueFiltersDialogProps {
+  field: RepositoryFilter;
+  allFilters: string[];
+  setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
+}
+
+export function NumberedValueFiltersDialog({
+  field,
+  allFilters,
+  setAllFilters,
+}: NumberedValueFiltersDialogProps) {
+  const [open, setOpen] = useState(false);
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger>
+        <Button variant={"outline"} className="rounded-xl">
+        {field.name}
+        {field.icon}
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Filter by {field.name}</DialogTitle>
+          <DialogDescription>
+            {
+              "Uses github search syntax like language:javascript stars:>100 forks:<500 size:>10000 size:<50000 created:>=2020-01-01 created:<2023-01-01"
+            }
+          </DialogDescription>
+        </DialogHeader>
+        <NumberedValueFilters
+          field={field}
+          allFilters={allFilters}
+          setAllFilters={setAllFilters}
+          setOpen={setOpen}
+        />
+      </DialogContent>
+    </Dialog>
   );
 }

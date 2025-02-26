@@ -10,6 +10,8 @@
 //   | "user:facebook"
 //   | "org:google";
 
+import { GitFork, MemoryStick, Star } from "lucide-react";
+
 export const filterComparatprs = {
   ">=": "gte",
   ">": "gt",
@@ -17,6 +19,11 @@ export const filterComparatprs = {
   "<": "lt",
 } as const;
 export const filterComparatorsArray = Object.entries(filterComparatprs);
-export const reposRangedFilters = ["stars:", "forks:","size:"] as const;
+// export const reposRangedFilters = ["stars:", "forks:", "size:"] as const;
+export const reposRangedFilters = [
+  { name: "stars:", icon: <Star /> },
+  { name: "forks:", icon: <GitFork /> },
+  { name: "size:", icon: <MemoryStick /> },
+] as const; //["stars:", {name:"forks:",icon:"fork"}, "forks:","size:"] as const;
 
-export type RepositoryFilter = typeof reposRangedFilters[number]
+export type RepositoryFilter = (typeof reposRangedFilters)[number];
