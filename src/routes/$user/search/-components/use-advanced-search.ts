@@ -1,7 +1,8 @@
 import { useTransition, useState } from "react";
 import { useDebouncedValue } from "@/hooks/use-debouncer";
 import { useLocation, useNavigate, useSearch } from "@tanstack/react-router";
-import { SearchType } from "@/routes/-components/search/__generated__/SearchListQuery.graphql";
+import { SearchType } from "./list/__generated__/SearchListQuery.graphql";
+
 
 export function useAdvancedGithubSearch() {
   const current = useLocation();

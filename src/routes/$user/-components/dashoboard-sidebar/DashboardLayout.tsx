@@ -17,7 +17,6 @@ import { Suspense } from "react";
 import { DashboardSidebarUser } from "./DashboardSidebarUser";
 import { RouterPendingComponent } from "@/lib/tanstack/router/RouterPendingComponent";
 import { RelayEnvironmentProvider } from "react-relay";
-import { SearchBar } from "@/routes/-components/search/SearchBar";
 import { ExternalLink, Search } from "lucide-react";
 
 interface DashboardLayoutProps {
@@ -63,11 +62,6 @@ export function DashboardLayout({ sidebar_props }: DashboardLayoutProps) {
         {/* main content */}
         <div data-test="dashboard-layout" className="h-full  p-2 min-h-screen ">
           <RelayEnvironmentProvider environment={relayEnviroment!}>
-            {/* {showSearchBar && (
-              <Suspense fallback={<RouterPendingComponent />}>
-                <SearchBar />
-              </Suspense>
-            )} */}
             {showSearchBar && (
               <Link
                 to="/$user/search"

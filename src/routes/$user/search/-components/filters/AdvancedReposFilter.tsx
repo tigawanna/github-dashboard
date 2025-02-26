@@ -1,5 +1,4 @@
-import { SearchType } from "@/routes/-components/search/__generated__/SearchListQuery.graphql";
-import { RepoInFilters } from "./RepoInFilters";
+
 import { useState, useTransition } from "react";
 import { RepositoryRangesFilter } from "./RepositoryRangesFilter";
 import { ListFilterPlus, Loader, X } from "lucide-react";
@@ -13,7 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
-import { GithubLanguagesFilter } from "./GithubLanguagesFilter";
+import { SearchType } from "../list/__generated__/SearchListQuery.graphql";
+import { WordInFilters } from "./WordInFilters";
 
 interface AdvancedReposFilterProps {
   isDebouncing: boolean;
@@ -58,7 +58,7 @@ export function AdvancedReposFilter({}: AdvancedReposFilterProps) {
         <div className="w-full p-2 flex flex-col gap-2 ">
           <div className="w-full p-5 flex flex-col gap-5 ">
             <div className="divider divider-primary">text in filters</div>
-          <RepoInFilters allFilters={allFilters} setAllFilters={setAllFilters} />
+            <WordInFilters allFilters={allFilters} setAllFilters={setAllFilters} />
 
             <div className="divider divider-primary">range filters</div>
             <RepositoryRangesFilter allFilters={allFilters} setAllFilters={setAllFilters} />

@@ -1,7 +1,7 @@
-import { SearchListSuspenseFalllback, SearchList } from "@/routes/-components/search/SearchList";
 import { Suspense } from "react";
 import { useAdvancedGithubSearch } from "./use-advanced-search";
 import { AdvancedSearchInputSection } from "./AdvancedSearchInputSection";
+import { SearchListSuspenseFalllback, SearchList } from "./list/SearchList";
 
 interface SearchPageProps {}
 

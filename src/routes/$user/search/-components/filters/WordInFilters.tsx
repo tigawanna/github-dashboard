@@ -25,14 +25,13 @@ interface WordInfiltersProps {
   setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-export function RepoInFilters({allFilters,setAllFilters}: WordInfiltersProps) {
-
-const hasFilter = (value: string) => {
+export function WordInFilters({ allFilters, setAllFilters }: WordInfiltersProps) {
+  const hasFilter = (value: string) => {
     const inFiltersSet = new Set(allFilters);
     return inFiltersSet.has(value);
   };
-  
-  function handleChecked(checked: boolean, value: string) {  
+
+  function handleChecked(checked: boolean, value: string) {
     if (hasFilter(value) && checked === false) {
       setAllFilters((prev) => {
         return prev.filter((f) => f !== value);

@@ -1,5 +1,5 @@
 import { NumberedValueFiltersDialog } from "./NumberedValueFilters";
-import { dateRangeFilters, reposRangedFilters } from "./shared";
+import { dateRangeFilters, reposRangedFilters } from "../shared";
 import { DatedValueFiltersDialog } from "./DatedValueFilters";
 
 interface RepositoryRangesFilterProps {

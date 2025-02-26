@@ -9,8 +9,8 @@ import {
 } from "@/components/shadcn/ui/select";
 import { Input } from "@/components/shadcn/ui/input";
 import { Loader } from "lucide-react";
-import { SearchType } from "@/routes/-components/search/__generated__/SearchListQuery.graphql";
-import { AdvancedReposFilter } from "./AdvancedReposFilter";
+import { AdvancedReposFilter } from "./filters/AdvancedReposFilter";
+import { SearchType } from "./list/__generated__/SearchListQuery.graphql";
 
 
 interface AdvancedSearchInputSectionProps {
