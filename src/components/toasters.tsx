@@ -22,17 +22,17 @@ export function makeHotToast({
   const toastVariantStyle = (toastAvriant: typeof variant) => {
     switch (toastAvriant) {
       case "success":
-        return " to-success/20 text-success";
+        return " to-success text-success";
       case "info":
-        return "to-info/20 text-info";
+        return "to-info text-info";
       case "warning":
-        return "to-warning/20 text-warning";
+        return "to-warning text-warning";
       case "error":
-        return "to-error/20 text-error";
+        return "to-error text-error";
       case "mixed":
-        return "to-info/20 text-info";
+        return "to-info text-info";
       default:
-        return "to-info/20 text-info";
+        return "to-info text-info";
     }
   };
   // @ts-expect-error
@@ -41,10 +41,10 @@ export function makeHotToast({
         <div
           className={`${t.visible ? "animate-enter" : "animate-leave"} ${toastVariantStyle(
             variant
-          )} pointer-events-auto flex w-full max-w-md rounded-lg bg-linear-to-r from-base-200  ring-1 ring-success ring-opacity-5 dark:shadow-xs`}>
+          )} pointer-events-auto flex w-full max-w-md border-none rounded-2xl bg-base-300 text-base-content shadow-lg ring-1 ring-success ring-opacity-5 dark:shadow-xs`}>
           <div className="w-0 flex-1 p-4">
             <div className="flex items-center justify-center">
-              <div className="h-full shrink-0 items-center justify-center pt-0.5">
+              <div className="h-full shrink-0 items-center justify-center pt-0.5">  
                 {variant === "success" && (
                   <CheckCircle2 className="aspect-square h-full text-success" />
                 )}

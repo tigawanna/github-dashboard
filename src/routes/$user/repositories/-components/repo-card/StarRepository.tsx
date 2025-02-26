@@ -31,9 +31,10 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
               variables: { starrableId: id },
               onError(error) {
                 makeHotToast({
-                  title: "Error starring",
+                  title: "Error unstarring",
                   variant: "error",
-                  description:humanReadableGQLError(error),
+                  description: humanReadableGQLError(error),
+                  duration: 7000,
                 });
               },
             });
@@ -45,6 +46,7 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
                   title: "Error starring",
                   variant: "error",
                   description: humanReadableGQLError(error),
+                  duration:7000,
                 });
               },
             });
