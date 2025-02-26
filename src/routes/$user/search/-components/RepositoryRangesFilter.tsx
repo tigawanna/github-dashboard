@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { NumberedValueFilters, NumberedValueFiltersDialog } from "./NumberedValueFilters";
+import { NumberedValueFiltersDialog } from "./NumberedValueFilters";
 import { dateRangeFilters, reposRangedFilters } from "./shared";
 import { DatedValueFiltersDialog } from "./DatedValueFilters";
 
@@ -24,6 +23,7 @@ return (
       ))}
       {dateRangeFilters.map((filter) => (
         <DatedValueFiltersDialog
+        key={filter}
         field={filter}
         allFilters={allFilters}
         setAllFilters={setAllFilters}

@@ -11,7 +11,7 @@ export function useAdvancedGithubSearch() {
   });
 
   const [, startTransition] = useTransition();
-  const [keyword,setKeyword] = useState("")
+  const [keyword,setKeyword] = useState(seq.q??"")
   const { debouncedValue, setDebouncedValue, isDebouncing } = useDebouncedValue(
     keyword,
     3000,
@@ -27,10 +27,11 @@ export function useAdvancedGithubSearch() {
       });
     }
   );
-
+  const searchFilters = seq.filters?.join(" ") 
+  
   const [searchType, setSearchType] = useState<SearchType>("REPOSITORY");
   return {
-    debouncedValue,
+    debouncedValue:debouncedValue+" "+searchFilters,
     setDebouncedValue,
     isDebouncing,
     searchType,
