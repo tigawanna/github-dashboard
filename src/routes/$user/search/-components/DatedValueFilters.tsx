@@ -15,12 +15,12 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/shadcn/ui/dialog";
-import { filterComparatorsArray, RepositoryFilter } from "./shared";
+import { filterComparatorsArray, DateRangeFilter } from "./shared";
 import { Button } from "@/components/shadcn/ui/button";
-
+import { Calendar, X } from "lucide-react";
 
 interface DatedValueFiltersProps {
-  field: RepositoryFilter;
+  field: DateRangeFilter;
   allFilters: string[];
   setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
   setOpen: React.Dispatch<SetStateAction<boolean>>;
@@ -32,65 +32,60 @@ export function DatedValueFilters({
   setOpen,
   setAllFilters,
 }: DatedValueFiltersProps) {
-  const [exactValue, setExactValue] = useState(-1);
-  const [lessThanValue, setLessThanValue] = useState(0);
-  const [greaterThanValue, setGreaterThanValue] = useState(0);
-  const updateLessThanValue = (newValue: string) => {
-    const newNumber = parseInt(newValue);
-    if (newNumber < 0) return;
-    setLessThanValue(newNumber);
-  };
-  const updateGreaterThanValue = (newValue: string) => {
-    const newNumber = parseInt(newValue);
-    if (newNumber < 0) return;
-    setGreaterThanValue(newNumber);
-  };
-  const sillyRangeState = lessThanValue > greaterThanValue;
-  const rangeValuesWillBeIgnored = exactValue > -1;
+  const [exactValue, setExactValue] = useState("");
+  const [lessThanValue, setLessThanValue] = useState("");
+  const [greaterThanValue, setGreaterThanValue] = useState("");
+
+  const sillyRangeState =
+    lessThanValue && greaterThanValue && new Date(lessThanValue) < new Date(greaterThanValue);
+
+  const rangeValuesWillBeIgnored = Boolean(exactValue);
+
   const disableApplyButton = () => {
     if (sillyRangeState) {
       return true;
     }
     return false;
   };
+  const clearExactAmount = () => {
+    setExactValue("");
+  }
   const updateRangeFilters = () => {
     setAllFilters((prev) => {
-      const newArray = prev.filter((f) => !f.startsWith(field.name));
-      if (exactValue > -1) {
-        newArray.push(`${field.name}${exactValue}`);
+      const newArray = prev.filter((f) => !f.startsWith(field));
+      if (exactValue) {
+        newArray.push(`${field}${exactValue}`);
       } else {
-        if (lessThanValue > 0) {
-          newArray.push(`${field.name}<=${lessThanValue}`);
+        if (lessThanValue) {
+          newArray.push(`${field}<=${lessThanValue}`);
         }
-        if (greaterThanValue > 0) {
-          newArray.push(`${field.name}>${greaterThanValue}`);
+        if (greaterThanValue) {
+          newArray.push(`${field}>${greaterThanValue}`);
         }
       }
       return newArray;
     });
     setOpen(false);
   };
+
   return (
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-      <div className="w-full  flex flex-col items-center justify-center">
-        <Input
-          type="number"
-          value={exactValue}
-          onChange={(e) => setExactValue(parseInt(e.target.value))}
-        />
+      <div className="w-full flex items-center justify-center relative">
+        <Input type="date" value={exactValue} 
+        onChange={(e) => setExactValue(e.target.value)} />
+        <X className="cursor-pointer size-4 absolute right-2" onClick={clearExactAmount} />
       </div>
       <div
         data-disabled={rangeValuesWillBeIgnored}
-        className="w-full h-full flex flex-wrap  items-center justify-center disabled-container ">
+        className="w-full h-full flex flex-wrap items-center justify-center disabled-container">
         <div className="w-fit flex-1 flex flex-col items-center justify-center">
           <div
             data-error={sillyRangeState}
-            className="w-full error-border-data  flex  items-center justify-center">
+            className="w-full error-border-data flex items-center justify-center">
             <Input
-              className=""
-              type="number"
+              type="date"
               value={lessThanValue}
-              onChange={(e) => updateLessThanValue(e.target.value)}
+              onChange={(e) => setLessThanValue(e.target.value)}
             />
             <Select>
               <SelectTrigger className="w-[100px] min-w-fit">
@@ -110,15 +105,14 @@ export function DatedValueFilters({
             </Select>
           </div>
           {sillyRangeState && (
-            <p className="text-error text-sm">cannot be bigger than greater than value</p>
+            <p className="text-error text-sm">End date cannot be before start date</p>
           )}
         </div>
-        <div className="min-w-fit px-2">{field.name}</div>
-        {/* greater than */}
-        <div className="w-fit flex-1   flex flex-col items-center justify-center">
+        <div className="min-w-fit px-2">{field}</div>
+        <div className="w-fit flex-1 flex flex-col items-center justify-center">
           <div
             data-error={sillyRangeState}
-            className="w-full error-border-data  flex  items-center justify-center">
+            className="w-full error-border-data flex items-center justify-center">
             <Select>
               <SelectTrigger className="w-[100px] min-w-fit">
                 <SelectValue placeholder="gt >" />
@@ -136,14 +130,13 @@ export function DatedValueFilters({
               </SelectContent>
             </Select>
             <Input
-              className=""
-              type="number"
+              type="date"
               value={greaterThanValue}
-              onChange={(e) => updateGreaterThanValue(e.target.value)}
+              onChange={(e) => setGreaterThanValue(e.target.value)}
             />
           </div>
           {sillyRangeState && (
-            <p className="text-error text-sm">cannot be smaller than less than value</p>
+            <p className="text-error text-sm">Start date cannot be after end date</p>
           )}
         </div>
       </div>
@@ -152,12 +145,7 @@ export function DatedValueFilters({
           range values get ignored when an exact value is specified and vice versa
         </div>
       )}
-      <Button
-        disabled={disableApplyButton()}
-        className="w-full"
-        onClick={() => {
-          updateRangeFilters();
-        }}>
+      <Button disabled={disableApplyButton()} className="w-full" onClick={updateRangeFilters}>
         Apply
       </Button>
     </div>
@@ -165,7 +153,7 @@ export function DatedValueFilters({
 }
 
 interface DatedValueFiltersDialogProps {
-  field: RepositoryFilter;
+  field: DateRangeFilter;
   allFilters: string[];
   setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -178,19 +166,15 @@ export function DatedValueFiltersDialog({
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button variant={"outline"} className="rounded-xl">
-        {field.name}
-        {field.icon}
-        </Button>
+      <DialogTrigger className="btn btn-sm btn-outline rounded-2xl">
+        {field}
+        <Calendar className="size-4"/>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Filter by {field.name}</DialogTitle>
+          <DialogTitle>Filter by {field}</DialogTitle>
           <DialogDescription>
-            {
-              "Uses github search syntax like language:javascript stars:>100 forks:<500 size:>10000 size:<50000 created:>=2020-01-01 created:<2023-01-01"
-            }
+            {"Uses github search syntax like created:>=2020-01-01 created:<2023-01-01"}
           </DialogDescription>
         </DialogHeader>
         <DatedValueFilters

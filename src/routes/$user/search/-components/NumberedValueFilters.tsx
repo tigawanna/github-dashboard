@@ -17,8 +17,8 @@ import {
 } from "@/components/shadcn/ui/dialog";
 import { filterComparatorsArray, RepositoryFilter } from "./shared";
 import { Button } from "@/components/shadcn/ui/button";
-import { ChevronsLeftRight } from "lucide-react";
-import { Badge } from "@/components/shadcn/ui/badge";
+import { X } from "lucide-react";
+
 
 interface NumberedValueFiltersProps {
   field: RepositoryFilter;
@@ -71,14 +71,19 @@ export function NumberedValueFilters({
     });
     setOpen(false);
   };
+
+  const clearExactAmount = () => {
+    setExactValue(-1);
+  }
   return (
     <div className="w-full h-full flex flex-col gap-5 items-center justify-center">
-      <div className="w-full  flex flex-col items-center justify-center">
+      <div className="w-full  flex items-center relative justify-center">
         <Input
           type="number"
           value={exactValue}
           onChange={(e) => setExactValue(parseInt(e.target.value))}
         />
+        <X className="cursor-pointer size-4 absolute right-[7%]" onClick={clearExactAmount} />
       </div>
       <div
         data-disabled={rangeValuesWillBeIgnored}
@@ -179,18 +184,16 @@ export function NumberedValueFiltersDialog({
   const [open, setOpen] = useState(false);
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger>
-        <Button variant={"outline"} className="rounded-xl">
+      <DialogTrigger className="btn btn-sm rounded-2xl btn-outline">
         {field.name}
         {field.icon}
-        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Filter by {field.name}</DialogTitle>
           <DialogDescription>
             {
-              "Uses github search syntax like language:javascript stars:>100 forks:<500 size:>10000 size:<50000 created:>=2020-01-01 created:<2023-01-01"
+              "Uses github search syntax like language:javascript stars:>100 forks:<500 size:>10000 size:<50000"
             }
           </DialogDescription>
         </DialogHeader>

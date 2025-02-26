@@ -26,8 +26,7 @@ interface WordInfiltersProps {
 
 export function RepoInFilters({allFilters,setAllFilters}: WordInfiltersProps) {
 
-  const [isPending, startTransition] = useTransition();
-  const { in: currentFilter, ...rest } = useSearch({ from: "/$user/search/" });
+const { in: currentFilter, ...rest } = useSearch({ from: "/$user/search/" });
 
 
   const hasFilter = (value: string) => {
@@ -48,8 +47,7 @@ export function RepoInFilters({allFilters,setAllFilters}: WordInfiltersProps) {
   }
 
   return (
-    <div className="w-full  space-y-2">
-      <Label htmlFor="search-filter">Search In</Label>
+    <div className="w-full  space-y-2 p-2">
       <div className="space-y-2 flex w-full ">
         {inSearchFilters.map((filter) => (
           <div key={filter.value} className="flex items-center space-x-2 w-full">
@@ -64,10 +62,6 @@ export function RepoInFilters({allFilters,setAllFilters}: WordInfiltersProps) {
           </div>
         ))}
       </div>
-
-      <p className="text-sm text-muted-foreground">
-        {isPending ? "Updating..." : "Select where to search in repositories"}
-      </p>
     </div>
   );
 }

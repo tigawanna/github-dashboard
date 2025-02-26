@@ -21,9 +21,9 @@ export const filterComparatprs = {
 export const filterComparatorsArray = Object.entries(filterComparatprs);
 // export const reposRangedFilters = ["stars:", "forks:", "size:"] as const;
 export const reposRangedFilters = [
-  { name: "stars:", icon: <Star /> },
-  { name: "forks:", icon: <GitFork /> },
-  { name: "size:", icon: <MemoryStick /> },
+  { name: "stars:", icon: <Star className="size-4"/> },
+  { name: "forks:", icon: <GitFork className="size-4"/> },
+  { name: "size:", icon: <MemoryStick className="size-4"/> },
 ] as const; //["stars:", {name:"forks:",icon:"fork"}, "forks:","size:"] as const;
 
 
