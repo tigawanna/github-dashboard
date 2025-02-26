@@ -17,6 +17,7 @@ import { useMutation } from "@tanstack/react-query";
 import { deleteRepositories } from "../extra-mutations/repo_mutations";
 import { makeHotToast } from "@/components/toasters";
 import { FaHatWizard } from "react-icons/fa";
+import { humanReadableGQLError } from "@/lib/github/string";
 
 
 interface DeleteRepositoryProps {
@@ -65,7 +66,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
     onError(error: any) {
       makeHotToast({
         title: "Error",
-        description: "Issue deleting repositories \n" + error.message,
+        description:humanReadableGQLError(error),
         variant: "error",
       });
     },

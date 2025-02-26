@@ -3,6 +3,7 @@ import { graphql, useMutation } from "react-relay";
 import { StarRepositoryAddStarMutation } from "./__generated__/StarRepositoryAddStarMutation.graphql";
 import { StarRepositoryRemoveStarMutation } from "./__generated__/StarRepositoryRemoveStarMutation.graphql";
 import { makeHotToast } from "@/components/toasters";
+import { humanReadableGQLError } from "@/lib/github/string";
 
 interface StarRepositoryProps {
   id: string;
@@ -32,7 +33,7 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
                 makeHotToast({
                   title: "Error starring",
                   variant: "error",
-                  description: error.message,
+                  description:humanReadableGQLError(error),
                 });
               },
             });
@@ -43,7 +44,7 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
                 makeHotToast({
                   title: "Error starring",
                   variant: "error",
-                  description: error.message,
+                  description: humanReadableGQLError(error),
                 });
               },
             });
