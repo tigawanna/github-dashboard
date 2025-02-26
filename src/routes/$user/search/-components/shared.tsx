@@ -26,4 +26,8 @@ export const reposRangedFilters = [
   { name: "size:", icon: <MemoryStick /> },
 ] as const; //["stars:", {name:"forks:",icon:"fork"}, "forks:","size:"] as const;
 
+
 export type RepositoryFilter = (typeof reposRangedFilters)[number];
+
+export const dateRangeFilters = ["created:", "pushed:"] as const;
+export type DateRangeFilter = (typeof dateRangeFilters)[number];

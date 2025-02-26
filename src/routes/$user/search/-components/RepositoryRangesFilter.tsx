@@ -7,14 +7,6 @@ interface RepositoryRangesFilterProps {
   setAllFilters: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
-const baseforkSelector = "fork:";
-const comparatprs = {
-  gte: ">=",
-  gt: ">",
-  lte: "<=",
-  lt: "<",
-} as const;
-const comparatorsArray = Object.entries(comparatprs);
 export function RepositoryRangesFilter({ allFilters, setAllFilters }: RepositoryRangesFilterProps) {
 
 return (
