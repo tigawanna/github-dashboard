@@ -137,7 +137,6 @@ export function RepoCard({
               <span>Release: {repo?.releases?.nodes?.[0]?.name}</span>
               <span>
                 {" "}
-                {/* {dayjs(repo?.releases?.nodes?.[0]?.publishedAt).fromNow()} */}
                 {getRelativeTimeString(repo?.releases?.nodes?.[0]?.publishedAt)}
               </span>
             </div>

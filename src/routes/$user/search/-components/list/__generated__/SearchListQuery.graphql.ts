@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<828d020be62bb3f2d07988b5ec3b5109>>
+ * @generated SignedSource<<62232dd4ac3d6e868804c0ea900a120d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -120,6 +120,13 @@ v9 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v10 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "url",
   "storageKey": null
 };
 return {
@@ -242,6 +249,42 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "forkCount",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "pushedAt",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "diskUsage",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "visibility",
+                        "storageKey": null
+                      },
+                      (v10/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "stargazerCount",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "description",
                         "storageKey": null
                       },
@@ -250,6 +293,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "openGraphImageUrl",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "viewerHasStarred",
                         "storageKey": null
                       },
                       {
@@ -301,13 +351,7 @@ return {
                         "name": "login",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "url",
-                        "storageKey": null
-                      }
+                      (v10/*: any*/)
                     ],
                     "type": "User",
                     "abstractKey": null
@@ -332,12 +376,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0377acecad7a834ac2eacc10bdf838ad",
+    "cacheID": "37a53380576e4d747de0dc77dfd3df3d",
     "id": null,
     "metadata": {},
     "name": "SearchListQuery",
     "operationKind": "query",
-    "text": "query SearchListQuery(\n  $query: String!\n  $type: SearchType!\n) {\n  search(first: 10, query: $query, type: $type) {\n    codeCount\n    discussionCount\n    issueCount\n    repositoryCount\n    userCount\n    wikiCount\n    edges {\n      cursor\n      node {\n        __typename\n        ...SearchRepoResultsFraggment\n        ...SearchUserResultsfragment\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SearchRepoResultsFraggment on Repository {\n  id\n  nameWithOwner\n  description\n  openGraphImageUrl\n  createdAt\n}\n\nfragment SearchUserResultsfragment on User {\n  id\n  bio\n  name\n  avatarUrl(size: 150)\n  login\n  url\n}\n"
+    "text": "query SearchListQuery(\n  $query: String!\n  $type: SearchType!\n) {\n  search(first: 10, query: $query, type: $type) {\n    codeCount\n    discussionCount\n    issueCount\n    repositoryCount\n    userCount\n    wikiCount\n    edges {\n      cursor\n      node {\n        __typename\n        ...SearchRepoResultsFraggment\n        ...SearchUserResultsfragment\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment SearchRepoResultsFraggment on Repository {\n  id\n  nameWithOwner\n  forkCount\n  pushedAt\n  diskUsage\n  visibility\n  url\n  stargazerCount\n  description\n  openGraphImageUrl\n  viewerHasStarred\n  createdAt\n}\n\nfragment SearchUserResultsfragment on User {\n  id\n  bio\n  name\n  avatarUrl(size: 150)\n  login\n  url\n}\n"
   }
 };
 })();

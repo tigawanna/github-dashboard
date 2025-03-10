@@ -1,8 +1,7 @@
-
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { RepositoryRangesFilter } from "./RepositoryRangesFilter";
 import { ListFilterPlus, Loader, X } from "lucide-react";
-import { useNavigate, useSearch } from "@tanstack/react-router";
+import { useNavigate, useParams, useSearch } from "@tanstack/react-router";
 import { Button } from "@/components/shadcn/ui/button";
 import {
   Dialog,
@@ -14,6 +13,8 @@ import {
 } from "@/components/shadcn/ui/dialog";
 import { SearchType } from "../list/__generated__/SearchListQuery.graphql";
 import { WordInFilters } from "./WordInFilters";
+import { IsFilters } from "./IsFilters";
+import { UserGroupFilter } from "./UserGroupFilter";
 
 interface AdvancedReposFilterProps {
   isDebouncing: boolean;
@@ -24,14 +25,35 @@ interface AdvancedReposFilterProps {
   setSearchType: React.Dispatch<React.SetStateAction<SearchType>>;
 }
 
-export function AdvancedReposFilter({}: AdvancedReposFilterProps) {
+export function AdvancedReposFilter({setKeyword}: AdvancedReposFilterProps) {
   const { filters, ...rest } = useSearch({ from: "/$user/search/" });
   const navigate = useNavigate({ from: "/$user/search" });
+  const { user: currentUser } = useParams({
+    from: "/$user/search/",
+  });
   const [pending, startTransition] = useTransition();
   const [allFilters, setAllFilters] = useState(filters ?? [""]);
   const validFilters = allFilters.filter((item) => item !== "");
   const [open, setOpen] = useState(false);
-
+  useEffect(() => {
+    setAllFilters((prev) => {
+      const hasuser = prev.find((f) => f.startsWith("user:"))?.split(":")[1];
+      if (!hasuser) {
+        return [...prev, `user:${currentUser}`];
+      }
+      return prev;
+    });
+    // setKeyword((prev) => prev + rest.q + validFilters.join(" "));
+    // startTransition(() => {
+    //   navigate({
+    //     search: {
+    //       ...rest,
+    //       filters: validFilters,
+    //       q: validFilters.join(" "),
+    //     },
+    //   });
+    // });
+  }, []);
   function handleApplyFilters() {
     startTransition(() => {
       navigate({
@@ -56,10 +78,13 @@ export function AdvancedReposFilter({}: AdvancedReposFilterProps) {
           </DialogDescription>
         </DialogHeader>
         <div className="w-full p-2 flex flex-col gap-2 ">
-          <div className="w-full p-5 flex flex-col gap-5 ">
+          <div className="w-full p-5 flex flex-col gap-3 ">
+            <div className="divider divider-primary">is filters</div>
+            <UserGroupFilter allFilters={allFilters} setAllFilters={setAllFilters} />
+            <div className="divider divider-primary">is filters</div>
+            <IsFilters allFilters={allFilters} setAllFilters={setAllFilters} />
             <div className="divider divider-primary">text in filters</div>
             <WordInFilters allFilters={allFilters} setAllFilters={setAllFilters} />
-
             <div className="divider divider-primary">range filters</div>
             <RepositoryRangesFilter allFilters={allFilters} setAllFilters={setAllFilters} />
             {validFilters.length > 0 && <div className="divider divider-primary">filter list</div>}

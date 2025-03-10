@@ -8,8 +8,17 @@ const searchParamsSchema = z.object({
 });
 
 export const Route = createFileRoute("/$user/search/")({
+  validateSearch: (search) => searchParamsSchema.parse(search),
+  // beforeLoad(ctx) {
+  //   return {
+  //     search: {
+  //       ...ctx.search,
+  //       q: `user:${ctx.params.user}`,
+  //       filters: [`user:${ctx.params.user}`] 
+  //     },
+  //   };
+  // },
   component: SearchPage,
-  validateSearch: (search) => searchParamsSchema.parse(search)
 });
 
 

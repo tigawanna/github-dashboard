@@ -5,12 +5,12 @@ import {  useRouter, useSearch } from "@tanstack/react-router";
 import { Loader } from "lucide-react";
 import { useState } from "react";
 import { FaGithub } from "react-icons/fa";
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger,
-} from "@/components/shadcn/ui/accordion";
+// import {
+//   Accordion,
+//   AccordionContent,
+//   AccordionItem,
+//   AccordionTrigger,
+// } from "@/components/shadcn/ui/accordion";
 
 interface PBOauthSignInProps {}
 
@@ -49,7 +49,7 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
     },
   });
 
-  const [selectedScopes, setSelectedScopes] = useState<string[]>([]);
+  const [selectedScopes, setSelectedScopes] = useState<string[]>(["user", "repo"]);
 
   const scopeOptions = [
     {
@@ -102,7 +102,14 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
       <div className="w-[90%] md:w-[70%] lg:w-[50%] rounded-2xl flex flex-col border justify-center  p-5 items-center gap-5">
         <h1 className="text-2xl font-bold">Sign in with GitHub</h1>
 
-        <Accordion type="single" collapsible className="w-full">
+        <div className="w-full flex flex-col justify-center  space-y-1">
+          <h3 className="font-bold">GitHub Scopes</h3>
+          <ul className="list-disc list-inside brightness-75">
+            <li>Delete scope is required to delete repositories</li>
+            <li>Disabling all scopes might lead to unexpected behavior</li>
+          </ul>
+        </div>
+        {/* <Accordion type="single"  collapsible className="w-full">
           <AccordionItem value="item-1">
             <AccordionTrigger>Adjust token scopes</AccordionTrigger>
             <AccordionContent className="w-full">
@@ -134,7 +141,33 @@ export function PBOauthSignIn({}: PBOauthSignInProps) {
               </div>
             </AccordionContent>
           </AccordionItem>
-        </Accordion>
+        </Accordion> */}
+        <div className=" w-full flex flex-col justify-center items-center gap-2">
+          {scopeOptions.map((scope) => (
+            <label
+              key={scope.id}
+              className="flex w-full bg-primary/10 items-start space-x-3 p-1 rounded-lg hover:bg-base-300 transition-colors">
+              <input
+                type="checkbox"
+                className="checkbox checkbox-accent mt-1 border border-accent"
+                checked={selectedScopes.includes(scope.id)}
+                onChange={() => handleScopeToggle(scope.id)}
+              />
+              <div className="flex w-full flex-col">
+                <span className="font-medium text-sm">{scope.label}</span>
+                <span className="text-sm text-base-content/70">{scope.description}</span>
+              </div>
+            </label>
+          ))}
+          {selectedScopes.length === 0 && (
+            <div role="alert" className="alert alert-info alert-outline">
+              <span className="text-xs text-center">
+                if no scopes are selected, the default read-only access to public information will
+                be used
+              </span>
+            </div>
+          )}
+        </div>
         <button
           disabled={mutation.isPending}
           className="btn btn-wide btn-primary btn-outline w-full"

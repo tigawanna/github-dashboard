@@ -1,7 +1,5 @@
 import { Checkbox } from "@/components/shadcn/ui/checkbox";
 import { Label } from "@/components/shadcn/ui/label";
-import { useSearch } from "@tanstack/react-router";
-import { useState, useTransition } from "react";
 import { GithubLanguagesFilter } from "./GithubLanguagesFilter";
 
 /** Array of GitHub repository search filter options */
@@ -26,6 +24,7 @@ interface WordInfiltersProps {
 }
 
 export function WordInFilters({ allFilters, setAllFilters }: WordInfiltersProps) {
+  
   const hasFilter = (value: string) => {
     const inFiltersSet = new Set(allFilters);
     return inFiltersSet.has(value);

@@ -1,9 +1,7 @@
-
 import { FragmentRefs, graphql } from "relay-runtime";
 import { SearchUserResultsfragment$key } from "./__generated__/SearchUserResultsfragment.graphql";
 import { useFragment } from "react-relay";
 import { Link } from "@tanstack/react-router";
-
 
 interface SearchUserResultsProps {
   refs?: {
@@ -14,10 +12,7 @@ interface SearchUserResultsProps {
 }
 
 export function SearchUserResults({ refs }: SearchUserResultsProps) {
-  const query = useFragment<SearchUserResultsfragment$key>(
-    searchUserResultsFragment,
-    refs,
-  );
+  const query = useFragment<SearchUserResultsfragment$key>(searchUserResultsFragment, refs);
   if (!query || !query.login) {
     return null;
   }
@@ -28,7 +23,7 @@ export function SearchUserResults({ refs }: SearchUserResultsProps) {
       params={{ user: query?.login }}
       preload={false}
       className="bg-base-300 rounded-lg flex grow gap-2
-              w-[95%] md:w-[40%] xl:w-[30%]  
+              w-[95%] md:w-[40%] xl:w-[30%] md:max-w-[50%] 
                  justify-between items-center p-1 relative  hover:text-primary">
       <img
         height={50}
