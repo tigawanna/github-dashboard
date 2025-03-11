@@ -15,6 +15,7 @@ export function UserFollowingPage({}: UserFollowingPageProps) {
   if (!query.user) {
     return <Navigate to=".." />;
   }
+  
   return (
     <div className="w-full h-full min-h-screen flex flex-col items-center justify-center">
       <Suspense fallback={<CardsListSuspenseFallback />}>

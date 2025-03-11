@@ -4,7 +4,7 @@ import { TailwindIndicator } from "@/components/navigation/tailwind-indicator";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@/components/wrappers/RouterDevttols";
-import { TigawannaFooter } from "@/components/shared/TigawannaFooter";
+import { TigawannaFooter } from "@/components/navigation/TigawannaFooter";
 
 
 export function RootComponent() {

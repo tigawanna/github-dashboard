@@ -28,12 +28,6 @@ export const routes = [
     children: undefined,
   },
   {
-    name: "About",
-    href: "/about",
-    icon: <SearchSlash />,
-    children: undefined,
-  },
-  {
     name: "Profile",
     href: "/profile",
     icon: <User />,

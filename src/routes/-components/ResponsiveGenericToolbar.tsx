@@ -3,7 +3,7 @@ import { ThemeToggle } from "@/components/themes/ThemeToggle";
 import { Link } from "@tanstack/react-router";
 import { ResponsiveToolbarDropdown } from "./ResponsiveToolbarDropdown";
 import { MainNavbarUser } from "@/components/navigation/navbar/MainNavbarUser";
-import { TigawannaFooter } from "@/components/shared/TigawannaFooter";
+import { TigawannaFooter } from "@/components/navigation/TigawannaFooter";
 
 interface ResponsiveGenericToolbarProps {
 children: React.ReactNode

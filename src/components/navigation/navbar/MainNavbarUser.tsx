@@ -1,5 +1,5 @@
 import { useViewer } from "@/lib/viewer/use-viewer";
-import { BadgeCheck, Bell, ChevronsUpDown, ShieldCheck, User } from "lucide-react";
+import { BadgeCheck, Bell,User } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/shadcn/ui/avatar";
 import {
   DropdownMenu,

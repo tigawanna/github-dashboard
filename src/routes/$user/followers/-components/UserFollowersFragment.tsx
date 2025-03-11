@@ -4,31 +4,31 @@ import { UserFollowersPageQuery } from "./__generated__/UserFollowersPageQuery.g
 import { UserFragmentCard } from "../../-components/user/UserFragmentCard";
 import { UserFollowersFragment$key } from "./__generated__/UserFollowersFragment.graphql";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
+import { EmptyList } from "@/components/shared/EmptyList";
 
 interface UserFollowersFragmentProps {
-followers_key: UserFollowersFragment$key
+  followers_key: UserFollowersFragment$key;
 }
 
-export function UserFollowersFragment({followers_key}:UserFollowersFragmentProps){
-    const fragData = usePaginationFragment<UserFollowersPageQuery, UserFollowersFragment$key>(
-      FollowersFragment,
-      followers_key
-    );
-    const frags = fragData.data;
-    if (!frags) return null;
-return (
+export function UserFollowersFragment({ followers_key }: UserFollowersFragmentProps) {
+  const frags = usePaginationFragment<UserFollowersPageQuery, UserFollowersFragment$key>(
+    FollowersFragment,
+    followers_key
+  );
+
+  const followers = frags?.data?.followers?.edges;
+  if (!followers || followers?.length === 0) {
+    return <EmptyList message="No followers found" />;
+  }
+  return (
     <div className="w-full h-full flex justify-center flex-wrap @container gap-2">
-    {/* <div className="w-full  flex justify-center">
-      <TailwindIndicator/>
-      <TailwindContainerIndicator/>
-      </div> */}
-      {frags.followers.edges?.map((stg, idx) => {
-        if (!stg?.node) return
+      {followers?.map((stg, idx) => {
+        if (!stg?.node) return;
         return <UserFragmentCard user_fragment_key={stg?.node} key={stg.cursor} />;
       })}
-     <LoadMoreButton frag={fragData}/>
+      <LoadMoreButton frag={frags} />
     </div>
-);
+  );
 }
 
 export const FollowersFragment = graphql`
@@ -52,5 +52,3 @@ export const FollowersFragment = graphql`
     }
   }
 `;
-
-
