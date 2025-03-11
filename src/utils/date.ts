@@ -40,12 +40,21 @@ export function getRelativeTimeString(
 ): string {
   // Allow dates or times to be passed
 
-  const timeMs =
-    typeof date === "string"
-      ? new Date(date).getTime()
-      : typeof date === "number"
-      ? date
-      : date.getTime();
+  let timeMs = 0
+  if(typeof date === "string" && date !=="" && !isNaN(Date.parse(date))){
+    timeMs = new Date(date).getTime()
+  }
+  if(typeof date === "number"){
+    timeMs = date
+  }
+  if(date instanceof Date){
+    timeMs= date.getTime()
+  }
+    // typeof date === "string" && !isNaN(Date.parse(date))
+    //   ? new Date(date).getTime()
+    //   : typeof date === "number"
+    //   ? date
+    //   : date.getTime();
 
   // Get the amount of seconds between the given date and now
   const deltaSeconds = Math.round((timeMs - Date.now()) / 1000);

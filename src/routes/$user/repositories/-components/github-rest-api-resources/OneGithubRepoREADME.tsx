@@ -8,7 +8,7 @@ interface OneGithubRepoREADMEProps {
   branch?: string;
 }
 
-export  function OneGithubRepoREADME({ owner, repo,branch="main" }: OneGithubRepoREADMEProps) {
+export default  function OneGithubRepoREADME({ owner, repo,branch="main" }: OneGithubRepoREADMEProps) {
   // const data = await getGithubREADME({ owner, repo });
   const query = useSuspenseQuery({
     queryKey: ["readme", repo, owner,branch],

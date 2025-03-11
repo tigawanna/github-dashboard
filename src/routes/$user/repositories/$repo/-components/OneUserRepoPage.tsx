@@ -3,13 +3,14 @@ import { Branches } from "./Branches";
 import { GeneralInfo } from "./GeneralInfo";
 import { OneUserRepoPageQuery } from "./__generated__/OneUserRepoPageQuery.graphql";
 import { useLazyLoadQuery } from "react-relay";
-import { Navigate, useNavigate, useParams, useSearch } from "@tanstack/react-router";
+import { Navigate , useParams } from "@tanstack/react-router";
 import { makeHotToast } from "@/components/toasters";
 import { Stargazers } from "./Stargazers";
-import { Suspense, useState, useTransition } from "react";
-import { OneGithubRepoREADME } from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
+import { lazy, Suspense, useState, useTransition } from "react";
+// import OneGithubRepoREADME  from "../../-components/github-rest-api-resources/OneGithubRepoREADME";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/shadcn/ui/tabs";
 import { CardsListSuspenseFallback } from "@/components/wrappers/GenericDataCardsListSuspenseFallback";
+const OneGithubRepoREADME = lazy(() => import("../../-components/github-rest-api-resources/OneGithubRepoREADME"));
 
 interface OneUserRepoPageProps {}
 
@@ -17,12 +18,7 @@ export function OneUserRepoPage({}: OneUserRepoPageProps) {
   const [isPending, startTransition] = useTransition();
   const [tab,setTabs] = useState("readme")
   const { repo, user } = useParams({ from: "/$user/repositories/$repo/" });
-  // const { tab } = useSearch({
-  //   from: "/$user/repositories/$repo/",
-  // });
-  const navigate = useNavigate({
-    from: "/$user/repositories/$repo",
-  });
+
 
   const query = useLazyLoadQuery<OneUserRepoPageQuery>(oneREPOquery, {
     reponame: repo,

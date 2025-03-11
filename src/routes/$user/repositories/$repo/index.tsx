@@ -9,5 +9,5 @@ const searchparams = z.object({
 });
 export const Route = createFileRoute("/$user/repositories/$repo/")({
   validateSearch: (search) => searchparams.parse(search),
-  // component: OneUserRepoPage,
+  component: OneUserRepoPage,
 });

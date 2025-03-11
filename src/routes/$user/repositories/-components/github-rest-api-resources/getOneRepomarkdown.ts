@@ -21,6 +21,7 @@ export async function getGithubREADME({ repo, owner, branch="main" }: GetRepoREA
     }
     const output_html = convertMarkdownToHtml(text);
     return output_html;
+    // return text
   } catch (error) {
     console.log(" === error === ", error);
     return;

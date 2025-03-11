@@ -137,7 +137,7 @@ export function RepoCard({
         target="_blank"
         rel="noreferrer"
         href={repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.url}
-        className="w-full max-w-full hover:text-primary group flex justify-evenly text-sm items-center gap-1">
+        className="w-full max-w-full px-2 hover:text-primary group flex justify-evenly text-sm items-center gap-1">
         <div className="flex w-fit  gap-1  items-center justify-center">
           <History className="w-4 h-4 " />
           <div className=" text-secondary  line-clamp-1" data-tip={"last pushed to branch"}>
@@ -145,8 +145,10 @@ export function RepoCard({
           </div>
         </div>
 
-        <div className="w-fit line-clamp-1 flex gap-2 justify-center" data-tip={"last commit message"}>
-          {repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.message.trim()}
+        <div
+          className="w-fit line-clamp-1 flex gap-2 justify-center"
+          data-tip={"last commit message"}>
+          <p  className="w-fit max-w-[80%] line-clamp-1"> {repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.message.trim()}</p>
           <ExternalLink className="w-4 h-4 hidden group-hover:flex" />
         </div>
       </a>
