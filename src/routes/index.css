@@ -4,10 +4,13 @@
 
 
 @plugin "daisyui" {
-  /* themes: cupcacke --default, forest --prefersdark; */
-  themes: all;
+  themes: wireframe --default, forest --prefersdark;
+  /* themes: all; */
   logs: false;
 }
+
+
+
 
 
 @custom-variant dark (&:is(.dark *));
