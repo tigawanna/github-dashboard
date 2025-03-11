@@ -19,7 +19,6 @@ import { makeHotToast } from "@/components/toasters";
 import { FaHatWizard } from "react-icons/fa";
 import { humanReadableGQLError } from "@/lib/github/string";
 
-
 interface DeleteRepositoryProps {
   open: boolean;
   selected: ItemList[];
@@ -28,7 +27,13 @@ interface DeleteRepositoryProps {
   canDelete?: boolean;
 }
 
-export function DeleteRepository({ open, selected, setOpen, setSelected,canDelete=true }: DeleteRepositoryProps) {
+export function DeleteRepository({
+  open,
+  selected,
+  setOpen,
+  setSelected,
+  canDelete = true,
+}: DeleteRepositoryProps) {
   const { PAT } = useRouteContext({ from: "__root__" });
   const token = PAT ?? "";
   const enviroment = useRelayEnvironment();
@@ -46,28 +51,29 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
             },
           });
         });
-        makeHotToast({
-          title: "Done",
-          mixed: {
-            successfull: `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull
-              .map((item) => item.name + "\n")
-              .join(", \n")}`,
-            failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed
-              .map((item) => item.repo + " : " + item.issue + "\n")
-              .join(", ")}`,
-          },
-          variant: "mixed",
-          duration: 7000,
-        });
-
+      makeHotToast({
+        title: "Done",
+        mixed: {
+          successfull: `${data?.successfull?.length} Successfull deletes : \n ${data?.successfull
+            .map((item) => item.name + "\n")
+            .join(", \n")}`,
+          failed: `${data?.failed?.length} Failed deletes:\n ${data?.failed
+            .map((item) => item.repo + " : " + item.issue + "\n")
+            .join(", ")}`,
+        },
+        variant: "mixed",
+        duration: 7000,
+      });
 
       setOpen(false);
     },
     onError(error: any) {
+      const { description, title } = humanReadableGQLError(error, "Something went wrong");
       makeHotToast({
-        title: "Error",
-        description:humanReadableGQLError(error),
+        title,
+        description,
         variant: "error",
+        duration: 10000,
       });
     },
   });
@@ -75,7 +81,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger asChild disabled={!canDelete}>
-        <div  className="flex gap-2 group items-center btn  btn-wide justify-between p-2 hover:bg-primary/20">
+        <div className="flex gap-2 group items-center btn  btn-wide justify-between p-2 hover:bg-primary/20">
           Delete
           <Trash className="size-5 text-error group-hover:fill-error" />
         </div>
@@ -84,7 +90,7 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
         <AlertDialogHeader>
           <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
           <AlertDialogDescription className="flex gap-1">
-           <FaHatWizard/> This action will permanently delete the selected repositories:
+            <FaHatWizard /> This action will permanently delete the selected repositories:
             {/* {selected.map((item) => item.nameWithOwner).join(", ")} */}
           </AlertDialogDescription>
           <ul className="list-disc pl-5 mt-2">
@@ -95,7 +101,9 @@ export function DeleteRepository({ open, selected, setOpen, setSelected,canDelet
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel>Cancel </AlertDialogCancel>
-          <AlertDialogAction className="btn btn-error bg-error/23 hover:bg-error/70"    onClick={() => mutation.mutate()}>
+          <AlertDialogAction
+            className="btn btn-error bg-error/23 hover:bg-error/70"
+            onClick={() => mutation.mutate()}>
             {mutation.isPending ? "Deleting..." : "Delete"}
           </AlertDialogAction>
         </AlertDialogFooter>

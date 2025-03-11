@@ -77,7 +77,7 @@
   --border: var(--color-base-content);
   --input: var(--color-base-100);
   --ring: var(--color-primary);
-  --radius: var(--border-radius);
+  --radius: var(--radius-box);
   --chart-1: var(--color-accent);
   --chart-2: var(--color-info);
   --chart-3: var(--color-succent);
@@ -161,8 +161,8 @@
   body {
     @apply bg-background text-foreground;
   }
-}
 
+}
 
 .stats{
   @apply w-full h-full flex flex-wrap items-center justify-center;

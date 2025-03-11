@@ -12,6 +12,7 @@ import { Edit } from "lucide-react";
 import { useParams } from "@tanstack/react-router";
 import { LoadMoreButton } from "@/lib/relay/LoadMoreButton";
 import { RepoFiltersSelect, RepoIsForkSwitch, RepoOrderSelect } from "./RepoFiltersSelect";
+import { GetBetterTokenScopes } from "@/routes/-components/GetBetterTokenScopes";
 
 interface UserReposProps {
   user_repos_key?: UserRepos_repositories$key | null;
@@ -38,6 +39,7 @@ export function UserRepos({ user_repos_key }: UserReposProps) {
   }
   return (
     <div className="w-full h-full flex flex-col items-center justify-between">
+      <GetBetterTokenScopes dismiss={()=>{}}/>
       <div className="w-full bg-base-200 sticky mb-4 -top-1 left-0 right-0 flex flex-wrap justify-evenly z-40 md:z-30 ">
         {/* <FilterRepos /> */}
         <div className=" flex flex-wrap w-full  items-center justify-center md:justify-end gap-5 rounded-2xl py-2">

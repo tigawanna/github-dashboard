@@ -30,11 +30,12 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
             unStarMutation({
               variables: { starrableId: id },
               onError(error) {
+                const { description, title } = humanReadableGQLError(error, "Something went wrong");
                 makeHotToast({
-                  title: "Error unstarring",
+                  title,
+                  description,
                   variant: "error",
-                  description: humanReadableGQLError(error),
-                  duration: 7000,
+                  duration: 10000,
                 });
               },
             });
@@ -42,11 +43,12 @@ export function StarRepository({ id, stargazerCount, viewerHasStarred }: StarRep
             starMutation({
               variables: { starrableId: id },
               onError: (error) => {
+                const { description, title } = humanReadableGQLError(error, "Something went wrong");
                 makeHotToast({
-                  title: "Error starring",
+                  title,
+                  description,
                   variant: "error",
-                  description: humanReadableGQLError(error),
-                  duration:7000,
+                  duration: 10000,
                 });
               },
             });

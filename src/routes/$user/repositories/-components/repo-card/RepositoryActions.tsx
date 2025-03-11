@@ -36,7 +36,7 @@ export function RepositoryActions({
   const CAN_DELETE = local_viewer?.login === owner && viewerCanAdminister;
 
   if (!CAN_FORK && !CAN_DELETE) return null;
-  const [selectedAction,setSelectedAction]=useState<"delete"|"fork">("delete")
+
   const [openFork, setOpenFork] = useState(false);
   const [openDelete, setOpenDelete] = useState(false);
   return (
@@ -45,16 +45,9 @@ export function RepositoryActions({
         <MoreVertical className="" />
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-fit min-w-64">
-        <DropdownMenuLabel className="text-xl font-bold">Actionssss</DropdownMenuLabel>
+        <DropdownMenuLabel className="">Actions</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          {/* {CAN_DELETE && (
-            <DropdownMenuItem className="gap-2">
-              <Trash className="w-4 h-4" /> Delete
-              <DropdownMenuShortcut>⇧⌘D</DropdownMenuShortcut>
-            </DropdownMenuItem>
-          )} */}
-
           <DeleteRepository
             open={openDelete}
             setOpen={setOpenDelete}
@@ -71,7 +64,7 @@ export function RepositoryActions({
             canFork={CAN_FORK}
           />
         </DropdownMenuGroup>
-        <DropdownMenuSeparator />
+        {/* <DropdownMenuSeparator /> */}
       </DropdownMenuContent>
     </DropdownMenu>
   );

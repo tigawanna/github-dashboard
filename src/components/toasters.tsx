@@ -1,3 +1,4 @@
+import { GetBetterTokenScopes } from "@/routes/-components/GetBetterTokenScopes";
 import { CheckCircle2, CircleAlert, CircleX } from "lucide-react";
 import toast, { ToastOptions } from "react-hot-toast";
 
@@ -37,6 +38,9 @@ export function makeHotToast({
   };
   // @ts-expect-error
   return toast.custom((t) => {
+    if (title?.includes("Insufficient Scopes")) {
+      return <GetBetterTokenScopes dismiss={()=>toast.dismiss(t.id)} />;
+    }
       return (
         <div
           className={`${t.visible ? "animate-enter" : "animate-leave"} ${toastVariantStyle(
@@ -83,3 +87,5 @@ export function makeHotToast({
     { ...props, position: "bottom-left" },
   );
 }
+
+
