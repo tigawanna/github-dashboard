@@ -3,6 +3,7 @@ import { ThemeToggle } from "@/components/themes/ThemeToggle";
 import { Link } from "@tanstack/react-router";
 import { ResponsiveToolbarDropdown } from "./ResponsiveToolbarDropdown";
 import { MainNavbarUser } from "@/components/navigation/navbar/MainNavbarUser";
+import { TigawannaFooter } from "@/components/shared/TigawannaFooter";
 
 interface ResponsiveGenericToolbarProps {
 children: React.ReactNode
@@ -47,11 +48,12 @@ return (
         </div>
         <div className="">
           {/* <ThemeToggle compact /> */}
-          <ResponsiveToolbarDropdown/>
+          <ResponsiveToolbarDropdown />
         </div>
       </div>
       {/* Page content here */}
       {children}
+      <TigawannaFooter />
     </div>
     <div className="drawer-side z-50">
       <label htmlFor="my-drawer-3" aria-label="close sidebar" className="drawer-overlay"></label>
@@ -70,7 +72,7 @@ return (
 
         <div className="flex flex-col justify-start gap-4">
           <ThemeToggle />
-          <MainNavbarUser/>
+          <MainNavbarUser />
         </div>
       </ul>
     </div>

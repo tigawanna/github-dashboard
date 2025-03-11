@@ -4,6 +4,7 @@ import { TailwindIndicator } from "@/components/navigation/tailwind-indicator";
 import { Toaster } from "react-hot-toast";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { TanStackRouterDevtools } from "@/components/wrappers/RouterDevttols";
+import { TigawannaFooter } from "@/components/shared/TigawannaFooter";
 
 
 export function RootComponent() {
@@ -17,6 +18,7 @@ export function RootComponent() {
       <TanStackRouterDevtools position="bottom-left" />
       <ReactQueryDevtools buttonPosition="bottom-right" />
       <Toaster reverseOrder />
+
     </div>
   );
 }
