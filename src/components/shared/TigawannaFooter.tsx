@@ -1,4 +1,4 @@
-import {  projectGithubUrl } from "../config/project";
+import {  projectGithubUrl } from "@/config/project";
 
 interface TigawannaFooterProps {}
 
