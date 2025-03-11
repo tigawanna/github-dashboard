@@ -51,7 +51,7 @@ export function RepoCard({
     <li
       key={repo.id}
       className="bg-primary/10 relative  rounded-2xl border border-primary
-        min-h-fit  md:h-[400px] w-[95%] @repos:w-[95%] @md/repos:lg:w-[45%] @2xl/repos:md:w-[45%] @2xl/repos:lg:w-[30%]  flex-col
+        min-h-fit  md:h-[300px] w-[95%] @repos:w-[95%] @md/repos:lg:w-[45%] @2xl/repos:md:w-[45%] @2xl/repos:lg:w-[30%]  flex-col
         justify-between items-center  ">
       {/* <div className="text-3xl font-bold @2xl/repos:lg:bg-accent">uwu</div> */}
       <div
