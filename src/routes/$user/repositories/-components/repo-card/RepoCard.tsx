@@ -1,6 +1,6 @@
 import { FiActivity } from "react-icons/fi";
 import { BiGitRepoForked } from "react-icons/bi";
-import { History, Lock } from "lucide-react";
+import { ExternalLink, History, Lock } from "lucide-react";
 import { RepositoryActions } from "./RepositoryActions";
 import { FaGithub } from "react-icons/fa";
 import { ItemList } from "../types";
@@ -46,7 +46,9 @@ export function RepoCard({
   if (!repo) return null;
   const vslink = `https://vscode.dev/${repo.url}`;
   const selected = getSelected?.(repo.id);
-
+  const repoLanguages = repo?.languages?.edges?.slice(0, 3) ?? [
+    { node: { id: "1", name: "vibes", color: "#2b7489" } },
+  ];
   return (
     <li
       key={repo.id}
@@ -55,7 +57,7 @@ export function RepoCard({
         justify-between items-center  ">
       {/* <div className="text-3xl font-bold @2xl/repos:lg:bg-accent">uwu</div> */}
       <div
-        className="w-full flex flex-col cursor-pointer gap-1 "
+        className="w-full flex flex-col cursor-pointer justify-center gap-1 "
         onClick={() => {}}
         data-tip={repo.description}>
         {editing && (
@@ -80,23 +82,24 @@ export function RepoCard({
           loading="lazy"
           src={repo?.openGraphImageUrl}
           onError={(e) => {
-            e.currentTarget.src = "/github-fallback.png"
+            e.currentTarget.src = "/github-fallback.png";
           }}
         />
         <div className="w-full flex gap-3 p-2 brightness-75 hover:text-secondary h-full">
-          {/* TODO  crate this page */}
           <Link
             to="/$user/repositories/$repo"
             preload={false}
-            params={{ user:repo?.owner?.login, repo: repo.name }}
+            params={{ user: repo?.owner?.login, repo: repo.name }}
             className="w-full flex flex-col justify-center gap-2 p-2">
             <div className=" break-all flex flex-col justify-center ">
-              <div className="text-2xl font-bold">{repo?.name}</div>
-              <div className="text-sm line-clamp-1">{repo.description}</div>
+              <div className="text-2xl font-bold line-clamp-1">{repo?.name}</div>
+              <div className="text-sm line-clamp-1">
+                {repo.description ?? `${repo?.name} repository`}
+              </div>
             </div>
             {/* repository Languages */}
             <div className="flex flex-wrap w-full  gap-1">
-              {repo?.languages?.edges?.map((item, idx) => {
+              {repoLanguages?.map((item, idx) => {
                 if (!item) return null;
                 return (
                   <div
@@ -106,7 +109,7 @@ export function RepoCard({
                       borderWidth: "1px",
                       borderColor: item?.node?.color ?? "",
                     }}
-                    className="p-[1px] m-[1px] rounded-lg text-xs  break-all px-1">
+                    className="p-[1px] m-[1px] rounded-2xl text-xs  break-all px-1">
                     {item.node.name}
                   </div>
                 );
@@ -127,42 +130,28 @@ export function RepoCard({
               />
             </div>
           )}
-
-          <div className="p-2 gap-2 flex flex-col items-center justify-between"></div>
-        </div>
-        {/*  description and last commit message */}
-        <div className="w-full flex flex-col p-1 gap-2">
-          {repo?.releases?.nodes?.[0] && (
-            <div className="w-full text-sm flex gap-3  overflow-clip">
-              <span>Release: {repo?.releases?.nodes?.[0]?.name}</span>
-              <span>
-                {" "}
-                {getRelativeTimeString(repo?.releases?.nodes?.[0]?.publishedAt)}
-              </span>
-            </div>
-          )}
-
-          <div className="w-full max-w-full text-sm flex gap-1">
-            <div className="w-full flex gap-1 ">
-              <div className="flex w-fit  gap-1  items-center justify-center">
-                <History className="w-4 h-4 text-accent" />
-                <div
-                  className=" text-secondary hover:text-secondary/60 line-clamp-1"
-                  data-tip={"last pushed to branch"}>
-                  {repo?.refs?.edges?.[0]?.node?.name}:
-                </div>
-              </div>
-
-              <div
-                className="w-fit  hover:text-secondary line-clamp-1 "
-                data-tip={"last commit message"}>
-                {repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.message.trim()}
-              </div>
-            </div>
-          </div>
         </div>
       </div>
-      <div className="w-full  text-[15px] text-sm  flex gap-3 flex-wrap items-center justify-evenly p-2">
+      {/* most recent commit */}
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href={repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.url}
+        className="w-full max-w-full hover:text-primary group flex justify-evenly text-sm items-center gap-1">
+        <div className="flex w-fit  gap-1  items-center justify-center">
+          <History className="w-4 h-4 " />
+          <div className=" text-secondary  line-clamp-1" data-tip={"last pushed to branch"}>
+            {repo?.refs?.edges?.[0]?.node?.name}:
+          </div>
+        </div>
+
+        <div className="w-fit line-clamp-1 flex gap-2 justify-center" data-tip={"last commit message"}>
+          {repo?.refs?.edges?.[0]?.node?.target?.history?.edges?.[0]?.node?.message.trim()}
+          <ExternalLink className="w-4 h-4 hidden group-hover:flex" />
+        </div>
+      </a>
+      {/* recent activity , stars and forks */}
+      <div className="w-full  text-[15px] text-sm  flex gap-3 flex-wrap items-center justify-evenly p-1">
         <div className="text-[12px] font-bold flex gap-1 justify-center items-center">
           <FiActivity /> {getRelativeTimeString(repo?.pushedAt)}
         </div>
@@ -174,6 +163,9 @@ export function RepoCard({
           stargazerCount={repo?.stargazerCount}
           viewerHasStarred={repo?.viewerHasStarred}
         />
+      </div>
+      {/* privacy , size and external links */}
+      <div className="flex gap-3 p-1 pb-2 w-full justify-center items-center">
         {repo?.visibility === "PRIVATE" ? (
           <div className="flex gap-1 justify-center items-center">
             <Lock className="text-error" />
@@ -228,7 +220,7 @@ export const RepoFragment = graphql`
       avatarUrl
     }
 
-    languages(first: 20) {
+    languages(first: 3) {
       edges {
         node {
           id
@@ -237,23 +229,21 @@ export const RepoFragment = graphql`
         }
       }
     }
-    releases(first: 1) {
-      nodes {
-        name
-        publishedAt
-      }
-    }
+
     stargazerCount
     refs(refPrefix: "refs/heads/", orderBy: { direction: DESC, field: TAG_COMMIT_DATE }, first: 2) {
       edges {
         node {
           name
           id
+
           target {
             ... on Commit {
               history(first: 1) {
                 edges {
                   node {
+                    id
+                    url
                     committedDate
                     author {
                       name
@@ -269,3 +259,9 @@ export const RepoFragment = graphql`
     }
   }
 `;
+
+
+
+
+               
+                               

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f985fe943a1e050f583eb5e4f89ee3d6>>
+ * @generated SignedSource<<1ce26294d4e0ccb28a7a854c172f4523>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -107,14 +107,7 @@ v9 = {
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
-},
-v10 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -353,7 +346,7 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "first",
-                                "value": 20
+                                "value": 3
                               }
                             ],
                             "concreteType": "LanguageConnection",
@@ -393,38 +386,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "languages(first:20)"
-                          },
-                          {
-                            "alias": null,
-                            "args": (v10/*: any*/),
-                            "concreteType": "ReleaseConnection",
-                            "kind": "LinkedField",
-                            "name": "releases",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Release",
-                                "kind": "LinkedField",
-                                "name": "nodes",
-                                "plural": true,
-                                "selections": [
-                                  (v8/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "publishedAt",
-                                    "storageKey": null
-                                  },
-                                  (v6/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "releases(first:1)"
+                            "storageKey": "languages(first:3)"
                           },
                           {
                             "alias": null,
@@ -492,7 +454,13 @@ return {
                                             "selections": [
                                               {
                                                 "alias": null,
-                                                "args": (v10/*: any*/),
+                                                "args": [
+                                                  {
+                                                    "kind": "Literal",
+                                                    "name": "first",
+                                                    "value": 1
+                                                  }
+                                                ],
                                                 "concreteType": "CommitHistoryConnection",
                                                 "kind": "LinkedField",
                                                 "name": "history",
@@ -514,6 +482,8 @@ return {
                                                         "name": "node",
                                                         "plural": false,
                                                         "selections": [
+                                                          (v6/*: any*/),
+                                                          (v9/*: any*/),
                                                           {
                                                             "alias": null,
                                                             "args": null,
@@ -539,8 +509,7 @@ return {
                                                             "kind": "ScalarField",
                                                             "name": "message",
                                                             "storageKey": null
-                                                          },
-                                                          (v6/*: any*/)
+                                                          }
                                                         ],
                                                         "storageKey": null
                                                       }
@@ -637,12 +606,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a15d1449a728df8e7bdd3923f82c5832",
+    "cacheID": "001dd4fd85050571545e5e3d06c89436",
     "id": null,
     "metadata": {},
     "name": "StarredRepositoriesPaginationQuery",
     "operationKind": "query",
-    "text": "query StarredRepositoriesPaginationQuery(\n  $afterStarredRepo: String\n  $firstStarredRepos: Int = 24\n  $orderByStarredRepos: StarOrder = {field: STARRED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserStarredRepos_repositories_30IreX\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserStarredRepos_repositories_30IreX on User {\n  starredRepositories(first: $firstStarredRepos, after: $afterStarredRepo, orderBy: $orderByStarredRepos) {\n    totalCount\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
+    "text": "query StarredRepositoriesPaginationQuery(\n  $afterStarredRepo: String\n  $firstStarredRepos: Int = 24\n  $orderByStarredRepos: StarOrder = {field: STARRED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserStarredRepos_repositories_30IreX\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 3) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  id\n                  url\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserStarredRepos_repositories_30IreX on User {\n  starredRepositories(first: $firstStarredRepos, after: $afterStarredRepo, orderBy: $orderByStarredRepos) {\n    totalCount\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n  id\n}\n"
   }
 };
 })();

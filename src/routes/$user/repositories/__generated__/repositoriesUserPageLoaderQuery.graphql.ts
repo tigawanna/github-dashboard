@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87ac2ba2718a4a101718bf4ee233da8f>>
+ * @generated SignedSource<<533c4d8eb64dd49b814e27fa249bd2e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,14 +100,7 @@ v10 = {
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-},
-v11 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -319,7 +312,7 @@ return {
                           {
                             "kind": "Literal",
                             "name": "first",
-                            "value": 20
+                            "value": 3
                           }
                         ],
                         "concreteType": "LanguageConnection",
@@ -359,38 +352,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "languages(first:20)"
-                      },
-                      {
-                        "alias": null,
-                        "args": (v11/*: any*/),
-                        "concreteType": "ReleaseConnection",
-                        "kind": "LinkedField",
-                        "name": "releases",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Release",
-                            "kind": "LinkedField",
-                            "name": "nodes",
-                            "plural": true,
-                            "selections": [
-                              (v8/*: any*/),
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "publishedAt",
-                                "storageKey": null
-                              },
-                              (v7/*: any*/)
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "releases(first:1)"
+                        "storageKey": "languages(first:3)"
                       },
                       {
                         "alias": null,
@@ -458,7 +420,13 @@ return {
                                         "selections": [
                                           {
                                             "alias": null,
-                                            "args": (v11/*: any*/),
+                                            "args": [
+                                              {
+                                                "kind": "Literal",
+                                                "name": "first",
+                                                "value": 1
+                                              }
+                                            ],
                                             "concreteType": "CommitHistoryConnection",
                                             "kind": "LinkedField",
                                             "name": "history",
@@ -480,6 +448,8 @@ return {
                                                     "name": "node",
                                                     "plural": false,
                                                     "selections": [
+                                                      (v7/*: any*/),
+                                                      (v9/*: any*/),
                                                       {
                                                         "alias": null,
                                                         "args": null,
@@ -505,8 +475,7 @@ return {
                                                         "kind": "ScalarField",
                                                         "name": "message",
                                                         "storageKey": null
-                                                      },
-                                                      (v7/*: any*/)
+                                                      }
                                                     ],
                                                     "storageKey": null
                                                   }
@@ -608,12 +577,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "98b6d21702373de639c4d694a6fbf741",
+    "cacheID": "d55eabce21e52f50dfac7f6a9b36e805",
     "id": null,
     "metadata": {},
     "name": "repositoriesUserPageLoaderQuery",
     "operationKind": "query",
-    "text": "query repositoriesUserPageLoaderQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 24, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query repositoriesUserPageLoaderQuery(\n  $login: String!\n  $isFork: Boolean\n  $orderBy: RepositoryOrder\n) {\n  user(login: $login) {\n    ...UserRepos_repositories_3LFRQw\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 3) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  id\n                  url\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserRepos_repositories_3LFRQw on User {\n  repositories(first: 24, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();

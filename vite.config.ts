@@ -11,7 +11,7 @@ export default defineConfig({
     relay,
     TanStackRouterVite({
       routeToken: "layout", // <-- Add this line
-      autoCodeSplitting: true,
+      // autoCodeSplitting: true,
       routeFileIgnorePattern:"__generated__/*",
       
     }),

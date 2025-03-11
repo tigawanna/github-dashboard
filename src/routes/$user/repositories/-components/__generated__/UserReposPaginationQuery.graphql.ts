@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91935e369c9c27ed4e3abf02a4ba8197>>
+ * @generated SignedSource<<a2b1dba3466312121396a6422d5daf75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -118,14 +118,7 @@ v10 = {
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
-},
-v11 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": [
@@ -343,7 +336,7 @@ return {
                               {
                                 "kind": "Literal",
                                 "name": "first",
-                                "value": 20
+                                "value": 3
                               }
                             ],
                             "concreteType": "LanguageConnection",
@@ -383,38 +376,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "languages(first:20)"
-                          },
-                          {
-                            "alias": null,
-                            "args": (v11/*: any*/),
-                            "concreteType": "ReleaseConnection",
-                            "kind": "LinkedField",
-                            "name": "releases",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "concreteType": "Release",
-                                "kind": "LinkedField",
-                                "name": "nodes",
-                                "plural": true,
-                                "selections": [
-                                  (v9/*: any*/),
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "publishedAt",
-                                    "storageKey": null
-                                  },
-                                  (v8/*: any*/)
-                                ],
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "releases(first:1)"
+                            "storageKey": "languages(first:3)"
                           },
                           {
                             "alias": null,
@@ -482,7 +444,13 @@ return {
                                             "selections": [
                                               {
                                                 "alias": null,
-                                                "args": (v11/*: any*/),
+                                                "args": [
+                                                  {
+                                                    "kind": "Literal",
+                                                    "name": "first",
+                                                    "value": 1
+                                                  }
+                                                ],
                                                 "concreteType": "CommitHistoryConnection",
                                                 "kind": "LinkedField",
                                                 "name": "history",
@@ -504,6 +472,8 @@ return {
                                                         "name": "node",
                                                         "plural": false,
                                                         "selections": [
+                                                          (v8/*: any*/),
+                                                          (v10/*: any*/),
                                                           {
                                                             "alias": null,
                                                             "args": null,
@@ -529,8 +499,7 @@ return {
                                                             "kind": "ScalarField",
                                                             "name": "message",
                                                             "storageKey": null
-                                                          },
-                                                          (v8/*: any*/)
+                                                          }
                                                         ],
                                                         "storageKey": null
                                                       }
@@ -635,12 +604,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0186646e5e11764d826da396e9e58a90",
+    "cacheID": "1d60ca031ec4417b9a1b5139a59ee507",
     "id": null,
     "metadata": {},
     "name": "UserReposPaginationQuery",
     "operationKind": "query",
-    "text": "query UserReposPaginationQuery(\n  $after: String\n  $first: Int = 24\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 20) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  releases(first: 1) {\n    nodes {\n      name\n      publishedAt\n      id\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                  id\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
+    "text": "query UserReposPaginationQuery(\n  $after: String\n  $first: Int = 24\n  $isFork: Boolean = false\n  $orderBy: RepositoryOrder = {field: PUSHED_AT, direction: DESC}\n  $id: ID!\n) {\n  node(id: $id) {\n    __typename\n    ...UserRepos_repositories_2NdkU6\n    id\n  }\n}\n\nfragment RepoCard_reposiotory on Repository {\n  id\n  name\n  nameWithOwner\n  description\n  pushedAt\n  diskUsage\n  url\n  visibility\n  forkCount\n  openGraphImageUrl\n  isInOrganization\n  forkingAllowed\n  isFork\n  viewerHasStarred\n  viewerPermission\n  viewerCanAdminister\n  owner {\n    __typename\n    login\n    id\n    url\n    avatarUrl\n  }\n  languages(first: 3) {\n    edges {\n      node {\n        id\n        color\n        name\n      }\n    }\n  }\n  stargazerCount\n  refs(refPrefix: \"refs/heads/\", orderBy: {direction: DESC, field: TAG_COMMIT_DATE}, first: 2) {\n    edges {\n      node {\n        name\n        id\n        target {\n          __typename\n          ... on Commit {\n            history(first: 1) {\n              edges {\n                node {\n                  id\n                  url\n                  committedDate\n                  author {\n                    name\n                  }\n                  message\n                }\n              }\n            }\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment UserRepos_repositories_2NdkU6 on User {\n  repositories(first: $first, after: $after, orderBy: $orderBy, isFork: $isFork) {\n    edges {\n      cursor\n      node {\n        id\n        name\n        nameWithOwner\n        viewerPermission\n        ...RepoCard_reposiotory\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n    totalCount\n  }\n  id\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52cd5a2c3086fb9ed72ad78bc26590aa>>
+ * @generated SignedSource<<4ac5b54a7e03bb3b20b3efafbf028662>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,9 @@ export type RepoCard_reposiotory$data = {
                   readonly name: string | null | undefined;
                 } | null | undefined;
                 readonly committedDate: any;
+                readonly id: string;
                 readonly message: string;
+                readonly url: any;
               } | null | undefined;
             } | null | undefined> | null | undefined;
           };
@@ -60,12 +62,6 @@ export type RepoCard_reposiotory$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly releases: {
-    readonly nodes: ReadonlyArray<{
-      readonly name: string | null | undefined;
-      readonly publishedAt: any | null | undefined;
-    } | null | undefined> | null | undefined;
-  };
   readonly stargazerCount: number;
   readonly url: any;
   readonly viewerCanAdminister: boolean;
@@ -100,14 +96,7 @@ v2 = {
   "kind": "ScalarField",
   "name": "url",
   "storageKey": null
-},
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 1
-  }
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -241,7 +230,7 @@ return {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 20
+          "value": 3
         }
       ],
       "concreteType": "LanguageConnection",
@@ -281,37 +270,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "languages(first:20)"
-    },
-    {
-      "alias": null,
-      "args": (v3/*: any*/),
-      "concreteType": "ReleaseConnection",
-      "kind": "LinkedField",
-      "name": "releases",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Release",
-          "kind": "LinkedField",
-          "name": "nodes",
-          "plural": true,
-          "selections": [
-            (v1/*: any*/),
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "publishedAt",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "releases(first:1)"
+      "storageKey": "languages(first:3)"
     },
     {
       "alias": null,
@@ -378,7 +337,13 @@ return {
                       "selections": [
                         {
                           "alias": null,
-                          "args": (v3/*: any*/),
+                          "args": [
+                            {
+                              "kind": "Literal",
+                              "name": "first",
+                              "value": 1
+                            }
+                          ],
                           "concreteType": "CommitHistoryConnection",
                           "kind": "LinkedField",
                           "name": "history",
@@ -400,6 +365,8 @@ return {
                                   "name": "node",
                                   "plural": false,
                                   "selections": [
+                                    (v0/*: any*/),
+                                    (v2/*: any*/),
                                     {
                                       "alias": null,
                                       "args": null,
@@ -457,6 +424,6 @@ return {
 };
 })();
 
-(node as any).hash = "2f5ded36976b0464f4c3a248fece0d1a";
+(node as any).hash = "0ac83be3c2d7613d1844d06b29ef3774";
 
 export default node;
